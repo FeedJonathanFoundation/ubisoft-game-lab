@@ -15,10 +15,10 @@ Entry to Ubisoft's 2016 Game Lab Competition.
 3. Enter the newly created *ubisoft-game-lab* directory.
 4. Create a new branch: ```git -b checkout your_branch```
 5. Get to coding!
-5. Once you're ready to merge your changes, enter: 
-	-```git add filename```
-	-```git commit -m "commit message"```
-	-```git push -u origin your_branch```
+5. Once you're ready to merge your changes, run the following commands: 
+	- ```git add filename```
+	- ```git commit -m "commit message"```
+	- ```git push -u origin your_branch```
 6. Create a new pull request on GitHub :)
 	- Select under "Your recently pushed branches" the option to *Compare & pull request*
 	- Write a detailed description and create
