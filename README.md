@@ -17,5 +17,12 @@ Entry to Ubisoft's 2016 Game Lab Competition.
 7. Verify by entering the following command: ```git remote -v```. You should see your fork as *origin* and the original repository as *upstream*  
 8. Get to coding! We <3 pull requests :*
 
+------------------
+
+**Arist Repo Setup:**
+1. Use the Mac Desktop client
+2. Idk how to use it, so FIO on your own
+3. Good luck
+
 
 
