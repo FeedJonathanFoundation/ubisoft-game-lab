@@ -10,14 +10,19 @@ Entry to Ubisoft's 2016 Game Lab Competition.
 
 ## Dev Repo Setup:
 
-1. Go to https://github.com/FeedJonathanFoundation/ubisoft-game-lab and click the *Fork* button at the top left corner 
-2. On GitHub, navigate to your fork and copy the URL (click the clipboard icon)
-3. In Terminal, navigate to your working directory
-4. Enter the following command with the correct URL: ```git clone https://github.com/$YOUR-USERNAME/ubisoft-game-lab.git```
-5. Enter the newly created *ubisoft-game-lab* directory.
-6. Enter the following command: ```git remote add upstream https://github.com/FeedJonathanFoundation/ubisoft-game-lab```
-7. Verify by entering the following command: ```git remote -v```. You should see your fork as *origin* and the original repository as *upstream*  
-8. Get to coding! We <3 pull requests
+1. In Terminal, navigate to your working directory
+2. Enter the following command: ```git clone https://github.com/FeedJonathanFoundation/ubisoft-game-lab```
+3. Enter the newly created *ubisoft-game-lab* directory.
+4. Create a new branch: ```git -b checkout your_branch```
+5. Get to coding!
+5. Once you're ready to merge your changes, run the following commands: 
+	- ```git add filename```
+	- ```git commit -m "commit message"```
+	- ```git push -u origin your_branch```
+6. Create a new pull request on GitHub :)
+	- Select under "Your recently pushed branches" the option to **Compare & pull request**
+	- Write a detailed description and create
+	- Assign appropriate tags under **Labels** and tester as **Assignee**
 
 - - -
 
