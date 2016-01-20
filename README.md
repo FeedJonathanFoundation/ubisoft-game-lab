@@ -4,4 +4,3 @@ Entry to Ubisoft's 2016 Game Lab Competition.
 
 **Artists:** Roxanne Sirois, Tristan Mirza
 
-test commit :)
