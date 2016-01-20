@@ -20,9 +20,9 @@ Entry to Ubisoft's 2016 Game Lab Competition.
 	- ```git commit -m "commit message"```
 	- ```git push -u origin your_branch```
 6. Create a new pull request on GitHub :)
-	- Select under "Your recently pushed branches" the option to *Compare & pull request*
+	- Select under "Your recently pushed branches" the option to **Compare & pull request**
 	- Write a detailed description and create
-	- Assign appropriate tags and tester as assignee
+	- Assign appropriate tags under **Labels** and tester as **Assignee**
 
 - - -
 
