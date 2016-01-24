@@ -12,7 +12,7 @@ FJF's entry for the Ubisoft's 2016 Game Lab Competition.
 
 1. In Terminal, navigate to your working directory
 2. Enter the following command: ```git clone https://github.com/FeedJonathanFoundation/ubisoft-game-lab```
-3. ```cd``` to the newly created *ubisoft-game-lab* directory.
+3. Navigate into the newly created repository: ```cd ubisoft-game-lab```
 4. Replace *your_branch* with a more informative name and create a new branch: ```git checkout -b your_branch```
 5. Get to coding!
 5. Once you're ready to merge your changes, run the following commands: 
@@ -29,9 +29,8 @@ FJF's entry for the Ubisoft's 2016 Game Lab Competition.
 
 ## Arist Repo Setup:
 
-1. Use the Mac Desktop client
-2. Idk how to use it, so FIO on your own
-3. Good luck
+1. Download the Mac Desktop client
+2. Good luck
 
 
 
