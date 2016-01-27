@@ -53,16 +53,19 @@ public class PlayerMovement : MonoBehaviour
         // Get the direction the left stick is pointing to
         Vector2 leftStickDirection = InputManager.GetLeftStick();
         
-        // Get the angle the left stick is pointing in
-        float leftStickAngle = 0.0f;
-        if (leftStickDirection.x != 0 || leftStickDirection.y != 0)
+        if(leftStickDirection != Vector2.zero)
         {
-            // 90-degree offset to ensure angle is relative to +y-axis
-            leftStickAngle = Mathf.Atan2(leftStickDirection.y,leftStickDirection.x) * Mathf.Rad2Deg - 90;
+            // Get the angle the left stick is pointing in
+            float leftStickAngle = 0.0f;
+            if (leftStickDirection.x != 0 || leftStickDirection.y != 0)
+            {
+                // 90-degree offset to ensure angle is relative to +y-axis
+                leftStickAngle = Mathf.Atan2(leftStickDirection.y,leftStickDirection.x) * Mathf.Rad2Deg - 90;
+            }
+            
+            // Make the character face in the direction of the left stick
+            transform.localEulerAngles = new Vector3(0,0,leftStickAngle);
         }
-        
-        // Make the character face in the direction of the left stick
-        transform.localEulerAngles = new Vector3(0,0,leftStickAngle);
     }
     
     /// <summary>
