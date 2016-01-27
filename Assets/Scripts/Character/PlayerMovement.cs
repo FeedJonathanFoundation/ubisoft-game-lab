@@ -24,25 +24,25 @@ public class PlayerMovement : MonoBehaviour
     private new Rigidbody rigidbody;
 
 	// Use this for initialization
-	void Start () 
+    void Start () 
     {
-       transform = GetComponent<Transform>();
-	   rigidbody = GetComponent<Rigidbody>();
+        transform = GetComponent<Transform>();
+	    rigidbody = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
-	void Update () 
+    void Update () 
     {
-	   if(Input.GetButtonDown("Thrust"))
-       {
-           // Eject mass in the direction of the left stick
-           EjectMass(InputManager.GetLeftStick());
-       }
+	    if(Input.GetButtonDown("Thrust"))
+        {
+            // Eject mass in the direction of the left stick
+            EjectMass(InputManager.GetLeftStick());
+        }
        
-       // Makes the character follow the left stick's rotation
-       FollowLeftStickRotation();
+        // Makes the character follow the left stick's rotation
+        FollowLeftStickRotation();
        
-       //Debug.Log("Eject Mass in direction: " + InputManager.GetLeftStick());
+        //Debug.Log("Eject Mass in direction: " + InputManager.GetLeftStick());
 	}
     
     /// <summary>
