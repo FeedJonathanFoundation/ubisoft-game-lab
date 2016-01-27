@@ -3,6 +3,7 @@ using System.Collections;
 
 public abstract class AbstractFish : MonoBehaviour 
 {
+    private bool isProximate;
 
     Transform player;           // Reference to player's position
     //  PlayerHealth playerHealth;
@@ -13,30 +14,51 @@ public abstract class AbstractFish : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         //      playerHealth = player.GetComponent <PlayerHealth> ();
         //      enemyHealth = GetComponent <EnemyHealth> ();
+        isProximate = false;
     }
 
-    void Update() 
+    void FixedUpdate() 
     {
-        if (isProximate()) 
-        {
-            React(player);
-        }
+        // if (playerHealth >= 0 && !isDead())
+        // {
+        if (isProximate) { React(player); }
         // if (player light == on) { Approach(player); }
-        else 
+        else { Move(player); }
+        // }
+        // else if (isDead()) { this.gameObject.SetActive(false); }
+    }
+    
+    // Detects if fish is close to the player
+    // ****** Change tag to refer to space around player, not player itself
+    void OnTriggerEnter(Collider other) 
+    {
+        if (other.gameObject.CompareTag("Player")) 
         {
-            Move(player);
+            isProximate = true;
         }
     }
-
-    public bool isProximate()
+    
+    // Detects if fish is no longer close to the player
+    // ****** Change tag to refer to space around player, not player itself
+    void OnTriggerExit(Collider other) 
     {
-        // on trigger collision with sphere collider around player
-        if (1>0) { return true; }
-        else { return false; }
+        if (other.gameObject.CompareTag("Player")) 
+        {
+            isProximate = false;
+        }
+    }
+    
+    public bool isDead()
+    {
+        // if (enemyHealth >= 0) { return true; }
+        // else { return false; }
+        return false;
     }
 
+    // How the fish moves when it is not proximate to the player
     public abstract void Move(Transform player);
     
+    // How the fish moves when it is proximate to the player
     public abstract void React(Transform player);
 
 }

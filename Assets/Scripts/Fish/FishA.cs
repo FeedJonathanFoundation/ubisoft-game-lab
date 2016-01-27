@@ -5,14 +5,19 @@ using System.Collections;
 // Run away upon close contact
 public class FishA : AbstractFish
 {
+    public int movementSpeed;
+    public int reactionSpeed;
+    
+    Action movement = new Action(new Wander());
+    Action reaction = new Action(new Escape());
 
     public override void Move(Transform player) 
     {
-        // swim
+        movement.think(movementSpeed);
     }
     
     public override void React(Transform player)
     {
-        // escape
+        reaction.think(reactionSpeed);
     }
 }
