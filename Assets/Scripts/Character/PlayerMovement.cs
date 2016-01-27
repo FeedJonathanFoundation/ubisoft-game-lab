@@ -27,13 +27,13 @@ public class PlayerMovement : MonoBehaviour
     void Start () 
     {
         transform = GetComponent<Transform>();
-	    rigidbody = GetComponent<Rigidbody>();
-	}
+        rigidbody = GetComponent<Rigidbody>();
+    }
 	
 	// Update is called once per frame
     void Update () 
     {
-	    if(Input.GetButtonDown("Thrust"))
+        if (Input.GetButtonDown("Thrust"))
         {
             // Eject mass in the direction of the left stick
             EjectMass(InputManager.GetLeftStick());
@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
         FollowLeftStickRotation();
        
         //Debug.Log("Eject Mass in direction: " + InputManager.GetLeftStick());
-	}
+    }
     
     /// <summary>
     /// Makes the character follow the left stick's rotation.
@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         
         // Get the angle the left stick is pointing in
         float leftStickAngle = 0.0f;
-        if(leftStickDirection.x != 0 || leftStickDirection.y != 0)
+        if (leftStickDirection.x != 0 || leftStickDirection.y != 0)
         {
             // 90-degree offset to ensure angle is relative to +y-axis
             leftStickAngle = Mathf.Atan2(leftStickDirection.y,leftStickDirection.x) * Mathf.Rad2Deg - 90;

@@ -21,7 +21,7 @@ public class SmoothCamera : MonoBehaviour
     
     void FixedUpdate()
     {
-        if(target)
+        if (target)
         {
             // Move the camera to its target smoothly.
             Vector3 newPosition = Vector2.SmoothDamp(transform.position, target.position, ref velocity, dampTime);
