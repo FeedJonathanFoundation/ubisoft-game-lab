@@ -1,4 +1,4 @@
 ﻿public interface NPCActionable
 {
-	void think(int speed);
+	void Execute(int speed);
 }

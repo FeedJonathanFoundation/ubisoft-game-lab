@@ -3,48 +3,63 @@ using System.Collections;
 
 public abstract class AbstractFish : MonoBehaviour 
 {
-    private bool isProximate;
+    public int movementSpeed;
+    public int reactionSpeed;
+    
+    private bool isProximateToPlayer;
+    private bool isProximateToNPC;
+    Transform player;                           // Reference to player's position
+    NPCAction movement = new NPCAction(new Wander());
+    NPCAction escape = new NPCAction(new Escape());
+    NPCAction attack = new NPCAction(new Attack());
+    
 
-    Transform player;           // Reference to player's position
-    //  PlayerHealth playerHealth;
-    //  EnemyHealth enemyHealth; 
+    public AbstractFish() { }
+    
+    public AbstractFish(NPCAction reactionToPlayer) { }
 
     void Awake() 
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        //      playerHealth = player.GetComponent <PlayerHealth> ();
-        //      enemyHealth = GetComponent <EnemyHealth> ();
-        isProximate = false;
+        isProximateToPlayer = false;
+        isProximateToNPC = false;
     }
 
     void FixedUpdate() 
     {
         // if (playerHealth >= 0 && !isDead())
         // {
-        if (isProximate) { React(player); }
+        if (isProximateToPlayer) { ReactToPlayer(player); }
         // if (player light == on) { Approach(player); }
-        else { Move(player); }
+        // else if (isProximateToNPC) { ReactToNPC(other); }
+        else { Move(); }
         // }
         // else if (isDead()) { this.gameObject.SetActive(false); }
     }
     
     // Detects if fish is close to the player
-    // ****** Change tag to refer to space around player, not player itself
     void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.CompareTag("Player")) 
         {
-            isProximate = true;
+            isProximateToPlayer = true;
+        }
+        else if (other.gameObject.CompareTag("Fish")) 
+        {
+            isProximateToNPC = true;
         }
     }
     
     // Detects if fish is no longer close to the player
-    // ****** Change tag to refer to space around player, not player itself
     void OnTriggerExit(Collider other) 
     {
         if (other.gameObject.CompareTag("Player")) 
         {
-            isProximate = false;
+            isProximateToPlayer = false;
+        }
+        else if (other.gameObject.CompareTag("Fish")) 
+        {
+            isProximateToNPC = false;
         }
     }
     
@@ -56,9 +71,12 @@ public abstract class AbstractFish : MonoBehaviour
     }
 
     // How the fish moves when it is not proximate to the player
-    public abstract void Move(Transform player);
+    public abstract void Move();
     
     // How the fish moves when it is proximate to the player
-    public abstract void React(Transform player);
+    public abstract void ReactToPlayer(Transform player);
+    
+    // How the fish moves when it is proximate to the player
+    public abstract void ReactToNPC(Transform other);
 
 }

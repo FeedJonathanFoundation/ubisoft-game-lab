@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Wander : NPCActionable 
 {
-	public void think(int speed) 
+	public void Execute(int speed) 
     {
         // wander
     }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Escape : NPCActionable 
 {
-	public void think(int speed)
+	public void Execute(int speed)
     {
         // move in opposite direction
     }
