@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
     void Update () 
     {
-        if (Input.GetButtonDown("Thrust") || Input.GetKeyDown("space"))
+        if (Input.GetButtonDown("Thrust"))
         {
             // Eject mass in the direction of the left stick
             EjectMass(massEjectionTransform.up);
