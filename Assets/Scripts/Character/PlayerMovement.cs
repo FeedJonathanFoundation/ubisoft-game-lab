@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         // Get the direction the left stick is pointing to
         Vector2 leftStickDirection = InputManager.GetLeftStick();
         
-        if(leftStickDirection.magnitude > 0.1f)
+        if(leftStickDirection.sqrMagnitude > 0.01f)
         {
             Debug.Log("Move " + Time.time); 
             // Get the angle the left stick is pointing in
