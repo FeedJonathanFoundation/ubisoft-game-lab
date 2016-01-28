@@ -4,47 +4,47 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Parse;
 
-/// <summary>
-///  This class keeps track of the game in progress.
-/// </summary>
-public class GameControl : MonoBehaviour
-{
+public class Checkpoint : MonoBehaviour {
 
-    public static GameControl control;
-
+    // corresponds to player data
     public float playerLight;
     public int level;
 
+	// Use this for initialization
+	void Start() {
+	   Save();
+	}
+	
+	// Update is called once per frame
+	void Update() {
+	
+	}
     
     /// <summary>
-    ///  Executed before Start()
+    /// TO REVIEW
+    /// Executed before Start()
     /// Makes sure that there's only 1 instance of the gameObject
     /// across different scenes.
     /// </summary>
     void Awake() 
     {
-        if (control == null) 
-        {
-            DontDestroyOnLoad(gameObject);
-            control = this;
-        } 
-        else if (control != this) 
-        {
-            Destroy(gameObject);
-        }    
+        // if (control == null) 
+        // {
+        //     DontDestroyOnLoad(gameObject);
+        //     control = this;
+        // } 
+        // else if (control != this) 
+        // {
+        //     Destroy(gameObject);
+        // }    
     }
-    
-    void Start()
-    {
-        this.Save();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+   
+	void OnTriggerEnter(Collider other) {
+		if (other.tag == "Player") {
+		  Save();
+		}		
+		Destroy (gameObject); // destoy checkpoint once it's been collected
+	}
     
     public void Save()
     {
@@ -60,8 +60,8 @@ public class GameControl : MonoBehaviour
         
         // save online
         ParseObject gameControl = new ParseObject("GameControl");
-        gameControl["playerLight"] = 90;
-        gameControl["level"] = 1;
+        gameControl["playerLight"] = 9999;
+        gameControl["level"] = 5;
         gameControl.SaveAsync();
         
     }
@@ -79,9 +79,11 @@ public class GameControl : MonoBehaviour
             level = data.level;          
         }
     }
-    
 }
 
+ /// <summary>
+ /// Model holding player data
+ /// </summary>
 [Serializable]
 class PlayerData
 {
