@@ -17,17 +17,26 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// The amount of force applied on the player when ejecting one piece of mass.
     /// </summary>
+    [Tooltip("The amount of force applied on the player when ejecting one piece of mass.")]
     public float thrustForce;
+    
+    /// <summary>
+    /// The amount of light energy spent when ejecting one piece of mass.
+    /// </summary>
+    [Tooltip("The amount of light energy spent when ejecting one piece of mass.")]
+    public float thrustEnergyCost = 1;
 
     /** Caches the player's components */
     private new Transform transform;
     private new Rigidbody rigidbody;
+    private LightEnergy lightEnergy;
 
 	// Use this for initialization
     void Start () 
     {
         transform = GetComponent<Transform>();
         rigidbody = GetComponent<Rigidbody>();
+        lightEnergy = GetComponent<LightEnergy>();
     }
 	
 	// Update is called once per frame
@@ -41,6 +50,9 @@ public class PlayerMovement : MonoBehaviour
        
         // Makes the character follow the left stick's rotation
         FollowLeftStickRotation();
+        
+        // Ensure that the rigidbody never spins
+        rigidbody.angularVelocity = Vector3.zero;
        
         //Debug.Log("Eject Mass in direction: " + InputManager.GetLeftStick());
     }
@@ -79,8 +91,9 @@ public class PlayerMovement : MonoBehaviour
         // Push the light mass in the given direction
         lightMass.GetComponent<Rigidbody>().AddForce(thrustForce * direction, ForceMode.Impulse);
         
-        
         // Push the character in the opposite direction that the mass was ejected
         rigidbody.AddForce(-thrustForce * direction, ForceMode.Impulse);
+        // Deplete energy from the player for each ejection
+        lightEnergy.Deplete(thrustEnergyCost);
     }
 }
