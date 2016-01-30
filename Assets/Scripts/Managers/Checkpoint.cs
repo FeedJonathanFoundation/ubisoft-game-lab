@@ -4,24 +4,27 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Parse;
 
-public class Checkpoint : MonoBehaviour {
+public class Checkpoint : MonoBehaviour 
+{
 
-    // corresponds to player data
+    // placeholder for player data
     public float playerLight;
     public int level;
 
 	// Use this for initialization
-	void Start() {
+	void Start() 
+    {
 	   Save();
 	}
 	
 	// Update is called once per frame
-	void Update() {
+	void Update() 
+    {
 	
 	}
     
     /// <summary>
-    /// TO REVIEW
+    /// TO-DO in the future
     /// Executed before Start()
     /// Makes sure that there's only 1 instance of the gameObject
     /// across different scenes.
@@ -39,11 +42,14 @@ public class Checkpoint : MonoBehaviour {
         // }    
     }
    
-	void OnTriggerEnter(Collider other) {
+	void OnTriggerEnter(Collider other) 
+    {
 		if (other.tag == "Player") {
 		  Save();
 		}		
-		Destroy (gameObject); // destoy checkpoint once it's been collected
+        // destoy checkpoint once it's been collected
+        // temp behaviour for testing
+		Destroy (gameObject); 
 	}
     
     public void Save()
@@ -58,7 +64,7 @@ public class Checkpoint : MonoBehaviour {
         bf.Serialize(file, data);
         file.Close();
         
-        // save online
+        // test saving online
         ParseObject gameControl = new ParseObject("GameControl");
         gameControl["playerLight"] = 9999;
         gameControl["level"] = 5;
@@ -83,6 +89,7 @@ public class Checkpoint : MonoBehaviour {
 
  /// <summary>
  /// Model holding player data
+ /// DATA to be changed
  /// </summary>
 [Serializable]
 class PlayerData
