@@ -25,6 +25,15 @@ public class LightSource : MonoBehaviour
     /** The light sources this GameObject is touching. */
     private List<LightSource> lightsInContact = new List<LightSource>();
     
+    // Cached components
+    private LightEnergy lightEnergy;
+    
+    void Start()
+    {
+        // Cache components
+        lightEnergy = GetComponent<LightEnergy>();
+    }
+    
     void FixedUpdate()
     {
         // Cycle through each light source being touched by this GameObject
@@ -32,12 +41,10 @@ public class LightSource : MonoBehaviour
         {            
             LightSource otherLightSource = lightsInContact[i];
             
-            // If this GameObject can absorb light sources but the one being touched
-            // can't, make this GameObject absorb the touched light source
-            if(canAbsorb && !otherLightSource.canAbsorb)
+            // If this GameObject can absorb the touched light source
+            if(CanAbsorb(otherLightSource))
             {
-                LightEnergy lightEnergy = GetComponent<LightEnergy>();
-                LightEnergy lightEnergyToAbsorb = otherLightSource.GetComponent<LightEnergy>();
+                LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
                 
                 // Calculate the amount of light to absorb from the other light source
                 float lightToAbsorb = absorptionRate * Time.fixedDeltaTime;
@@ -48,6 +55,24 @@ public class LightSource : MonoBehaviour
             }
             
         }
+    }
+    
+    /// <summary>
+    /// Returns true if this LightSource can absorb the given light source.
+    /// </summary>
+    public bool CanAbsorb(LightSource otherLightSource)
+    {
+        // If this light source has more energy than the other one, 
+        // return true. This light source can absorb the given argument.
+        if(LightEnergy.CurrentEnergy > otherLightSource.LightEnergy.CurrentEnergy)
+            return true;
+            
+        // If this GameObject can absorb light sources but the given argument
+        // can't, this GameObject can absorb the given light source
+        if(canAbsorb && !otherLightSource.canAbsorb)
+            return true; 
+            
+        return false;
     }
     
     public void OnTriggerEnter(Collider otherCollider)
@@ -74,5 +99,13 @@ public class LightSource : MonoBehaviour
             // Remove the LightSource from to the list of lights sources being touched
             lightsInContact.Remove(otherLightSource);
         }  
+    }
+    
+    /// <summary>
+    /// The LightEnergy component controlling this object's amount of energy
+    /// </summary>
+    public LightEnergy LightEnergy
+    {
+        get { return lightEnergy; }
     }
 }

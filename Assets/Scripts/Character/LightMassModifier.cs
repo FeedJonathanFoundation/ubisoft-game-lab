@@ -15,14 +15,21 @@ public class LightMassModifier : LightAttribute
     
     private new Rigidbody rigidbody;
     
-    void Start()
-    {
-        rigidbody = GetComponent<Rigidbody>();
-    }
-    
     public override void OnLightChanged(float currentLight)
     {
         // Scales the rigidbody's mass based on its current amount of light
-        rigidbody.mass = currentLight * lightToMassRatio;
+        Rigidbody.mass = currentLight * lightToMassRatio;
+    }
+    
+    /** Cached Rigidbody component. */
+    private Rigidbody Rigidbody
+    {
+        get
+        {
+            if(rigidbody == null)
+                rigidbody = GetComponent<Rigidbody>();   
+            
+            return rigidbody; 
+        }
     }
 }
