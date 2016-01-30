@@ -29,6 +29,8 @@ GameObject:
   - 135: {fileID: 13541734}
   - 23: {fileID: 2342228}
   - 114: {fileID: 11466080}
+  - 114: {fileID: 11425672}
+  - 114: {fileID: 11484220}
   - 54: {fileID: 5494308}
   m_Layer: 0
   m_Name: Player
@@ -171,6 +173,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
+--- !u!114 &11425672
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f6e3559068193346bc63c9b6a406089, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11466080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -185,6 +198,17 @@ MonoBehaviour:
   massEjectionTransform: {fileID: 493842}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
   thrustForce: 2
+--- !u!114 &11484220
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4b6d515b5ec3a49bf89a2fbd857710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &13541734
 SphereCollider:
   m_ObjectHideFlags: 1

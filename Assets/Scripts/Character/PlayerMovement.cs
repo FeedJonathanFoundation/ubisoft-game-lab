@@ -55,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
         
         if(leftStickDirection.sqrMagnitude > 0.01f)
         {
-            Debug.Log("Move " + Time.time); 
             // Get the angle the left stick is pointing in
             float leftStickAngle = 0.0f;
             if (leftStickDirection.x != 0 || leftStickDirection.y != 0)
