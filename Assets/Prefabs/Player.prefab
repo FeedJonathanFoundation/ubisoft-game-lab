@@ -31,6 +31,8 @@ GameObject:
   - 114: {fileID: 11466080}
   - 114: {fileID: 11425672}
   - 114: {fileID: 11484220}
+  - 114: {fileID: 11479800}
+  - 114: {fileID: 11485722}
   - 54: {fileID: 5494308}
   m_Layer: 0
   m_Name: Player
@@ -184,6 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6e3559068193346bc63c9b6a406089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultEnergy: 10
 --- !u!114 &11466080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -198,6 +201,18 @@ MonoBehaviour:
   massEjectionTransform: {fileID: 493842}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
   thrustForce: 2
+--- !u!114 &11479800
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fee347b7b46b71449ae5ccc7337d398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightToScaleRatio: 0.1
 --- !u!114 &11484220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -206,9 +221,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 135280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc4b6d515b5ec3a49bf89a2fbd857710, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d54fd3ad18d24c459c54c2d1a496880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canAbsorb: 1
+  absorptionRate: 10
+--- !u!114 &11485722
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ee6488897e82d54196197c7b541385f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightToMassRatio: 0
 --- !u!135 &13541734
 SphereCollider:
   m_ObjectHideFlags: 1
