@@ -11,6 +11,7 @@ public class SpawningVolume : MonoBehaviour
     public int maxFishCount;                // Maximum number of fish in level
     public int minFishDifficulty;           // Mass of smallest fish
     public int maxFishDifficulty;           // Mass of largest fish
+    public float spawnPointRadius;
     
     private int fishCount;
     
@@ -40,13 +41,20 @@ public class SpawningVolume : MonoBehaviour
         // Choose random fish type to spawn
         int spawnTypeIndex = Random.Range(0, fishesToSpawn.Length);
         
-        // Create instance of fish prefab at spawn point and rotation
-        Instantiate(
-            fishesToSpawn[spawnTypeIndex], spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation
+        // All colliders touching or inside sphere
+        Collider[] hitColliders = Physics.OverlapSphere(spawnPoint, spawnPointRadius);
+        // If spawn point is not occupied, spawn fish
+        if (hitColliders.Length < 1)
+        {
+            // Create instance of fish prefab at spawn point and rotation
+            Instantiate(
+                fishesToSpawn[spawnTypeIndex], spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation
             );
+            // Increment number of fish spawned
+            fishCount++;
+        }
         
-        // Increment number of fish spawned
-        fishCount++;
+        
     }
     
 }
