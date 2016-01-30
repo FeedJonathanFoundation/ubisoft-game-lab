@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LightControl : MonoBehaviour {
+public class LightToggle : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
