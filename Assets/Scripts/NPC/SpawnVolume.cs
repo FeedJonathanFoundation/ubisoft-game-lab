@@ -7,11 +7,17 @@ public class SpawningVolume : MonoBehaviour
     public GameObject[] fishesToSpawn;      // Fish prefabs to be spawned
     public float spawnTime = 3f;            // Time between spawns
     public Transform[] spawnPoints;         // Array of possible spawn points
-    public int minFishCount;                // Minimum number of fish in level
-    public int maxFishCount;                // Maximum number of fish in level
+    public float spawnPointRadius;          // Radius of sphere to check for spawned fish
+    
     public int minFishDifficulty;           // Mass of smallest fish
     public int maxFishDifficulty;           // Mass of largest fish
-    public float spawnPointRadius;
+    public int minFishCount;                // Minimum number of fish in level
+    public int maxFishCount;                // Maximum number of fish in level
+    // public int minSchoolPopulation;         // Minimum number of fish in one school
+    // public int maxSchoolPopulation;         // Maximum number of fish in one school
+    // public int minSchoolCount;              // Minimum number of schools
+    // public int maxSchoolCount;              // Maximum number of schools
+
     
     private int fishCount;
     
@@ -53,8 +59,6 @@ public class SpawningVolume : MonoBehaviour
             // Increment number of fish spawned
             fishCount++;
         }
-        
-        
     }
     
 }
