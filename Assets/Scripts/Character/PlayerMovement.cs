@@ -24,14 +24,14 @@ public class PlayerMovement : MonoBehaviour
     private new Rigidbody rigidbody;
 
 	// Use this for initialization
-    void Start () 
+    void Start() 
     {
         transform = GetComponent<Transform>();
         rigidbody = GetComponent<Rigidbody>();
     }
 	
 	// Update is called once per frame
-    void Update () 
+    void Update() 
     {
         if (Input.GetButtonDown("Thrust"))
         {
