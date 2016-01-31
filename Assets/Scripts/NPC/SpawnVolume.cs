@@ -17,11 +17,10 @@ public class SpawningVolume : MonoBehaviour
     // public int maxSchoolPopulation;         // Maximum number of fish in one school
     // public int minSchoolCount;              // Minimum number of schools
     // public int maxSchoolCount;              // Maximum number of schools
-
     
     private int fishCount;
-    
-	void Start() 
+
+    void Start() 
     {
         fishCount = 0;
         
@@ -35,7 +34,7 @@ public class SpawningVolume : MonoBehaviour
        {
            InvokeRepeating ("Spawn", spawnTime, spawnTime);
        }
-	}
+    }
 	
     void Spawn() 
     {
