@@ -20,7 +20,7 @@ public class LightScaler : LightAttribute
     /// </summary>
     public override void OnLightChanged(float currentLight)
     {
-        Debug.Log("Amount of light changed to: " + currentLight);   
+        //Debug.Log("Amount of light changed to: " + currentLight);   
         
         // Update the GameObject's scale based on its current amount of energy
         float newScale = currentLight * lightToScaleRatio;

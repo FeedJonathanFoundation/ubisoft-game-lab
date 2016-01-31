@@ -15,6 +15,10 @@ public class LightEnergy : MonoBehaviour
     /** Called when the GameObject's amount of stored light changes */ 
     public event LightChangedHandler LightChanged = delegate {};
     
+    public delegate void LightDepletedHandler();
+    /** Called when all light was depleted from the light source. */
+    public event LightDepletedHandler LightDepleted = delegate {};
+        
     void Start()
     {
         // Set the current amount of energy to default
@@ -56,6 +60,16 @@ public class LightEnergy : MonoBehaviour
         
         // Notify subscribers that the amount of energy in this light has changed
         LightChanged(currentEnergy);
+        
+        // If all light was depleted from this light source
+        if(currentEnergy <= 0)
+        {
+            LightDepleted();
+            Debug.Log("Light source depleted");
+            
+            // Destroy this object. TODO: Pooling
+            GameObject.Destroy(gameObject);
+        }
         
         return actualLightRemoved;
     }

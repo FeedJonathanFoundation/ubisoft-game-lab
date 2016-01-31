@@ -41,6 +41,13 @@ public class LightSource : MonoBehaviour
         {            
             LightSource otherLightSource = lightsInContact[i];
             
+            if(otherLightSource == null)
+            {
+                // Remove the null light source from the list 
+                lightsInContact.RemoveAt(i);
+                continue;
+            }
+            
             // If this GameObject can absorb the touched light source
             if(CanAbsorb(otherLightSource))
             {
@@ -77,7 +84,7 @@ public class LightSource : MonoBehaviour
     
     public void OnTriggerEnter(Collider otherCollider)
     {
-        Debug.Log("ENTERRED light absorber: " + otherCollider.name); 
+        //Debug.Log("ENTERRED light absorber: " + otherCollider.name); 
         
         LightSource otherLightSource = otherCollider.GetComponent<LightSource>();
         
@@ -90,7 +97,7 @@ public class LightSource : MonoBehaviour
     
     public void OnTriggerExit(Collider otherCollider)
     {
-        Debug.Log("LEFT light absorber: " + otherCollider.name); 
+        //Debug.Log("LEFT light absorber: " + otherCollider.name); 
         
         LightSource otherLightSource = otherCollider.GetComponent<LightSource>();
         
