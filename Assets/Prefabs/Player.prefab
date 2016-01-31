@@ -50,6 +50,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 497328}
   - 108: {fileID: 10838764}
+  - 114: {fileID: 11458744}
   m_Layer: 0
   m_Name: Point light
   m_TagString: Untagged
@@ -319,6 +320,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultEnergy: 10
+--- !u!114 &11458744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4906f634a9b27624c9e41234e3122bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightEnergyOverride: {fileID: 11425672}
+  lightToRangeRatio: 0.5
 --- !u!114 &11466080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -345,6 +359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fee347b7b46b71449ae5ccc7337d398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightEnergyOverride: {fileID: 0}
   lightToScaleRatio: 0.1
 --- !u!114 &11484220
 MonoBehaviour:
@@ -370,6 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee6488897e82d54196197c7b541385f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightEnergyOverride: {fileID: 0}
   lightToMassRatio: 0.1
 --- !u!135 &13541734
 SphereCollider:
