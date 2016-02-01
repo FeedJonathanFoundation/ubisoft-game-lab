@@ -78,5 +78,27 @@ public abstract class AbstractFish : MonoBehaviour
     
     // How the fish moves when it is proximate to the player
     public abstract void ReactToNPC(Transform other);
+    
+    // Returns the height of a fish
+    public virtual float GetHeight()
+    {
+        return transform.lossyScale.y;
+    }
+    
+    // Returns the width of a fish
+    public virtual float GetWidth()
+    {
+        return transform.lossyScale.x;
+    }
+    
+    // Calculates the radius of a sphere around the fish
+    public float CalculateRadius()
+    {
+        float height = GetHeight();
+        float width = GetWidth();
+        
+        if (height > width) { return height / 2; }
+        else { return width / 2; }
+    }
 
 }

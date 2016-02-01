@@ -4,18 +4,15 @@ using System.Collections;
 public class SpawningVolume : MonoBehaviour
 {
 
-    public AbstractFish[] fishesToSpawn;      // Fish prefabs to be spawned
-    public float spawnTime = 3f;            // Time between spawns
-    public Transform[] spawnPoints;         // Array of possible spawn points
-    public float spawnPointRadius;          // Radius of sphere to check for spawned fish
-    
-    public int minFishDifficulty;           // Mass of smallest fish
-    public int maxFishDifficulty;           // Mass of largest fish
-    public int minFishCount;                // Minimum number of fish in level
-    public int maxFishCount;                // Maximum number of fish in level
-    public int minSchoolPopulation;         // Minimum number of fish in one school
-    public int maxSchoolPopulation;         // Maximum number of fish in one school
-    public float spaceBetweenFish;          // Space between fish in a school
+    public AbstractFish[] fishesToSpawn;        // Fish prefabs to be spawned
+    public float spawnTime = 3f;                // Time between spawns    
+    public bool overrideSpawnLocations = false; // Determines usage of random or specific spawn points
+    public Transform[] spawnPoints;             // Array of possible spawn points
+    public float spawnPointRadius;              // Radius of sphere to check for spawned fish
+    public int minFishDifficulty;               // Mass of smallest fish
+    public int maxFishDifficulty;               // Mass of largest fish
+    public int minFishCount;                    // Minimum number of fish in level
+    public int maxFishCount;                    // Maximum number of fish in level
     
     private int fishCount;
 
@@ -26,36 +23,47 @@ public class SpawningVolume : MonoBehaviour
         // Spawn minimum number of fish
         while (fishCount < minFishCount)
         {
-            InvokeRepeating("SpawnIndividual", 0, 0);
+            InvokeRepeating("Spawn", 0, 0);
         }
         
        // Spawn after a delay of spawnTime and continue to call after the same amount of time
        while (fishCount < maxFishCount)
        {
-           InvokeRepeating ("SpawnIndividual", spawnTime, spawnTime);
-           InvokeRepeating("SpawnSchool", spawnTime, spawnTime);
+           InvokeRepeating ("Spawn", spawnTime, spawnTime);
        }
     }
-	
-    void SpawnIndividual() 
+    
+    void Spawn()
     {
         // if (player.isDead) { return; // exit function }
         
-        // Choose random index within number of spawn points
-        int spawnPointIndex = Random.Range(0, spawnPoints.Length);        
+        Vector3 spawnLocation;
+       
         // Choose random fish type to spawn
         int spawnTypeIndex = Random.Range(0, fishesToSpawn.Length);
-        // Calculate spawn radius
-        float spawnRadius = calculateRadius(fishesToSpawn[spawnTypeIndex], 1);
+        
+        // Use specific spawn points
+        if (overrideSpawnLocations) 
+        {
+            // Choose random index within number of spawn points
+            int spawnPointIndex = Random.Range(0, spawnPoints.Length); 
+            spawnLocation = spawnPoints[spawnPointIndex].position;
+        }
+        // Use random spawn point
+        else
+        {
+            // generate random point
+        }
         
         // If spawn point is not occupied, spawn fish
-        if (!IsOccupied(spawnPoint, spawnRadius))
+        if (IsValidSpawnPoint(spawnPoints[spawnPointIndex].position))
         {
             // Create instance of fish prefab at spawn point and rotation
             Instantiate(fishesToSpawn[spawnTypeIndex], spawnPoints[spawnPointIndex].position, Quaternion.identity);
             // Increment number of fish spawned
             fishCount++;
         }
+        
     }
 
     void SpawnSchool() 
@@ -63,15 +71,16 @@ public class SpawningVolume : MonoBehaviour
         // if (player.isDead) { return; // exit function }
         
         // Choose random index within number of spawn points
-        int schoolPopulation = Random.Range(minSchoolPopulation, maxSchoolPopulation);
+        int spawnPointIndex = Random.Range(0, spawnPoints.Length);  
+        
         // Choose random fish type to spawn
         int spawnTypeIndex = Random.Range(0, fishesToSpawn.Length);
-        // Calculate spawn radius
-        float spawnRadius = calculateRadius(fishesToSpawn[spawnTypeIndex], 1);
-        float schoolSpawnRadius = calculateRadius(fishesToSpawn[spawnTypeIndex], schoolPopulation);
+        
+        School newSchool = new School(fishesToSpawn[spawnTypeIndex]);
+        int schoolPopulation = newSchool.GetSchoolPopulation();
         
         // If spawn point is not occupied, spawn fish
-        if (!IsOccupied(spawnPoint, schoolSpawnRadius))
+        if (IsValidSpawnPoint(spawnPoints[spawnPointIndex].position))
         {
             // Create instance of fish prefab at spawn point and rotation
             for (int i = 0; i < schoolPopulation; i++) 
@@ -95,30 +104,17 @@ public class SpawningVolume : MonoBehaviour
         return true;
     }
     
-    // Calculates the radius of a sphere around the fish
-    float CalculateRadius(AbstractFish fish, int numberOfFish)
-    {
-        float height = GetHeight(fish);
-        float width = GetWidth(fish);
-        float max;
         
-        if (height > width) { max = height; }
-        else { max = width; }
-
-        if (numberOfFish == 1) { return max / 2; }
-        return ((max + spaceBetweenFish) * numberOfFish) / 2;  
-    }
-    
-    // Returns the height of a fish
-    float GetHeight(AbstractFish fish)
+    bool IsValidSpawnPoint(Vector3 spawnPoint)
     {
-        return transform.lossyScale.y;
+        // Calculate spawn radius
+        float spawnRadius = calculateRadius(fishesToSpawn[spawnTypeIndex]);
+        
+        if (IsOccupied(spawnPoint, spawnRadius))
+        {
+            return false;
+        }
+        return true;
     }
-    
-    // Returns the width of a fish
-    float GetWidth(AbstractFish fish)
-    {
-        return transform.lossyScale.x;
-    }
-    
+  
 }
