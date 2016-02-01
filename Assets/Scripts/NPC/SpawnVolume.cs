@@ -4,7 +4,7 @@ using System.Collections;
 public class SpawningVolume : MonoBehaviour
 {
 
-    public GameObject[] fishesToSpawn;      // Fish prefabs to be spawned
+    public AbstractFish[] fishesToSpawn;      // Fish prefabs to be spawned
     public float spawnTime = 3f;            // Time between spawns
     public Transform[] spawnPoints;         // Array of possible spawn points
     public float spawnPointRadius;          // Radius of sphere to check for spawned fish
@@ -49,7 +49,7 @@ public class SpawningVolume : MonoBehaviour
         float spawnRadius = calculateRadius(fishesToSpawn[spawnTypeIndex], 1);
         
         // If spawn point is not occupied, spawn fish
-        if (!isOccupied(spawnPoint, spawnRadius))
+        if (!IsOccupied(spawnPoint, spawnRadius))
         {
             // Create instance of fish prefab at spawn point and rotation
             Instantiate(fishesToSpawn[spawnTypeIndex], spawnPoints[spawnPointIndex].position, Quaternion.identity);
@@ -71,7 +71,7 @@ public class SpawningVolume : MonoBehaviour
         float schoolSpawnRadius = calculateRadius(fishesToSpawn[spawnTypeIndex], schoolPopulation);
         
         // If spawn point is not occupied, spawn fish
-        if (!isOccupied(spawnPoint, schoolSpawnRadius))
+        if (!IsOccupied(spawnPoint, schoolSpawnRadius))
         {
             // Create instance of fish prefab at spawn point and rotation
             for (int i = 0; i < schoolPopulation; i++) 
@@ -87,7 +87,7 @@ public class SpawningVolume : MonoBehaviour
     }
     
     // Checks whether the spawn point is occupied within the radius
-    bool isOccupied(Vector3 spawnPoint, float spawnPointRadius) 
+    bool IsOccupied(Vector3 spawnPoint, float spawnPointRadius) 
     {
         // Array of all colliders touching or inside sphere
         Collider[] hitColliders = Physics.OverlapSphere(spawnPoint, spawnPointRadius);
@@ -96,10 +96,10 @@ public class SpawningVolume : MonoBehaviour
     }
     
     // Calculates the radius of a sphere around the fish
-    float calculateRadius(GameObject fish, int numberOfFish)
+    float CalculateRadius(AbstractFish fish, int numberOfFish)
     {
-        float height = getHeight(fish);
-        float width = getWidth(fish);
+        float height = GetHeight(fish);
+        float width = GetWidth(fish);
         float max;
         
         if (height > width) { max = height; }
@@ -110,13 +110,13 @@ public class SpawningVolume : MonoBehaviour
     }
     
     // Returns the height of a fish
-    float getHeight(GameObject fish)
+    float GetHeight(AbstractFish fish)
     {
         return transform.lossyScale.y;
     }
     
     // Returns the width of a fish
-    float getWidth(GameObject fish)
+    float GetWidth(AbstractFish fish)
     {
         return transform.lossyScale.x;
     }
