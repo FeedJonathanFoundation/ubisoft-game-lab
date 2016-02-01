@@ -51,6 +51,7 @@ GameObject:
   - 4: {fileID: 497328}
   - 108: {fileID: 10838764}
   - 114: {fileID: 11458744}
+  - 114: {fileID: 11433084}
   m_Layer: 0
   m_Name: Point light
   m_TagString: Untagged
@@ -320,6 +321,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultEnergy: 10
+--- !u!114 &11433084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4906f634a9b27624c9e41234e3122bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightEnergyOverride: {fileID: 11425672}
+  lightToRangeRatio: 0.5
 --- !u!114 &11458744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -347,7 +361,7 @@ MonoBehaviour:
   massEjectionTransform: {fileID: 493842}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
   thrustForce: 2
-  thrustEnergyCost: 0.1
+  thrustEnergyCost: 0.2
 --- !u!114 &11479800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -386,7 +400,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightEnergyOverride: {fileID: 0}
-  lightToMassRatio: 0.1
+  lightToMassRatio: 0.12
+  minMass: 0.9
 --- !u!135 &13541734
 SphereCollider:
   m_ObjectHideFlags: 1

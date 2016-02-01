@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &102724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 447262}
+  - 33: {fileID: 3346680}
+  - 23: {fileID: 2332368}
+  m_Layer: 9
+  m_Name: Sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &157500
 GameObject:
   m_ObjectHideFlags: 0
@@ -24,9 +41,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 451124}
-  - 33: {fileID: 3334118}
   - 135: {fileID: 13503362}
-  - 23: {fileID: 2381016}
   - 54: {fileID: 5404248}
   - 114: {fileID: 11408064}
   - 114: {fileID: 11459794}
@@ -51,6 +66,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 451124}
   m_RootOrder: 0
+--- !u!4 &447262
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 451124}
+  m_RootOrder: 1
 --- !u!4 &451124
 Transform:
   m_ObjectHideFlags: 1
@@ -58,23 +85,24 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.24370417, y: 0.24370417, z: 0.24370417}
+  m_LocalPosition: {x: -4.38, y: 3.95, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 428062}
+  - {fileID: 447262}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!23 &2381016
+--- !u!23 &2332368
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 191022}
+  m_GameObject: {fileID: 102724}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -90,12 +118,12 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &3334118
+--- !u!33 &3346680
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 191022}
+  m_GameObject: {fileID: 102724}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &5404248
 Rigidbody:
@@ -123,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6e3559068193346bc63c9b6a406089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultEnergy: 0.1
+  defaultEnergy: 0.3
 --- !u!114 &11459462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -135,7 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fee347b7b46b71449ae5ccc7337d398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightToScaleRatio: 2
+  lightEnergyOverride: {fileID: 0}
+  lightToScaleRatio: 0.6
 --- !u!114 &11459794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -147,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d54fd3ad18d24c459c54c2d1a496880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canAbsorb: 1
+  canAbsorb: 0
   absorptionRate: 15
 --- !u!114 &11467018
 MonoBehaviour:
@@ -160,7 +189,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee6488897e82d54196197c7b541385f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightEnergyOverride: {fileID: 0}
   lightToMassRatio: 0.1
+  minMass: 0
 --- !u!135 &13503362
 SphereCollider:
   m_ObjectHideFlags: 1

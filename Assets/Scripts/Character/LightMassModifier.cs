@@ -13,12 +13,22 @@ public class LightMassModifier : LightAttribute
     /// </summary>
     public float lightToMassRatio = 0.1f;
     
+    /// <summary>
+    /// The minimum amount of mass this GameObject can have
+    /// </summary>
+    [Tooltip("The minimum amount of mass this GameObject can have")]
+    public float minMass;
+    
+    // Don't access directly. Access the Rigidbody property instead
     private new Rigidbody rigidbody;
     
     public override void OnLightChanged(float currentLight)
     {
         // Scales the rigidbody's mass based on its current amount of light
         Rigidbody.mass = currentLight * lightToMassRatio;
+        
+        // Clamp the mass to its minimum value 
+        Rigidbody.mass = Mathf.Max(minMass,Rigidbody.mass);
     }
     
     /** Cached Rigidbody component. */
