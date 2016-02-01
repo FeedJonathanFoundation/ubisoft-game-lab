@@ -27,7 +27,7 @@ public abstract class AbstractFish : MonoBehaviour
 
     void FixedUpdate() 
     {
-        // if (playerHealth >= 0 && !isDead())
+        // if (playerHealth >= 0 && !IsDead())
         // {
         if (isProximateToPlayer) { ReactToPlayer(player); }
         // if (player light == on) { Approach(player); }
@@ -63,7 +63,7 @@ public abstract class AbstractFish : MonoBehaviour
         }
     }
     
-    public bool isDead()
+    public bool IsDead()
     {
         // if (enemyHealth >= 0) { return true; }
         // else { return false; }
