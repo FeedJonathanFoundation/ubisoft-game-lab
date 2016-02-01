@@ -1,17 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LightControl : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
+public class LightControl : MonoBehaviour 
+{
+	void Update()
     {
-		if (Input.GetKeyDown("f")) {
+		if (Input.GetKeyDown("f")) 
+        {
 			if (GetComponent<Light>().enabled)
             {
 				ToggleLights(false);
@@ -23,9 +18,10 @@ public class LightControl : MonoBehaviour {
 		}
 	}
     
-    public void ToggleLights (bool toggle)
+    public void ToggleLights(bool toggle)
     {
-        foreach (Behaviour childComponent in GetComponent<Light>().GetComponentsInChildren<Light>()) 
+        Behaviour[] lightComponents = GetComponent<Light>().GetComponentsInChildren<Light>();
+        foreach (Behaviour childComponent in lightComponents) 
         {
             childComponent.enabled = toggle;
         }
