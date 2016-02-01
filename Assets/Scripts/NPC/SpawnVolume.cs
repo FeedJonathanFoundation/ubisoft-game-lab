@@ -52,7 +52,8 @@ public class SpawningVolume : MonoBehaviour
         // Use random spawn point
         else
         {
-            // generate random point
+            // generate random point in sphere collider
+            spawnLocation = Random.insideUnitSphere * GetRadius();
         }
         
         // If spawn point is not occupied, spawn fish
@@ -60,19 +61,30 @@ public class SpawningVolume : MonoBehaviour
         {
             // Create instance of fish prefab at spawn point and rotation
             Instantiate(fishesToSpawn[spawnTypeIndex], spawnPoints[spawnPointIndex].position, Quaternion.identity);
-            // Increment number of fish spawned
             fishCount++;
         }
-        
     }
 
     void SpawnSchool() 
     {
         // if (player.isDead) { return; // exit function }
         
-        // Choose random index within number of spawn points
-        int spawnPointIndex = Random.Range(0, spawnPoints.Length);  
+        Vector3 spawnLocation;
         
+        // Use specific spawn points
+        if (overrideSpawnLocations) 
+        {
+            // Choose random index within number of spawn points
+            int spawnPointIndex = Random.Range(0, spawnPoints.Length); 
+            spawnLocation = spawnPoints[spawnPointIndex].position;
+        }
+        // Use random spawn point
+        else
+        {
+            // generate random point in sphere collider
+            spawnLocation = Random.insideUnitSphere * GetRadius();
+        }
+
         // Choose random fish type to spawn
         int spawnTypeIndex = Random.Range(0, fishesToSpawn.Length);
         
@@ -86,10 +98,8 @@ public class SpawningVolume : MonoBehaviour
             for (int i = 0; i < schoolPopulation; i++) 
             {
                 // Calculate school pattern
-                Vector3 pos = spawnPoints[spawnPointIndex].position + spacing * i;
+                Vector3 pos = spawnPoints[spawnPointIndex].position + spacing * i;  // NEEDS TO BE FIXED
                 Instantiate(fishesToSpawn[spawnTypeIndex], pos, Quaternion.identity);
-                
-                // Increment number of fish spawned
                 fishCount++;
             }
         }
@@ -116,5 +126,12 @@ public class SpawningVolume : MonoBehaviour
         }
         return true;
     }
+    
+    float GetRadius()
+    {
+        float radius = this.GetComponent<SphereCollider>().radius;
+        return radius;
+    }
+   
   
 }
