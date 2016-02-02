@@ -28,8 +28,8 @@ GameObject:
   - 33: {fileID: 3345294}
   - 135: {fileID: 13541734}
   - 23: {fileID: 2342228}
-  - 114: {fileID: 11466080}
   - 54: {fileID: 5494308}
+  - 114: {fileID: 11419794}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -171,7 +171,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
---- !u!114 &11466080
+--- !u!114 &11419794
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 135280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6c896990ed3f154e9cc288315fc40f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ec3957d8b5e8478ca9d01653ead9cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   massEjectionTransform: {fileID: 493842}
@@ -203,7 +203,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: lightBallPrefab
+      value: 
+      objectReference: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
+    - target: {fileID: 0}
+      propertyPath: massEjectionTransform
+      value: 
+      objectReference: {fileID: 493842}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 135280}
