@@ -1,6 +1,6 @@
 # Ubisoft Game Lab 2016 - FJF Entry
 
-FJF's entry for the Ubisoft's 2016 Game Lab Competition.
+FJF's entry for the Ubisoft 2016 Game Lab Competition.
 
 ## Controls
 | Action        | Xbox 360 Controller | Keyboard                    |
