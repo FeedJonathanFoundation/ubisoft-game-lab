@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class School : AbstractFish 
+public class School : AbstractFish
 {
     private AbstractFish[] fishes;
     public int schoolPopulation;
     public int minSchoolPopulation;         // Minimum number of fish in one school
     public int maxSchoolPopulation;         // Maximum number of fish in one school
-    
+
     public School(AbstractFish fish)
     {
         schoolPopulation = Random.Range(minSchoolPopulation, maxSchoolPopulation);
         fishes = new AbstractFish[schoolPopulation];
     }
-    
+
    public override void Move()
    {
        foreach (AbstractFish fish in fishes)
@@ -21,30 +21,30 @@ public class School : AbstractFish
            fish.Move();
        }
    }
-    
+
     // How the fish moves when it is proximate to the player
     public override void ReactToPlayer(Transform player)
     {
        foreach (AbstractFish fish in fishes)
        {
-           fish.ReactToPlayer();
+           fish.ReactToPlayer(player);
        }
     }
-    
+
     // How the fish moves when it is proximate to the player
-    public override void ReactToNPC(Transform other) 
+    public override void ReactToNPC(Transform other)
     {
        foreach (AbstractFish fish in fishes)
        {
-           fish.ReactToNPC();
+           fish.ReactToNPC(other);
        }
     }
-    
+
     public int GetSchoolPopulation()
     {
         return schoolPopulation;
     }
-    
+
     // MAY NEED TO CONSIDER SPACING
     // Returns the height of school
     public override float GetHeight()
@@ -56,7 +56,7 @@ public class School : AbstractFish
        }
         return height;
     }
-    
+
     // Returns the width of school
     public override float GetWidth()
     {
@@ -67,5 +67,5 @@ public class School : AbstractFish
        }
         return width;
     }
-   
+
 }
