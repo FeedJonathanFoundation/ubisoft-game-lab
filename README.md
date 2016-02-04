@@ -1,7 +1,15 @@
-# FEED JONATHAN FOUNDATION
+# Ubisoft Game Lab 2016 - FJF Entry
 
 FJF's entry for the Ubisoft's 2016 Game Lab Competition.
 
+## Controls
+| Action        | Xbox 360 Controller | Keyboard                    |
+| ------------- |:-------------------:| :--------------------------:|
+| Rotate Player | Left-Stick          | <kbd>&#8593;</kbd><kbd>&#8595;</kbd> <kbd>&#8592;</kbd><kbd>&#8594;</kbd>|
+| Propulse      | <kbd>A</kbd>        | <kbd>Space</kbd>            |
+| Light Toggle  | <kbd> RB </kbd>     |   <kbd>x</kbd>              |
+
+## Team
 **Programmers:** Alex Ilea, Karl Chiraz, Stella Lee, Simon Thompson, Jonathan Lucuix-André
 
 **Artists:** Roxanne Sirois, Tristan Mirza
