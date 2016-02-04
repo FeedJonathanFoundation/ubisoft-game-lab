@@ -36,7 +36,7 @@ public class LightMassModifier : LightAttribute
     {
         get
         {
-            if(rigidbody == null)
+            if (rigidbody == null)
                 rigidbody = GetComponent<Rigidbody>();   
             
             return rigidbody; 
