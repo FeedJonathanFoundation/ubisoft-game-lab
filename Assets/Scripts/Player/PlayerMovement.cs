@@ -1,61 +1,60 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Rigidbody))]
-public class PlayerMovement : MonoBehaviour 
+public class PlayerMovement
 {
     /// <summary>
     /// The position at which the character ejects mass. 
     /// </summary> 
-    public Transform massEjectionTransform;
+    private Transform massEjectionTransform;
    
     /// <summary>
     /// The light ball ejected by the player when thrusting
     /// </summary>
-    public GameObject lightBallPrefab;
+    private GameObject lightBallPrefab;
     
     /// <summary>
     /// The amount of force applied on the player when ejecting one piece of mass.
     /// </summary>
-    public float thrustForce;
+    private float thrustForce;
+    
+    /// <summary>
+    /// The amount of light energy spent when ejecting one piece of mass.
+    /// </summary>
+    private float thrustEnergyCost = 1;
 
     /** Caches the player's components */
-    private new Transform transform;
-    private new Rigidbody rigidbody;
+    private Transform transform;
+    private Rigidbody rigidbody;
+    private LightEnergy lightEnergy;
 
-	// Use this for initialization
-    void Start() 
+    /// <summary>
+    /// Public constructor
+    /// </summary>
+    public PlayerMovement(Transform massEjectionTransform, GameObject lightBallPrefab, float thrustForce, float thrustEnergyCost, Transform transform, Rigidbody rigidbody, LightEnergy lightEnergy) 
     {
-        transform = GetComponent<Transform>();
-        rigidbody = GetComponent<Rigidbody>();
-    }
-	
-	// Update is called once per frame
-    void Update() 
-    {
-        if (Input.GetButtonDown("Thrust"))
-        {
-            // Eject mass in the direction of the left stick
-            EjectMass(massEjectionTransform.up);
-        }
-       
-        // Makes the character follow the left stick's rotation
-        FollowLeftStickRotation();
-       
-        //Debug.Log("Eject Mass in direction: " + InputManager.GetLeftStick());
+        this.massEjectionTransform = massEjectionTransform;
+        this.lightBallPrefab = lightBallPrefab; 
+        this.thrustForce = thrustForce;
+        this.thrustEnergyCost = thrustEnergyCost;
+        
+        this.transform = transform;
+        this.rigidbody = rigidbody;
+        this.lightEnergy = lightEnergy;
     }
     
     /// <summary>
     /// Makes the character follow the left stick's rotation.
     /// </summary>
-    private void FollowLeftStickRotation()
+    public void FollowLeftStickRotation()
     {
         // Get the direction the left stick is pointing to
         Vector2 leftStickDirection = InputManager.GetLeftStick();
         
         if(leftStickDirection.sqrMagnitude > 0.01f)
         {
-            Debug.Log("Move " + Time.time); 
+            //Debug.Log("Move the player " + Time.time);
+            
             // Get the angle the left stick is pointing in
             float leftStickAngle = 0.0f;
             if (leftStickDirection.x != 0 || leftStickDirection.y != 0)
@@ -72,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// Ejects mass in the given direction, pushing the gameObject in the opposite direction.
     /// </summary>
-    private void EjectMass(Vector2 direction)
+    public void EjectMass(Vector2 direction)
     {
         // Spawn a light mass at the position of the character's mass ejector
         GameObject lightMass = GameObject.Instantiate(lightBallPrefab);
@@ -80,8 +79,9 @@ public class PlayerMovement : MonoBehaviour
         // Push the light mass in the given direction
         lightMass.GetComponent<Rigidbody>().AddForce(thrustForce * direction, ForceMode.Impulse);
         
-        
         // Push the character in the opposite direction that the mass was ejected
         rigidbody.AddForce(-thrustForce * direction, ForceMode.Impulse);
+        // Deplete energy from the player for each ejection
+        lightEnergy.Deplete(thrustEnergyCost);
     }
 }
