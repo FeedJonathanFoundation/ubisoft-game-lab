@@ -37,11 +37,11 @@ public class LightSource : MonoBehaviour
     void FixedUpdate()
     {
         // Cycle through each light source being touched by this GameObject
-        for(int i = 0; i < lightsInContact.Count; i++)
+        for (int i = 0; i < lightsInContact.Count; i++)
         {            
             LightSource otherLightSource = lightsInContact[i];
             
-            if(otherLightSource == null)
+            if (otherLightSource == null)
             {
                 // Remove the null light source from the list 
                 lightsInContact.RemoveAt(i);
@@ -49,7 +49,7 @@ public class LightSource : MonoBehaviour
             }
             
             // If this GameObject can absorb the touched light source
-            if(CanAbsorb(otherLightSource))
+            if (CanAbsorb(otherLightSource))
             {
                 LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
                 
@@ -71,12 +71,12 @@ public class LightSource : MonoBehaviour
     {
         // If this light source has more energy than the other one, 
         // return true. This light source can absorb the given argument.
-        if(LightEnergy.CurrentEnergy > otherLightSource.LightEnergy.CurrentEnergy)
+        if (LightEnergy.CurrentEnergy > otherLightSource.LightEnergy.CurrentEnergy)
             return true;
             
         // If this GameObject can absorb light sources but the given argument
         // can't, this GameObject can absorb the given light source
-        if(canAbsorb && !otherLightSource.canAbsorb)
+        if (canAbsorb && !otherLightSource.canAbsorb)
             return true; 
             
         return false;
@@ -88,7 +88,7 @@ public class LightSource : MonoBehaviour
         
         LightSource otherLightSource = otherCollider.GetComponent<LightSource>();
         
-        if(otherLightSource)
+        if (otherLightSource)
         {
             // Add the LightSource being touched to the list of lights in contact
             lightsInContact.Add(otherLightSource);
@@ -101,7 +101,7 @@ public class LightSource : MonoBehaviour
         
         LightSource otherLightSource = otherCollider.GetComponent<LightSource>();
         
-        if(otherLightSource)
+        if (otherLightSource)
         {
             // Remove the LightSource from to the list of lights sources being touched
             lightsInContact.Remove(otherLightSource);
