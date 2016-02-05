@@ -118,7 +118,7 @@ public class SpawningVolume : MonoBehaviour
     {
         // Calculate spawn radius
         int spawnTypeIndex = Random.Range(0, fishesToSpawn.Length);
-        float spawnRadius = CalculateRadius(fishesToSpawn[spawnTypeIndex]);
+        float spawnRadius = fishesToSpawn[spawnTypeIndex].CalculateRadius();
 
         if (IsOccupied(spawnPoint, spawnRadius))
         {
@@ -132,12 +132,5 @@ public class SpawningVolume : MonoBehaviour
         float radius = this.GetComponent<SphereCollider>().radius;
         return radius;
     }
-
-    private float CalculateRadius(AbstractFish fish)
-    {
-        //TODO
-        return 0;
-    }
-
 
 }
