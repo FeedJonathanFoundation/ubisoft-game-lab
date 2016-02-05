@@ -9,10 +9,10 @@ public abstract class AbstractFish : MonoBehaviour
     private bool isProximateToPlayer;
     private bool isProximateToNPC;
     Transform player;                           // Reference to player's position
-    NPCAction movement = new NPCAction(new Wander());
-    NPCAction escape = new NPCAction(new Escape());
-    NPCAction attack = new NPCAction(new Attack());
-    
+    Transform other;
+    // NPCAction movement = new NPCAction(new Wander());
+    // NPCAction escape = new NPCAction(new Escape());
+    // NPCAction attack = new NPCAction(new Attack());
 
     public AbstractFish() { }
     
@@ -31,7 +31,8 @@ public abstract class AbstractFish : MonoBehaviour
         // {
         if (isProximateToPlayer) { ReactToPlayer(player); }
         // if (player light == on) { Approach(player); }
-        // else if (isProximateToNPC) { ReactToNPC(other); }
+        else if (isProximateToNPC) { ReactToNPC(other); }
+        
         else { Move(); }
         // }
         // else if (isDead()) { this.gameObject.SetActive(false); }
@@ -47,6 +48,7 @@ public abstract class AbstractFish : MonoBehaviour
         else if (other.gameObject.CompareTag("Fish")) 
         {
             isProximateToNPC = true;
+            this.other = other.gameObject.transform;
         }
     }
     
