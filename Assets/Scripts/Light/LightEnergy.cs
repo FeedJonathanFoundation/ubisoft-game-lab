@@ -20,12 +20,13 @@ public class LightEnergy
     /** Called when all light was depleted from the light source. */
     public event LightDepletedHandler LightDepleted = delegate {};
 
-    public LightEnergy(float energy, GameObject gameObject)
+    public LightEnergy(float defaultEnergy, GameObject gameObject)
     {
-        this.currentEnergy = energy;
+        this.currentEnergy = defaultEnergy;
         this.gameObject = gameObject;
-        //LightChanged(this.currentEnergy);
+        LightChanged(this.currentEnergy);
     }
+    
     // void Start()
     // {
     //     // Set the current amount of energy to default
@@ -64,8 +65,8 @@ public class LightEnergy
         // Remove the desired amount of light energy and clamp it to zero
         this.currentEnergy -= lightToRemove;
         this.currentEnergy = Mathf.Max(0, this.currentEnergy);
-        Debug.Log("My name is : " + this.gameObject.name);
-        Debug.Log("Current energy: " + this.currentEnergy);
+        //Debug.Log("My name is : " + this.gameObject.name);
+        //Debug.Log("Current energy: " + this.currentEnergy);
         // Notify subscribers that the amount of energy in this light has changed
         LightChanged(this.currentEnergy);
 
@@ -73,7 +74,7 @@ public class LightEnergy
         if (this.currentEnergy <= 0)
         {
             LightDepleted();
-            Debug.Log("Light source depleted");
+            //Debug.Log("Light source depleted");
             // Destroy LightSource object and its children. TODO: Pooling
             UnityEngine.Object.Destroy(this.gameObject);
         }

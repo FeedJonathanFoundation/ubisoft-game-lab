@@ -28,7 +28,11 @@ public abstract class LightAttribute : MonoBehaviour
         {
             this.lightEnergy = null;
         }
+        
         Subscribe();
+        
+        // Initialize the attribute to the light's initial energy
+        OnLightChanged(lightEnergy.CurrentEnergy);
     }
 
     public void Subscribe()

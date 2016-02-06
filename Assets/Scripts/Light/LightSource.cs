@@ -19,7 +19,7 @@ public class LightSource : MonoBehaviour
     /// The amount of light drained per second from other light sources.
     /// </summary>
     [Tooltip("The higher the value, the faster light is absorbed from other light sources")]
-    public float absorbtionRate = 5;
+    public float absorptionRate = 15;
 
     [Tooltip("The default amount of energy this light source holds")]
     public float defaultEnergy = 10;
@@ -62,7 +62,7 @@ public class LightSource : MonoBehaviour
                 LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
 
                 // Calculate the amount of light to absorb from the other light source
-                float lightToAbsorb = absorbtionRate * Time.fixedDeltaTime;
+                float lightToAbsorb = absorptionRate * Time.fixedDeltaTime;
 
                 // Transfer light energy from the other light source to this one
                 float lightAbsorbed = lightEnergyToAbsorb.Deplete(lightToAbsorb);
@@ -82,16 +82,15 @@ public class LightSource : MonoBehaviour
         {
             return true;
         }
-
         // If this GameObject can absorb light sources but the given argument
         // can't, this GameObject can absorb the given light source
-        if (canAbsorb && !otherLightSource.canAbsorb)
+        else if (canAbsorb && !otherLightSource.canAbsorb)
         {
             return true;
         }
         else
         {
-            return true;
+            return false;
         }
     }
 

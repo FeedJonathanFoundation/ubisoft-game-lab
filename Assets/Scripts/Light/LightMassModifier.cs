@@ -30,8 +30,7 @@ public class LightMassModifier : LightAttribute
         // Clamp the mass to its minimum value
         Rigidbody.mass = Mathf.Max(minMass, Rigidbody.mass);
 
-        Debug.Log("My name is : " + name);
-        Debug.Log("Current mass: " + Rigidbody.mass);
+        // Debug.Log("Current mass: " + Rigidbody.mass);
     }
 
     /** Cached Rigidbody component. */

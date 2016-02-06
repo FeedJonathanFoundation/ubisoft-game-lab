@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// Scales the GameObject based on its current amount of light energy
 /// </summary>
-public class LightScaler : LightAttribute
+public class LightScaleModifier : LightAttribute
 {
     /// <summary>
     /// Determines the amount of energy points required to have a 1.0 scale.
