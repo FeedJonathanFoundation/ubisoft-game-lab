@@ -307,8 +307,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d54fd3ad18d24c459c54c2d1a496880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canAbsorb: 1
-  absorptionRate: 15
+  canAbsorb: 0
+  absorbtionRate: 15
   defaultEnergy: 0.3
 --- !u!114 &11467018
 MonoBehaviour:
@@ -385,7 +385,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: canAbsorb
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: absorptionRate
@@ -398,6 +398,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: minMass
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: absorbtionRate
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

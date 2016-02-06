@@ -734,7 +734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canAbsorb: 1
-  absorptionRate: 15
+  absorbtionRate: 15
   defaultEnergy: 10
   massEjectionTransform: {fileID: 493842}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
@@ -811,6 +811,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: defaultEnergy
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: absorbtionRate
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
