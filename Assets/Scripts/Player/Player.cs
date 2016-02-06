@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Player : MonoBehaviour
+public class Player : LightSource
 {
 
     /// <summary>
@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     /// </summary>
     [Tooltip("The amount of force applied on the player when ejecting one piece of mass.")]
     public float thrustForce;
-    
+
     /// <summary>
     /// The amount of light energy spent when ejecting one piece of mass.
     /// </summary>
@@ -31,26 +31,30 @@ public class Player : MonoBehaviour
     private PlayerMovement movement;
     private new Transform transform;
     private new Rigidbody rigidbody;
-    private LightEnergy lightEnergy;
 
     // Use this for initialization
-    void Awake()
+    public override void Awake()
     {
+       base.Awake(); // call parent LightSource Awake() first
        transform = GetComponent<Transform>();
        rigidbody = GetComponent<Rigidbody>();
-       lightEnergy = GetComponent<LightEnergy>();
-       movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, thrustEnergyCost, transform, rigidbody, lightEnergy);
+       movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, thrustEnergyCost, transform, rigidbody, this.LightEnergy);
     }
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
         Move();
+    }
+
+    public void SelfDestroy()
+    {
+        GameObject.Destroy(gameObject);
     }
 
     /// <summary>
@@ -66,7 +70,7 @@ public class Player : MonoBehaviour
 
         // Makes the character follow the left stick's rotation
         movement.FollowLeftStickRotation();
-        
+
         // Ensure that the rigidbody never spins
         rigidbody.angularVelocity = Vector3.zero;
     }
