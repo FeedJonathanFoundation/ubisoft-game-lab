@@ -41,12 +41,12 @@ public class SpawningVolume : MonoBehaviour
 
         // Choose random fish type to spawn
         int spawnTypeIndex = Random.Range(0, fishesToSpawn.Length);
-        int spawnPointIndex = Random.Range(0, spawnPoints.Length);
 
         // Use specific spawn points
         // else use random spawn point
         if (overrideSpawnLocations)
         {
+            int spawnPointIndex = Random.Range(0, spawnPoints.Length);
             spawnLocation = spawnPoints[spawnPointIndex].position;
         }
         else
@@ -56,10 +56,10 @@ public class SpawningVolume : MonoBehaviour
         }
 
         // If spawn point is not occupied, spawn fish
-        if (IsValidSpawnPoint(spawnPoints[spawnPointIndex].position))
+        if (IsValidSpawnPoint(spawnLocation))
         {
             // Create instance of fish prefab at spawn point and rotation
-            Instantiate(fishesToSpawn[spawnTypeIndex], spawnPoints[spawnPointIndex].position, Quaternion.identity);
+            Instantiate(fishesToSpawn[spawnTypeIndex], spawnLocation, Quaternion.identity);
             fishCount++;
         }
     }
@@ -91,13 +91,13 @@ public class SpawningVolume : MonoBehaviour
         int schoolPopulation = newSchool.GetSchoolPopulation();
 
         // If spawn point is not occupied, spawn fish
-        if (IsValidSpawnPoint(spawnPoints[spawnPointIndex].position))
+        if (IsValidSpawnPoint(spawnLocation))
         {
             // Create instance of fish prefab at spawn point and rotation
             for (int i = 0; i < schoolPopulation; i++)
             {
                 // Calculate school pattern
-                // Vector3 pos = spawnPoints[spawnPointIndex].position + spacing * i;  // NEEDS TO BE FIXED
+                // Vector3 pos = spawnLocation + spacing * i;  // NEEDS TO BE FIXED
                 // Instantiate(fishesToSpawn[spawnTypeIndex], pos, Quaternion.identity);
                 fishCount++;
             }
