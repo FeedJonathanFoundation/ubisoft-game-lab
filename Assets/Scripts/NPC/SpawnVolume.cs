@@ -151,9 +151,6 @@ public class SpawnVolume : MonoBehaviour {
     Vector3 GenerateValidSpawnPoint(int spawnIndex)
     {
         Vector3 spawnLocation = new Vector3 (-999,-999,-999);
-        // Vector3 spawnLocation;
-        bool success = false;
-        int count = 0;
         
         // Use specific spawn points
         // else use random spawn point
@@ -164,7 +161,6 @@ public class SpawnVolume : MonoBehaviour {
                 if (IsValidSpawnPoint(spawnPoints[i].position, spawnIndex)) 
                 {
                     spawnLocation = spawnPoints[i].position;
-                    success = true;
                     break;
                 }
             }
@@ -178,7 +174,6 @@ public class SpawnVolume : MonoBehaviour {
                 if (IsValidSpawnPoint(Random.insideUnitSphere * GetSpawnVolumeRadius(), spawnIndex)) 
                 {
                     spawnLocation = Random.insideUnitSphere * GetSpawnVolumeRadius();
-                    success = true;
                     break;
                 }
             }
