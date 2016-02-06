@@ -12,17 +12,17 @@ public class LightRangeModifier : LightAttribute
     /// </summary>
     [Tooltip("The higher the value, the larger the range of light per unit of light energy")]
     public float lightToRangeRatio;
-    
+
     // Cached components
     private new Light light;
-    
+
     public override void OnLightChanged(float currentLight)
     {
         // Modifies the range of the attached light component based on the current amount of light energy
         float newRange = currentLight * lightToRangeRatio;
         Light.range = newRange;
     }
-    
+
     /** Cached light component */
     private Light Light
     {
@@ -30,7 +30,7 @@ public class LightRangeModifier : LightAttribute
         {
             if (light == null)
                 light = GetComponent<Light>();
-                
+
             return light;
         }
     }

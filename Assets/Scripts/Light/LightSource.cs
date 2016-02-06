@@ -7,7 +7,6 @@ using System.Collections.Generic;
 /// from other GameObjects with a LightEnergy component
 /// <summary>
 [RequireComponent(typeof(Collider))]
-[RequireComponent(typeof(LightEnergy))]
 public class LightSource : MonoBehaviour
 {
     /// <summary>
@@ -22,6 +21,9 @@ public class LightSource : MonoBehaviour
     [Tooltip("The higher the value, the faster light is absorbed from other light sources")]
     public float absorptionRate = 5;
 
+    [Tooltip("The default amount of energy this light source holds")]
+    public float defaultEnergy = 10;
+
     // The light sources this GameObject is touching
     private List<LightSource> lightsInContact = new List<LightSource>();
 
@@ -32,7 +34,8 @@ public class LightSource : MonoBehaviour
     public virtual void Awake()
     {
         // Cache components
-        lightEnergy = GetComponent<LightEnergy>();
+        //lightEnergy = GetComponent<LightEnergy>();
+        lightEnergy = new LightEnergy(defaultEnergy, gameObject);
     }
 
     void Start()

@@ -5,46 +5,59 @@ using System.Collections;
 /// Modifies the GameObject based on its current amount of light energy
 /// </summary>
 public abstract class LightAttribute : MonoBehaviour
-{   
+{
     [Tooltip("The LightEnergy component which modifies the desired attribute. If none " +
-     "specified, the LightEnergy attached to this GameObject is used.")] 
+     "specified, the LightEnergy attached to this GameObject is used.")]
     public LightEnergy lightEnergyOverride;
-    
-    void OnEnable()
+
+    private LightEnergy lightEnergy;
+
+    void Start()
     {
-        LightEnergy lightEnergy;
-        
         // Choose either the override (if assigned in the Inspector) or the component
         // attached to this GameObject.
-        if (lightEnergyOverride) { lightEnergy = lightEnergyOverride; }
-        else { lightEnergy = GetComponent<LightEnergy>(); }
-        
-        if (lightEnergy)
+        if (lightEnergyOverride != null)
         {
-            // Call OnLightChanged() whenever the GameObject's amount of light energy changes.  
-            lightEnergy.LightChanged += OnLightChanged;
+            this.lightEnergy = lightEnergyOverride;
+        }
+        else if (GetComponentInParent<LightSource>())
+        {
+            this.lightEnergy = GetComponentInParent<LightSource>().LightEnergy;
+        }
+        else
+        {
+            this.lightEnergy = null;
+        }
+        Subscribe();
+    }
+
+    public void Subscribe()
+    {
+        if (this.lightEnergy != null)
+        {
+            // Call OnLightChanged() whenever the GameObject's amount of light energy changes.
+            this.lightEnergy.LightChanged += OnLightChanged;
         }
     }
-    
-    void OnDisable()
+
+    public void Unsubscribe()
     {
-        LightEnergy lightEnergy;
-        
-        // Choose the LightEnergy instance that affects the desired attribute
-        if (lightEnergyOverride) { lightEnergy = lightEnergyOverride; }
-        else { lightEnergy = GetComponent<LightEnergy>(); }
-        
-        if (lightEnergy)
+        if (this.lightEnergy != null)
         {
             // Unsubscribe from events to avoid errors
-            lightEnergy.LightChanged -= OnLightChanged;
+            this.lightEnergy.LightChanged -= OnLightChanged;
         }
     }
-    
+
+    public void OnLightDepleted()
+    {
+        Unsubscribe();
+    }
+
     /// <summary>
-    /// Called by LightEnergy.cs when the amount of light energy owned by the 
+    /// Called by LightEnergy.cs when the amount of light energy owned by the
     /// GameObject changes.
     /// </summary>
     public abstract void OnLightChanged(float currentLight);
-    
+
 }

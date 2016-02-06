@@ -64,7 +64,6 @@ GameObject:
   - 4: {fileID: 451124}
   - 135: {fileID: 13503362}
   - 54: {fileID: 5404248}
-  - 114: {fileID: 11408064}
   - 114: {fileID: 11459794}
   - 114: {fileID: 11459462}
   - 114: {fileID: 11467018}
@@ -273,18 +272,6 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
---- !u!114 &11408064
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 191022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6e3559068193346bc63c9b6a406089, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultEnergy: 0.3
 --- !u!114 &11453794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -296,7 +283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4906f634a9b27624c9e41234e3122bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightEnergyOverride: {fileID: 11408064}
   lightToRangeRatio: 2
 --- !u!114 &11459462
 MonoBehaviour:
@@ -309,7 +295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fee347b7b46b71449ae5ccc7337d398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightEnergyOverride: {fileID: 0}
   lightToScaleRatio: 0.6
 --- !u!114 &11459794
 MonoBehaviour:
@@ -322,8 +307,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d54fd3ad18d24c459c54c2d1a496880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canAbsorb: 0
+  canAbsorb: 1
   absorptionRate: 15
+  defaultEnergy: 0.1
 --- !u!114 &11467018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -335,7 +321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee6488897e82d54196197c7b541385f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightEnergyOverride: {fileID: 0}
   lightToMassRatio: 0.1
   minMass: 0
 --- !u!114 &11499152
@@ -349,7 +334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4906f634a9b27624c9e41234e3122bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightEnergyOverride: {fileID: 11408064}
   lightToRangeRatio: 10
 --- !u!135 &13503362
 SphereCollider:
@@ -410,6 +394,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: lightToScaleRatio
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: minMass
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

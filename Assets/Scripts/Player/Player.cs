@@ -52,6 +52,11 @@ public class Player : LightSource
         Move();
     }
 
+    public void SelfDestroy()
+    {
+        GameObject.Destroy(gameObject);
+    }
+
     /// <summary>
     /// Player movements responding to user input
     /// </summary>
