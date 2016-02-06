@@ -33,7 +33,6 @@ public class SpawnVolume : MonoBehaviour {
     /// </summary>
     [Tooltip("Radius of sphere to check for spawned fish.")]
     public float spawnPointRadius;
-
     
     /// <summary>
     /// Minimum number of fish to be spawned.
@@ -44,15 +43,23 @@ public class SpawnVolume : MonoBehaviour {
     /// Maximum number of fish to be spawned.
     /// </summary>
     [Tooltip("Maximum number of fish to be spawned.")]
-    public int maxFishCount;
+    public int maxFishCount; 
+    
+    /// <summary>
+    /// Mass of smallest fish.
+    /// </summary>
+    [Tooltip("Mass of smallest fish.")]
+    public int minFishDifficulty;
+    /// <summary>
+    /// Mass of largest fish.
+    /// </summary>
+    [Tooltip("Mass of largest fish.")]
+    public int maxFishDifficulty;
     
     /// <summary>
     /// Tracks number of fish spawned.
     /// </summary>
     private int fishCount;
-    
-    public int minFishDifficulty;               // Mass of smallest fish
-    public int maxFishDifficulty;               // Mass of largest fish
 
     /// <summary>
     /// Initializes fish count to 0,
@@ -86,11 +93,8 @@ public class SpawnVolume : MonoBehaviour {
 
         // If valid spawn point location,
         // Create instance of fish prefab at spawn point and rotation
-        // if (IsValidSpawnPoint(spawnLocation))
-        // {
-            Instantiate(spawnObject[spawnTypeIndex], spawnLocation, Quaternion.identity);
-            fishCount++;
-        // }
+        Instantiate(spawnObject[spawnTypeIndex], spawnLocation, Quaternion.identity);
+        fishCount++;
     }
     
     void SpawnSchool()
@@ -161,8 +165,9 @@ public class SpawnVolume : MonoBehaviour {
         }
         else
         {
+            // prevent infinite loop
+            int timeout = 10;       
             // generate random point in sphere collider
-            int timeout = 10;
             spawnLocation = Random.insideUnitSphere * GetSpawnVolumeRadius();
             while (!IsValidSpawnPoint(spawnLocation) && timeout > 0)
             {
@@ -178,7 +183,7 @@ public class SpawnVolume : MonoBehaviour {
         // Calculate spawn radius of fish
         // int spawnTypeIndex = Random.Range(0, fishesToSpawn.Length);
         // float spawnRadius = spawnObject.GetHeight() / 2;
-        float spawnRadius = 1f;
+        float spawnRadius = 50f;
 
         if (IsOccupied(spawnPoint, spawnRadius))
         {
