@@ -89,8 +89,9 @@ public class SpawnVolume : MonoBehaviour {
         int spawnTypeIndex = ChooseFish();
 
         Vector3 spawnLocation = GenerateValidSpawnPoint(spawnTypeIndex);
-        if (spawnLocation == new Vector3 (-999,-999,-999)) { return; }
-
+        if (spawnLocation == new Vector3 (-999,-999,-999)) { 
+            return; 
+        }
         // If valid spawn point location,
         // Create instance of fish prefab at spawn point and rotation
         Instantiate(spawnObject[spawnTypeIndex], spawnLocation, Quaternion.identity);
@@ -150,6 +151,9 @@ public class SpawnVolume : MonoBehaviour {
     Vector3 GenerateValidSpawnPoint(int spawnIndex)
     {
         Vector3 spawnLocation = new Vector3 (-999,-999,-999);
+        // Vector3 spawnLocation;
+        bool success = false;
+        int count = 0;
         
         // Use specific spawn points
         // else use random spawn point
@@ -157,33 +161,36 @@ public class SpawnVolume : MonoBehaviour {
         {
             for (int i = 0; i < spawnPoints.Length; i++)
             {
-                spawnLocation = spawnPoints[i].position;
-                if (IsValidSpawnPoint(spawnLocation, spawnIndex)) {
+                if (IsValidSpawnPoint(spawnPoints[i].position, spawnIndex)) 
+                {
+                    spawnLocation = spawnPoints[i].position;
+                    success = true;
                     break;
                 }
             }
         }
         else
         {
-            // prevent infinite loop
             int timeout = 10;       
             // generate random point in sphere collider
-            spawnLocation = Random.insideUnitSphere * GetSpawnVolumeRadius();
-            while (!IsValidSpawnPoint(spawnLocation, spawnIndex) && timeout > 0)
+            for (int i = 0; i < timeout; i++)
             {
-                spawnLocation = Random.insideUnitSphere * GetSpawnVolumeRadius();
-                timeout--;
+                if (IsValidSpawnPoint(Random.insideUnitSphere * GetSpawnVolumeRadius(), spawnIndex)) 
+                {
+                    spawnLocation = Random.insideUnitSphere * GetSpawnVolumeRadius();
+                    success = true;
+                    break;
+                }
             }
-        }
+        }   
         return spawnLocation;
     }
     
     bool IsValidSpawnPoint(Vector3 spawnPoint, int spawnIndex)
     {
         // Calculate spawn radius of fish
-        // GameObject obj = spawnObject[spawnIndex];
-        // spawnRadius = obj.GetComponent<SphereCollider>().radius + 1f;
-        float spawnRadius = 5f;
+        GameObject obj = spawnObject[spawnIndex];
+        float spawnRadius = obj.GetComponent<SphereCollider>().radius + 1;
         
         if (IsOccupied(spawnPoint, spawnRadius))
         {
@@ -196,13 +203,12 @@ public class SpawnVolume : MonoBehaviour {
     // Checks whether the spawn point is occupied within the radius
     bool IsOccupied(Vector3 spawnPoint, float spawnRadius)
     {
-        
-        // DEBUG
-        spawnPoint = GameObject.FindWithTag("Player").transform.position;
-        
         // Array of all colliders touching or inside sphere
-        Collider[] hitColliders = Physics.OverlapSphere(spawnPoint, spawnRadius);
-        if (hitColliders.Length == 0) { return false; }
+        Collider[] colliders = Physics.OverlapSphere(spawnPoint, spawnRadius);
+        if (colliders.Length == 1)
+        {
+            return false; 
+        }
         return true;
     }
     
