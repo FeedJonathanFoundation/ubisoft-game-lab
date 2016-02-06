@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// Modifies the GameObject based on its current amount of light energy
 /// </summary>
-public abstract class LightAttribute : MonoBehaviour
+public abstract class LightEnergyListener : MonoBehaviour
 {
     [Tooltip("The LightEnergy component which modifies the desired attribute. If none " +
      "specified, the LightEnergy attached to this GameObject is used.")]

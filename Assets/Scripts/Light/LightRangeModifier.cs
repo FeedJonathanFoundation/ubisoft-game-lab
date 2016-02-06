@@ -5,7 +5,7 @@ using System.Collections;
 /// Modifies the range of a Light component based on the amount of light energy
 /// stored in a LightEnergy component.
 /// </summary>
-public class LightRangeModifier : LightAttribute
+public class LightRangeModifier : LightEnergyListener
 {
     /// <summary>
     /// The amount of light energy required for to make the light have a range of 1.0
