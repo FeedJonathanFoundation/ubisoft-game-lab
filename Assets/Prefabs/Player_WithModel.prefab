@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &111516
 GameObject:
   m_ObjectHideFlags: 1
@@ -135,7 +135,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 427148}
-  - 114: {fileID: 11475792}
+  - 114: {fileID: 11458118}
   m_Layer: 0
   m_Name: Wings
   m_TagString: Untagged
@@ -493,7 +493,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &178192
 GameObject:
   m_ObjectHideFlags: 1
@@ -532,7 +532,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 453706}
-  - 114: {fileID: 11441520}
+  - 114: {fileID: 11483742}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -1176,7 +1176,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 195980}
   m_LocalRotation: {x: 0.3407852, y: -0.044595003, z: 0.28571796, w: 0.8945624}
-  m_LocalPosition: {x: 0.073, y: 0.684, z: -0.486}
+  m_LocalPosition: {x: 0.086, y: 0.674, z: -0.49}
   m_LocalScale: {x: 100.00001, y: 99.99999, z: 100}
   m_Children: []
   m_Father: {fileID: 428612}
@@ -1202,7 +1202,7 @@ Transform:
   m_GameObject: {fileID: 100218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.8500001, z: 0.5}
+  m_LocalScale: {x: 0.5, y: 0.7118751, z: 0.5}
   m_Children:
   - {fileID: 468512}
   - {fileID: 443060}
@@ -2005,18 +2005,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.4
---- !u!114 &11441520
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 179822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6565332d1c1c6045beaee1be9930a85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  idleSpinSpeed: 25
 --- !u!114 &11456182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2047,6 +2035,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.13
+--- !u!114 &11458118
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 133060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 269a5a12696f57f49b567da56bd207e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spinSpeed: 75
+  rotationAxis: 1
 --- !u!114 &11460128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2071,18 +2072,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.02
---- !u!114 &11475792
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 133060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6565332d1c1c6045beaee1be9930a85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  idleSpinSpeed: 75
 --- !u!114 &11478666
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2120,6 +2109,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightToMassRatio: 0.12
   minMass: 0.9
+--- !u!114 &11483742
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 269a5a12696f57f49b567da56bd207e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spinSpeed: 25
+  rotationAxis: 1
 --- !u!114 &11486216
 MonoBehaviour:
   m_ObjectHideFlags: 1
