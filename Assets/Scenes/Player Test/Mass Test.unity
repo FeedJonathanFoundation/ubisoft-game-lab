@@ -341,7 +341,7 @@ Light:
 --- !u!4 &140662820 stripped
 Transform:
   m_PrefabParentObject: {fileID: 424626, guid: eea3edfe73050394987fb0cbdc1dee62, type: 2}
-  m_PrefabInternal: {fileID: 1740572450}
+  m_PrefabInternal: {fileID: 1766721500}
 --- !u!1 &150573090
 GameObject:
   m_ObjectHideFlags: 0
@@ -2600,7 +2600,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1733975217}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &1740572450
+--- !u!1001 &1766721500
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -2639,9 +2639,17 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 11456182, guid: eea3edfe73050394987fb0cbdc1dee62, type: 2}
-      propertyPath: canAbsorb
+    - target: {fileID: 471162, guid: eea3edfe73050394987fb0cbdc1dee62, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.7118751
+      objectReference: {fileID: 0}
+    - target: {fileID: 172694, guid: eea3edfe73050394987fb0cbdc1dee62, type: 2}
+      propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100218, guid: eea3edfe73050394987fb0cbdc1dee62, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: eea3edfe73050394987fb0cbdc1dee62, type: 2}
