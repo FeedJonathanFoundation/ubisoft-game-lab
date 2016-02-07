@@ -9,8 +9,8 @@ public class LightEnergy
     private float currentEnergy;
 
     private GameObject gameObject;
-    // [Tooltip("The default amount of energy this light source holds")]
-    // public float defaultEnergy;
+    
+    private bool debugInfiniteLight = false;
 
     public delegate void LightChangedHandler(float currentLight);
     /** Called when the GameObject's amount of stored light changes */
@@ -20,10 +20,11 @@ public class LightEnergy
     /** Called when all light was depleted from the light source. */
     public event LightDepletedHandler LightDepleted = delegate {};
 
-    public LightEnergy(float defaultEnergy, GameObject gameObject)
+    public LightEnergy(float defaultEnergy, GameObject gameObject, bool debugInfiniteLight)
     {
         this.currentEnergy = defaultEnergy;
         this.gameObject = gameObject;
+        this.debugInfiniteLight = debugInfiniteLight;
         LightChanged(this.currentEnergy);
     }
     
@@ -52,6 +53,9 @@ public class LightEnergy
     /// </summary>
     public float Deplete(float lightToRemove)
     {
+        if (debugInfiniteLight)
+            return lightToRemove;
+        
         // Stores the actual amount of light depleted from this energy source
         float actualLightRemoved = lightToRemove;
 
