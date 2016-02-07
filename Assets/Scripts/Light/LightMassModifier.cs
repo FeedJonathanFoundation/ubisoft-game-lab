@@ -5,7 +5,7 @@ using System.Collections;
 /// Changes the GameObject's mass based on its current amount of light energy.
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public class LightMassModifier : LightAttribute
+public class LightMassModifier : LightEnergyListener
 {
     /// <summary>
     /// Determines the amount of energy points required to have a 1.0 mass.
