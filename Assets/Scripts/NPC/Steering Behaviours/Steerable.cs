@@ -5,6 +5,7 @@ using System.Collections;
 /// Manages the steering behaviours for the GameObject this script is attached to.
 /// (All steering behaviors implemented based on the tutorials on GameDevelopment Tuts+)
 /// </summary>
+[RequireComponent(typeof(Rigidbody))]
 public class Steerable : MonoBehaviour
 {
 	/// <summary>
@@ -41,6 +42,12 @@ public class Steerable : MonoBehaviour
 	/** If true, the steerable's speed is clamped to 'MaxSpeed'. The entity does not accelerate nor decelerate, but stay at a constant speed. */
 	[Tooltip("If true, the steerable always moves at a constant speed (Max Speed)")]
     public bool constantSpeed;
+    
+    /// <summary>
+    /// If true, the steerable faces its velocity vector
+    /// </summary>
+    [Tooltip("If true, the steerable faces its velocity vector")]
+    public bool faceVelocity;
 	
 	/** Stores the steering force to be applied on this object this frame. 
 	  * This vector accumulates all steering forces before applying it to
@@ -68,7 +75,7 @@ public class Steerable : MonoBehaviour
 	
 	/** Cache this GameObject's components for efficiency purposes. */
 	private new Transform transform;
-	private new Rigidbody2D rigidbody;
+	private new Rigidbody rigidbody;
 
 	/** A force vector drawn as a gizmo on-screen. */
 	private Vector2 debugForce;
@@ -80,7 +87,7 @@ public class Steerable : MonoBehaviour
 	{
 		// Cache this GameObject's Transform component
 		transform = GetComponent<Transform>();
-		rigidbody = GetComponent<Rigidbody2D>();
+		rigidbody = GetComponent<Rigidbody>();
 	}
 
 	// NOTE: This method is called after the physics update. Therefore, the ApplyForces() has already been called by the time this is called.
@@ -125,6 +132,14 @@ public class Steerable : MonoBehaviour
 
 		// Update the steerable's velocity in the physics engine.
 		rigidbody.velocity = newVelocity;
+
+        if(faceVelocity && rigidbody.velocity != Vector3.zero)
+        {
+            // Face the velocity vector.
+            float velocityAngle = Mathf.Atan2(rigidbody.velocity.y,rigidbody.velocity.x);
+            velocityAngle = (velocityAngle * Mathf.Rad2Deg) - 90;
+            transform.eulerAngles = new Vector3(0,0,velocityAngle);
+        }
 
 		// Reset the steering forces back to zero.
 		steeringForce = Vector2.zero;
@@ -234,7 +249,7 @@ public class Steerable : MonoBehaviour
 		
 		// Determines the target's future position, in 'timeToReachTarget' amount of time
 		// This is the position this object will try to pursue to stay ahead of his target
-		Vector2 futureTargetPosition = (Vector2)target.Transform.position + target.Rigidbody.velocity * timeToReachTarget;
+		Vector2 futureTargetPosition = (Vector2)target.Transform.position + (Vector2)target.Rigidbody.velocity * timeToReachTarget;
 		
 		// The resulting steering force is the 'Seek' force to the target's future location
 		Vector2 pursueForce = SeekForce(futureTargetPosition);
@@ -282,7 +297,7 @@ public class Steerable : MonoBehaviour
 		
 		// Determines the target's future position, in 'timeToReachTarget' amount of time
 		// This is the position this object will try to evade to stay away from his target
-		Vector2 futureTargetPosition = (Vector2)targetToEvade.Transform.position + targetToEvade.Rigidbody.velocity * timeToReachTarget;
+		Vector2 futureTargetPosition = (Vector2)targetToEvade.Transform.position + (Vector2)targetToEvade.Rigidbody.velocity * timeToReachTarget;
 		
 		// Calculate the steering force needed to veer away from the target's future position
 		Vector2 evadeForce = FleeForce(futureTargetPosition);
@@ -456,10 +471,10 @@ public class Steerable : MonoBehaviour
 		for(int i = 0; i < neighbourhood.NeighbourCount; i++)
 		{
 			// Cache the neighbour's Rigidbody
-			Rigidbody2D neighbour = neighbourhood.GetNeighbour(i).GetComponent<Rigidbody2D>();
+			Rigidbody neighbour = neighbourhood.GetNeighbour(i).GetComponent<Rigidbody>();
 
 			// Add the neighbour's velocity to the average. 
-			averageNeighbourVelocity += neighbour.velocity;
+			averageNeighbourVelocity += (Vector2)neighbour.velocity;
 		}
 
 		// If this steerable has one or more neighbours
@@ -568,7 +583,7 @@ public class Steerable : MonoBehaviour
 	
 	/** Returns a cached version of the Rigidbody component attached to the GameObject to which 
 	  * this SteeringManager belongs. */
-	public Rigidbody2D Rigidbody
+	public Rigidbody Rigidbody
 	{
 		get { return rigidbody; }
 	}
