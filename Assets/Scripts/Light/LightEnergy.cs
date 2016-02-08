@@ -26,7 +26,7 @@ public class LightEnergy
         this.gameObject = gameObject;
         LightChanged(this.currentEnergy);
     }
-    
+
     // void Start()
     // {
     //     // Set the current amount of energy to default
@@ -74,9 +74,12 @@ public class LightEnergy
         if (this.currentEnergy <= 0)
         {
             LightDepleted();
-            //Debug.Log("Light source depleted");
-            // Destroy LightSource object and its children. TODO: Pooling
-            UnityEngine.Object.Destroy(this.gameObject);
+            // Destroy LightSource object and its children, except if its Player.
+            //TODO: Pooling
+            if (this.gameObject.name != "Player")
+            {
+                UnityEngine.Object.Destroy(this.gameObject);
+            }
         }
 
         return actualLightRemoved;
@@ -88,5 +91,6 @@ public class LightEnergy
     public float CurrentEnergy
     {
         get { return currentEnergy; }
+        set { currentEnergy = value; }
     }
 }

@@ -29,6 +29,7 @@ public class Player : LightSource
 
     /** Caches the player's components */
     private PlayerMovement movement;
+    private bool isDead; // determines is current player is dead
     private new Transform transform;
     private new Rigidbody rigidbody;
 
@@ -39,22 +40,26 @@ public class Player : LightSource
        transform = GetComponent<Transform>();
        rigidbody = GetComponent<Rigidbody>();
        movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, thrustEnergyCost, transform, rigidbody, this.LightEnergy);
+       this.LightEnergy.LightDepleted += OnLightDepleted;
+       this.isDead = false;
     }
 
     void Start()
     {
-
+        Debug.Log(transform);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
-    }
-
-    public void SelfDestroy()
-    {
-        GameObject.Destroy(gameObject);
+        if (isDead)
+        {
+            Restart();
+        }
+        else
+        {
+            Move();
+        }
     }
 
     /// <summary>
@@ -73,6 +78,27 @@ public class Player : LightSource
 
         // Ensure that the rigidbody never spins
         rigidbody.angularVelocity = Vector3.zero;
+    }
+
+    private void Restart()
+    {
+        if (Input.GetButtonDown("Restart"))
+        {
+            Debug.Log("Game Restarted");
+            this.LightEnergy.Add(this.defaultEnergy);
+            this.isDead = false;
+            //Checkpoint.Load();
+        }
+    }
+
+    /// <summary>
+    /// Listens for LightDepleted event from LightEnergy
+    /// Sets player to dead when it occurs
+    /// </summary>
+    public void OnLightDepleted()
+    {
+        isDead = true;
+        Debug.Log("Game OVER! Press 'R' to restart!");
     }
 
 }
