@@ -11,14 +11,14 @@ public class SmoothCamera : MonoBehaviour
     /// The object that the camera follows.
     /// </summary>
     public Transform target;
-    
+
     /// <summary>
     /// The camera's default z-value.
     /// </summary>
     public float zPosition;
-     
+
     private Vector2 velocity = Vector2.zero;
-    
+
     void FixedUpdate()
     {
         if (target)
@@ -27,7 +27,7 @@ public class SmoothCamera : MonoBehaviour
             Vector3 newPosition = Vector2.SmoothDamp(transform.position, target.position, ref velocity, dampTime);
             // Lock the camera's depth
             newPosition.z = zPosition;
-            
+
             transform.position = newPosition;
         }
     }

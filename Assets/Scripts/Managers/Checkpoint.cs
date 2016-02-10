@@ -1,99 +1,43 @@
 ﻿using UnityEngine;
-using System;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using Parse;
+using System.Collections;
 
-public class Checkpoint : MonoBehaviour 
+public class Checkpoint : MonoBehaviour
 {
 
-    // placeholder for player data
-    public float playerLight;
-    public int level;
+    private new Transform transform;
 
-	// Use this for initialization
-	void Start() 
+    void Awake()
     {
-	   Save();
-	}
-	
-	// Update is called once per frame
-	void Update() 
-    {
-	
-	}
-    
-    /// <summary>
-    /// TO-DO in the future
-    /// Executed before Start()
-    /// Makes sure that there's only 1 instance of the gameObject
-    /// across different scenes.
-    /// </summary>
-    void Awake() 
-    {
-        // if (control == null) 
-        // {
-        //     DontDestroyOnLoad(gameObject);
-        //     control = this;
-        // } 
-        // else if (control != this) 
-        // {
-        //     Destroy(gameObject);
-        // }    
+        transform = GetComponent<Transform>();
+        MoveCheckpoint();
     }
-   
-	void OnTriggerEnter(Collider other) 
+
+	void Update()
+    {
+
+	}
+
+	void OnTriggerEnter(Collider other)
     {
 		if (other.tag == "Player") {
-		  Save();
-		}		
-        // destoy checkpoint once it's been collected
-        // temp behaviour for testing
-		Destroy (gameObject); 
+          PlayerData data = new PlayerData();
+          data.playerPosition = DataManager.Vector3ToString(other.gameObject.transform.position);
+          data.playerScale = DataManager.Vector3ToString(other.gameObject.transform.localScale);
+          data.playerEnergy = other.gameObject.GetComponent<Player>().LightEnergy.CurrentEnergy;
+		  DataManager.SaveFile(data);
+		}
+
+        MoveCheckpoint();
 	}
-    
-    public void Save()
+
+    private void MoveCheckpoint()
     {
-        // save locally
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + ".playerInfo.dat");
-        
-        PlayerData data = new PlayerData();
-        data.playerLight = playerLight;
-        data.level = level;
-        bf.Serialize(file, data);
-        file.Close();
-        
-        // test saving online
-        ParseObject gameControl = new ParseObject("GameControl");
-        gameControl["playerLight"] = 9999;
-        gameControl["level"] = 5;
-        gameControl.SaveAsync();
-        
+        int x = Random.Range(-20, 60);
+        int y = Random.Range(0, -30);
+        int z = 0;
+        transform.position = new Vector3(x, y, z);
     }
-    
-    public void Load()
-    {
-        if (File.Exists(Application.persistentDataPath + "playerInfo.dat")) 
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + ".playerInfo.dat", FileMode.Open);
-            PlayerData data = (PlayerData) bf.Deserialize(file);
-            file.Close();
-            
-            playerLight = data.playerLight; 
-            level = data.level;          
-        }
-    }
+
 }
 
- /// <summary>
- /// Model holding player data
- /// DATA to be changed
- /// </summary>
-[Serializable]
-class PlayerData
-{
-    public float playerLight;
-    public int level;
-}
+

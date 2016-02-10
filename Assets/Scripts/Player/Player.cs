@@ -42,11 +42,12 @@ public class Player : LightSource
        movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, thrustEnergyCost, transform, rigidbody, this.LightEnergy);
        this.LightEnergy.LightDepleted += OnLightDepleted;
        this.isDead = false;
+       LoadGame();
     }
 
     void Start()
     {
-        Debug.Log(transform);
+
     }
 
     // Update is called once per frame
@@ -87,8 +88,19 @@ public class Player : LightSource
             Debug.Log("Game Restarted");
             this.LightEnergy.Add(this.defaultEnergy);
             this.isDead = false;
-            //Checkpoint.Load();
+            LoadGame();
         }
+    }
+
+    private void LoadGame()
+    {
+       PlayerData data = DataManager.LoadFile();
+       if (data != null)
+       {
+           defaultEnergy = data.playerEnergy;
+           transform.position = DataManager.Vector3FromString(data.playerPosition);
+           transform.localScale = DataManager.Vector3FromString(data.playerScale);
+       }
     }
 
     /// <summary>
