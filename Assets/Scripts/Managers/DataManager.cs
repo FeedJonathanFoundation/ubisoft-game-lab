@@ -5,10 +5,8 @@ using System.IO;
 using Parse;
 
  /// <summary>
- /// Data Manager contains static classes
- /// to read and write PlayerData to disk
- /// TODO extend beyond player data
- /// TODO implement loading from Parse
+ /// Data Manager contains static methods to read and write PlayerData to disk
+ /// TODO extend beyond player data and implement loading from Parse
  /// </summary>
 public static class DataManager
 {
@@ -43,8 +41,7 @@ public static class DataManager
 
 
     /// <summary>
-    /// Utility method
-    /// Converts Vector3 objects to strings.
+    /// Utility method - converts Vector3 objects to strings.
     /// Useful to allow serialization Vector3 objects.
     /// </summary>
     public static string Vector3ToString(Vector3 v)
@@ -53,8 +50,7 @@ public static class DataManager
     }
 
     /// <summary>
-    /// Utility method
-    /// Converts strings to Vector3 objects
+    /// Utility method - converts strings to Vector3 objects.
     /// Useful to allow DEserialization of Vector3 objects.
     /// </summary>
     public static Vector3 Vector3FromString(String s)
