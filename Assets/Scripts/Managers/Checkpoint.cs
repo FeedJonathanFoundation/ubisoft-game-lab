@@ -9,7 +9,6 @@ public class Checkpoint : MonoBehaviour
     void Awake()
     {
         transform = GetComponent<Transform>();
-        MoveCheckpoint();
     }
 
 	void Update()
@@ -27,16 +26,16 @@ public class Checkpoint : MonoBehaviour
 		  DataManager.SaveFile(data);
 		}
 
-        MoveCheckpoint();
+        Destroy(gameObject);
 	}
 
-    private void MoveCheckpoint()
-    {
-        int x = Random.Range(-20, 60);
-        int y = Random.Range(0, -30);
-        int z = 0;
-        transform.position = new Vector3(x, y, z);
-    }
+    // private void MoveCheckpoint()
+    // {
+    //     int x = Random.Range(-20, 60);
+    //     int y = Random.Range(0, -30);
+    //     int z = 0;
+    //     transform.position = new Vector3(x, y, z);
+    // }
 
 }
 

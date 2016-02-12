@@ -97,9 +97,7 @@ public class Player : LightSource
        PlayerData data = DataManager.LoadFile();
        if (data != null)
        {
-           defaultEnergy = data.playerEnergy;
            transform.position = DataManager.Vector3FromString(data.playerPosition);
-           transform.localScale = DataManager.Vector3FromString(data.playerScale);
        }
     }
 
