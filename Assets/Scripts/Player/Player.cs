@@ -48,8 +48,6 @@ public class Player : LightSource
        this.LightEnergy.LightDepleted += OnLightDepleted;
        this.isDead = false;
        LoadGame();
-
-       Debug.Log(transform.Find("LightsToToggle").gameObject);
     }
 
     void Start()
@@ -89,6 +87,9 @@ public class Player : LightSource
         rigidbody.angularVelocity = Vector3.zero;
     }
 
+    /// <summary>
+    /// Player lights responding to user input
+    /// </summary>
     private void LightControl()
     {
         if (Input.GetButtonDown("LightToggle"))
