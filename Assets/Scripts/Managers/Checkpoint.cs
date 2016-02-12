@@ -16,19 +16,18 @@ public class Checkpoint : MonoBehaviour
 
 	}
 
-	void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-		if (other.tag == "Player")
+        if (other.tag == "Player")
         {
-          PlayerData data = new PlayerData();
-          data.playerPosition = DataManager.Vector3ToString(other.gameObject.transform.position);
-          data.playerScale = DataManager.Vector3ToString(other.gameObject.transform.localScale);
-          data.playerEnergy = other.gameObject.GetComponent<Player>().LightEnergy.CurrentEnergy;
-		  DataManager.SaveFile(data);
-		}
-
+            PlayerData data = new PlayerData();
+            data.playerPosition = DataManager.Vector3ToString(other.gameObject.transform.position);
+            data.playerScale = DataManager.Vector3ToString(other.gameObject.transform.localScale);
+            data.playerEnergy = other.gameObject.GetComponent<Player>().LightEnergy.CurrentEnergy;
+            DataManager.SaveFile(data);
+        }
         Destroy(gameObject);
-	}
+    }
 
     // private void MoveCheckpoint()
     // {
