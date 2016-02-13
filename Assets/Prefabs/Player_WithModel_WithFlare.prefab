@@ -2173,7 +2173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flareObject: {fileID: 177066, guid: 1481585a8f164c04d9beedd085f2ee2d, type: 2}
   flareSpawnObject: {fileID: 408650}
-  cooldownTime: 20
+  cooldownTime: 10
   flareEnergyCost: 1
   flareCostPercentage: 1.5
 --- !u!114 &11499388
@@ -2233,6 +2233,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: flareCostPercentage
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: cooldownTime
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
