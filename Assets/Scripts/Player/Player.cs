@@ -45,7 +45,6 @@ public class Player : LightSource
     private bool isDead; // determines is current player is dead
     private new Transform transform;
     private new Rigidbody rigidbody;
-    private LightSource lightSource;
 
     // Use this for initialization
     public override void Awake()
@@ -53,9 +52,8 @@ public class Player : LightSource
        base.Awake(); // call parent LightSource Awake() first
        transform = GetComponent<Transform>();
        rigidbody = GetComponent<Rigidbody>();
-       lightSource = GetComponent<LightSource>();
        movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, thrustEnergyCost, transform, rigidbody, this.LightEnergy);
-       lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, lightSource, minimalEnergyRestrictionToggleLights);
+       lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
        this.LightEnergy.LightDepleted += OnLightDepleted;
        this.isDead = false;
        LoadGame();
@@ -103,7 +101,7 @@ public class Player : LightSource
     /// </summary>
     private void LightControl()
     {
-        if (Input.GetButtonDown("LightToggle") && minimalEnergyRestrictionToggleLights < lightSource.LightEnergy.CurrentEnergy)
+        if (Input.GetButtonDown("LightToggle") && minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
         {
             lightToggle.ToggleLights();
         }
