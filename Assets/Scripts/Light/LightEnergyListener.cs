@@ -28,9 +28,9 @@ public abstract class LightEnergyListener : MonoBehaviour
         {
             this.lightEnergy = null;
         }
-        
+
         Subscribe();
-        
+
         // Initialize the attribute to the light's initial energy
         OnLightChanged(lightEnergy.CurrentEnergy);
     }
@@ -41,6 +41,7 @@ public abstract class LightEnergyListener : MonoBehaviour
         {
             // Call OnLightChanged() whenever the GameObject's amount of light energy changes.
             this.lightEnergy.LightChanged += OnLightChanged;
+            //this.lightEnergy.LightDepleted += OnLightDepleted;
         }
     }
 
@@ -50,6 +51,7 @@ public abstract class LightEnergyListener : MonoBehaviour
         {
             // Unsubscribe from events to avoid errors
             this.lightEnergy.LightChanged -= OnLightChanged;
+            //this.lightEnergy.LightDepleted -= OnLightDepleted;
         }
     }
 
