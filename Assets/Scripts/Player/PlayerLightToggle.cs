@@ -16,8 +16,8 @@ public class PlayerLightToggle
     {
         this.lightsEnabled = defaultLightStatus;
         this.lightsToToggle = lightsToToggle;
-        lightSource = lightSourceRef; //initiate lightSource
-        minimalEnergyRestriction = minimalEnergy;
+        this.lightSource = lightSourceRef; //initiate lightSource
+        this.minimalEnergyRestriction = minimalEnergy;
         ToggleLights();
     }
 
@@ -31,20 +31,19 @@ public class PlayerLightToggle
         this.lightsEnabled = !this.lightsEnabled;
     }
 
-    public void lostOfLight(float lostOfLightTimeInterval, float energyCostLightToggle)
+    public void LostOfLight(float lostOfLightTimeInterval, float energyCostLightToggle)
     {
         
         if (this.lightsEnabled)
         {
-            timerLostOfLight += Time.deltaTime;
-            if (timerLostOfLight > lostOfLightTimeInterval)
+            this.timerLostOfLight += Time.deltaTime;
+            if (this.timerLostOfLight > lostOfLightTimeInterval)
             {
-                lightSource.LightEnergy.Deplete(energyCostLightToggle);
-                timerLostOfLight = 0;
+                this.lightSource.LightEnergy.Deplete(energyCostLightToggle);
+                this.timerLostOfLight = 0;
 
-                if (minimalEnergyRestriction >= lightSource.LightEnergy.CurrentEnergy)
+                if (this.minimalEnergyRestriction >= this.lightSource.LightEnergy.CurrentEnergy)
                 {
-                    Debug.Log("turning off...");
                     this.ToggleLights();
                 }
             }
