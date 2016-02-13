@@ -1,4 +1,5 @@
 ﻿public interface NPCActionable
 {
-	void Execute(int speed);
+	// void Execute(Steerable steerable, SteeringBehavior steeringBehavior);
+    void Execute(Steerable steerable);
 }

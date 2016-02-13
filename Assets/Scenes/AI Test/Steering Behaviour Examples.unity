@@ -334,6 +334,68 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 424626, guid: eea3edfe73050394987fb0cbdc1dee62, type: 2}
   m_PrefabInternal: {fileID: 1766721500}
+--- !u!1 &149716357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 149716358}
+  - 54: {fileID: 149716360}
+  - 114: {fileID: 149716359}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &149716358
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 149716357}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 311.40768, y: -86.55725, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+--- !u!114 &149716359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 149716357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91bfd65893f398f45824f35f221ef78d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 0
+  maxForce: 0
+  bodyRadius: 0
+  obstacleDetector: {fileID: 0}
+  neighbourhood: {fileID: 0}
+  constantSpeed: 0
+  faceVelocity: 0
+--- !u!54 &149716360
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 149716357}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &164212279
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,7 +714,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &314860508
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1226,6 +1288,7 @@ MonoBehaviour:
   canAbsorb: 0
   absorptionRate: 15
   defaultEnergy: 10
+  debugInfiniteLight: 0
 --- !u!23 &620759134
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2569,6 +2632,7 @@ GameObject:
   - 114: {fileID: 1239494519}
   - 114: {fileID: 1239494518}
   - 54: {fileID: 1239494517}
+  - 114: {fileID: 1239494521}
   m_Layer: 0
   m_Name: NPC (Seek)
   m_TagString: Untagged
@@ -2597,7 +2661,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1239494516}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25e686b48a5f1db4f8c6621aa9054757, type: 3}
   m_Name: 
@@ -2653,6 +2717,22 @@ Transform:
   - {fileID: 1915147124}
   m_Father: {fileID: 0}
   m_RootOrder: 6
+--- !u!114 &1239494521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1239494516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2e10a2ea6294b7ebaf4c21fafc5484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  steeringBehaviors: []
+  stoppingCondition:
+    target: {fileID: 140662820}
+    stoppingDistance: 0
+    waitTime: 0
 --- !u!1 &1377723512
 GameObject:
   m_ObjectHideFlags: 0
@@ -3408,8 +3488,9 @@ GameObject:
   - 114: {fileID: 1846107495}
   - 114: {fileID: 1846107494}
   - 54: {fileID: 1846107493}
+  - 114: {fileID: 1846107497}
   m_Layer: 0
-  m_Name: NPC (Wander)
+  m_Name: NPC (Wander2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3436,14 +3517,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1846107492}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25e686b48a5f1db4f8c6621aa9054757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   steeringBehaviors:
   - type: 5
-    strengthMultiplier: 1
+    strengthMultiplier: 9.94
     targetSteerable: {fileID: 0}
     targetTransform: {fileID: 0}
     slowingRadius: 0
@@ -3470,7 +3551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bfd65893f398f45824f35f221ef78d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 1
+  maxSpeed: 5
   maxForce: 0.5
   bodyRadius: 0
   obstacleDetector: {fileID: 0}
@@ -3492,6 +3573,23 @@ Transform:
   - {fileID: 1639521918}
   m_Father: {fileID: 0}
   m_RootOrder: 8
+--- !u!114 &1846107497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1846107492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2e10a2ea6294b7ebaf4c21fafc5484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  steeringBehaviors:
+  - {fileID: 0}
+  stoppingCondition:
+    target: {fileID: 0}
+    stoppingDistance: 0
+    waitTime: 0
 --- !u!1 &1903163196
 GameObject:
   m_ObjectHideFlags: 0
@@ -3918,6 +4016,7 @@ MonoBehaviour:
   canAbsorb: 0
   absorptionRate: 15
   defaultEnergy: 10
+  debugInfiniteLight: 0
 --- !u!1 &2034642642
 GameObject:
   m_ObjectHideFlags: 0
