@@ -486,7 +486,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 467024}
-  - 114: {fileID: 11478666}
   m_Layer: 0
   m_Name: LightsToToggle
   m_TagString: Untagged
@@ -873,7 +872,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 198018}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.15093932, y: 0, z: 0, w: 0.98854303}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2019,10 +2018,15 @@ MonoBehaviour:
   canAbsorb: 1
   absorptionRate: 15
   defaultEnergy: 10
+  debugInfiniteLight: 1
   massEjectionTransform: {fileID: 454708}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
   thrustForce: 1
   thrustEnergyCost: 0.2
+  defaultLightStatus: 1
+  lostOfLightTime: 0
+  energyCostLightToggle: 0
+  minimalEnergyRestrictionToggleLights: 0
 --- !u!114 &11457278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2072,18 +2076,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.02
---- !u!114 &11478666
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 172694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aa14c0e1170d3c4fb8117aa7fbcfe04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  beginEnabled: 0
 --- !u!114 &11479152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2148,6 +2140,7 @@ MonoBehaviour:
   canAbsorb: 1
   absorptionRate: 15
   defaultEnergy: 10
+  debugInfiniteLight: 0
 --- !u!135 &13516340
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -94,7 +94,7 @@ public class Steerable : MonoBehaviour
 	/*public void OnDrawGizmos()
 	{
 		Gizmos.color = Color.green;
-		Gizmos.DrawLine((Vector2)Transform.position, (Vector2)transform.position + rigidbody.velocity);
+		Gizmos.DrawLine((Vector2)Transform.position, (Vector2)transform.position + (Vector2)rigidbody.velocity);
 		Gizmos.color = Color.red;
 		Gizmos.DrawLine((Vector2)Transform.position, (Vector2)transform.position + steeringForce);
 		Gizmos.color = Color.yellow;
@@ -205,7 +205,7 @@ public class Steerable : MonoBehaviour
 	/// identical to the 'Seek' behavior, except that the steerable slows down and stops when he reaches his target.
 	/// </summary>
 	/// <param name="slowingRadius">When the entity gets this close to his target, he will start slowing down.</param>
-	public Vector2 ArrivalForce(Vector2 target, float slowingRadius)
+	private Vector2 ArrivalForce(Vector2 target, float slowingRadius)
 	{
 		// Compute the distance vector to the target position
 		Vector2 distance = (Vector2)target - (Vector2)transform.position;
@@ -240,7 +240,7 @@ public class Steerable : MonoBehaviour
 	
 	/** Returns a steering force which veers this object towards the given target's future position.
 	  * This can be seen as a more intelligent version of the 'Seek' behaviour */
-	public Vector2 PursueForce(Steerable target)
+	private Vector2 PursueForce(Steerable target)
 	{
 		// Compute the distance from this GameObject to his target
 		float distanceToTarget = (target.Transform.position - Transform.position).magnitude;
@@ -267,7 +267,7 @@ public class Steerable : MonoBehaviour
 	}
 	
 	/** Returns a steering force which makes this objec flee the given position */
-	public Vector2 FleeForce(Vector2 fleeTarget)
+	private Vector2 FleeForce(Vector2 fleeTarget)
 	{
 		// The fleeing force is simply the negative of the seek force to the given fleeTarget.
 		return -SeekForce(fleeTarget);
@@ -288,7 +288,7 @@ public class Steerable : MonoBehaviour
 	/// The target's SteeringManager component is passed to access the target's
 	/// max speed easily.
 	/// </summary>
-	public Vector2 EvadeForce(Steerable targetToEvade)
+	private Vector2 EvadeForce(Steerable targetToEvade)
 	{
 		// Compute the distance from this GameObject to his target to evade
 		float distanceToTarget = (targetToEvade.Transform.position - Transform.position).magnitude;
@@ -328,7 +328,7 @@ public class Steerable : MonoBehaviour
 	/// <param name="circleRadius">The greater the radius, the stronger the wander force, and the more likely
 	/// the entity will change directions.</param>
 	/// <param name="angleChange">The maximum angle in degrees that the wander force can change next frame.</param>
-	public Vector2 WanderForce(float circleDistance, float circleRadius, float angleChange)
+	private Vector2 WanderForce(float circleDistance, float circleRadius, float angleChange)
 	{
 		// Update the steerable's 'normalizedVelocity' variable
 		CheckDirty ();
@@ -371,10 +371,10 @@ public class Steerable : MonoBehaviour
 	/// <param name="avoidanceForce">The amount of force applied in order to avoid the nearest obstacle.</param>
 	/// <param name="maxViewDistance">Only obstacles within 'maxViewDistance' meters of this steerable can be avoided.</param>
 	/// <param name="obstacleLayer">The layer which contains the colliders that can be avoided.</param>
-	public Vector2 ObstacleAvoidanceForce(float avoidanceForce, float maxViewDistance, LayerMask obstacleLayer)
+	private Vector2 ObstacleAvoidanceForce(float avoidanceForce, float maxViewDistance, LayerMask obstacleLayer)
 	{
 		// Update the steerable's 'normalizedVelocity' variable
-		CheckDirty ();
+		CheckDirty();
 
 		// The obstacle avoidance force returned by this method.
 		Vector2 avoidForce = Vector2.zero;
@@ -405,6 +405,63 @@ public class Steerable : MonoBehaviour
 		// Returns a force which will avoid the nearest obstacle in the steerable's line of sight.
 		return avoidForce;
 	}
+    
+    /// <summary>
+    /// Avoids the nearest obstacle in front of the object. This works for obstacles of any size or shape, unlike
+    /// Obstacle Avoidance, which approximates obstacles as spheres. Formal name: "Containment" or "Generalized Obstacle Avoidance"
+    /// </summary>
+    /// <param name="avoidanceForce">The amount of force applied in order to avoid the nearest obstacle.</param>
+	/// <param name="maxViewDistance">Only obstacles within 'maxViewDistance' meters of this steerable can be avoided.</param>
+	/// <param name="obstacleLayer">The layer which contains the colliders that can be avoided.</param>
+    public void AddWallAvoidanceForce(float avoidanceForce, float maxViewDistance, LayerMask obstacleLayer, float multiplier)
+    {
+        steeringForce += WallAvoidanceForce(avoidanceForce,maxViewDistance,obstacleLayer) * multiplier;
+    }
+    
+    /// <summary>
+    /// Avoids the nearest obstacle in front of the object. This works for obstacles of any size or shape, unlike
+    /// Obstacle Avoidance, which approximates obstacles as spheres. Formal name: "Containment" or "Generalized Obstacle Avoidance"
+    /// </summary>
+    /// <param name="avoidanceForce">The amount of force applied in order to avoid the nearest obstacle.</param>
+	/// <param name="maxViewDistance">Only obstacles within 'maxViewDistance' meters of this steerable can be avoided.</param>
+	/// <param name="obstacleLayer">The layer which contains the colliders that can be avoided.</param>
+    private Vector2 WallAvoidanceForce(float avoidanceForce, float maxViewDistance, LayerMask obstacleLayer)
+    {
+        // Update the steerable's 'normalizedVelocity' variable
+		CheckDirty();
+        
+        Vector2 avoidForce = Vector2.zero;
+        
+        Vector2 forward = previousVelocity.normalized;
+        
+        if (obstacleDetector != null &&  obstacleDetector.GetNearestObstacle() != null)
+        {
+            RaycastHit hitInfo;
+            // Shoot a SphereCast in front of the object. Stores the first hit obstacle in front of the object in 'hitInfo".
+            Physics.SphereCast(transform.position, bodyRadius, forward, out hitInfo, 
+                            maxViewDistance, obstacleLayer);
+            
+            if (hitInfo.transform != null)
+            {
+                // The obstacle's normal vector
+                Vector2 normal = hitInfo.normal;
+                
+                // Compute the projection of the normal vector onto the steerable's forward vector
+                Vector2 projection = Vector2.Dot(forward,hitInfo.normal) * forward;
+                // The avoidance force should steer the object perpendicular to its forward vector, along the direction of the normal 
+                Vector2 avoidDirection = normal - projection;
+                avoidForce = avoidDirection.SetMagnitude(avoidanceForce);
+                
+                //Debug.Log("Avoid obstacle: " + hitInfo.transform.name + " normal = " + hitInfo.normal + " projection = " + projection);
+                //Debug.Log("Avoidance direction: " + avoidDirection);
+                
+                debugForce = avoidForce;
+            }
+        }
+        
+        return avoidForce;
+                           
+    }
 
 	/// <summary>
 	/// Adds a force which separates this agent from his neighbours. This steerable's neighbours are defined by the GameObjects
@@ -420,7 +477,7 @@ public class Steerable : MonoBehaviour
 	/// Returns the 'Separation' steering force. This force pushes this steerable away from his neighbours, as
 	/// defined by his 'Neighbourhood' component.
 	/// </summary>
-	public Vector2 SeparationForce()
+	private Vector2 SeparationForce()
 	{
 		// Store the final steering force
 		Vector2 separationForce = Vector2.zero;
@@ -457,7 +514,7 @@ public class Steerable : MonoBehaviour
 	/// Returns a force corresponding to the 'Alignment' group behavior. This behavior makes the steerable move in parallel with his
 	/// neighbours. Imagine cars on a highway. They are all moving in the same direction, thus exhibiting alignment behavior.
 	/// </summary>
-	public Vector2 AlignmentForce()
+	private Vector2 AlignmentForce()
 	{
 		// Update the steerable's 'normalizedVelocity' variable
 		CheckDirty ();
@@ -507,7 +564,7 @@ public class Steerable : MonoBehaviour
 	/// Returns a steering force for the 'Cohesion' group behavior. This steers the agent to the center of mass of his neighbours.
 	/// Imagine a sheep trying to run back to the center of his group. He is demonstrating cohesion. 
 	/// </summary>
-	public Vector2 CohesionForce()
+	private Vector2 CohesionForce()
 	{
 		// The final cohesion force
 		Vector2 cohesionForce = Vector2.zero;

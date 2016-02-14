@@ -13,6 +13,7 @@ public enum SteeringBehaviorType
 	Evade,
 	Wander,
 	ObstacleAvoidance,
+    WallAvoidance,
 	Separation,
 	Alignment,
 	Cohesion,
@@ -84,7 +85,11 @@ public class SteeringTest : MonoBehaviour
 				steerable.AddObstacleAvoidanceForce (steeringBehavior.obstacleAvoidanceForce, steeringBehavior.maxObstacleViewDistance, 
 				                                     steeringBehavior.obstacleLayer, steeringBehavior.strengthMultiplier);
 				break;
-			case SteeringBehaviorType.Separation:
+			case SteeringBehaviorType.WallAvoidance:
+                steerable.AddWallAvoidanceForce(steeringBehavior.obstacleAvoidanceForce, steeringBehavior.maxObstacleViewDistance,
+                                                steeringBehavior.obstacleLayer, steeringBehavior.strengthMultiplier);
+                break;
+            case SteeringBehaviorType.Separation:
 				steerable.AddSeparationForce(steeringBehavior.strengthMultiplier);
 				break;
 			case SteeringBehaviorType.Alignment:
@@ -165,7 +170,7 @@ public class SteeringBehavior
 	/// The magnitude of the obstacle avoidance force. The higher this value, the faster it is to avoid obstacles and the less
 	/// chance there is of hitting them.
 	/// </summary>
-    [Tooltip("Obstacle Avoidance: The higher this value, the faster it is to avoid obstacles and the less chance there is of hitting them.")]
+    [Tooltip("Obstacle/Wall Avoidance: The higher this value, the faster it is to avoid obstacles and the less chance there is of hitting them.")]
 	public float obstacleAvoidanceForce;
 
 	/// <summary>
@@ -173,13 +178,13 @@ public class SteeringBehavior
 	/// far away from a steerable can be seen. For instance, if set to '2', obstacles as far as 2 meters from the steerable
 	/// can be seen and avoided
 	/// </summary>
-    [Tooltip("Obstacle Avoidance: The max look-ahead (in meters) for an incorming obstacle")]
+    [Tooltip("Obstacle/Wall Avoidance: The max look-ahead (in meters) for an incorming obstacle")]
 	public float maxObstacleViewDistance;
 
 	/// <summary>
-	/// Only colliders on this layer will be avoided if applying the 'ObstacleAvoidance' steering behavior.
+	/// Only colliders on this layer will be avoided if applying the 'Obstacle/WallAvoidance' steering behavior.
 	/// </summary>
-    [Tooltip("Obstacle Avoidance: Only colliders on this layer will be avoided")]
+    [Tooltip("Obstacle/Wall Avoidance: Only colliders on this layer will be avoided")]
 	public LayerMask obstacleLayer;
 	
 }

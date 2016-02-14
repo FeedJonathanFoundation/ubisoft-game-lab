@@ -30,7 +30,7 @@ public class ObstacleDetector : MonoBehaviour
 	/** The trigger volume that detects if an obstacle is viewable by this GameObject or not. */
 	private BoxCollider collider;
 	/** Caches this obstacle detector's Transform */
-	private Transform transform;
+	private new Transform transform;
 	
 	void Awake()
 	{
@@ -46,31 +46,7 @@ public class ObstacleDetector : MonoBehaviour
 		collider.isTrigger = true;
 	}
 	
-	void FixedUpdate()
-	{
-		// If the entity moved from the last frame, update his current direction of movement
-		if(((Vector2)transform.position) != previousPosition)
-		{
-			// Subtract the entity's current position by his previous to determine the entity's current direction of movement
-			movementDirection = (Vector2)transform.position - previousPosition;
-		}
-
-		// Determine the angle (relative to the +x-axis) at which the entity is moving
-		float angle = Mathf.Atan2 (movementDirection.y, movementDirection.x) * Mathf.Rad2Deg;
-
-		// Modify the angle of the obstacle detector to point in the direction of this entity's velocity
-		transform.eulerAngles = new Vector3(0,0,angle);
-
-		// Update the 'previousPosition' variable with the entity's current position. Allows velocity to be computed next frame.
-		previousPosition = transform.position;
-
-		/*string log = "Obstacles: ";
-		for(int i = 0; i < visibleObstacles.Count; i++)
-			log += visibleObstacles[i].name + ", ";
-		Debug.Log (log);*/
-	}
-	
-	void OnTriggerEnter2D(Collider2D collider)
+	void OnTriggerEnter(Collider collider)
 	{
 		// If the collider which entered the trigger volume is on the correct layer
 		if(((1 << collider.gameObject.layer) & obstacleLayer) == obstacleLayer)
@@ -84,7 +60,7 @@ public class ObstacleDetector : MonoBehaviour
 		}
 	}
 	
-	void OnTriggerExit2D(Collider2D collider)
+	void OnTriggerExit(Collider collider)
 	{
 		// If the collider which left the trigger volume belongs to the layer which is tracked by this neighbourhood
 		if(((1 << collider.gameObject.layer) & obstacleLayer) == obstacleLayer)
@@ -98,7 +74,7 @@ public class ObstacleDetector : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Returns the nearest obstacle in the line of sight delimited by this obstacle detector.
+	/// Returns the nearest obstacle in the object's line of sight.
 	/// </summary>
 	public Transform GetNearestObstacle()
 	{
@@ -151,18 +127,18 @@ public class ObstacleDetector : MonoBehaviour
 	/// <summary>
 	/// Updates the size and anchor of the collider used for obstacle detection
 	/// </summary>
-	public void UpdateColliderSize()
+	private void UpdateColliderSize()
 	{
 		// Set the collider's width to the detector's viewing distance
 		// Set the collider's height to the size of the character's body. This is the breadth of his line of sight
-		collider.size = new Vector2(viewDistance, bodyRadius * 2);
+		collider.size = new Vector2(bodyRadius * 2, viewDistance);
 		
 		// Set the collider's anchor so that its left-center point is at the character's feet (0,0)
-		collider.center = new Vector2(viewDistance*0.5f, 0);
+		collider.center = new Vector2(0, viewDistance*0.5f);
 	}
 
 	/// <summary>
-	/// The number of obstacles which are within sight of this detector
+	/// The number of obstacles that are within sight of this detector
 	/// </summary>
 	public int ObstacleCount 
 	{
