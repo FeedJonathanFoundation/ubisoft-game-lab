@@ -12,6 +12,7 @@ public abstract class AbstractFish : MonoBehaviour
 	// The steering behaviors to apply
     public Dictionary<int, NPCActionable> actionDirectory;
 
+
 	// The condwition that must be met for this action to return 'Success'
 	public StoppingCondition stoppingCondition;
     
@@ -22,7 +23,7 @@ public abstract class AbstractFish : MonoBehaviour
     void Awake() 
     {
         myId = globalId++;
-        
+
         actionDirectory = new Dictionary<int, NPCActionable>();
 
         // Cache the 'Steerable' component attached to the GameObject performing this action
@@ -58,12 +59,12 @@ public abstract class AbstractFish : MonoBehaviour
         NPCActionable action;
         if (actionDirectory.TryGetValue(id, out action)) 
         {
+            // priority 0 is a fallback strategy (i.e. wander)
             if (action.priority != 0) 
             {
                 actionDirectory.Remove(id);
             }
         }
-        
         //todo go to a sensible activePriority.
     }
 
@@ -109,11 +110,11 @@ public abstract class AbstractFish : MonoBehaviour
     // Detects if fish is no longer close to another character
     void OnTriggerExit(Collider other) 
     {
-        // if (other.gameObject.CompareTag("Fish")) 
-        // {
-        //     int otherID = other.GetID();
-        //     RemoveAction(otherID);
-        // }
+        if (other.gameObject.CompareTag("Fish")) 
+        {
+            int otherID = other.GetComponent<AbstractFish>().GetID();
+            RemoveAction(otherID);
+        }
     }
     
     public bool IsDead()
