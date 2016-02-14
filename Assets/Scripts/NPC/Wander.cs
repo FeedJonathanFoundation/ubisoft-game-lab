@@ -26,14 +26,18 @@ public class Wander : NPCActionable
     
     public float strengthMultiplier = 9.9f;
     
+    public Wander(int priority) {
+        this.priority = priority;
+    }
     
-    // public NPCActionType = "Wander";
+    // Need to be able to set these floats elsewhere;
     
 	public override void Execute(Steerable steerable) 
     {
-        circleDistance=1f;
-        circleRadius=.5f;
-        angleChange=30f;
+        circleDistance = 1f;
+        circleRadius = .5f;
+        angleChange = 30f;
+        
         steerable.AddWanderForce(circleDistance, circleRadius, angleChange, strengthMultiplier);
     }
 }

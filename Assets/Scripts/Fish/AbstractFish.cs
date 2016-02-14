@@ -9,24 +9,13 @@ public abstract class AbstractFish : MonoBehaviour
     /** The steerable component attached to the GameObject performing this action. */
 	protected Steerable steerable;
 
-	// The steering behaviors to apply every frame
+	// The steering behaviors to apply
     public Dictionary<int, NPCActionable> actionDirectory;
 
 	// The condwition that must be met for this action to return 'Success'
 	public StoppingCondition stoppingCondition;
     
-    // public int movementSpeed;
-    // public int reactionSpeed;
-    
-    private bool isProximateToPlayer;
-    private bool isProximateToNPC;
-    Transform player;                           // Reference to player's position
-    Transform other;
-    Transform target;
     private int activePriority = 0;
-    // public AbstractFish() { }
-    // public AbstractFish(NPCAction reactionToPlayer) { }
-
     static int globalId = 0;
     private int myId;
     public int GetID() { return myId; }
@@ -34,9 +23,6 @@ public abstract class AbstractFish : MonoBehaviour
     void Awake() 
     {
         myId = globalId++;
-        
-        isProximateToPlayer = false;
-        isProximateToNPC = false;
         
         actionDirectory = new Dictionary<int, NPCActionable>();
 
@@ -49,6 +35,9 @@ public abstract class AbstractFish : MonoBehaviour
         
         // Reset the stopping condition. The stopping condition now knows that the 'Steer' action just started.
 		stoppingCondition.Init();
+        
+        Move();
+        
     }
     
     public void PushAction(int id, NPCActionable action)
@@ -57,11 +46,22 @@ public abstract class AbstractFish : MonoBehaviour
         {
             activePriority = action.priority;
         }
-        actionDirectory.Add(id, action);
+        if (!actionDirectory.ContainsKey(id)) 
+        {
+            actionDirectory.Add(id, action);
+        }
     }
     
     public void RemoveAction(int id)
     {
+        NPCActionable action;
+        if (actionDirectory.TryGetValue(id, out action)) 
+        {
+            if (action.priority != 0) 
+            {
+                actionDirectory.Remove(id);
+            }
+        }
         
         //todo go to a sensible activePriority.
     }
@@ -76,10 +76,6 @@ public abstract class AbstractFish : MonoBehaviour
 			return;
 		}
         
-        if (isProximateToPlayer) { ReactToPlayer(player); }
-        else if (isProximateToNPC) { ReactToNPC(other); }
-        else { Move(); }
-        
         foreach(KeyValuePair<int, NPCActionable> entry in actionDirectory)
         {
             NPCActionable actionable = entry.Value;
@@ -88,43 +84,35 @@ public abstract class AbstractFish : MonoBehaviour
                 actionable.Execute(steerable);
             }    
         }
-        actionDirectory.Clear();
+        // actionDirectory.Clear();
     }
 
     void FixedUpdate() 
     {
-        
-        
         steerable.ApplyForces (Time.fixedDeltaTime); 
-        // if (player light == on) { Approach(player); }
     }
     
-    // Detects if fish is close to the player
+    // Detects if fish is close to another character
     void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.CompareTag("Player")) 
         {
-            isProximateToPlayer = true;
-            player = other.gameObject.transform;
+            ReactToPlayer(other.gameObject.transform);
         }
         else if (other.gameObject.CompareTag("Fish")) 
         {
-            isProximateToNPC = true;
-            this.other = other.gameObject.transform;
+            ReactToNPC(other.gameObject.transform);
         }
     }
     
-    // Detects if fish is no longer close to the player
+    // Detects if fish is no longer close to another character
     void OnTriggerExit(Collider other) 
     {
-        if (other.gameObject.CompareTag("Player")) 
-        {
-            isProximateToPlayer = false;
-        }
-        else if (other.gameObject.CompareTag("Fish")) 
-        {
-            isProximateToNPC = false;
-        }
+        // if (other.gameObject.CompareTag("Fish")) 
+        // {
+        //     int otherID = other.GetID();
+        //     RemoveAction(otherID);
+        // }
     }
     
     public bool IsDead()

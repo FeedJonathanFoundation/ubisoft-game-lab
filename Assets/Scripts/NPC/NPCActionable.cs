@@ -1,8 +1,8 @@
 ﻿public enum NPCActionPriority
 {
     Low = 0,
-    Medium,
-    High
+    Medium = 1,
+    High = 2
 }
 
 public enum NPCActionType

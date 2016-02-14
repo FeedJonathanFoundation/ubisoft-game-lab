@@ -8,14 +8,14 @@ public class Seek : NPCActionable
     
     public float strengthMultiplier = 9.9f;
     
-    public Seek(Transform transform)
-    {
+    public Seek(int priority, Transform transform) {
+        this.priority = priority;
         targetTransform = transform;
     }
     
 	public override void Execute(Steerable steerable) 
     {
-        //targetTransform = GameObject.FindGameObjectWithTag("Player").transform;
         steerable.AddSeekForce (targetTransform.position, strengthMultiplier);
     }
+    
 }
