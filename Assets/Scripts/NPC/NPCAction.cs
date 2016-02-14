@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NPCAction : MonoBehaviour 
+/// <summary>
+/// The types of steering behaviors a Steerable instance can perform
+/// </summary>
+
+
+[RequireComponent(typeof(Steerable))]
+public class NPCAction 
 {
     private NPCActionable executableStrategy;
     
@@ -9,12 +15,15 @@ public class NPCAction : MonoBehaviour
     public NPCAction(NPCActionable strategy)
     {
         this.executableStrategy = strategy;
+        
     }
 
     // Executes the strategy
-    public void Execute(int speed)
+    public void Execute(Steerable steerable)
     {
-        executableStrategy.Execute(speed);
+        executableStrategy.Execute(steerable);
     }
+    
+    // stopping condition / check if valid
+    
 }
-

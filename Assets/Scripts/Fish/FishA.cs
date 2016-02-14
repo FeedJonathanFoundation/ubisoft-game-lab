@@ -5,28 +5,23 @@ using System.Collections;
 // Run away upon close contact
 public class FishA : AbstractFish
 {
-    
-    NPCAction reactionToPlayer;
-    
-    public FishA() { }
-    
-    public FishA(NPCAction reactionToPlayer) : base(reactionToPlayer) 
-    {
-        this.reactionToPlayer = reactionToPlayer;
-    }
-    
+
     public override void Move() 
     {
-        // movement.Execute(movementSpeed);
+        PushAction(GetID(), new Wander(0));
     }
     
     public override void ReactToPlayer(Transform player)
     {
-        reactionToPlayer.Execute(reactionSpeed);
+        Seek seek = new Seek(1, player);
+        PushAction(-1, seek);
     }
     
     public override void ReactToNPC(Transform other)
     {
-        reactionToPlayer.Execute(reactionSpeed);
+        AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
+        int id = fish.GetID();
+        Seek seek = new Seek(1, other);
+        PushAction(id, seek);
     }
 }
