@@ -10,11 +10,9 @@ public abstract class AbstractFish : MonoBehaviour
 	protected Steerable steerable;
 
 	// The steering behaviors to apply every frame
-	// public SteeringBehavior[] steeringBehaviors;
-    public NPCAction[] steeringBehaviors;
-    public Queue<NPCAction> actionQueue;
+    public Dictionary<int, NPCActionable> actionDirectory;
 
-	// The condition that must be met for this action to return 'Success'
+	// The condwition that must be met for this action to return 'Success'
 	public StoppingCondition stoppingCondition;
     
     // public int movementSpeed;
@@ -25,17 +23,22 @@ public abstract class AbstractFish : MonoBehaviour
     Transform player;                           // Reference to player's position
     Transform other;
     Transform target;
-
+    private int activePriority = 0;
     // public AbstractFish() { }
     // public AbstractFish(NPCAction reactionToPlayer) { }
 
+    static int globalId = 0;
+    private int myId;
+    public int GetID() { return myId; }
+
     void Awake() 
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        myId = globalId++;
+        
         isProximateToPlayer = false;
         isProximateToNPC = false;
         
-        // actionQueue = new Queue<NPCAction>();
+        actionDirectory = new Dictionary<int, NPCActionable>();
 
         // Cache the 'Steerable' component attached to the GameObject performing this action
 		steerable = transform.GetComponent<Steerable>();
@@ -47,11 +50,24 @@ public abstract class AbstractFish : MonoBehaviour
         // Reset the stopping condition. The stopping condition now knows that the 'Steer' action just started.
 		stoppingCondition.Init();
     }
-
-    void FixedUpdate() 
+    
+    public void PushAction(int id, NPCActionable action)
     {
-        // if (player light == on) { Approach(player); }
+        if (action.priority > activePriority)
+        {
+            activePriority = action.priority;
+        }
+        actionDirectory.Add(id, action);
+    }
+    
+    public void RemoveAction(int id)
+    {
         
+        //todo go to a sensible activePriority.
+    }
+
+    void Update()
+    {        
         if(stoppingCondition.Complete())
 		{
             // if player health <=0
@@ -63,7 +79,24 @@ public abstract class AbstractFish : MonoBehaviour
         if (isProximateToPlayer) { ReactToPlayer(player); }
         else if (isProximateToNPC) { ReactToNPC(other); }
         else { Move(); }
+        
+        foreach(KeyValuePair<int, NPCActionable> entry in actionDirectory)
+        {
+            NPCActionable actionable = entry.Value;
+            if(actionable.priority == activePriority)
+            {
+                actionable.Execute(steerable);
+            }    
+        }
+        actionDirectory.Clear();
+    }
 
+    void FixedUpdate() 
+    {
+        
+        
+        steerable.ApplyForces (Time.fixedDeltaTime); 
+        // if (player light == on) { Approach(player); }
     }
     
     // Detects if fish is close to the player
@@ -72,6 +105,7 @@ public abstract class AbstractFish : MonoBehaviour
         if (other.gameObject.CompareTag("Player")) 
         {
             isProximateToPlayer = true;
+            player = other.gameObject.transform;
         }
         else if (other.gameObject.CompareTag("Fish")) 
         {

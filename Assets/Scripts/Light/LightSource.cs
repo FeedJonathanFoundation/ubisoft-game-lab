@@ -32,8 +32,7 @@ public class LightSource : MonoBehaviour
 
     // Cached components
     private LightEnergy lightEnergy;
-
-
+    
     public virtual void Awake()
     {
         // Cache components

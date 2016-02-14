@@ -29,7 +29,7 @@ public class Wander : NPCActionable
     
     // public NPCActionType = "Wander";
     
-	public void Execute(Steerable steerable) 
+	public override void Execute(Steerable steerable) 
     {
         circleDistance=1f;
         circleRadius=.5f;

@@ -28,30 +28,20 @@ public class FishA : AbstractFish
         // else {
         // actionQueue.Enqueue(new NPCAction(new Wander()));
         // }
-        
-        NPCAction wander = new NPCAction(new Wander());
-        wander.Execute(steerable);
-        // Apply the forces on the steerable that is performing this action
-		steerable.ApplyForces (Time.fixedDeltaTime);
+        PushAction(GetID(), new Wander());
     }
     
     public override void ReactToPlayer(Transform player)
     {
         // reactionToPlayer.Execute(steerable);
-        NPCAction current = new NPCAction(new Seek());
-        current.Execute(steerable);
-        
-        // Apply the forces on the steerable that is performing this action
-		steerable.ApplyForces (Time.fixedDeltaTime);
+        Seek seek = new Seek(player);
+        PushAction(-1, seek);
     }
     
     public override void ReactToNPC(Transform other)
     {
         // reactionToPlayer.Execute(reactionSpeed);
-        NPCAction current = new NPCAction(new Seek());
-        current.Execute(steerable);
-        
-        // Apply the forces on the steerable that is performing this action
-		steerable.ApplyForces (Time.fixedDeltaTime);
+        Seek seek = new Seek(other);
+        PushAction(-2, seek);
     }
 }
