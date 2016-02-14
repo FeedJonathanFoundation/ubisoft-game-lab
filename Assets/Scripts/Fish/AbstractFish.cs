@@ -7,15 +7,14 @@ public abstract class AbstractFish : LightSource
 {
 
     /** The steerable component attached to the GameObject performing this action. */
-	protected Steerable steerable;
+    protected Steerable steerable;
 
-	// The steering behaviors to apply every frame
-	// public SteeringBehavior[] steeringBehaviors;
+    // The steering behaviors to apply every frame
     public NPCAction[] steeringBehaviors;
     public Queue<NPCAction> actionQueue;
 
-	// The condition that must be met for this action to return 'Success'
-	public StoppingCondition stoppingCondition;
+    // The condition that must be met for this action to return 'Success'
+    public StoppingCondition stoppingCondition;
 
     // public int movementSpeed;
     // public int reactionSpeed;
