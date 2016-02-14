@@ -30,6 +30,15 @@ public class Player : LightSource
     [Tooltip("If true, the lights are enabled on scene start.")]
     public bool defaultLightStatus = true;
 
+    [Tooltip("Time interval for lost of lights while lights are on")]
+    public float lostOfLightTime;
+
+    [Tooltip("Amount of light lost while lights are turned on")]
+    public float energyCostLightToggle;
+
+    [Tooltip("Energy needed to activate light and that light will turn off if reached")]
+    public float minimalEnergyRestrictionToggleLights;
+
     /** Caches the player's components */
     private PlayerMovement movement;
     private PlayerLightToggle lightToggle;
@@ -44,7 +53,7 @@ public class Player : LightSource
        transform = GetComponent<Transform>();
        rigidbody = GetComponent<Rigidbody>();
        movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, thrustEnergyCost, transform, rigidbody, this.LightEnergy);
-       lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus);
+       lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
        this.LightEnergy.LightDepleted += OnLightDepleted;
        this.isDead = false;
        LoadGame();
@@ -92,10 +101,11 @@ public class Player : LightSource
     /// </summary>
     private void LightControl()
     {
-        if (Input.GetButtonDown("LightToggle"))
+        if (Input.GetButtonDown("LightToggle") && minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
         {
             lightToggle.ToggleLights();
         }
+        lightToggle.LostOfLight(lostOfLightTime, energyCostLightToggle);
     }
 
     private void Restart()
