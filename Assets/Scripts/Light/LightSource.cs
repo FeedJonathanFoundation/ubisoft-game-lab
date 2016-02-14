@@ -9,43 +9,29 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Collider))]
 public class LightSource : MonoBehaviour
 {
-    /// <summary>
-    /// If true, this GameObject can absorb other GameObjects with a LightSource
-    /// component
-    /// </summary>
+    [Tooltip("If true, this GameObject can absorb other GameObjects with a LightSource component")]
     public bool canAbsorb;
 
-    /// <summary>
-    /// The amount of light drained per second from other light sources.
-    /// </summary>
     [Tooltip("The higher the value, the faster light is absorbed from other light sources")]
     public float absorptionRate = 15;
 
     [Tooltip("The default amount of energy this light source holds")]
     public float defaultEnergy = 10;
-    
+
     [Tooltip("If true, the light source has infinite energy")]
     public bool debugInfiniteLight = false;
 
     // The light sources this GameObject is touching
     private List<LightSource> lightsInContact = new List<LightSource>();
 
-    // Cached components
     private LightEnergy lightEnergy;
-
 
     public virtual void Awake()
     {
-        // Cache components
         lightEnergy = new LightEnergy(defaultEnergy, gameObject, debugInfiniteLight);
     }
 
-    void Start()
-    {
-
-    }
-
-    void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         // Cycle through each light source being touched by this GameObject
         for (int i = 0; i < lightsInContact.Count; i++)
@@ -97,7 +83,7 @@ public class LightSource : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter(Collider otherCollider)
+    public virtual void OnTriggerEnter(Collider otherCollider)
     {
         LightSource otherLightSource = otherCollider.GetComponent<LightSource>();
 
@@ -108,10 +94,8 @@ public class LightSource : MonoBehaviour
         }
     }
 
-    public void OnTriggerExit(Collider otherCollider)
+    public virtual void OnTriggerExit(Collider otherCollider)
     {
-        //Debug.Log("LEFT light absorber: " + otherCollider.name);
-
         LightSource otherLightSource = otherCollider.GetComponent<LightSource>();
 
         if (otherLightSource)
