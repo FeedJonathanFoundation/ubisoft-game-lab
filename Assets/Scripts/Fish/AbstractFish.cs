@@ -10,13 +10,11 @@ public abstract class AbstractFish : MonoBehaviour
 	protected Steerable steerable;
 
 	// The steering behaviors to apply
-    public Dictionary<int, NPCActionable> actionDirectory;
-
-
+    public PriorityDictionary actions;
+    
 	// The condwition that must be met for this action to return 'Success'
 	public StoppingCondition stoppingCondition;
     
-    private int activePriority = 0;
     static int globalId = 0;
     private int myId;
     
@@ -24,7 +22,7 @@ public abstract class AbstractFish : MonoBehaviour
     {
         myId = globalId++;
 
-        actionDirectory = new Dictionary<int, NPCActionable>();
+        actions = new PriorityDictionary();
 
         // Cache the 'Steerable' component attached to the GameObject performing this action
 		steerable = transform.GetComponent<Steerable>();
@@ -37,36 +35,9 @@ public abstract class AbstractFish : MonoBehaviour
 		stoppingCondition.Init();
         
         Move();
-        
     }
     
     public int GetID() { return myId; }
-    
-    public void PushAction(int id, NPCActionable action)
-    {
-        if (action.priority > activePriority)
-        {
-            activePriority = action.priority;
-        }
-        if (!actionDirectory.ContainsKey(id)) 
-        {
-            actionDirectory.Add(id, action);
-        }
-    }
-    
-    public void RemoveAction(int id)
-    {
-        NPCActionable action;
-        if (actionDirectory.TryGetValue(id, out action)) 
-        {
-            // priority 0 is a fallback strategy (i.e. wander)
-            if (action.priority != 0) 
-            {
-                actionDirectory.Remove(id);
-            }
-        }
-        //todo go to a sensible activePriority.
-    }
 
     void Update()
     {        
@@ -78,15 +49,11 @@ public abstract class AbstractFish : MonoBehaviour
 			return;
 		}
         
-        foreach(KeyValuePair<int, NPCActionable> entry in actionDirectory)
+        Dictionary<int, NPCActionable> activeActions = actions.GetActiveDictionary(); 
+        foreach(KeyValuePair<int, NPCActionable> entry in activeActions)
         {
-            NPCActionable actionable = entry.Value;
-            if(actionable.priority == activePriority)
-            {
-                actionable.Execute(steerable);
-            }    
+            entry.Value.Execute(steerable);
         }
-        // actionDirectory.Clear();
     }
 
     void FixedUpdate() 
@@ -113,7 +80,7 @@ public abstract class AbstractFish : MonoBehaviour
         if (other.gameObject.CompareTag("Fish")) 
         {
             int otherID = other.GetComponent<AbstractFish>().GetID();
-            RemoveAction(otherID);
+            actions.RemoveAction(otherID);
         }
     }
     
