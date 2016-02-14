@@ -8,7 +8,8 @@ public class Seek : NPCActionable
     
     public float strengthMultiplier = 9.9f;
     
-    public Seek(int priority, Transform transform) {
+    public Seek(int priority, Transform transform) 
+    {
         this.priority = priority;
         targetTransform = transform;
     }

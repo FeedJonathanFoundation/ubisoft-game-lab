@@ -18,8 +18,7 @@ public abstract class AbstractFish : MonoBehaviour
     private int activePriority = 0;
     static int globalId = 0;
     private int myId;
-    public int GetID() { return myId; }
-
+    
     void Awake() 
     {
         myId = globalId++;
@@ -39,6 +38,8 @@ public abstract class AbstractFish : MonoBehaviour
         Move();
         
     }
+    
+    public int GetID() { return myId; }
     
     public void PushAction(int id, NPCActionable action)
     {

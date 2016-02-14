@@ -19,6 +19,9 @@ public class FishA : AbstractFish
     
     public override void ReactToNPC(Transform other)
     {
+        // GameObject go = other.gameObject;
+        AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
+        int id = fish.GetID();
         Seek seek = new Seek(1, other);
         PushAction(-2, seek);
     }
