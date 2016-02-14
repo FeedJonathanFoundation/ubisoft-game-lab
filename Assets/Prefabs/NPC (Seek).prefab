@@ -51,6 +51,7 @@ GameObject:
   - 114: {fileID: 11475560}
   - 114: {fileID: 11490356}
   - 114: {fileID: 11478542}
+  - 114: {fileID: 11424892}
   m_Layer: 0
   m_Name: NPC (Seek)
   m_TagString: Fish
@@ -82,7 +83,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158476}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.13, y: -1.74, z: 0.2163086}
+  m_LocalPosition: {x: 0.17, y: 1.98, z: 0.2163086}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 483828}
@@ -96,7 +97,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 124330}
-  m_LocalRotation: {x: 0.54346836, y: -0.45300987, z: -0.4560242, w: -0.53987604}
+  m_LocalRotation: {x: -0.7071068, y: 0.00000034560696, z: -0.7071067, w: -0.00000011520234}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -109,7 +110,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173428}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.66, z: 0}
+  m_LocalPosition: {x: 0, y: 0.99, z: 0}
   m_LocalScale: {x: 0.008, y: 0.008, z: 0.001}
   m_Children: []
   m_Father: {fileID: 416946}
@@ -121,7 +122,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 145242}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.255, y: 2.845, z: -0.1081543}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 416946}
@@ -280,7 +281,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 6
   m_Type: 2
-  m_Color: {r: 0.4852941, g: 0.9574036, b: 1, a: 1}
+  m_Color: {r: 0.029141441, g: 0.07660036, b: 0.08088237, a: 1}
   m_Intensity: 8
   m_Range: 1.34
   m_SpotAngle: 30
@@ -304,6 +305,18 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &11424892
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9336e828e5f9be44ea437c5c6d499375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightToScaleRatio: 0.07
 --- !u!114 &11452868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -315,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4906f634a9b27624c9e41234e3122bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightToRangeRatio: 2
+  lightToRangeRatio: 0.2
 --- !u!114 &11475560
 MonoBehaviour:
   m_ObjectHideFlags: 1
