@@ -5,57 +5,28 @@ using System.Collections;
 // Run away upon close contact
 public class FishA : AbstractFish
 {
-
-    // SteeringBehavior steeringBehavior;
-    NPCAction steeringBehavior;
-
-    NPCAction reactionToPlayer;
-
-    // public FishA() { }
-
-    // public FishA(NPCAction reactionToPlayer) : base(reactionToPlayer)
-    // {
-    //     this.reactionToPlayer = reactionToPlayer;
-    // }
+    
     public override void Awake()
     {
         base.Awake(); // call parent LightSource Awake() first
     }
 
-    public override void Move()
+    public override void Move() 
     {
-        // movement.Execute(movementSpeed);
-        // if (actionQueue.Count > 0) {
-        //     NPCAction current = actionQueue.Dequeue();
-        //     current.Execute(steerable);
-        // }
-        // else {
-        // actionQueue.Enqueue(new NPCAction(new Wander()));
-        // }
-
-        // NPCAction wander = new NPCAction(new Wander());
-        // wander.Execute(steerable);
-        // // Apply the forces on the steerable that is performing this action
-		// steerable.ApplyForces (Time.fixedDeltaTime);
+        actions.InsertAction(GetID(), new Wander(0));
     }
-
+    
     public override void ReactToPlayer(Transform player)
     {
-        // reactionToPlayer.Execute(steerable);
-        //NPCAction current = new NPCAction(new Seek());
-        //current.Execute(steerable);
-
-        // Apply the forces on the steerable that is performing this action
-		steerable.ApplyForces(Time.fixedDeltaTime);
+        Seek seek = new Seek(1, player);
+        actions.InsertAction(-1, seek);
     }
-
+    
     public override void ReactToNPC(Transform other)
     {
-        // reactionToPlayer.Execute(reactionSpeed);
-        // NPCAction current = new NPCAction(new Seek());
-        // current.Execute(steerable);
-
-        // Apply the forces on the steerable that is performing this action
-		steerable.ApplyForces (Time.fixedDeltaTime);
+        AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
+        int id = fish.GetID();
+        Seek seek = new Seek(1, other);
+        actions.InsertAction(id, seek);
     }
 }
