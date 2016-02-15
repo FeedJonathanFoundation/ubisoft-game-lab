@@ -16,7 +16,10 @@ public class Seek : NPCActionable
     
 	public override void Execute(Steerable steerable) 
     {
-        steerable.AddSeekForce (targetTransform.position, strengthMultiplier);
+        if (targetTransform)
+        {
+            steerable.AddSeekForce (targetTransform.position, strengthMultiplier);
+        }
     }
     
 }
