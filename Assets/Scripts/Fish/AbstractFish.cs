@@ -10,32 +10,21 @@ public abstract class AbstractFish : LightSource
     protected Steerable steerable;
 
     // The steering behaviors to apply every frame
-    public NPCAction[] steeringBehaviors;
-    public Queue<NPCAction> actionQueue;
+    protected PriorityDictionary actions;
 
     // The condition that must be met for this action to return 'Success'
-    public StoppingCondition stoppingCondition;
-
-    // public int movementSpeed;
-    // public int reactionSpeed;
-
-    private bool isProximateToPlayer;
-    private bool isProximateToNPC;
-    Transform player;                           // Reference to player's position
-    Transform other;
-    Transform target;
-
-    // public AbstractFish() { }
-    // public AbstractFish(NPCAction reactionToPlayer) { }
+    protected StoppingCondition stoppingCondition = new StoppingCondition();
+    
+    static int globalId = 0;
+    private int myId;
 
     public override void Awake()
     {
         base.Awake(); // call parent LightSource Awake() first
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        isProximateToPlayer = false;
-        isProximateToNPC = false;
-
-        // actionQueue = new Queue<NPCAction>();
+        
+        // Initialize action priority dictionary
+        actions = new PriorityDictionary();
+        Move();
 
         // Cache the 'Steerable' component attached to the GameObject performing this action
 		steerable = transform.GetComponent<Steerable>();
@@ -48,58 +37,52 @@ public abstract class AbstractFish : LightSource
 		stoppingCondition.Init();
     }
 
+    void Update()
+    {        
+        if(stoppingCondition.Complete())
+		{
+			return;
+		}
+        
+        List<NPCActionable> activeActions = actions.GetActiveActions(); 
+        foreach(NPCActionable action in activeActions)
+        {
+            action.Execute(steerable);
+        }
+    }
 
     void FixedUpdate()
     {
-        // if (player light == on) { Approach(player); }
-
-        if (stoppingCondition.Complete())
-		{
-            // if player health <=0
-            // if own health <=0
-            if (IsDead()) { this.gameObject.SetActive(false); }
-			return;
-		}
-
-        if (isProximateToPlayer) { ReactToPlayer(player); }
-        else if (isProximateToNPC) { ReactToNPC(other); }
-        else { Move(); }
-
+        steerable.ApplyForces (Time.fixedDeltaTime); 
+    }
+    
+    // Returns the fish's unique ID
+    public int GetID()
+    {
+        return myId;
     }
 
-    // Detects if fish is close to the player
-    public override void OnTriggerEnter(Collider other)
+    // Detects if fish is close to another character
+    void OnTriggerEnter(Collider other) 
     {
-        //base.OnTriggerEnter(other);
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player")) 
         {
-            isProximateToPlayer = true;
+            ReactToPlayer(other.gameObject.transform);
         }
-        else if (other.gameObject.tag == "Fish")
+        else if (other.gameObject.CompareTag("Fish")) 
         {
-            isProximateToNPC = true;
-            this.other = other.gameObject.transform;
+            ReactToNPC(other.gameObject.transform);
         }
     }
-
-    // Detects if fish is no longer close to the player
-    void OnTriggerExit(Collider other)
+    
+    // Detects if fish is no longer close to another character
+    void OnTriggerExit(Collider other) 
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Fish")) 
         {
-            isProximateToPlayer = false;
+            int otherID = other.GetComponent<AbstractFish>().GetID();
+            actions.RemoveAction(otherID);
         }
-        else if (other.gameObject.tag == "Fish")
-        {
-            isProximateToNPC = false;
-        }
-    }
-
-    public bool IsDead()
-    {
-        // if (enemyHealth >= 0) { return true; }
-        // else { return false; }
-        return false;
     }
 
     // How the fish moves when it is not proximate to the player
