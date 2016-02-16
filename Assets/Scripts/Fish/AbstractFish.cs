@@ -13,7 +13,7 @@ public abstract class AbstractFish : LightSource
     protected PriorityDictionary actions;
 
     // The condition that must be met for this action to return 'Success'
-    protected StoppingCondition stoppingCondition;
+    protected StoppingCondition stoppingCondition = new StoppingCondition();
     
     static int globalId = 0;
     private int myId;

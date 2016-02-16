@@ -15,7 +15,7 @@ public class PriorityDictionary
     private Dictionary<int, NPCActionable> lowPriorityAction;
     private Dictionary<int, NPCActionable> medPriorityAction;
     private Dictionary<int, NPCActionable> highPriorityAction;
-    private List<NPCActionable> constantAction;
+    private List<NPCActionable> constantActions;
     
     public int activePriority;
     
@@ -24,7 +24,7 @@ public class PriorityDictionary
         lowPriorityAction = new Dictionary<int, NPCActionable>();
         medPriorityAction = new Dictionary<int, NPCActionable>();
         highPriorityAction = new Dictionary<int, NPCActionable>();
-        constantAction = new List<NPCActionable>();
+        constantActions = new List<NPCActionable>();
         
         activePriority = 0;
     }
@@ -52,9 +52,9 @@ public class PriorityDictionary
     
     public void InsertConstantPriority(NPCActionable action)
     {
-        if (!constantAction.Contains(action))
+        if (!constantActions.Contains(action))
         {
-                constantAction.Add(action);
+                constantActions.Add(action);
         }
     }
     
@@ -85,11 +85,11 @@ public class PriorityDictionary
         }
     }
     
-    public void RemoveConstantPriority(NPCActionable action)
+    public void RemoveConstantAction(NPCActionable action)
     {
-        if (!constantAction.Contains(action))
+        if (!constantActions.Contains(action))
         {
-                constantAction.Add(action);
+                constantActions.Add(action);
         }
     }
 
@@ -161,7 +161,7 @@ public class PriorityDictionary
     
     public List<NPCActionable> GetActiveActions()
     {
-        List<NPCActionable> activeList = constantAction;
+        List<NPCActionable> activeList = constantActions;
         Dictionary<int, NPCActionable> activeDictionary; 
         switch(activePriority)
         {
