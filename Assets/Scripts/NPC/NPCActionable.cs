@@ -23,6 +23,12 @@ public enum NPCActionType
 public abstract class NPCActionable
 {
     public int priority;
+    
+    public NPCActionable(int priority)
+    {
+        this.priority = priority;
+    }
+    
 	// void Execute(Steerable steerable, SteeringBehavior steeringBehavior);
     public abstract void Execute(Steerable steerable);
 }
