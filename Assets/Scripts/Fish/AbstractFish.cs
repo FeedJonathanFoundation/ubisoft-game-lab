@@ -10,10 +10,10 @@ public abstract class AbstractFish : LightSource
     protected Steerable steerable;
 
     // The steering behaviors to apply every frame
-    public PriorityDictionary actions;
+    protected PriorityDictionary actions;
 
     // The condition that must be met for this action to return 'Success'
-	public StoppingCondition stoppingCondition;
+	protected StoppingCondition stoppingCondition;
     
     static int globalId = 0;
     private int myId;
