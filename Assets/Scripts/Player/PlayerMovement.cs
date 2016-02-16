@@ -75,9 +75,11 @@ public class PlayerMovement
     {
         // Spawn a light mass at the position of the character's mass ejector
         GameObject lightMass = GameObject.Instantiate(lightBallPrefab);
-        lightMass.transform.position = massEjectionTransform.position;
+        lightMass.transform.position = massEjectionTransform.position;  
         // Push the light mass in the given direction
         lightMass.GetComponent<Rigidbody>().AddForce(thrustForce * direction, ForceMode.Impulse);
+        //delete mass after an amount of time
+        GameObject.Destroy(lightMass, 1.0f);
 
         // Push the character in the opposite direction that the mass was ejected
         rigidbody.AddForce(-thrustForce * direction, ForceMode.Impulse);
