@@ -26,8 +26,8 @@ public class Wander : NPCActionable
     
     public float strengthMultiplier = 9.9f;
     
-    public Wander(int priority) {
-        this.priority = priority;
+    public Wander(int priority) : base(priority) 
+    {
     }
     
     // Need to be able to set these floats elsewhere;
