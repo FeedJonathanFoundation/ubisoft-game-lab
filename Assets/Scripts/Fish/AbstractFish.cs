@@ -41,16 +41,13 @@ public abstract class AbstractFish : LightSource
     {        
         if(stoppingCondition.Complete())
 		{
-            // if player health <=0
-            // if own health <=0
-            if (IsDead()) { this.gameObject.SetActive(false); }
 			return;
 		}
         
-        Dictionary<int, NPCActionable> activeActions = actions.GetActiveDictionary(); 
-        foreach(KeyValuePair<int, NPCActionable> entry in activeActions)
+        List<NPCActionable> activeActions = actions.GetActiveActions(); 
+        foreach(NPCActionable action in activeActions)
         {
-            entry.Value.Execute(steerable);
+            action.Execute(steerable);
         }
     }
 
@@ -86,13 +83,6 @@ public abstract class AbstractFish : LightSource
             int otherID = other.GetComponent<AbstractFish>().GetID();
             actions.RemoveAction(otherID);
         }
-    }
-
-    public bool IsDead()
-    {
-        // if (enemyHealth >= 0) { return true; }
-        // else { return false; }
-        return false;
     }
 
     // How the fish moves when it is not proximate to the player

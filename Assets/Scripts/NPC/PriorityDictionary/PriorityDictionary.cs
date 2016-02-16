@@ -2,11 +2,20 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum Priority
+{
+    low = 0,
+    med = 1,
+    high = 2,
+    constant = -1
+}
+
 public class PriorityDictionary
 {
-    public Dictionary<int, NPCActionable> lowPriorityAction;
-    public Dictionary<int, NPCActionable> medPriorityAction;
-    public Dictionary<int, NPCActionable> highPriorityAction;
+    private Dictionary<int, NPCActionable> lowPriorityAction;
+    private Dictionary<int, NPCActionable> medPriorityAction;
+    private Dictionary<int, NPCActionable> highPriorityAction;
+    private List<NPCActionable> constantAction;
     
     public int activePriority;
     
@@ -15,6 +24,7 @@ public class PriorityDictionary
         lowPriorityAction = new Dictionary<int, NPCActionable>();
         medPriorityAction = new Dictionary<int, NPCActionable>();
         highPriorityAction = new Dictionary<int, NPCActionable>();
+        constantAction = new List<NPCActionable>();
         
         activePriority = 0;
     }
@@ -29,9 +39,22 @@ public class PriorityDictionary
             case 1:
                 InsertMedPriority(id, action);
                 break;
-            default:
+            case 0:
                 InsertLowPriority(id, action);
                 break;
+            case -1:
+                InsertConstantPriority(action);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    public void InsertConstantPriority(NPCActionable action)
+    {
+        if (!constantAction.Contains(action))
+        {
+                constantAction.Add(action);
         }
     }
     
@@ -62,6 +85,14 @@ public class PriorityDictionary
         }
     }
     
+    public void RemoveConstantPriority(NPCActionable action)
+    {
+        if (!constantAction.Contains(action))
+        {
+                constantAction.Add(action);
+        }
+    }
+
     public bool RemoveLowPriority(int id)
     {
         if (lowPriorityAction.ContainsKey(id))
@@ -105,14 +136,15 @@ public class PriorityDictionary
             case 1:
                 if(RemoveMedPriority(id)) { break; }
                 else { goto default; }
+            case 0:
+                RemoveLowPriority(id);
+                break;
             default:
-                RemoveHighPriority(id);
                 break;
         }
         UpdatePriority();
     }
-    
-    
+
     public void UpdatePriority()
     {
         int count = 2;
@@ -127,22 +159,30 @@ public class PriorityDictionary
         activePriority = count;
     }
     
-    public Dictionary<int, NPCActionable> GetActiveDictionary()
+    public List<NPCActionable> GetActiveActions()
     {
-        Dictionary<int, NPCActionable> temp; 
+        List<NPCActionable> activeList = constantAction;
+        Dictionary<int, NPCActionable> activeDictionary; 
         switch(activePriority)
         {
             case 2:
-                temp = highPriorityAction;
+                activeDictionary = highPriorityAction;
                 break;
             case 1:
-                temp = medPriorityAction;
+                activeDictionary = medPriorityAction;
+                break;
+            case 0:
+                activeDictionary = lowPriorityAction;
                 break;
             default:
-                temp = lowPriorityAction;
+                activeDictionary = lowPriorityAction;
                 break;
         }
-        return temp;
+        
+        foreach(NPCActionable action in activeDictionary.Values) {
+            activeList.Add(action);
+        }
+        return activeList;
     }
 
 }
