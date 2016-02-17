@@ -52,7 +52,7 @@ public class PlayerLightToggle : MonoBehaviour
     /// <summary>
     /// If true, the lights are enabled and the GameObject is visible.
     /// </summary>
-    public bool IsVisible()
+    public bool GetLightsEnabled()
     {
         if (this.lightsEnabled)
         {

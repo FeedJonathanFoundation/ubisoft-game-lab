@@ -41,7 +41,7 @@ public class Player : LightSource
 
     /** Caches the player's components */
     private PlayerMovement movement;
-    public PlayerLightToggle lightToggle;
+    private PlayerLightToggle lightToggle;
     private bool isDead; // determines is current player is dead
     private new Transform transform;
     private new Rigidbody rigidbody;
@@ -135,8 +135,8 @@ public class Player : LightSource
     /// <summary>
     /// If player lights are on, player is visible
     /// </summary>
-    public bool IsVisible()
+    public bool IsDetectable()
     {
-        return lightToggle.IsVisible();
+        return lightToggle.GetLightsEnabled();
     }
 }
