@@ -42,8 +42,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnTime: 1
   spawnObject:
-  - {fileID: 148076, guid: 0773fb1a509f1460bb7870124b9a4d52, type: 2}
-  - {fileID: 0}
+  - {fileID: 134216, guid: bf98822168cb648a192b517ed10381c5, type: 2}
   overrideSpawnLocations: 0
   spawnPoints:
   - {fileID: 0}
@@ -72,6 +71,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: spawnObject.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
@@ -82,7 +85,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: spawnObject.Array.data[0]
       value: 
-      objectReference: {fileID: 148076, guid: 0773fb1a509f1460bb7870124b9a4d52, type: 2}
+      objectReference: {fileID: 134216, guid: bf98822168cb648a192b517ed10381c5, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 156226}
