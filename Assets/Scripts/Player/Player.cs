@@ -142,5 +142,14 @@ public class Player : LightSource
     {
         get { return this.currentLevel; }
     }
+    
+    /// <summary>
+    /// If player lights are on, player is visible
+    /// </summary>
+    public bool IsDetectable()
+    {
+        return lightToggle.LightsEnabled;
+    }
+
 
 }

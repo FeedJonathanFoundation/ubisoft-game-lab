@@ -6,7 +6,7 @@ public class Seek : NPCActionable
 {   
     private Transform targetTransform;
     
-    public float strengthMultiplier = 9.9f;
+    public float strengthMultiplier = 19.9f;
     
     public Seek(int priority, Transform transform) : base(priority)
     {
@@ -17,8 +17,20 @@ public class Seek : NPCActionable
     {
         if (targetTransform)
         {
-            steerable.AddSeekForce(targetTransform.position, strengthMultiplier);
+            // If player's lights are on, seek player
+            if (targetTransform.gameObject.CompareTag("Player")) 
+            {
+                Player player = targetTransform.gameObject.GetComponent<Player>();
+                if (player.IsDetectable())
+                {
+                    steerable.AddSeekForce(targetTransform.position, strengthMultiplier);
+                }
+            }
+            else
+            {
+                steerable.AddSeekForce(targetTransform.position, strengthMultiplier);
+            }
+            
         }
     }
-    
 }

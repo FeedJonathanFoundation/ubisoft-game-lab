@@ -33,7 +33,6 @@ public class PlayerLightToggle
 
     public void LostOfLight(float lostOfLightTimeInterval, float energyCostLightToggle)
     {
-        
         if (this.lightsEnabled)
         {
             this.timerLostOfLight += Time.deltaTime;
@@ -47,6 +46,17 @@ public class PlayerLightToggle
                     this.ToggleLights();
                 }
             }
+        }
+    }
+    
+    /// <summary>
+    /// If true, the lights are enabled and the GameObject is visible.
+    /// </summary>
+    public bool LightsEnabled
+    {
+        get
+        { 
+            return this.lightsEnabled;
         }
     }
 }
