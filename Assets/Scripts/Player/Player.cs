@@ -1,6 +1,5 @@
 using UnityEngine;
-using System;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Player : LightSource
@@ -49,7 +48,7 @@ public class Player : LightSource
     private bool isDead; // determines is current player is dead
     private new Transform transform;
     private new Rigidbody rigidbody;
-    private String levelName;
+    private int currentLevel;
 
     // Use this for initialization
     public override void Awake()
@@ -61,7 +60,7 @@ public class Player : LightSource
        lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
        this.LightEnergy.LightDepleted += OnLightDepleted;
        this.isDead = false;
-       this.levelName = Application.loadedLevelName;
+       this.currentLevel = SceneManager.GetActiveScene().buildIndex;
        if (!disableCheckpoints) { LoadGame(); }
     }
 
@@ -123,7 +122,7 @@ public class Player : LightSource
     private void LoadGame()
     {
        PlayerData data = DataManager.LoadFile();
-       if (data != null && data.levelName == this.levelName)
+       if (data != null && data.levelID == this.currentLevel)
        {
            transform.position = DataManager.Vector3FromString(data.playerPosition);
        }
@@ -139,9 +138,9 @@ public class Player : LightSource
         Debug.Log("Game OVER! Press 'R' to restart!");
     }
 
-    public String LevelName
+    public int CurrentLevel
     {
-        get { return this.levelName; }
+        get { return this.currentLevel; }
     }
 
 }

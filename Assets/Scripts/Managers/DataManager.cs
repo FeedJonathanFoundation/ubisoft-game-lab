@@ -12,6 +12,9 @@ public static class DataManager
 {
     private static String fileName = ".playerInfo.dat";
 
+    /// <summary>
+    /// Saves last player position on the current level on the disk
+    /// </summary>
     public static void SaveFile(PlayerData data)
     {
         BinaryFormatter bf = new BinaryFormatter();
@@ -21,6 +24,9 @@ public static class DataManager
         Debug.Log("Saved!");
     }
 
+    /// <summary>
+    /// Loads last player position on the last current level
+    /// </summary>
     public static PlayerData LoadFile()
     {
         if (File.Exists(Application.persistentDataPath + fileName))
@@ -106,5 +112,5 @@ public class PlayerData
     public float playerEnergy;
     public String playerPosition;
     public String playerScale;
-    public String levelName;
+    public int levelID;
 }
