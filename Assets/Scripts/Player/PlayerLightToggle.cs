@@ -49,4 +49,19 @@ public class PlayerLightToggle
             }
         }
     }
+    
+    /// <summary>
+    /// If true, the lights are enabled and the GameObject is visible.
+    /// </summary>
+    public bool GetLightsEnabled()
+    {
+        if (this.lightsEnabled)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
