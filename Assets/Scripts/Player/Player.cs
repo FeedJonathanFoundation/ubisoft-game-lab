@@ -148,7 +148,7 @@ public class Player : LightSource
     /// </summary>
     public bool IsDetectable()
     {
-        return lightToggle.GetLightsEnabled();
+        return lightToggle.LightsEnabled;
     }
 
 
