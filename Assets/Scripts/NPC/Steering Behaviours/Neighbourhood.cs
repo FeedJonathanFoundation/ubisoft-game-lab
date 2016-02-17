@@ -41,7 +41,7 @@ public class Neighbourhood : MonoBehaviour
 		Debug.Log (log);
 	}*/
 
-    void OnTriggerEnter2D(Collider2D collider)
+    void OnTriggerEnter(Collider collider)
     {
         // If the collider which entered the trigger volume is on the correct layer
         if(((1 << collider.gameObject.layer) & layerToDetect) == layerToDetect)
@@ -53,7 +53,7 @@ public class Neighbourhood : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D collider)
+    void OnTriggerExit(Collider collider)
     {
         // If the collider which left the trigger volume belongs to the layer which is tracked by this neighbourhood
 		if(((1 << collider.gameObject.layer) & layerToDetect) == layerToDetect)
