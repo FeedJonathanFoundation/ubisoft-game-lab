@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Player : LightSource
@@ -39,12 +39,16 @@ public class Player : LightSource
     [Tooltip("Energy needed to activate light and that light will turn off if reached")]
     public float minimalEnergyRestrictionToggleLights;
 
+    [Tooltip("If true, checkpoints are not used and user is spawned at the initial position")]
+    public bool disableCheckpoints;
+
     /** Caches the player's components */
     private PlayerMovement movement;
     private PlayerLightToggle lightToggle;
     private bool isDead; // determines is current player is dead
     private new Transform transform;
     private new Rigidbody rigidbody;
+    private int currentLevel;
 
     // Use this for initialization
     public override void Awake()
@@ -56,12 +60,8 @@ public class Player : LightSource
        lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
        this.LightEnergy.LightDepleted += OnLightDepleted;
        this.isDead = false;
-       LoadGame();
-    }
-
-    void Start()
-    {
-
+       this.currentLevel = SceneManager.GetActiveScene().buildIndex;
+       if (!disableCheckpoints) { LoadGame(); }
     }
 
     // Update is called once per frame
@@ -122,7 +122,7 @@ public class Player : LightSource
     private void LoadGame()
     {
        PlayerData data = DataManager.LoadFile();
-       if (data != null)
+       if (data != null && data.levelID == this.currentLevel)
        {
            transform.position = DataManager.Vector3FromString(data.playerPosition);
        }
@@ -136,6 +136,11 @@ public class Player : LightSource
     {
         isDead = true;
         Debug.Log("Game OVER! Press 'R' to restart!");
+    }
+
+    public int CurrentLevel
+    {
+        get { return this.currentLevel; }
     }
 
 }
