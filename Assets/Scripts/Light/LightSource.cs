@@ -31,7 +31,7 @@ public class LightSource : MonoBehaviour
         lightEnergy = new LightEnergy(defaultEnergy, gameObject, debugInfiniteLight);
     }
 
-    public virtual void FixedUpdate()
+    public virtual void Update()
     {
         // Cycle through each light source being touched by this GameObject
         for (int i = 0; i < lightsInContact.Count; i++)
@@ -51,7 +51,7 @@ public class LightSource : MonoBehaviour
                 LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
 
                 // Calculate the amount of light to absorb from the other light source
-                float lightToAbsorb = absorptionRate * Time.fixedDeltaTime;
+                float lightToAbsorb = absorptionRate * Time.deltaTime;
 
                 // Transfer light energy from the other light source to this one
                 float lightAbsorbed = lightEnergyToAbsorb.Deplete(lightToAbsorb);
