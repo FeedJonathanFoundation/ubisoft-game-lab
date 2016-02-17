@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 using System.IO;
 using Parse;
 
@@ -29,20 +30,33 @@ public static class DataManager
     /// </summary>
     public static PlayerData LoadFile()
     {
+        PlayerData data = null;
+        
         if (File.Exists(Application.persistentDataPath + fileName))
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + fileName, FileMode.Open);
-            PlayerData data = (PlayerData) bf.Deserialize(file);
-            file.Close();
-            Debug.Log("Loaded");
-            return data;
+            try 
+            {
+                data = (PlayerData) bf.Deserialize(file);
+                Debug.Log("Loaded");
+            }
+            catch (SerializationException e) 
+            {
+                Debug.Log("Failed to serialize. Reason: " + e.Message);
+                throw;
+            }
+            finally 
+            {
+                file.Close();
+            }
         }
         else
         {
             Debug.Log("No saved progress! File does not exist :(");
-            return null;
         }
+        
+        return data;
     }
 
 
