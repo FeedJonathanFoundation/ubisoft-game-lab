@@ -60,6 +60,8 @@ public class SpawnVolume : MonoBehaviour {
     /// Tracks number of fish spawned.
     /// </summary>
     private int fishCount;
+    
+    private bool disabled;
 
     /// <summary>
     /// Initializes fish count to 0,
@@ -68,6 +70,8 @@ public class SpawnVolume : MonoBehaviour {
     /// </summary>
 	void Start () 
     {
+        disabled = false;
+        
         fishCount = 0;
         for (int i = 0; i < minFishCount; i++)
         {
@@ -83,7 +87,7 @@ public class SpawnVolume : MonoBehaviour {
     /// </summary>
     void Spawn()
     {
-        // if (player.isDead) { return; // exit function }
+        if (disabled) { return; }
         if (fishCount >= maxFishCount) { return; }
         
         int spawnTypeIndex = ChooseFish();
@@ -171,9 +175,11 @@ public class SpawnVolume : MonoBehaviour {
             // generate random point in sphere collider
             for (int i = 0; i < timeout; i++)
             {
-                if (IsValidSpawnPoint(Random.insideUnitSphere * GetSpawnVolumeRadius(), spawnIndex)) 
+                Vector3 potentialSpawnPoint = transform.position + (Random.insideUnitSphere * GetSpawnVolumeRadius());
+
+                if (IsValidSpawnPoint(potentialSpawnPoint, spawnIndex)) 
                 {
-                    spawnLocation = Random.insideUnitSphere * GetSpawnVolumeRadius();
+                    spawnLocation = potentialSpawnPoint;
                     break;
                 }
             }
@@ -205,6 +211,15 @@ public class SpawnVolume : MonoBehaviour {
             return false; 
         }
         return true;
+    }
+    
+    // If player enters spawn volume, disable spawning
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player")) 
+        {
+            disabled = true;
+        }
     }
     
     public float GetSpawnVolumeRadius()
