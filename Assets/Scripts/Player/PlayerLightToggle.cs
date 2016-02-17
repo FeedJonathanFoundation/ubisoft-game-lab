@@ -55,13 +55,6 @@ public class PlayerLightToggle
     /// </summary>
     public bool GetLightsEnabled()
     {
-        if (this.lightsEnabled)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        get { return this.lightsEnabled; }
     }
 }
