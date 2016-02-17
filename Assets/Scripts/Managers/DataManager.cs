@@ -106,4 +106,5 @@ public class PlayerData
     public float playerEnergy;
     public String playerPosition;
     public String playerScale;
+    public String levelName;
 }
