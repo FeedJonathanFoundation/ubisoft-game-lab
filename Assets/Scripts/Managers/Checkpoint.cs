@@ -25,7 +25,10 @@ public class Checkpoint : LightSource
     
     private void ChangeLevel(int levelID)
     {
-        SceneManager.LoadScene(levelID, LoadSceneMode.Single);
+        if (SceneManager.sceneCountInBuildSettings > levelID)
+        {
+            SceneManager.LoadScene(levelID, LoadSceneMode.Single);
+        }
     }
 
 }
