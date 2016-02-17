@@ -41,7 +41,7 @@ public class Player : LightSource
 
     /** Caches the player's components */
     private PlayerMovement movement;
-    private PlayerLightToggle lightToggle;
+    public PlayerLightToggle lightToggle;
     private bool isDead; // determines is current player is dead
     private new Transform transform;
     private new Rigidbody rigidbody;
@@ -59,12 +59,6 @@ public class Player : LightSource
        LoadGame();
     }
 
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (isDead)
@@ -137,5 +131,12 @@ public class Player : LightSource
         isDead = true;
         Debug.Log("Game OVER! Press 'R' to restart!");
     }
-
+    
+    /// <summary>
+    /// If player lights are on, player is visible
+    /// </summary>
+    public bool IsVisible()
+    {
+        return lightToggle.IsVisible();
+    }
 }

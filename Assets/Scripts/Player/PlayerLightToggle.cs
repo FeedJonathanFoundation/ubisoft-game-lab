@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerLightToggle
+public class PlayerLightToggle : MonoBehaviour
 {
     /// <summary>
     /// If true, the lights that are children of this object are enabled.
@@ -33,7 +33,6 @@ public class PlayerLightToggle
 
     public void LostOfLight(float lostOfLightTimeInterval, float energyCostLightToggle)
     {
-        
         if (this.lightsEnabled)
         {
             this.timerLostOfLight += Time.deltaTime;
@@ -47,6 +46,21 @@ public class PlayerLightToggle
                     this.ToggleLights();
                 }
             }
+        }
+    }
+    
+    /// <summary>
+    /// If true, the lights are enabled and the GameObject is visible.
+    /// </summary>
+    public bool IsVisible()
+    {
+        if (this.lightsEnabled)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
