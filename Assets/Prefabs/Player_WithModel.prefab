@@ -16,6 +16,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &110618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 486090}
+  - 114: {fileID: 11437706}
+  m_Layer: 0
+  m_Name: FlareSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &111516
 GameObject:
   m_ObjectHideFlags: 1
@@ -730,6 +746,7 @@ GameObject:
   - 114: {fileID: 11412234}
   - 114: {fileID: 11481938}
   - 54: {fileID: 5448638}
+  - 114: {fileID: 11421534}
   m_Layer: 9
   m_Name: Player_WithModel
   m_TagString: Player
@@ -853,7 +870,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 424626}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!4 &423914
 Transform:
   m_ObjectHideFlags: 1
@@ -872,15 +889,16 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 198018}
-  m_LocalRotation: {x: 0.15093932, y: 0, z: 0, w: 0.98854303}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 245.8, y: -18.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 486090}
   - {fileID: 454708}
   - {fileID: 455254}
   - {fileID: 423882}
-  - {fileID: 467024}
   - {fileID: 425810}
+  - {fileID: 467024}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &425810
@@ -1063,7 +1081,7 @@ Transform:
   m_LocalScale: {x: 0.32847098, y: 0.32847098, z: 0.32847098}
   m_Children: []
   m_Father: {fileID: 424626}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &455254
 Transform:
   m_ObjectHideFlags: 1
@@ -1075,7 +1093,7 @@ Transform:
   m_LocalScale: {x: 0.32847098, y: 0.32847098, z: 0.32847098}
   m_Children: []
   m_Father: {fileID: 424626}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &456596
 Transform:
   m_ObjectHideFlags: 1
@@ -1141,7 +1159,7 @@ Transform:
   - {fileID: 491566}
   - {fileID: 414588}
   m_Father: {fileID: 424626}
-  m_RootOrder: 3
+  m_RootOrder: 5
 --- !u!4 &468512
 Transform:
   m_ObjectHideFlags: 1
@@ -1259,6 +1277,18 @@ Transform:
   m_LocalScale: {x: 100.00001, y: 99.99999, z: 100}
   m_Children: []
   m_Father: {fileID: 456596}
+  m_RootOrder: 0
+--- !u!4 &486090
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 110618}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071066, w: -0.70710695}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 424626}
   m_RootOrder: 0
 --- !u!4 &488154
 Transform:
@@ -1968,6 +1998,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToScaleRatio: 0.1
+--- !u!114 &11421534
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 198018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b00bf84facc35941942c8a96aaed8ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flareObject: {fileID: 177066, guid: 1481585a8f164c04d9beedd085f2ee2d, type: 2}
+  flareSpawnObject: {fileID: 486090}
+  cooldownTime: 15
+  flareEnergyCost: 2
+  flareCostPercentage: 1.5
 --- !u!114 &11432536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1980,6 +2026,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.02
+--- !u!114 &11437706
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 110618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11439548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2018,7 +2075,7 @@ MonoBehaviour:
   canAbsorb: 1
   absorptionRate: 15
   defaultEnergy: 10
-  debugInfiniteLight: 1
+  debugInfiniteLight: 0
   massEjectionTransform: {fileID: 454708}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
   thrustForce: 1
@@ -2027,6 +2084,7 @@ MonoBehaviour:
   lostOfLightTime: 0
   energyCostLightToggle: 0
   minimalEnergyRestrictionToggleLights: 0
+  disableCheckpoints: 0
 --- !u!114 &11457278
 MonoBehaviour:
   m_ObjectHideFlags: 1
