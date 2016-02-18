@@ -125,6 +125,10 @@ public class Player : LightSource
        if (data != null && data.levelID == this.currentLevel)
        {
            transform.position = DataManager.Vector3FromString(data.playerPosition);
+       } 
+       else 
+       {
+           transform.position = new Vector3(0, 0, 0);                                
        }
     }
 
