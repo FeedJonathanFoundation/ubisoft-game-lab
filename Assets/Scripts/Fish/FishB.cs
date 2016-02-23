@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// Small, easy to kill NPCs
-// Run away upon close contact
-public class FishA : AbstractFish
+// Medium, hard to kill NPCs
+// Seeks smaller fish by default
+// Run away from large fish upon close contact
+public class FishB : AbstractFish
 {
     public override void Awake()
     {
         // call parent LightSource Awake() first
-        base.Awake(); 
+        base.Awake();
     }
 
     public override void Move() 
@@ -18,15 +19,16 @@ public class FishA : AbstractFish
     
     public override void ReactToPlayer(Transform player)
     {
-        Flee flee = new Flee(1, player);
-        actions.InsertAction(-1, flee);
+        Seek seek = new Seek(1, player);
+        actions.InsertAction(-1, seek);
     }
     
     public override void ReactToNPC(Transform other)
     {
+        // Check size, then decide whether or not to eat
         AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
         int id = fish.GetID();
-        Flee flee = new Flee(1, other);
-        actions.InsertAction(id, flee);
+        Seek seek = new Seek(1, other);
+        actions.InsertAction(id, seek);
     }
 }
