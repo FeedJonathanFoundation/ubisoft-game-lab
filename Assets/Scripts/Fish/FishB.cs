@@ -30,5 +30,8 @@ public class FishB : AbstractFish
         int id = fish.GetID();
         Seek seek = new Seek(1, other);
         actions.InsertAction(id, seek);
+        
+        // Flee flee = new Flee(2, other);
+        // actions.InsertAction(id, seek);
     }
 }
