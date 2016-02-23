@@ -664,6 +664,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &190114
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 444774}
+  - 135: {fileID: 13552818}
+  m_Layer: 9
+  m_Name: DisableCollider
+  m_TagString: Disabler
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &191178
 GameObject:
   m_ObjectHideFlags: 1
@@ -889,8 +905,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 198018}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 245.8, y: -18.7, z: 0}
+  m_LocalRotation: {x: 0.15093932, y: 0, z: 0, w: 0.98854303}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 486090}
@@ -899,6 +915,7 @@ Transform:
   - {fileID: 423882}
   - {fileID: 425810}
   - {fileID: 467024}
+  - {fileID: 444774}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &425810
@@ -996,6 +1013,18 @@ Transform:
   - {fileID: 471094}
   m_Father: {fileID: 471162}
   m_RootOrder: 1
+--- !u!4 &444774
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190114}
+  m_LocalRotation: {x: -0.15093932, y: 0, z: 0, w: 0.98854303}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 424626}
+  m_RootOrder: 6
 --- !u!4 &448594
 Transform:
   m_ObjectHideFlags: 1
@@ -1992,7 +2021,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 198018}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9336e828e5f9be44ea437c5c6d499375, type: 3}
   m_Name: 
@@ -2074,8 +2103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canAbsorb: 1
   absorptionRate: 15
-  defaultEnergy: 10
-  debugInfiniteLight: 0
+  defaultEnergy: 5
+  debugInfiniteLight: 1
   massEjectionTransform: {fileID: 454708}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
   thrustForce: 1
@@ -2084,7 +2113,7 @@ MonoBehaviour:
   lostOfLightTime: 0
   energyCostLightToggle: 0
   minimalEnergyRestrictionToggleLights: 0
-  disableCheckpoints: 0
+  disableCheckpoints: 1
 --- !u!114 &11457278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2222,6 +2251,18 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13552818
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190114}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:

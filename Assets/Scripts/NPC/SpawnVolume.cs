@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SpawnVolume : MonoBehaviour {
     
@@ -62,6 +63,9 @@ public class SpawnVolume : MonoBehaviour {
     private int fishCount;
     
     private bool disabled;
+    
+    // private List<AbstractFish> fishes;
+    private List<GameObject> fishes;
 
     /// <summary>
     /// Initializes fish count to 0,
@@ -71,6 +75,9 @@ public class SpawnVolume : MonoBehaviour {
 	void Start () 
     {
         disabled = false;
+        
+        // fishes = new List<AbstractFish>();
+        fishes = new List<GameObject>();
         
         fishCount = 0;
         for (int i = 0; i < minFishCount; i++)
@@ -98,7 +105,8 @@ public class SpawnVolume : MonoBehaviour {
         }
         // If valid spawn point location,
         // Create instance of fish prefab at spawn point and rotation
-        Instantiate(spawnObject[spawnTypeIndex], spawnLocation, Quaternion.identity);
+        GameObject fish = (GameObject)Instantiate(spawnObject[spawnTypeIndex], spawnLocation, Quaternion.identity);
+        fishes.Add(fish);
         fishCount++;
     }
     
@@ -176,6 +184,7 @@ public class SpawnVolume : MonoBehaviour {
             for (int i = 0; i < timeout; i++)
             {
                 Vector3 potentialSpawnPoint = transform.position + (Random.insideUnitSphere * GetSpawnVolumeRadius());
+                potentialSpawnPoint.z = 0f;
 
                 if (IsValidSpawnPoint(potentialSpawnPoint, spawnIndex)) 
                 {
@@ -219,6 +228,19 @@ public class SpawnVolume : MonoBehaviour {
         if (other.gameObject.CompareTag("Player")) 
         {
             disabled = true;
+        }
+    }
+    
+    // Destroys spawned objects
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Disabler"))
+        {
+            foreach(GameObject fish in fishes)
+            {
+                fish.SetActive(false);
+            }
+            fishes.Clear();
         }
     }
     
