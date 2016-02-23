@@ -1,4 +1,7 @@
-﻿/// <summary>
+﻿using UnityEngine;
+using System.Collections;
+
+/// <summary>
 /// The condition that must be met for a 'Steer' action to return 'Success'
 /// </summary>
 [System.Serializable]
