@@ -61,7 +61,7 @@ public class Player : LightSource
        this.LightEnergy.LightDepleted += OnLightDepleted;
        this.isDead = false;
        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
-       if (!disableCheckpoints) { LoadGame(); }
+       LoadGame();
     }
 
     // Update is called once per frame
@@ -115,21 +115,25 @@ public class Player : LightSource
             Debug.Log("Game Restarted");
             this.LightEnergy.Add(this.defaultEnergy);
             this.isDead = false;
+            this.rigidbody.drag = 0; // reset drag
             LoadGame();
         }
     }
 
     private void LoadGame()
-    {
-       PlayerData data = DataManager.LoadFile();
-       if (data != null && data.levelID == this.currentLevel)
-       {
-           transform.position = DataManager.Vector3FromString(data.playerPosition);
-       } 
-       else 
-       {
-           transform.position = new Vector3(0, 0, 0);                                
-       }
+    {              
+        PlayerData data = DataManager.LoadFile();
+        
+        if (data != null && data.levelID == this.currentLevel && !disableCheckpoints)
+        {
+            transform.position = DataManager.Vector3FromString(data.playerPosition);
+            transform.localEulerAngles = DataManager.Vector3FromString(data.playerRotation);
+        } 
+        else 
+        {
+            transform.position = new Vector3(0, 0, 0);
+            transform.localEulerAngles = new Vector3(0, 0, 0);                                
+        }
     }
 
     /// <summary>

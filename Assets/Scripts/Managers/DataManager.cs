@@ -15,6 +15,8 @@ public static class DataManager
 
     /// <summary>
     /// Saves last player position on the current level on the disk
+    /// NOTE: MAC file location:  /Users/USERNAME/Library/Application Support/FJFCompany/Space Explorer/ 
+    ///       PC file location: C:\Users\USERNAME\AppData\LocalLow\FJFCompany\Space Explorer
     /// </summary>
     public static void SaveFile(PlayerData data)
     {
@@ -89,6 +91,7 @@ public static class DataManager
         gameControl["playerID"] = data.playerID;
         gameControl["playerEnergy"] = data.playerEnergy;
         gameControl["playerPosition"] = data.playerPosition;
+        gameControl["playerRotation"] = data.playerRotation;
         gameControl["playerScale"] = data.playerScale;
         gameControl.SaveAsync();
         Debug.Log("Game Saved!");
@@ -124,7 +127,8 @@ public class PlayerData
 {
     public float playerID;
     public float playerEnergy;
-    public String playerPosition;
+    public String playerPosition;   
+    public String playerRotation;    
     public String playerScale;
     public int levelID;
 }
