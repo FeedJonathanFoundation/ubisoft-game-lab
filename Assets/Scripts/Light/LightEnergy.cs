@@ -27,14 +27,7 @@ public class LightEnergy
         this.debugInfiniteLight = debugInfiniteLight;
         LightChanged(this.currentEnergy);
     }
-
-    // void Start()
-    // {
-    //     // Set the current amount of energy to default
-    //     currentEnergy = defaultEnergy;
-    //     LightChanged(currentEnergy);
-    // }
-
+    
     /// <summary>
     /// Adds the given amount of light energy
     /// </summary>
@@ -54,8 +47,10 @@ public class LightEnergy
     public float Deplete(float lightToRemove)
     {
         if (debugInfiniteLight)
+        {
             return lightToRemove;
-        
+        }
+                            
         // Stores the actual amount of light depleted from this energy source
         float actualLightRemoved = lightToRemove;
 
@@ -69,8 +64,7 @@ public class LightEnergy
         // Remove the desired amount of light energy and clamp it to zero
         this.currentEnergy -= lightToRemove;
         this.currentEnergy = Mathf.Max(0, this.currentEnergy);
-        //Debug.Log("My name is : " + this.gameObject.name);
-        //Debug.Log("Current energy: " + this.currentEnergy);
+
         // Notify subscribers that the amount of energy in this light has changed
         LightChanged(this.currentEnergy);
 
@@ -78,12 +72,10 @@ public class LightEnergy
         if (this.currentEnergy <= 0)
         {
             LightDepleted();
-            // Destroy LightSource object and its children, except if its Player.
-            //TODO: Pooling
             if (this.gameObject.name != "Player")
             {
+                // stops players inert movement
                 this.gameObject.GetComponent<Rigidbody>().drag = 10;                
-                //UnityEngine.Object.Destroy(this.gameObject);
             }
         }
 
