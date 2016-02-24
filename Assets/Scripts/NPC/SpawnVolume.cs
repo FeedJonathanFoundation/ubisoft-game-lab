@@ -151,7 +151,6 @@ public class SpawnVolume : MonoBehaviour {
         float randomFish = Random.value * total;
         for (int i= 0; i < probabilities.Length; i++) {
             if (randomFish < probabilities[i]) {
-                // Debug.Log(i);
                 return i;
             }
             else {
