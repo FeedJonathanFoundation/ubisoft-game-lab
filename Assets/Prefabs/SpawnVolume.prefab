@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 444290}
   - 135: {fileID: 13559234}
   - 114: {fileID: 11466458}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpawnVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 156226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.44, y: 0.4, z: 0.5}
+  m_LocalPosition: {x: -8.9, y: -6.7, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -43,12 +43,16 @@ MonoBehaviour:
   spawnTime: 1
   spawnObject:
   - {fileID: 134216, guid: bf98822168cb648a192b517ed10381c5, type: 2}
+  probabilities:
+  - 0.75
   overrideSpawnLocations: 0
+  spawnRandom: 0
   spawnPoints:
   - {fileID: 0}
+  - {fileID: 0}
   spawnPointRadius: 1
-  minFishCount: 5
-  maxFishCount: 10
+  minFishCount: 15
+  maxFishCount: 50
   minFishDifficulty: 0
   maxFishDifficulty: 0
 --- !u!135 &13559234
