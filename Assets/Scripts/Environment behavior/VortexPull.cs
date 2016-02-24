@@ -1,18 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class VortexPull : MonoBehaviour {
+public class VortexPull : MonoBehaviour 
+{
     [Tooltip("Increases the pull to the center of the whirlpool")]
     public float strengthOfAttraction;
-    [Tooltip("Increases the roation of elements inside the whirlpool")]
+    [Tooltip("Increases the rotation of elements inside the whirlpool")]
     public float strengthOfRotation;
     private List<GameObject> objectsInVortex = new List<GameObject>(); //this might change if the player is the only one attracted to vortex
-	// Use this for initialization
-	void Start () 
-    {
-	
-	}
-	
 	// Update is called once per frame
 	void Update () 
     {
