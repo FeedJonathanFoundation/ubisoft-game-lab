@@ -36,11 +36,11 @@ public class VortexPull : MonoBehaviour
     
     void OnTriggerEnter(Collider col)
     {
-        if(gameObject.tag == "Player" && !objectsInVortex.Contains(gameObject))
+        if(col.gameObject.tag == "Player" && !objectsInVortex.Contains(col.gameObject))
         {
-            if(rayChecker(gameObject))
+            if(rayChecker(col.gameObject))
             {
-                objectsInVortex.Add(gameObject);
+                objectsInVortex.Add(col.gameObject);
             }
          }
     }
@@ -52,11 +52,11 @@ public class VortexPull : MonoBehaviour
     
     void OnTriggerStay(Collider col)
     {
-        if(gameObject.tag == "Player" && !objectsInVortex.Contains(gameObject))
+        if(col.gameObject.transform.tag == "Player" && !objectsInVortex.Contains(col.gameObject))
         {
-            if(rayChecker(gameObject))
+            if(rayChecker(col.gameObject))
             {
-                objectsInVortex.Add(gameObject);
+                objectsInVortex.Add(col.gameObject);
             }
          }
     }
@@ -68,6 +68,7 @@ public class VortexPull : MonoBehaviour
         ray.origin = this.transform.position;
         ray.direction = gameObject.transform.position - this.transform.position;
         //checks if raycast hits a target and if the target is not a wall
+        
         if(Physics.Raycast(ray, out hit) && hit.transform.tag != "Wall")
         {
             return true;
@@ -80,7 +81,7 @@ public class VortexPull : MonoBehaviour
     void colliderObjectRemover(GameObject gameObject)
     {
         //removes objects from list
-        if(objectsInVortex != null && objectsInVortex.Contains(gameObject))
+        if(objectsInVortex.Contains(gameObject))
         {
             objectsInVortex.Remove(gameObject);
             gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero; //sets the attraction to vortex to 0 but keeps rotation
