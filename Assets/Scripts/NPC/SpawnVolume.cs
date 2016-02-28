@@ -127,9 +127,12 @@ public class SpawnVolume : MonoBehaviour {
             float radius = GetSpawnVolumeRadius() / 2;
             float angle = i * Mathf.PI * 2 / numberOfFish;
             Vector3 spawnLocation = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius + transform.position;
-            GameObject fish = (GameObject)Instantiate(spawnObject[spawnTypeIndex], spawnLocation, Quaternion.identity);
-            fishes.Add(fish);
-            fishCount++;
+            if (spawnObject.Length > 0 && spawnObject[spawnTypeIndex] != null)
+            {
+                GameObject fish = (GameObject)Instantiate(spawnObject[spawnTypeIndex], spawnLocation, Quaternion.identity);
+                fishes.Add(fish);
+                fishCount++;
+            }
         }
     }
     
