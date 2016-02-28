@@ -17,7 +17,19 @@ public class Flee : NPCActionable
     {
         if (targetTransform)
         {
-            steerable.AddFleeForce(targetTransform.position, strengthMultiplier);
+            // If player's lights are on, seek player
+            if (targetTransform.gameObject.CompareTag("Player")) 
+            {
+                Player player = targetTransform.gameObject.GetComponent<Player>();
+                if (player.IsDetectable())
+                {
+                    steerable.AddFleeForce(targetTransform.position, strengthMultiplier);
+                }
+            }
+            else
+            {
+                steerable.AddFleeForce(targetTransform.position, strengthMultiplier);
+            }
         }
     }
     

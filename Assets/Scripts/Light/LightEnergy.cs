@@ -82,7 +82,11 @@ public class LightEnergy
             //TODO: Pooling
             if (this.gameObject.name != "Player")
             {
-                this.gameObject.GetComponent<Rigidbody>().drag = 10;                
+                Rigidbody rigidbody = gameObject.GetComponent<Rigidbody>();
+                if (rigidbody)
+                {
+                    rigidbody.drag = 10;                
+                }
                 //UnityEngine.Object.Destroy(this.gameObject);
             }
         }

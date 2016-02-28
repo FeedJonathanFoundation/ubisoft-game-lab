@@ -19,6 +19,7 @@ public class FishB : AbstractFish
     
     public override void ReactToPlayer(Transform player)
     {
+        Debug.Log("Fish B React to Player()");
         Seek seek = new Seek(1, player);
         actions.InsertAction(-1, seek);
     }
@@ -26,10 +27,10 @@ public class FishB : AbstractFish
     public override void ReactToNPC(Transform other)
     {
         // Check size, then decide whether or not to eat
-        AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
+        /*AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
         int id = fish.GetID();
         Seek seek = new Seek(1, other);
-        actions.InsertAction(id, seek);
+        actions.InsertAction(id, seek);*/
         
         // Flee flee = new Flee(2, other);
         // actions.InsertAction(id, seek);

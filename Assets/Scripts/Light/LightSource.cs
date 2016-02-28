@@ -48,6 +48,7 @@ public class LightSource : MonoBehaviour
             // If this GameObject can absorb the touched light source
             if (CanAbsorb(otherLightSource))
             {
+                //Debug.Log(gameObject.name + " absorb " + otherLightSource.name);
                 LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
 
                 // Calculate the amount of light to absorb from the other light source
@@ -67,7 +68,7 @@ public class LightSource : MonoBehaviour
     {
         // If this light source has more energy than the other one,
         // return true. This light source can absorb the given argument.
-        if (LightEnergy.CurrentEnergy > otherLightSource.LightEnergy.CurrentEnergy)
+        if (canAbsorb && LightEnergy.CurrentEnergy > otherLightSource.LightEnergy.CurrentEnergy)
         {
             return true;
         }

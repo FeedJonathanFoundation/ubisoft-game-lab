@@ -438,7 +438,7 @@ public class Steerable : MonoBehaviour
         {
             RaycastHit hitInfo;
             // Shoot a SphereCast in front of the object. Stores the first hit obstacle in front of the object in 'hitInfo".
-            Physics.SphereCast(transform.position, bodyRadius, forward, out hitInfo, 
+            Physics.SphereCast(transform.position, bodyRadius*3, forward, out hitInfo, 
                             maxViewDistance, obstacleLayer);
             
             if (hitInfo.transform != null)
@@ -528,7 +528,7 @@ public class Steerable : MonoBehaviour
         for(int i = 0; i < neighbourhood.NeighbourCount; i++)
         {
             // Cache the neighbour's Rigidbody
-            Rigidbody neighbour = neighbourhood.GetNeighbour(i).GetComponent<Rigidbody>();
+            Rigidbody neighbour = neighbourhood.GetNeighbour(i).GetComponentInParent<Rigidbody>();
 
             // Add the neighbour's velocity to the average. 
             averageNeighbourVelocity += (Vector2)neighbour.velocity;

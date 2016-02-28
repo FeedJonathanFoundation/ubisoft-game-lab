@@ -673,7 +673,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 444774}
   - 135: {fileID: 13552818}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: DisableCollider
   m_TagString: Disabler
   m_Icon: {fileID: 0}
@@ -762,7 +762,6 @@ GameObject:
   - 114: {fileID: 11412234}
   - 114: {fileID: 11481938}
   - 54: {fileID: 5448638}
-  - 114: {fileID: 11421534}
   m_Layer: 9
   m_Name: Player_WithModel
   m_TagString: Player
@@ -2027,22 +2026,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToScaleRatio: 0.1
---- !u!114 &11421534
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 198018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b00bf84facc35941942c8a96aaed8ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flareObject: {fileID: 177066, guid: 1481585a8f164c04d9beedd085f2ee2d, type: 2}
-  flareSpawnObject: {fileID: 486090}
-  cooldownTime: 15
-  flareEnergyCost: 2
-  flareCostPercentage: 1.5
 --- !u!114 &11432536
 MonoBehaviour:
   m_ObjectHideFlags: 1

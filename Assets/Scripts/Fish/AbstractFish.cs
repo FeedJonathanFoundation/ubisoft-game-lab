@@ -41,12 +41,14 @@ public abstract class AbstractFish : LightSource
     {        
         if(stoppingCondition.Complete())
 		{
-			return;
+			//return;
 		}
         
         List<NPCActionable> activeActions = actions.GetActiveActions(); 
         foreach(NPCActionable action in activeActions)
         {
+            //if (gameObject.name == "Fish B")
+            //    Debug.Log("Execute action : " + action);
             action.Execute(steerable);
         }
     }
@@ -65,11 +67,16 @@ public abstract class AbstractFish : LightSource
     // Detects if fish is close to another character
     void OnTriggerEnter(Collider other) 
     {
-        if (other.gameObject.CompareTag("Player")) 
+        if (gameObject.name == "Fish B") 
+        {
+            Debug.Log("Collided with : " + other.tag);
+        }
+
+        if (other.gameObject.tag.Equals("Player")) 
         {
             ReactToPlayer(other.gameObject.transform);
         }
-        else if (other.gameObject.CompareTag("Fish")) 
+        else if (other.gameObject.tag.Equals("Fish")) 
         {
             ReactToNPC(other.gameObject.transform);
         }

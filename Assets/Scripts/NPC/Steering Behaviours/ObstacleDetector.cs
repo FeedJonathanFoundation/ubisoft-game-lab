@@ -29,13 +29,16 @@ public class ObstacleDetector : MonoBehaviour
 
 	/** The trigger volume that detects if an obstacle is viewable by this GameObject or not. */
 	private BoxCollider collider;
+    /** The sphere at the tip of the line-of-sight. Allows the LOS to resemble more of a cone. */
+    private SphereCollider tipCollider;
 	/** Caches this obstacle detector's Transform */
 	private new Transform transform;
 	
 	void Awake()
 	{
-		// Create a circle collider to detect which colliders enter this neighbourhood
+		// Create colliders to detect which GameObjects enter this neighbourhood
 		collider = gameObject.AddComponent<BoxCollider>();
+        //tipCollider = gameObject.AddComponent<SphereCollider>();
 		// Cache the entity's Transform
 		transform = GetComponent<Transform>();
 
@@ -44,6 +47,7 @@ public class ObstacleDetector : MonoBehaviour
 		
 		// Make the collider a trigger so that it doesn't collide with any GameObjects.
 		collider.isTrigger = true;
+        //tipCollider.isTrigger = true;
 	}
 	
 	void OnTriggerEnter(Collider collider)
@@ -135,6 +139,10 @@ public class ObstacleDetector : MonoBehaviour
 		
 		// Set the collider's anchor so that its left-center point is at the character's feet (0,0)
 		collider.center = new Vector2(0, viewDistance*0.5f);
+        
+        // Place the tip SphereCollider at the end of the line-of-sight 
+        //tipCollider.radius = bodyRadius*3;
+        //tipCollider.center = new Vector2(0, viewDistance-bodyRadius*3);
 	}
 
 	/// <summary>

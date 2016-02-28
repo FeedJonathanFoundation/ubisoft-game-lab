@@ -13,7 +13,7 @@ public class FishA : AbstractFish
 
     public override void Move() 
     {
-        actions.InsertAction(GetID(), new Wander(0));
+        //actions.InsertAction(GetID(), new Wander(0));
     }
     
     public override void ReactToPlayer(Transform player)
@@ -24,9 +24,9 @@ public class FishA : AbstractFish
     
     public override void ReactToNPC(Transform other)
     {
-        AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
+        /*AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
         int id = fish.GetID();
         Flee flee = new Flee(1, other);
-        actions.InsertAction(id, flee);
+        actions.InsertAction(id, flee);*/
     }
 }
