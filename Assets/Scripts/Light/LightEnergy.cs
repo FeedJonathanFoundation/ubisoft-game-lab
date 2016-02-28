@@ -9,7 +9,7 @@ public class LightEnergy
     private float currentEnergy;
 
     private GameObject gameObject;
-    
+
     private bool debugInfiniteLight = false;
 
     public delegate void LightChangedHandler(float currentLight);
@@ -27,7 +27,7 @@ public class LightEnergy
         this.debugInfiniteLight = debugInfiniteLight;
         LightChanged(this.currentEnergy);
     }
-    
+
     /// <summary>
     /// Adds the given amount of light energy
     /// </summary>
@@ -50,7 +50,7 @@ public class LightEnergy
         {
             return lightToRemove;
         }
-                            
+
         // Stores the actual amount of light depleted from this energy source
         float actualLightRemoved = lightToRemove;
 
@@ -72,11 +72,11 @@ public class LightEnergy
         if (this.currentEnergy <= 0)
         {
             LightDepleted();
-            if (this.gameObject.name != "Player")
+            if (this.gameObject.tag == "Player")
             {
                 // stops players inert movement
-                this.gameObject.GetComponent<Rigidbody>().drag = 10;                
-            }
+                this.gameObject.GetComponent<Rigidbody>().drag = 10;
+            }           
         }
 
         return actualLightRemoved;

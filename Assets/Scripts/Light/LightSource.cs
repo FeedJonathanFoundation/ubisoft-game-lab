@@ -19,7 +19,7 @@ public class LightSource : MonoBehaviour
     public float defaultEnergy = 10;
 
     [Tooltip("If true, the light source has infinite energy")]
-    public bool debugInfiniteLight = false;
+    public bool infiniteEnergy = false;
 
     // The light sources this GameObject is touching
     private List<LightSource> lightsInContact = new List<LightSource>();
@@ -28,7 +28,7 @@ public class LightSource : MonoBehaviour
 
     public virtual void Awake()
     {
-        lightEnergy = new LightEnergy(defaultEnergy, gameObject, debugInfiniteLight);
+        lightEnergy = new LightEnergy(defaultEnergy, gameObject, infiniteEnergy);
     }
 
     public virtual void Update()
