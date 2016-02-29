@@ -438,11 +438,11 @@ public class Steerable : MonoBehaviour
         
         Vector2 forward = previousVelocity.normalized;
         
-        if (obstacleDetector != null &&  obstacleDetector.GetNearestObstacle() != null)
+        if (true)//obstacleDetector != null &&  obstacleDetector.GetNearestObstacle() != null)
         {
             RaycastHit hitInfo;
             // Shoot a SphereCast in front of the object. Stores the first hit obstacle in front of the object in 'hitInfo".
-            Physics.SphereCast(transform.position, bodyRadius*2, forward, out hitInfo, 
+            Physics.SphereCast(transform.position, bodyRadius, forward, out hitInfo, 
                             maxViewDistance, obstacleLayer);
             
             if (hitInfo.transform != null)

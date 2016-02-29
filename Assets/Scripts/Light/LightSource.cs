@@ -6,7 +6,6 @@ using System.Collections.Generic;
 /// If attached to a GameObject, this GameObject can absorb light
 /// from other GameObjects with a LightEnergy component
 /// <summary>
-[RequireComponent(typeof(Collider))]
 public class LightSource : MonoBehaviour
 {
     [Tooltip("If true, this GameObject can absorb other GameObjects with a LightSource component")]
