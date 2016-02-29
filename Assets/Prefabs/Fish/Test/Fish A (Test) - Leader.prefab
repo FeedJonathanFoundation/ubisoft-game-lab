@@ -164,6 +164,7 @@ GameObject:
   - 4: {fileID: 452502}
   - 65: {fileID: 6572996}
   - 64: {fileID: 6459408}
+  - 64: {fileID: 6499604}
   m_Layer: 27
   m_Name: FishModel
   m_TagString: Untagged
@@ -452,6 +453,18 @@ MeshCollider:
   serializedVersion: 2
   m_Convex: 1
   m_Mesh: {fileID: 0}
+--- !u!64 &6499604
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162906}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_Mesh: {fileID: 0}
 --- !u!65 &6523306
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -533,7 +546,7 @@ MonoBehaviour:
     maxObstacleViewDistance: 0
     obstacleLayer:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 4096
   - type: 7
     strengthMultiplier: 1
     targetSteerable: {fileID: 0}

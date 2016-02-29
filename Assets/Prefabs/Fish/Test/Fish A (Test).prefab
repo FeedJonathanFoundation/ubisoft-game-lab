@@ -43,7 +43,6 @@ GameObject:
   - 114: {fileID: 11497638}
   - 54: {fileID: 5455914}
   - 135: {fileID: 13506946}
-  - 114: {fileID: 11426866}
   - 114: {fileID: 11404342}
   - 114: {fileID: 11433706}
   m_Layer: 10
@@ -214,7 +213,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.33, y: 0.32, z: 0.2163086}
+  m_LocalPosition: {x: -0.6, y: -0.08, z: 0.2163086}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 405052}
@@ -510,7 +509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steeringBehaviors:
   - type: 10
-    strengthMultiplier: 1
+    strengthMultiplier: 0.5
     targetSteerable: {fileID: 0}
     targetTransform: {fileID: 0}
     slowingRadius: 0
@@ -536,7 +535,7 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
   - type: 8
-    strengthMultiplier: 1.5
+    strengthMultiplier: 1.4
     targetSteerable: {fileID: 0}
     targetTransform: {fileID: 0}
     slowingRadius: 0
@@ -580,35 +579,6 @@ MonoBehaviour:
   layerToDetect:
     serializedVersion: 2
     m_Bits: 16777216
---- !u!114 &11426866
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 113434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48fe9e9835684164999d67cd412e3784, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  steeringBehaviors:
-  - type: 5
-    strengthMultiplier: 1
-    targetSteerable: {fileID: 0}
-    targetTransform: {fileID: 0}
-    slowingRadius: 0
-    circleDistance: 0.5
-    circleRadius: 0.25
-    angleChange: 20
-    obstacleAvoidanceForce: 0
-    maxObstacleViewDistance: 0
-    obstacleLayer:
-      serializedVersion: 2
-      m_Bits: 0
-  stoppingCondition:
-    target: {fileID: 0}
-    stoppingDistance: 0
-    waitTime: 0
 --- !u!114 &11433706
 MonoBehaviour:
   m_ObjectHideFlags: 1
