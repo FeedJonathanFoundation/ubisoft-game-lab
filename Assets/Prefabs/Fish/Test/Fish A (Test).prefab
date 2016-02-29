@@ -45,7 +45,7 @@ GameObject:
   - 135: {fileID: 13506946}
   - 114: {fileID: 11404342}
   - 114: {fileID: 11433706}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: Fish A (Test)
   m_TagString: Fish
   m_Icon: {fileID: 0}
@@ -555,6 +555,19 @@ MonoBehaviour:
     circleDistance: 0
     circleRadius: 0
     angleChange: 0
+    obstacleAvoidanceForce: 2
+    maxObstacleViewDistance: 4
+    obstacleLayer:
+      serializedVersion: 2
+      m_Bits: 4096
+  - type: 5
+    strengthMultiplier: 1
+    targetSteerable: {fileID: 0}
+    targetTransform: {fileID: 0}
+    slowingRadius: 0
+    circleDistance: 0.5
+    circleRadius: 0.25
+    angleChange: 1
     obstacleAvoidanceForce: 1
     maxObstacleViewDistance: 4
     obstacleLayer:
@@ -621,8 +634,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bfd65893f398f45824f35f221ef78d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 7
-  maxForce: 2
+  minSpeed: 3
+  maxSpeed: 3
+  maxForce: 5
   bodyRadius: 0.5
   obstacleDetector: {fileID: 11447926}
   neighbourhood: {fileID: 11424632}

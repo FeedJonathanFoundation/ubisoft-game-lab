@@ -9,6 +9,10 @@ using System.Collections;
 public class Steerable : MonoBehaviour
 {
     /// <summary>
+    /// The steerable can never travel slower than this speed
+    /// </summary>
+    public float minSpeed;
+    /// <summary>
     /// The maximum speed at which the GameObject can move 
     /// </summary>
     public float maxSpeed;
@@ -118,7 +122,7 @@ public class Steerable : MonoBehaviour
         /*rigidbody.velocity = Vector2.SmoothDamp((Vector2)previousVelocity, 
                                                 Vector2.ClampMagnitude(previousVelocity + steeringForce, maxSpeed),
                                                 ref dampVelocity, timeToReachDesiredVelocity).Truncate(maxSpeed);*/
-        Vector2 newVelocity = (previousVelocity + (steeringAcceleration * deltaTime)).Truncate (MaxSpeed);
+        Vector2 newVelocity = (previousVelocity + (steeringAcceleration * deltaTime)).Clamp(MinSpeed, MaxSpeed);
 
         // Update this entity's previous velocity. This allows us to keep track of the steerable's velocity before future physics collisions.
         previousVelocity = newVelocity;
@@ -434,11 +438,11 @@ public class Steerable : MonoBehaviour
         
         Vector2 forward = previousVelocity.normalized;
         
-        if (obstacleDetector != null &&  obstacleDetector.GetNearestObstacle() != null)
+        if (true)//obstacleDetector != null &&  obstacleDetector.GetNearestObstacle() != null)
         {
             RaycastHit hitInfo;
             // Shoot a SphereCast in front of the object. Stores the first hit obstacle in front of the object in 'hitInfo".
-            Physics.SphereCast(transform.position, bodyRadius*3, forward, out hitInfo, 
+            Physics.SphereCast(transform.position, bodyRadius*2, forward, out hitInfo, 
                             maxViewDistance, obstacleLayer);
             
             if (hitInfo.transform != null)
@@ -614,8 +618,14 @@ public class Steerable : MonoBehaviour
         }
     }
     
-    /** The max speed at which the GameObject can move. The larger the value,
-      * the larger the steering forces? */
+    /** The min speed at which the GameObject can move */
+    public float MinSpeed
+    {
+        get { return minSpeed; }
+        set { minSpeed = value; }    
+    }
+    
+    /** The max speed at which the GameObject can move */
     public float MaxSpeed
     {
         get { return maxSpeed; }
