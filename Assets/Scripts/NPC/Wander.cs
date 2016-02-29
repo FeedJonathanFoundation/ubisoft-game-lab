@@ -24,7 +24,7 @@ public class Wander : NPCActionable
     [Tooltip("Wander: The maximum angle in degrees that the wander force can change between two frames")]
 	public float angleChange = 30f;
     
-    public Wander(int priority) : base(priority) 
+    public Wander(int priority, int id) : base(priority, id) 
     {
     }
     

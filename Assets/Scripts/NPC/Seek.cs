@@ -6,7 +6,7 @@ public class Seek : NPCActionable
 {   
     private Transform targetTransform;
     
-    public Seek(int priority, Transform transform) : base(priority)
+    public Seek(int priority, int id, Transform transform) : base(priority, id)
     {
         targetTransform = transform;
     }

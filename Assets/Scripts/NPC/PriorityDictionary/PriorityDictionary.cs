@@ -29,18 +29,18 @@ public class PriorityDictionary
         activePriority = 0;
     }
     
-    public void InsertAction(int id, NPCActionable action)
+    public void InsertAction(NPCActionable action)
     {
         switch (action.priority)
         {
             case 2: 
-                InsertHighPriority(id, action);
+                InsertHighPriority(action);
                 break;
             case 1:
-                InsertMedPriority(id, action);
+                InsertMedPriority(action);
                 break;
             case 0:
-                InsertLowPriority(id, action);
+                InsertLowPriority(action);
                 break;
             case -1:
                 InsertConstantPriority(action);
@@ -54,34 +54,34 @@ public class PriorityDictionary
     {
         if (!constantActions.Contains(action))
         {
-                constantActions.Add(action);
+            constantActions.Add(action);
         }
     }
     
-    public void InsertLowPriority(int id, NPCActionable action)
+    public void InsertLowPriority(NPCActionable action)
     {
-        if (!lowPriorityAction.ContainsKey(id))
+        if (!lowPriorityAction.ContainsKey(action.id))
         {
-                lowPriorityAction.Add(id, action);
-                UpdatePriority();
+            lowPriorityAction.Add(action.id, action);
+            UpdatePriority();
         }
     }
     
-    public void InsertMedPriority(int id, NPCActionable action)
+    public void InsertMedPriority(NPCActionable action)
     {
-        if (!medPriorityAction.ContainsKey(id))
+        if (!medPriorityAction.ContainsKey(action.id))
         {
-                medPriorityAction.Add(id, action);
-                UpdatePriority();
+            medPriorityAction.Add(action.id, action);
+            UpdatePriority();
         }
     }
     
-    public void InsertHighPriority(int id, NPCActionable action)
+    public void InsertHighPriority(NPCActionable action)
     {
-        if (!highPriorityAction.ContainsKey(id))
+        if (!highPriorityAction.ContainsKey(action.id))
         {
-                highPriorityAction.Add(id, action);
-                UpdatePriority();
+            highPriorityAction.Add(action.id, action);
+            UpdatePriority();
         }
     }
     
@@ -89,7 +89,7 @@ public class PriorityDictionary
     {
         if (!constantActions.Contains(action))
         {
-                constantActions.Add(action);
+            constantActions.Add(action);
         }
     }
 
@@ -183,6 +183,51 @@ public class PriorityDictionary
             activeList.Add(action);
         }
         return activeList;
+    }
+    
+    public NPCActionable GetAction(int id)
+    {
+        NPCActionable action = null;
+        
+        if (highPriorityAction.ContainsKey(id))
+            action = highPriorityAction[id];
+        if (medPriorityAction.ContainsKey(id))
+            action = medPriorityAction[id];
+        if (lowPriorityAction.ContainsKey(id))
+            action = lowPriorityAction[id];
+            
+        return action;
+    }
+    
+    public string ToString()
+    {
+        string output = "";
+        
+        output += "High Priority\n";
+        output += "{\n";
+        foreach (KeyValuePair<int, NPCActionable> entry in highPriorityAction)
+        {
+            output += "\t" + entry.Key + " : " + entry.Value.ToString();
+        }
+        output += "}\n\n";
+        
+        output += "Med Priority\n";
+        output += "{\n";
+        foreach (KeyValuePair<int, NPCActionable> entry in medPriorityAction)
+        {
+            output += "\t" + entry.Key + " : " + entry.Value.ToString();
+        }
+        output += "}\n\n";
+        
+        output += "Low Priority\n";
+        output += "{\n";
+        foreach (KeyValuePair<int, NPCActionable> entry in lowPriorityAction)
+        {
+            output += "\t" + entry.Key + " : " + entry.Value.ToString();
+        }
+        output += "}\n\n";
+        
+        return output;
     }
 
 }

@@ -18,8 +18,8 @@ public class FishC : AbstractFish
     
     public override void ReactToPlayer(Transform player)
     {
-        /*Seek seek = new Seek(1, player);
-        actions.InsertAction(-1, seek);*/
+        /*Seek seek = new Seek(1, -1, player);
+        AddAction(seek);*/
     }
     
     public override void ReactToNPC(Transform other)

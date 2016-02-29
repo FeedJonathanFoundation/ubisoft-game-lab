@@ -10,7 +10,7 @@ public class Evade : NPCActionable
 	/// </summary>
 	public Steerable targetSteerable;
     
-    public Evade(int priority, Steerable targetSteerable) : base(priority)
+    public Evade(int priority, int id, Steerable targetSteerable) : base(priority, id)
     {
         this.targetSteerable = targetSteerable;
     }

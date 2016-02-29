@@ -10,7 +10,7 @@ public abstract class AbstractFish : LightSource
     protected Steerable steerable;
 
     // The steering behaviors to apply every frame
-    protected PriorityDictionary actions;
+    private PriorityDictionary actions;
 
     // The condition that must be met for this action to return 'Success'
     protected StoppingCondition stoppingCondition = new StoppingCondition();
@@ -48,9 +48,14 @@ public abstract class AbstractFish : LightSource
         foreach(NPCActionable action in activeActions)
         {
             //if (gameObject.name == "Fish B")
-            //    Debug.Log("Execute action : " + action);
+                //Debug.Log("Execute action : " + action.ToString());
             action.Execute(steerable);
         }
+        
+        NPCActionable playerSeek = actions.GetAction(-1);
+        if(playerSeek != null)
+            Debug.Log("Seek player: " + gameObject.name);
+            
     }
 
     void FixedUpdate()
@@ -75,6 +80,8 @@ public abstract class AbstractFish : LightSource
         if (other.gameObject.tag.Equals("Player")) 
         {
             ReactToPlayer(other.gameObject.transform);
+            
+            Debug.Log(actions.ToString());
         }
         else if (other.gameObject.tag.Equals("Fish")) 
         {
@@ -88,8 +95,47 @@ public abstract class AbstractFish : LightSource
         if (other.gameObject.CompareTag("Fish")) 
         {
             int otherID = other.GetComponent<AbstractFish>().GetID();
-            actions.RemoveAction(otherID);
+            RemoveAction(otherID);
         }
+        else if (other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Before RemoveAction()\n" + actions.ToString());
+            Debug.Log("Player out of sight of fish : " + gameObject.name);
+            // Player id = -1
+            RemoveAction(-1);
+            
+            Debug.Log(actions.ToString());
+        }
+    }
+    
+    protected void AddAction(NPCActionable action)
+    {
+        action.ActionComplete += OnActionComplete;
+        actions.InsertAction(action);
+    }
+    
+    protected void RemoveAction(int id)
+    {
+        //Debug.Log("Remove the action with ID : " + id);
+        RemoveAction(actions.GetAction(id));
+    }
+    
+    protected void RemoveAction(NPCActionable action)
+    {
+        if (action == null)
+            return;        
+        
+        Debug.Log("Remove the action : " + action.ToString());
+        
+        // Unsubscribe from events before removing the action
+        action.ActionComplete -= OnActionComplete;
+        actions.RemoveAction(action.id);
+    }
+
+    // Removes the completed action from the list of actions to perform.
+    protected void OnActionComplete(NPCActionable completedAction)
+    {
+        actions.RemoveAction(completedAction.id);
     }
 
     // How the fish moves when it is not proximate to the player

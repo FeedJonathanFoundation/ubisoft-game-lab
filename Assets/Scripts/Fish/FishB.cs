@@ -14,14 +14,14 @@ public class FishB : AbstractFish
 
     public override void Move() 
     {
-        actions.InsertAction(GetID(), new Wander(0));
+        AddAction(new Wander(0, GetID()));
     }
     
     public override void ReactToPlayer(Transform player)
     {
         Debug.Log("Fish B React to Player()");
-        Seek seek = new Seek(1, player);
-        actions.InsertAction(-1, seek);
+        Seek seek = new Seek(1, -1, player);
+        AddAction(seek);
     }
     
     public override void ReactToNPC(Transform other)

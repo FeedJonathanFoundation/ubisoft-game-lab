@@ -6,7 +6,7 @@ public class Flee : NPCActionable
 {   
     private Transform targetTransform;
     
-    public Flee(int priority, Transform transform) : base(priority)
+    public Flee(int priority, int id, Transform transform) : base(priority, id)
     {
         targetTransform = transform;
     }
@@ -22,6 +22,11 @@ public class Flee : NPCActionable
                 if (player.IsDetectable())
                 {
                     steerable.AddFleeForce(targetTransform.position, strengthMultiplier);
+                }
+                else
+                {
+                    // The player is hidden. Thus, the fish should stop fleeing
+                    ActionCompleted();
                 }
             }
             else

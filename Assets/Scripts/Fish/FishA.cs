@@ -10,6 +10,7 @@ public class FishA : AbstractFish
         // call parent LightSource Awake() first
         base.Awake(); 
     }
+    
 
     public override void Move() 
     {
@@ -18,8 +19,9 @@ public class FishA : AbstractFish
     
     public override void ReactToPlayer(Transform player)
     {
-        Flee flee = new Flee(1, player);
-        actions.InsertAction(-1, flee);
+        Flee flee = new Flee(1, -1, player);
+        flee.strengthMultiplier = 20f;
+        AddAction(flee);
     }
     
     public override void ReactToNPC(Transform other)

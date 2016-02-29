@@ -11,7 +11,7 @@ public class Pursue : NPCActionable
 	/// </summary>
 	public Steerable targetSteerable;
     
-    public Pursue(int priority, Steerable targetSteerable) : base(priority)
+    public Pursue(int priority, int id, Steerable targetSteerable) : base(priority, id)
     {
         this.targetSteerable = targetSteerable;
     }
