@@ -6,8 +6,6 @@ public class Pursue : NPCActionable
 {   
     private Transform targetTransform;
     
-    public float strengthMultiplier = 9.9f;
-    
     /// <summary>
 	/// The steerable that this steering behavior is targetting
 	/// </summary>

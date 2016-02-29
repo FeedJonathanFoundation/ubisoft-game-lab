@@ -6,8 +6,6 @@ public class Flee : NPCActionable
 {   
     private Transform targetTransform;
     
-    public float strengthMultiplier = 9.9f;
-    
     public Flee(int priority, Transform transform) : base(priority)
     {
         targetTransform = transform;

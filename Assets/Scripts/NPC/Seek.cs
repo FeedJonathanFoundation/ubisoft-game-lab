@@ -6,8 +6,6 @@ public class Seek : NPCActionable
 {   
     private Transform targetTransform;
     
-    public float strengthMultiplier = 19.9f;
-    
     public Seek(int priority, Transform transform) : base(priority)
     {
         targetTransform = transform;

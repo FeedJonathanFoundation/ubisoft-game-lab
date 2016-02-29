@@ -4,8 +4,6 @@ using System.Collections;
 [System.Serializable]
 public class Evade : NPCActionable
 {   
-
-    public float strengthMultiplier = 9.9f;
     
     /// <summary>
 	/// The steerable that this steering behavior is targetting
