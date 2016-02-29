@@ -23,6 +23,7 @@ public enum NPCActionType
 public abstract class NPCActionable
 {
     public int priority;
+    public float strengthMultiplier;
     
     public NPCActionable(int priority)
     {

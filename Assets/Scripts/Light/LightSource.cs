@@ -44,7 +44,7 @@ public class LightSource : MonoBehaviour
                 lightsInContact.RemoveAt(i);
                 continue;
             }
-
+            
             // If this GameObject can absorb the touched light source
             if (CanAbsorb(otherLightSource))
             {
