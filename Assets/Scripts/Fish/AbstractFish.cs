@@ -48,13 +48,18 @@ public abstract class AbstractFish : LightSource
         foreach(NPCActionable action in activeActions)
         {
             //if (gameObject.name == "Fish B")
-                //Debug.Log("Execute action : " + action.ToString());
+                
+            Debug.Log("Before performing action : \n" + actions.ToString());
+            Debug.Log("Execute action : " + action.ToString());
             action.Execute(steerable);
+            Debug.Log("After performing action : \n" + actions.ToString());
         }
         
         NPCActionable playerSeek = actions.GetAction(-1);
         if(playerSeek != null)
             Debug.Log("Seek player: " + gameObject.name);
+            
+        Debug.Log("After foreach loop : \n" + actions.ToString());
             
     }
 
@@ -81,7 +86,7 @@ public abstract class AbstractFish : LightSource
         {
             ReactToPlayer(other.gameObject.transform);
             
-            Debug.Log(actions.ToString());
+            //Debug.Log(actions.ToString());
         }
         else if (other.gameObject.tag.Equals("Fish")) 
         {

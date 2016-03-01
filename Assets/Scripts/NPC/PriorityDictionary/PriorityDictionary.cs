@@ -17,6 +17,9 @@ public class PriorityDictionary
     private Dictionary<int, NPCActionable> highPriorityAction;
     private List<NPCActionable> constantActions;
     
+    // Helper list to avoid instantiation in GetActiveActions()
+    private readonly List<NPCActionable> activeActions;
+    
     public int activePriority;
     
     public PriorityDictionary()
@@ -25,6 +28,7 @@ public class PriorityDictionary
         medPriorityAction = new Dictionary<int, NPCActionable>();
         highPriorityAction = new Dictionary<int, NPCActionable>();
         constantActions = new List<NPCActionable>();
+        activeActions = new List<NPCActionable>();
         
         activePriority = 0;
     }
@@ -161,7 +165,9 @@ public class PriorityDictionary
     
     public List<NPCActionable> GetActiveActions()
     {
-        List<NPCActionable> activeList = constantActions;
+        // Clear the current contents of the helper list
+        activeActions.Clear();
+        
         Dictionary<int, NPCActionable> activeDictionary; 
         switch(activePriority)
         {
@@ -179,10 +185,13 @@ public class PriorityDictionary
                 break;
         }
         
-        foreach(NPCActionable action in activeDictionary.Values) {
-            activeList.Add(action);
+        foreach (NPCActionable action in constantActions) {
+            activeActions.Add(action);
         }
-        return activeList;
+        foreach (NPCActionable action in activeDictionary.Values) {
+            activeActions.Add(action);
+        }
+        return activeActions;
     }
     
     public NPCActionable GetAction(int id)
