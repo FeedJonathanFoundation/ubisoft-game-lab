@@ -47,19 +47,17 @@ public abstract class AbstractFish : LightSource
         List<NPCActionable> activeActions = actions.GetActiveActions(); 
         foreach(NPCActionable action in activeActions)
         {
-            //if (gameObject.name == "Fish B")
-                
-            Debug.Log("Before performing action : \n" + actions.ToString());
-            Debug.Log("Execute action : " + action.ToString());
+            //Debug.Log("Before performing action : \n" + actions.ToString());
+            //Debug.Log("Execute action : " + action.ToString());
             action.Execute(steerable);
-            Debug.Log("After performing action : \n" + actions.ToString());
+            //Debug.Log("After performing action : \n" + actions.ToString());
         }
         
-        NPCActionable playerSeek = actions.GetAction(-1);
-        if(playerSeek != null)
-            Debug.Log("Seek player: " + gameObject.name);
+        // NPCActionable playerSeek = actions.GetAction(-1);
+        // if(playerSeek != null)
+        //     Debug.Log("Flee player: " + gameObject.name);
             
-        Debug.Log("After foreach loop : \n" + actions.ToString());
+        //Debug.Log("After foreach loop : \n" + actions.ToString());
             
     }
 
@@ -104,12 +102,12 @@ public abstract class AbstractFish : LightSource
         }
         else if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Before RemoveAction()\n" + actions.ToString());
+            //Debug.Log("Before RemoveAction()\n" + actions.ToString());
             Debug.Log("Player out of sight of fish : " + gameObject.name);
             // Player id = -1
             RemoveAction(-1);
             
-            Debug.Log(actions.ToString());
+            //Debug.Log("After RemoveAction()\n" + actions.ToString());
         }
     }
     

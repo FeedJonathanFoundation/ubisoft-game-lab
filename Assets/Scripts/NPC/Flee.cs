@@ -22,11 +22,13 @@ public class Flee : NPCActionable
                 if (player.IsDetectable())
                 {
                     steerable.AddFleeForce(targetTransform.position, strengthMultiplier);
+                    
+                    Debug.Log("Flee the player : " + steerable.name);
                 }
                 else
                 {
                     // The player is hidden. Thus, the fish should stop fleeing
-                    ActionCompleted();
+                    //ActionCompleted();
                 }
             }
             else
