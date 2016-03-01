@@ -14,23 +14,21 @@ public class Flee : NPCActionable
 	public override void Execute(Steerable steerable) 
     {
         if (targetTransform)
-        {
-            // Override the steerable's min/max speed
-            if (overrideSteerableSpeed)
-            {
-                steerable.MinSpeed = minSpeed;
-                steerable.MaxSpeed = maxSpeed;
-            }
-            
+        {            
             // If player's lights are on, seek player
             if (targetTransform.gameObject.CompareTag("Player")) 
             {
                 Player player = targetTransform.gameObject.GetComponent<Player>();
                 if (player.IsDetectable())
                 {
-                    steerable.AddFleeForce(targetTransform.position, strengthMultiplier);
+                    // Override the steerable's min/max speed
+                    if (overrideSteerableSpeed)
+                    {
+                        steerable.MinSpeed = minSpeed;
+                        steerable.MaxSpeed = maxSpeed;
+                    }
                     
-                    Debug.Log("Flee the player : " + steerable.name);
+                    steerable.AddFleeForce(targetTransform.position, strengthMultiplier);
                 }
                 else
                 {

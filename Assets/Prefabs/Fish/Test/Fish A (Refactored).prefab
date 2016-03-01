@@ -265,7 +265,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100658}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.29, y: -6.24, z: 0.2163086}
+  m_LocalPosition: {x: -3.05, y: -3.91, z: 0.2163086}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 410742}
@@ -538,7 +538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpeed: 3
   maxSpeed: 3
-  maxForce: 5
+  maxForce: 10
   bodyRadius: 0.5
   obstacleDetector: {fileID: 11490942}
   neighbourhood: {fileID: 11461170}
@@ -576,9 +576,9 @@ MonoBehaviour:
   debugInfiniteLight: 0
   flockingBehaviour:
     strengthMultiplier: 1
-    overrideSteerableSpeed: 0
-    minSpeed: 0
-    maxSpeed: 0
+    overrideSteerableSpeed: 1
+    minSpeed: 3
+    maxSpeed: 3
     wander:
       strengthMultiplier: 1
       overrideSteerableSpeed: 0
@@ -586,13 +586,13 @@ MonoBehaviour:
       maxSpeed: 0
       circleDistance: 1
       circleRadius: 1
-      angleChange: 20
+      angleChange: 50
     wallAvoidance:
       strengthMultiplier: 1
       overrideSteerableSpeed: 0
       minSpeed: 0
       maxSpeed: 0
-      avoidanceForce: 4
+      avoidanceForce: 6
       maxViewDistance: 4
       obstacleLayer:
         serializedVersion: 2
@@ -603,12 +603,12 @@ MonoBehaviour:
       minSpeed: 0
       maxSpeed: 0
     cohesion:
-      strengthMultiplier: 0.5
+      strengthMultiplier: 0.7
       overrideSteerableSpeed: 0
       minSpeed: 0
       maxSpeed: 0
     separation:
-      strengthMultiplier: 1.4
+      strengthMultiplier: 0.8
       overrideSteerableSpeed: 0
       minSpeed: 0
       maxSpeed: 0

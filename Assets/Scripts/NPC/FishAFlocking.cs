@@ -17,8 +17,18 @@ public class FishAFlocking : NPCActionable
     
     public FishAFlocking(int priority, int id) : base(priority, id)
     {
-        wander = new Wander(priority, id);
-        wallAvoidance = new WallAvoidance(priority, id);
+        wander.priority = priority;
+        wallAvoidance.priority = priority;
+        alignment.priority = priority;
+        cohesion.priority = priority;
+        separation.priority = priority;
+        
+        
+        wander.id = id;
+        wallAvoidance.id = id;
+        alignment.id = id;
+        cohesion.id = id;
+        separation.id = id;
     }
     
     /// <summary>
@@ -70,10 +80,17 @@ public class FishAFlocking : NPCActionable
     
     public override void Execute(Steerable steerable)
     {
-        wander.Execute(steerable);
-        wallAvoidance.Execute(steerable);
-        alignment.Execute(steerable);
+        // Override the steerable's min/max speed
+        if (overrideSteerableSpeed)
+        {
+            steerable.MinSpeed = minSpeed;
+            steerable.MaxSpeed = maxSpeed;
+        }
+        
         cohesion.Execute(steerable);
+        alignment.Execute(steerable);
         separation.Execute(steerable);
+        wallAvoidance.Execute(steerable);
+        wander.Execute(steerable);
     }
 } 

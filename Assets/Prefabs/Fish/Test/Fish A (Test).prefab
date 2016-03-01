@@ -584,7 +584,7 @@ MonoBehaviour:
     circleDistance: 0
     circleRadius: 0
     angleChange: 0
-    obstacleAvoidanceForce: 4
+    obstacleAvoidanceForce: 6
     maxObstacleViewDistance: 4
     obstacleLayer:
       serializedVersion: 2
@@ -627,7 +627,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113434}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d2e10a2ea6294b7ebaf4c21fafc5484, type: 3}
   m_Name: 
@@ -659,6 +659,21 @@ MonoBehaviour:
       obstacleLayer:
         serializedVersion: 2
         m_Bits: 0
+    alignment:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+    cohesion:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+    separation:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
 --- !u!114 &11447926
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -688,7 +703,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpeed: 3
   maxSpeed: 3
-  maxForce: 5
+  maxForce: 10
   bodyRadius: 0.5
   obstacleDetector: {fileID: 11447926}
   neighbourhood: {fileID: 11424632}

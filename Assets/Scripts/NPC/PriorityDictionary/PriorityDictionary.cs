@@ -216,7 +216,7 @@ public class PriorityDictionary
         output += "{\n";
         foreach (KeyValuePair<int, NPCActionable> entry in highPriorityAction)
         {
-            output += "\t" + entry.Key + " : " + entry.Value.ToString();
+            output += "\t" + entry.Key + " : " + entry.Value.ToString() + "\n";
         }
         output += "}\n\n";
         
@@ -224,7 +224,7 @@ public class PriorityDictionary
         output += "{\n";
         foreach (KeyValuePair<int, NPCActionable> entry in medPriorityAction)
         {
-            output += "\t" + entry.Key + " : " + entry.Value.ToString();
+            output += "\t" + entry.Key + " : " + entry.Value.ToString() + "\n";
         }
         output += "}\n\n";
         
@@ -232,7 +232,7 @@ public class PriorityDictionary
         output += "{\n";
         foreach (KeyValuePair<int, NPCActionable> entry in lowPriorityAction)
         {
-            output += "\t" + entry.Key + " : " + entry.Value.ToString();
+            output += "\t" + entry.Key + " : " + entry.Value.ToString() + "\n";
         }
         output += "}\n\n";
         

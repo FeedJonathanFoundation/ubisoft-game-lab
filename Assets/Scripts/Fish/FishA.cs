@@ -24,8 +24,13 @@ public class FishA : AbstractFish
     
     public override void ReactToPlayer(Transform player)
     {
+        Debug.Log("Flee the player : " + steerable.name);
+        
         Flee flee = new Flee(1, -1, player);
-        flee.strengthMultiplier = 20f;
+        flee.strengthMultiplier = 50f;
+        flee.overrideSteerableSpeed = true;
+        flee.minSpeed = 6f;
+        flee.maxSpeed = 6f;
         AddAction(flee);
     }
     

@@ -454,7 +454,18 @@ public class Steerable : MonoBehaviour
                 Vector2 projection = Vector2.Dot(forward,hitInfo.normal) * forward;
                 // The avoidance force should steer the object perpendicular to its forward vector, along the direction of the normal 
                 Vector2 avoidDirection = normal - projection;
-                avoidForce = avoidDirection.SetMagnitude(avoidanceForce);
+                
+                float distanceToObstacleSqr = (hitInfo.point - transform.position).sqrMagnitude;
+                float distanceToObstaclePow4 = distanceToObstacleSqr * distanceToObstacleSqr;
+                // Don't allow the distance to be greater than 1. Otherwise, the force will be weakened if the obstacle is far away.
+                distanceToObstaclePow4 = Mathf.Clamp(distanceToObstaclePow4, 0, 1);
+                
+                // The closer to an obstacle, the stronger the avoidance force
+                avoidForce = avoidDirection.SetMagnitude(avoidanceForce / distanceToObstaclePow4);
+                
+                // Adjust the wander angle to ensure the steerable wanders away from the obstacle
+                this.wanderAngle = Mathf.Rad2Deg * Mathf.Atan2(avoidDirection.y, avoidDirection.x);
+                //Debug.Log("New wander angle: " + wanderAngle);
                 
                 //Debug.Log("Avoid obstacle: " + hitInfo.transform.name + " normal = " + hitInfo.normal + " projection = " + projection);
                 //Debug.Log("Avoidance direction: " + avoidDirection);

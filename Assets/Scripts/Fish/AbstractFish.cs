@@ -133,6 +133,8 @@ public abstract class AbstractFish : LightSource
         // Unsubscribe from events before removing the action
         action.ActionComplete -= OnActionComplete;
         actions.RemoveAction(action.id);
+        
+        Debug.Log("Priority dictionary after removing action:\n" + actions.ToString());
     }
 
     // Removes the completed action from the list of actions to perform.
