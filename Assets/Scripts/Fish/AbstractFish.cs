@@ -80,8 +80,11 @@ public abstract class AbstractFish : LightSource
     {
         if (other.gameObject.CompareTag("Fish")) 
         {
-            int otherID = other.GetComponent<AbstractFish>().GetID();
-            actions.RemoveAction(otherID);
+            AbstractFish fish = other.GetComponent<AbstractFish>();
+            if (fish != null)
+            {
+                actions.RemoveAction(fish.GetID());
+            }
         }
     }
 
