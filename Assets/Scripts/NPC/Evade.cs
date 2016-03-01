@@ -17,6 +17,8 @@ public class Evade : NPCActionable
     
 	public override void Execute(Steerable steerable) 
     {
+        base.Execute(steerable);
+        
         if (targetSteerable)
         {
             steerable.AddEvadeForce(targetSteerable, strengthMultiplier);

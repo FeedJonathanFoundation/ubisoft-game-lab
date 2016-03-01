@@ -5,9 +5,12 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Steerable))]
 public abstract class AbstractFish : LightSource
 {
-
     /** The steerable component attached to the GameObject performing this action. */
     protected Steerable steerable;
+    
+    [Tooltip("Detects lights within the fish's line of sight")]
+    [SerializeField]
+    private Neighbourhood lightDetector;
 
     // The steering behaviors to apply every frame
     private PriorityDictionary actions;
@@ -35,6 +38,22 @@ public abstract class AbstractFish : LightSource
 
         // Reset the stopping condition. The stopping condition now knows that the 'Steer' action just started.
 		stoppingCondition.Init();
+    }
+    
+    void OnEnable()
+    {
+        // Subscribe to the events dictating when lights enter/exit the fish's line-of-sight 
+        lightDetector.NeighbourEnter += OnLightEnter;
+        lightDetector.NeighbourExit += OnLightExit;
+        lightDetector.NeighbourStay += OnLightStay;
+    }
+    
+    void OnDisable()
+    {
+        // Unsubscribe to the events dictating when lights enter/exit the fish's line-of-sight 
+        lightDetector.NeighbourEnter -= OnLightEnter;
+        lightDetector.NeighbourExit -= OnLightExit;
+        lightDetector.NeighbourStay -= OnLightStay; 
     }
 
     void Update()
@@ -72,38 +91,54 @@ public abstract class AbstractFish : LightSource
         return myId;
     }
 
-    // Detects if fish is close to another character
-    void OnTriggerEnter(Collider other) 
+    // Detects if fish is close to another light
+    private void OnLightEnter(GameObject lightObject) 
     {
-        if (gameObject.name == "Fish B") 
-        {
-            Debug.Log("Collided with : " + other.tag);
-        }
+        LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
+        
+        // if (lightSource.name == "Fish B") 
+        // {
+        //     Debug.Log("Collided with : " + lightSource.tag);
+        // }
 
-        if (other.gameObject.tag.Equals("Player")) 
+        if (lightSource.tag.Equals("Player")) 
         {
-            ReactToPlayer(other.gameObject.transform);
+            // ReactToPlayer(lightSource.transform);
             
             //Debug.Log(actions.ToString());
         }
-        else if (other.gameObject.tag.Equals("Fish")) 
+        else if (lightSource.tag.Equals("Fish")) 
         {
-            ReactToNPC(other.gameObject.transform);
+            ReactToNPC(lightSource.transform);
         }
     }
     
-    // Detects if fish is no longer close to another character
-    void OnTriggerExit(Collider other) 
+    private void OnLightStay(GameObject lightObject)
     {
-        if (other.gameObject.CompareTag("Fish")) 
+        LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
+
+        if (lightSource.tag.Equals("Player")) 
         {
-            int otherID = other.GetComponent<AbstractFish>().GetID();
+            ReactToPlayer(lightSource.transform);
+            
+            //Debug.Log(actions.ToString());
+        }
+    }
+    
+    // Detects if fish is no longer close to another light
+    private void OnLightExit(GameObject lightObject) 
+    {
+        LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
+        
+        if (lightSource.CompareTag("Fish")) 
+        {
+            int otherID = lightSource.GetComponent<AbstractFish>().GetID();
             RemoveAction(otherID);
         }
-        else if (other.gameObject.CompareTag("Player"))
+        else if (lightSource.CompareTag("Player"))
         {
             //Debug.Log("Before RemoveAction()\n" + actions.ToString());
-            Debug.Log("Player out of sight of fish : " + gameObject.name);
+            Debug.Log("Player out of sight of fish : " + lightSource.name);
             // Player id = -1
             RemoveAction(-1);
             
@@ -125,7 +160,7 @@ public abstract class AbstractFish : LightSource
     
     protected void RemoveAction(NPCActionable action)
     {
-        if (action == null)
+        if (action == null || !action.CanBeCancelled())
             return;        
         
         Debug.Log("Remove the action : " + action.ToString());

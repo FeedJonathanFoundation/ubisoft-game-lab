@@ -13,6 +13,8 @@ public class Seek : NPCActionable
     
 	public override void Execute(Steerable steerable) 
     {
+        base.Execute(steerable);
+        
         if (targetTransform)
         {
             // If player's lights are on, seek player
@@ -30,5 +32,14 @@ public class Seek : NPCActionable
             }
             
         }
+    }
+    
+    /// <summary>
+    /// The transform to seek
+    /// </summary>
+    public Transform TargetTransform
+    {
+        get { return targetTransform; }
+        set { targetTransform = value; }
     }
 }

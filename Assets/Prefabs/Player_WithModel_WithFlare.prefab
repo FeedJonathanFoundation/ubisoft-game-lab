@@ -112,6 +112,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &120582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 425140}
+  - 135: {fileID: 13535580}
+  - 114: {fileID: 11471824}
+  m_Layer: 14
+  m_Name: DetectableLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &124748
 GameObject:
   m_ObjectHideFlags: 1
@@ -377,7 +394,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 416134}
   - 108: {fileID: 10873792}
-  - 114: {fileID: 11421678}
   - 114: {fileID: 11414562}
   m_Layer: 0
   m_Name: Radius Light
@@ -481,10 +497,8 @@ GameObject:
   - 23: {fileID: 2349436}
   - 114: {fileID: 11499388}
   - 114: {fileID: 11434920}
-  - 114: {fileID: 11406198}
   - 114: {fileID: 11401112}
   - 54: {fileID: 5498592}
-  - 114: {fileID: 11498844}
   m_Layer: 9
   m_Name: Player_WithModel_WithFlare
   m_TagString: Player
@@ -748,7 +762,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 435506}
   - 135: {fileID: 13577472}
-  m_Layer: 11
+  m_Layer: 15
   m_Name: DisableCollider
   m_TagString: Disabler
   m_Icon: {fileID: 0}
@@ -790,7 +804,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 154376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.35, y: -1.43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 463722}
@@ -800,6 +814,7 @@ Transform:
   - {fileID: 473274}
   - {fileID: 408650}
   - {fileID: 435506}
+  - {fileID: 425140}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &407770
@@ -948,6 +963,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 403390}
   m_RootOrder: 0
+--- !u!4 &425140
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120582}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 407496}
+  m_RootOrder: 7
 --- !u!4 &425946
 Transform:
   m_ObjectHideFlags: 1
@@ -2028,18 +2055,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightToMassRatio: 0.12
   minMass: 0.9
---- !u!114 &11406198
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 154376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9336e828e5f9be44ea437c5c6d499375, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightToScaleRatio: 0.1
 --- !u!114 &11410060
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2101,18 +2116,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.13
---- !u!114 &11421678
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 148048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4906f634a9b27624c9e41234e3122bcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightToRangeRatio: 1
 --- !u!114 &11434920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2176,6 +2179,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.4
+--- !u!114 &11471824
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456aedb0d71fc4d42a91523185bb6a39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightToRadiusRatio: 0.2
 --- !u!114 &11497678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2189,22 +2204,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spinSpeed: 25
   rotationAxis: 1
---- !u!114 &11498844
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 154376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab2b81563e2b7634484b67d251dcdeaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flareObject: {fileID: 177066, guid: 1481585a8f164c04d9beedd085f2ee2d, type: 2}
-  flareSpawnObject: {fileID: 408650}
-  cooldownTime: 10
-  flareEnergyCost: 1
-  flareCostPercentage: 1.5
 --- !u!114 &11499388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2240,6 +2239,18 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13535580
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120582}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3.62
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &13577472
 SphereCollider:

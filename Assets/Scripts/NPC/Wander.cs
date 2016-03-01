@@ -31,7 +31,9 @@ public class Wander : NPCActionable
     // Need to be able to set these floats elsewhere;
     
 	public override void Execute(Steerable steerable) 
-    {        
+    {      
+        base.Execute(steerable);
+          
         steerable.AddWanderForce(circleDistance, circleRadius, angleChange, strengthMultiplier);
     }
 }

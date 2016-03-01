@@ -10,19 +10,22 @@ public abstract class LightEnergyListener : MonoBehaviour
      "specified, the LightEnergy attached to this GameObject is used.")]
     public LightEnergy lightEnergyOverride;
 
+    protected LightSource lightSource;  // The LightSource being listened to
     private LightEnergy lightEnergy;
 
-    void Start()
+    public virtual void Start()
     {
+        lightSource = GetComponentInParent<LightSource>();
+        
         // Choose either the override (if assigned in the Inspector) or the component
         // attached to this GameObject.
         if (lightEnergyOverride != null)
         {
             this.lightEnergy = lightEnergyOverride;
         }
-        else if (GetComponentInParent<LightSource>())
+        else if (lightSource)
         {
-            this.lightEnergy = GetComponentInParent<LightSource>().LightEnergy;
+            this.lightEnergy = lightSource.LightEnergy;
         }
         else
         {

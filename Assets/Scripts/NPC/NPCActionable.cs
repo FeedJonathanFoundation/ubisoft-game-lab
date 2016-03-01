@@ -1,4 +1,7 @@
-﻿public enum NPCActionPriority
+﻿using UnityEngine;
+using System.Collections;
+
+public enum NPCActionPriority
 {
     Low = 0,
     Medium = 1,
@@ -33,6 +36,8 @@ public abstract class NPCActionable
     public float minSpeed;
     public float maxSpeed;
     
+    protected float timeActive;
+    
     /** Called when the action is done being performed. The AbstractFish class then knows to stop performing the action. */
     public delegate void ActionCompleteHandler(NPCActionable completedAction);
     public event ActionCompleteHandler ActionComplete = delegate {};
@@ -44,13 +49,30 @@ public abstract class NPCActionable
     }
     
     // Inform the AbstractFish performing this action that the action is complete 
-    protected void ActionCompleted()
+    protected virtual void ActionCompleted()
     {
-        ActionComplete(this);
+        //if (ActionComplete != null)
+            // Notify subscribers that the action is complete
+            ActionComplete(this);
+    }
+    
+    protected void ResetTimer()
+    {
+         // Reset the timer for the next time this action is performed.
+        timeActive = 0;
+    }
+    
+    // Returns true if the action can be stopped. Should return "false" if the action's timer is ongoing.
+    public virtual bool CanBeCancelled()
+    {
+        return true;
     }
     
 	// void Execute(Steerable steerable, SteeringBehavior steeringBehavior);
-    public abstract void Execute(Steerable steerable);
+    public virtual void Execute(Steerable steerable)
+    {
+        timeActive += Time.deltaTime;
+    }
     
     public string ToString()
     {

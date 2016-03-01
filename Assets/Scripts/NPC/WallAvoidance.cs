@@ -17,6 +17,8 @@ public class WallAvoidance : NPCActionable
     
 	public override void Execute(Steerable steerable) 
     {
+        base.Execute(steerable);
+        
         steerable.AddWallAvoidanceForce(avoidanceForce, maxViewDistance, obstacleLayer, strengthMultiplier);
     }
     

@@ -17,12 +17,24 @@ public class FishAFlocking : NPCActionable
     
     public FishAFlocking(int priority, int id) : base(priority, id)
     {
+        SetPriority(priority);
+        SetID(id);
+    }
+    
+    public void SetPriority(int priority)
+    {
+        this.priority = priority;
+        
         wander.priority = priority;
         wallAvoidance.priority = priority;
         alignment.priority = priority;
         cohesion.priority = priority;
         separation.priority = priority;
-        
+    }
+    
+    public void SetID(int id)
+    {
+        this.id = id;
         
         wander.id = id;
         wallAvoidance.id = id;

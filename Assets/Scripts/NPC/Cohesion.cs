@@ -10,6 +10,8 @@ public class Cohesion : NPCActionable
     
 	public override void Execute(Steerable steerable) 
     {
+        base.Execute(steerable);
+        
         steerable.AddCohesionForce(strengthMultiplier);
     }
     

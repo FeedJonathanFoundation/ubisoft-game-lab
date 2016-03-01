@@ -10,13 +10,34 @@ public class LightSphereColliderModifier : LightEnergyListener
     // Cache GameObject components
     private SphereCollider sphereCollider;
     
-    void Start()
+    public override void Start()
     {
         sphereCollider = GetComponent<SphereCollider>();
+        
+        base.Start();
     }
     
-    public override void OnLightChanged(float currentEnergy)
+    public override void OnLightChanged(float currentLight)
     {
-        sphereCollider.radius = currentEnergy * lightToRadiusRatio;
+        sphereCollider.radius = currentLight * lightToRadiusRatio;
+    }
+    
+    void Update()
+    {
+        // Compute the sphere collider's radius based on the parent light source's energy
+        float colliderRadius = lightSource.LightEnergy.CurrentEnergy * lightToRadiusRatio;
+        
+        if (lightSource is Player)
+        {
+            Player player = (Player)lightSource;
+            
+            // If the player's lights are turned off, disable the sphere. Fish should not be able to detect the player.
+            if (!player.IsDetectable())
+            {
+                colliderRadius = 0;
+            }
+        }
+        
+        sphereCollider.radius = colliderRadius;
     }
 }

@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 461420}
   - 114: {fileID: 11432162}
   - 54: {fileID: 5425290}
-  - 135: {fileID: 13544348}
   - 114: {fileID: 11462572}
   - 114: {fileID: 11461650}
   m_Layer: 13
@@ -37,6 +36,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &118608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 473560}
+  - 114: {fileID: 11499682}
+  m_Layer: 13
+  m_Name: LightDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &121318
 GameObject:
   m_ObjectHideFlags: 1
@@ -265,7 +280,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100658}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.05, y: -3.91, z: 0.2163086}
+  m_LocalPosition: {x: -5.33, y: -5.98, z: 0.2163086}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 410742}
@@ -277,6 +292,7 @@ Transform:
   - {fileID: 456068}
   - {fileID: 482216}
   - {fileID: 428230}
+  - {fileID: 473560}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &468010
@@ -291,6 +307,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 461420}
   m_RootOrder: 3
+--- !u!4 &473560
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118608}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 461420}
+  m_RootOrder: 9
 --- !u!4 &478606
 Transform:
   m_ObjectHideFlags: 1
@@ -555,6 +583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9807d0e018a2bb44aa20d697950d438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  centerOffset: {x: 0, y: 0, z: 0}
   radius: 4
   layerToDetect:
     serializedVersion: 2
@@ -574,6 +603,7 @@ MonoBehaviour:
   absorptionRate: 15
   defaultEnergy: 10
   debugInfiniteLight: 0
+  lightDetector: {fileID: 11499682}
   flockingBehaviour:
     strengthMultiplier: 1
     overrideSteerableSpeed: 1
@@ -612,6 +642,34 @@ MonoBehaviour:
       overrideSteerableSpeed: 0
       minSpeed: 0
       maxSpeed: 0
+  playerBehaviour:
+    strengthMultiplier: 1
+    overrideSteerableSpeed: 0
+    minSpeed: 0
+    maxSpeed: 0
+    alwaysFlee: 1
+    seekWhenStronger:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+    fleeWhenWeaker:
+      strengthMultiplier: 5
+      overrideSteerableSpeed: 1
+      minSpeed: 8
+      maxSpeed: 8
+      useTimer: 1
+      timer: 1
+    wallAvoidance:
+      strengthMultiplier: 1
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+      avoidanceForce: 100
+      maxViewDistance: 4
+      obstacleLayer:
+        serializedVersion: 2
+        m_Bits: 4096
 --- !u!114 &11462572
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -709,6 +767,22 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 4096
+--- !u!114 &11499682
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9807d0e018a2bb44aa20d697950d438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerOffset: {x: 0, y: 1.55, z: 0}
+  radius: 2.15
+  layerToDetect:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!135 &13505850
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -721,18 +795,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &13544348
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100658}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2.15
-  m_Center: {x: 0, y: 1.55, z: 0}
 --- !u!135 &13547324
 SphereCollider:
   m_ObjectHideFlags: 1

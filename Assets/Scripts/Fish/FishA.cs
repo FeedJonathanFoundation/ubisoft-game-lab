@@ -8,13 +8,21 @@ public class FishA : AbstractFish
     [SerializeField]
     private FishAFlocking flockingBehaviour;
     
+    [Tooltip("Then action performed when the fish detects the player")]
+    [SerializeField]
+    private SeekOrFleeLight playerBehaviour;
+    
     public override void Awake()
     {
         // call parent LightSource Awake() first
         base.Awake(); 
         
-        flockingBehaviour.priority = 0;
-        flockingBehaviour.id = GetID();
+        flockingBehaviour.SetPriority(0);   // Lowest priority
+        flockingBehaviour.SetID(GetID());
+        
+        playerBehaviour.SetPriority(2);     // Highest priority
+        playerBehaviour.SetID(-1);
+        playerBehaviour.Init();
     }
     
     public override void Move() 
@@ -22,16 +30,17 @@ public class FishA : AbstractFish
         AddAction(flockingBehaviour);
     }
     
+    // Called every frame when the fish can see the player
     public override void ReactToPlayer(Transform player)
-    {
-        Debug.Log("Flee the player : " + steerable.name);
+    {        
+        // Flee flee = new Flee(1, -1, player);
+        // flee.strengthMultiplier = 50f;
+        // flee.overrideSteerableSpeed = true;
+        // flee.minSpeed = 6f;
+        // flee.maxSpeed = 6f;
         
-        Flee flee = new Flee(1, -1, player);
-        flee.strengthMultiplier = 50f;
-        flee.overrideSteerableSpeed = true;
-        flee.minSpeed = 6f;
-        flee.maxSpeed = 6f;
-        AddAction(flee);
+        playerBehaviour.TargetLightSource = player.GetComponent<LightSource>();
+        AddAction(playerBehaviour);
     }
     
     public override void ReactToNPC(Transform other)

@@ -18,6 +18,8 @@ public class Pursue : NPCActionable
     
 	public override void Execute(Steerable steerable) 
     {
+        base.Execute(steerable);
+        
         if (targetSteerable)
         {
             steerable.AddPursueForce(targetSteerable, strengthMultiplier);
