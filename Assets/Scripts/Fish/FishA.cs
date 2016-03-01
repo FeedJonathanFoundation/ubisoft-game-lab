@@ -5,16 +5,21 @@ using System.Collections;
 // Run away upon close contact
 public class FishA : AbstractFish
 {
+    [SerializeField]
+    private FishAFlocking flockingBehaviour;
+    
     public override void Awake()
     {
         // call parent LightSource Awake() first
         base.Awake(); 
+        
+        flockingBehaviour.priority = 0;
+        flockingBehaviour.id = GetID();
     }
     
-
     public override void Move() 
     {
-        //actions.InsertAction(GetID(), new Wander(0));
+        AddAction(flockingBehaviour);
     }
     
     public override void ReactToPlayer(Transform player)

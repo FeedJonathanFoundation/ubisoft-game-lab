@@ -20,11 +20,18 @@ public enum NPCActionType
 	None
 }
 
+[System.Serializable]
 public abstract class NPCActionable
 {
+    [System.NonSerialized]
     public int priority;
+    [System.NonSerialized]
     public int id;
     public float strengthMultiplier;
+    
+    public bool overrideSteerableSpeed = false; // If true, the Steerable performing this action is given a new min/maxSpeed 
+    public float minSpeed;
+    public float maxSpeed;
     
     /** Called when the action is done being performed. The AbstractFish class then knows to stop performing the action. */
     public delegate void ActionCompleteHandler(NPCActionable completedAction);
