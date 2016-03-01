@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// implement probabilities to spawn certain fish types
+
 public class SpawnVolume : MonoBehaviour {
     
     /// <summary>
@@ -15,6 +17,8 @@ public class SpawnVolume : MonoBehaviour {
     /// </summary>
     [Tooltip("Array of possible NPCs to spawn")]
     public GameObject[] spawnObject;
+    [Tooltip("NPC probability of spawning (in order of spawnObject)")]
+    public float[] probabilities;
     
     /// <summary>
     /// If true, uses specific spawn points.
@@ -22,6 +26,9 @@ public class SpawnVolume : MonoBehaviour {
     /// </summary>
     [Tooltip("If true, uses specific spawn points. Else, uses randomly generated spawn points.")]
     public bool overrideSpawnLocations = false;
+    
+    [Tooltip("If true, spawns randomly within a circle. Else, generates in a circle pattern.")]
+    public bool spawnRandom = false;
     /// <summary>
     /// Specific spawn points.
     /// Only used if overrideSpawnLocations == true
@@ -76,15 +83,16 @@ public class SpawnVolume : MonoBehaviour {
     {
         disabled = false;
         
-        // fishes = new List<AbstractFish>();
         fishes = new List<GameObject>();
         
         fishCount = 0;
-        for (int i = 0; i < minFishCount; i++)
+        SpawnCircle(minFishCount);    
+        
+        // Spawn after a delay of spawnTime
+        if (spawnRandom)
         {
-            Invoke("Spawn", 0f);                            // Spawn minimum number of fish
-        }     
-        InvokeRepeating ("Spawn", spawnTime, spawnTime);    // Spawn after a delay of spawnTime
+            InvokeRepeating ("Spawn", spawnTime, spawnTime);
+        }
 	}
 
     /// <summary>
@@ -96,6 +104,7 @@ public class SpawnVolume : MonoBehaviour {
     {
         if (disabled) { return; }
         if (fishCount >= maxFishCount) { return; }
+        if (!spawnRandom) { return; }
         
         int spawnTypeIndex = ChooseFish();
 
@@ -110,54 +119,48 @@ public class SpawnVolume : MonoBehaviour {
         fishCount++;
     }
     
-    void SpawnSchool()
+    void SpawnCircle(int numberOfFish)
     {
-        // generate
-                // if (player.isDead) { return; // exit function }
-
-        // Vector3 spawnLocation;
-        // // Choose random index within number of spawn points
-        // int spawnPointIndex = Random.Range(0, spawnPoints.Length);
-
-        // // Use specific spawn points
-        // if (overrideSpawnLocations)
-        // {
-        //     spawnLocation = spawnPoints[spawnPointIndex].position;
-        // }
-        // // Use random spawn point
-        // else
-        // {
-        //     // generate random point in sphere collider
-        //     spawnLocation = Random.insideUnitSphere * GetRadius();
-        // }
-
-        // // Choose random fish type to spawn
-        // int spawnTypeIndex = Random.Range(0, fishesToSpawn.Length);
-
-        // School newSchool = new School(fishesToSpawn[spawnTypeIndex]);
-        // int schoolPopulation = newSchool.GetSchoolPopulation();
-
-        // // If spawn point is not occupied, spawn fish
-        // if (IsValidSpawnPoint(spawnLocation))
-        // {
-        //     // Create instance of fish prefab at spawn point and rotation
-        //     for (int i = 0; i < schoolPopulation; i++)
-        //     {
-        //         // Calculate school pattern
-        //         // Vector3 pos = spawnLocation + spacing * i;  // NEEDS TO BE FIXED
-        //         // Instantiate(fishesToSpawn[spawnTypeIndex], pos, Quaternion.identity);
-        //         // fishCount++;
-        //     }
-        // }
+        for (int i = 0; i < numberOfFish; i++)
+        {
+            int spawnTypeIndex = ChooseFish();
+            float radius = GetSpawnVolumeRadius() / 2;
+            float angle = i * Mathf.PI * 2 / numberOfFish;
+            Vector3 spawnLocation = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius + transform.position;
+            if (spawnObject.Length > 0 && spawnObject[spawnTypeIndex] != null)
+            {
+                GameObject fish = (GameObject)Instantiate(spawnObject[spawnTypeIndex], spawnLocation, Quaternion.identity);
+                fishes.Add(fish);
+                fishCount++;
+            }
+        }
     }
     
     int ChooseFish()
     {
-        // Choose random fish type to spawn
-        return Random.Range(0, spawnObject.Length);
+        // If probabilities array not used, choose random fish type to spawn
+        if (probabilities.Length < 1) 
+        {
+            return Random.Range(0, spawnObject.Length);
+        }
         
-        // Choose specific fish to spawn
-        // Make flag for specific fish?
+        // Choose fish based on probabilities
+        float total = 0;
+        for (int i = 0; i < spawnObject.Length; i++)
+        {
+            total += probabilities[i];
+        }
+
+        float randomFish = Random.value * total;
+        for (int i= 0; i < probabilities.Length; i++) {
+            if (randomFish < probabilities[i]) {
+                return i;
+            }
+            else {
+                randomFish -= probabilities[i];
+            }
+        }
+        return (probabilities.Length - 1);
     }
     
     Vector3 GenerateValidSpawnPoint(int spawnIndex)
@@ -209,7 +212,6 @@ public class SpawnVolume : MonoBehaviour {
         return true;
     }
     
-    // UNDER CONSTRUCTION
     // Checks whether the spawn point is occupied within the radius
     bool IsOccupied(Vector3 spawnPoint, float spawnRadius)
     {
@@ -265,8 +267,5 @@ public class SpawnVolume : MonoBehaviour {
     {
         fishCount--;
     }
-    
 }
-
-/// implement probabilities to spawn certain fish types
 
