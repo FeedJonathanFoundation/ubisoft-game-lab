@@ -27,9 +27,12 @@ public class FishB : AbstractFish
     {
         // Check size, then decide whether or not to eat
         AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
-        int id = fish.GetID();
-        Seek seek = new Seek(1, other);
-        actions.InsertAction(id, seek);
+        if (fish != null)
+        {
+            int id = fish.GetID();
+            Seek seek = new Seek(1, other);
+            actions.InsertAction(id, seek);
+        }
         
         // Flee flee = new Flee(2, other);
         // actions.InsertAction(id, seek);

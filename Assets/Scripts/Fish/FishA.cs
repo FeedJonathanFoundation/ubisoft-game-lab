@@ -25,8 +25,11 @@ public class FishA : AbstractFish
     public override void ReactToNPC(Transform other)
     {
         AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
-        int id = fish.GetID();
-        Flee flee = new Flee(1, other);
-        actions.InsertAction(id, flee);
+        if (fish != null) 
+        {
+            int id = fish.GetID();
+            Flee flee = new Flee(1, other);
+            actions.InsertAction(id, flee);
+        }
     }
 }

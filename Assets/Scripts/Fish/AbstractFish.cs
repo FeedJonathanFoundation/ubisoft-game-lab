@@ -22,6 +22,8 @@ public abstract class AbstractFish : LightSource
     {
         base.Awake(); // call parent LightSource Awake() first
         
+        myId = globalId++;
+        
         // Initialize action priority dictionary
         actions = new PriorityDictionary();
         Move();
@@ -37,7 +39,7 @@ public abstract class AbstractFish : LightSource
 		stoppingCondition.Init();
     }
 
-    void Update()
+    new void Update()
     {        
         if(stoppingCondition.Complete())
 		{
@@ -63,7 +65,7 @@ public abstract class AbstractFish : LightSource
     }
 
     // Detects if fish is close to another character
-    void OnTriggerEnter(Collider other) 
+    new void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.CompareTag("Player")) 
         {
@@ -76,12 +78,15 @@ public abstract class AbstractFish : LightSource
     }
     
     // Detects if fish is no longer close to another character
-    void OnTriggerExit(Collider other) 
+    new void OnTriggerExit(Collider other) 
     {
         if (other.gameObject.CompareTag("Fish")) 
         {
-            int otherID = other.GetComponent<AbstractFish>().GetID();
-            actions.RemoveAction(otherID);
+            AbstractFish fish = other.GetComponent<AbstractFish>();
+            if (fish != null)
+            {
+                actions.RemoveAction(fish.GetID());
+            }
         }
     }
 
