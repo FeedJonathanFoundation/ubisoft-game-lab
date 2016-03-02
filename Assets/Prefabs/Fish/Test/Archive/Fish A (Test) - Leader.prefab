@@ -591,6 +591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9807d0e018a2bb44aa20d697950d438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  centerOffset: {x: 0, y: 0, z: 0}
   radius: 4
   layerToDetect:
     serializedVersion: 2
@@ -610,6 +611,121 @@ MonoBehaviour:
   absorptionRate: 15
   defaultEnergy: 10
   debugInfiniteLight: 0
+  absorbableLightDetector: {fileID: 0}
+  lightDetector: {fileID: 0}
+  flockingBehaviour:
+    strengthMultiplier: 0
+    overrideSteerableSpeed: 0
+    minSpeed: 0
+    maxSpeed: 0
+    overrideMaxForce: 0
+    maxForce: 0
+    wander:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+      overrideMaxForce: 0
+      maxForce: 0
+      circleDistance: 0
+      circleRadius: 0
+      angleChange: 0
+    wallAvoidance:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+      overrideMaxForce: 0
+      maxForce: 0
+      avoidanceForce: 0
+      maxViewDistance: 0
+      obstacleLayer:
+        serializedVersion: 2
+        m_Bits: 0
+    alignment:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+      overrideMaxForce: 0
+      maxForce: 0
+    cohesion:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+      overrideMaxForce: 0
+      maxForce: 0
+    separation:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+      overrideMaxForce: 0
+      maxForce: 0
+  playerBehaviour:
+    strengthMultiplier: 0
+    overrideSteerableSpeed: 0
+    minSpeed: 0
+    maxSpeed: 0
+    overrideMaxForce: 0
+    maxForce: 0
+    alwaysFlee: 0
+    seekWhenStronger:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+      overrideMaxForce: 0
+      maxForce: 0
+    fleeWhenWeaker:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+      overrideMaxForce: 0
+      maxForce: 0
+      useTimer: 0
+      timer: 0
+    wallAvoidance:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+      overrideMaxForce: 0
+      maxForce: 0
+      avoidanceForce: 0
+      maxViewDistance: 0
+      obstacleLayer:
+        serializedVersion: 2
+        m_Bits: 0
+  flareBehaviour:
+    strengthMultiplier: 0
+    overrideSteerableSpeed: 0
+    minSpeed: 0
+    maxSpeed: 0
+    overrideMaxForce: 0
+    maxForce: 0
+    arrivalForce:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+      overrideMaxForce: 0
+      maxForce: 0
+      slowingRadius: 0
+    wallAvoidance:
+      strengthMultiplier: 0
+      overrideSteerableSpeed: 0
+      minSpeed: 0
+      maxSpeed: 0
+      overrideMaxForce: 0
+      maxForce: 0
+      avoidanceForce: 0
+      maxViewDistance: 0
+      obstacleLayer:
+        serializedVersion: 2
+        m_Bits: 0
 --- !u!114 &11498742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -621,6 +737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bfd65893f398f45824f35f221ef78d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minSpeed: 0
   maxSpeed: 1
   maxForce: 2
   bodyRadius: 0.5

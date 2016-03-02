@@ -17,6 +17,18 @@ public class Seek : NPCActionable
         
         if (targetTransform)
         {
+            // Override the steerable's min/max speed
+            if (overrideSteerableSpeed)
+            {
+                steerable.MinSpeed = minSpeed;
+                steerable.MaxSpeed = maxSpeed;
+            }
+            // Override the steerable's max force
+            if (overrideMaxForce)
+            {
+                steerable.MaxForce = maxForce;
+            }
+            
             // If player's lights are on, seek player
             if (targetTransform.gameObject.CompareTag("Player")) 
             {

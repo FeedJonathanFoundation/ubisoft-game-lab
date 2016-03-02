@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 [System.Serializable]
-public class FishAFlocking : NPCActionable
+public class Flocking : NPCActionable
 {
     [SerializeField]
     private Wander wander;
@@ -15,7 +15,7 @@ public class FishAFlocking : NPCActionable
     [SerializeField]
     private Separation separation;
     
-    public FishAFlocking(int priority, int id) : base(priority, id)
+    public Flocking(int priority, int id) : base(priority, id)
     {
         SetPriority(priority);
         SetID(id);

@@ -6,7 +6,7 @@ using System.Collections;
 public class FishA : AbstractFish
 {
     [SerializeField]
-    private FishAFlocking flockingBehaviour;
+    private Flocking flockingBehaviour;
     
     [Tooltip("Then action performed when the fish detects the player")]
     [SerializeField]
