@@ -15,8 +15,8 @@ public static class DataManager
 
     /// <summary>
     /// Saves last player position on the current level on the disk
-    /// NOTE: MAC file location:  /Users/USERNAME/Library/Application Support/FJFCompany/Space Explorer/ 
-    ///       PC file location: C:\Users\USERNAME\AppData\LocalLow\FJFCompany\Space Explorer
+    /// NOTE: MAC file location:  /Users/USERNAME/Library/Application Support/FJFTeam/Space Explorer/ 
+    ///       PC file location: C:\Users\USERNAME\AppData\LocalLow\FJFTeam\Space Explorer
     /// </summary>
     public static void SaveFile(PlayerData data)
     {

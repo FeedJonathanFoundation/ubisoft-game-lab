@@ -19,6 +19,11 @@ public class SmoothCamera : MonoBehaviour
 
     private Vector2 velocity = Vector2.zero;
 
+    void Awake()
+    {
+       DontDestroyOnLoad(this.transform.gameObject); 
+    }
+
     void FixedUpdate()
     {
         if (target)
