@@ -28,4 +28,9 @@ public class FishC : AbstractFish
         /*Seek seek = new Seek(1, other);
         actions.InsertAction(-1, seek);*/
     }
+    
+    public override void ReactToFlare(Transform flare)
+    {
+        
+    }
 }

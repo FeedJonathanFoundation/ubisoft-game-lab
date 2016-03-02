@@ -100,16 +100,24 @@ public abstract class AbstractFish : LightSource
         // {
         //     Debug.Log("Collided with : " + lightSource.tag);
         // }
-
-        if (lightSource.tag.Equals("Player")) 
+        
+        if (lightSource)
         {
-            // ReactToPlayer(lightSource.transform);
-            
-            //Debug.Log(actions.ToString());
+            if (lightSource.tag.Equals("Player")) 
+            {
+                // ReactToPlayer(lightSource.transform);
+                
+                //Debug.Log(actions.ToString());
+            }
+            else if (lightSource.tag.Equals("Fish")) 
+            {
+                ReactToNPC(lightSource.transform);
+            }
         }
-        else if (lightSource.tag.Equals("Fish")) 
+        
+        if (lightObject.tag.Equals("Flare"))
         {
-            ReactToNPC(lightSource.transform);
+            ReactToFlare(lightObject.transform);
         }
     }
     
@@ -117,11 +125,14 @@ public abstract class AbstractFish : LightSource
     {
         LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
 
-        if (lightSource.tag.Equals("Player")) 
+        if (lightSource)
         {
-            ReactToPlayer(lightSource.transform);
-            
-            //Debug.Log(actions.ToString());
+            if (lightSource.tag.Equals("Player")) 
+            {
+                ReactToPlayer(lightSource.transform);
+                
+                //Debug.Log(actions.ToString());
+            }
         }
     }
     
@@ -130,19 +141,28 @@ public abstract class AbstractFish : LightSource
     {
         LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
         
-        if (lightSource.CompareTag("Fish")) 
+        if (lightSource)
         {
-            int otherID = lightSource.GetComponent<AbstractFish>().GetID();
-            RemoveAction(otherID);
+            if (lightSource.CompareTag("Fish")) 
+            {
+                int otherID = lightSource.GetComponent<AbstractFish>().GetID();
+                RemoveAction(otherID);
+            }
+            else if (lightSource.CompareTag("Player"))
+            {
+                //Debug.Log("Before RemoveAction()\n" + actions.ToString());
+                Debug.Log("Player out of sight of fish : " + lightSource.name);
+                // Player id = -1
+                RemoveAction(-1);
+                
+                //Debug.Log("After RemoveAction()\n" + actions.ToString());
+            }
         }
-        else if (lightSource.CompareTag("Player"))
+        
+        if (lightObject.CompareTag("Flare"))
         {
-            //Debug.Log("Before RemoveAction()\n" + actions.ToString());
-            Debug.Log("Player out of sight of fish : " + lightSource.name);
-            // Player id = -1
-            RemoveAction(-1);
-            
-            //Debug.Log("After RemoveAction()\n" + actions.ToString());
+            // Stop reacting to the flare 
+            RemoveAction(-2);
         }
     }
     
@@ -154,7 +174,7 @@ public abstract class AbstractFish : LightSource
     
     protected void RemoveAction(int id)
     {
-        //Debug.Log("Remove the action with ID : " + id);
+        Debug.Log("Remove the action with ID : " + id);
         RemoveAction(actions.GetAction(id));
     }
     
@@ -186,6 +206,9 @@ public abstract class AbstractFish : LightSource
 
     // How the fish moves when it is proximate to the player
     public abstract void ReactToNPC(Transform other);
+    
+    // How the fish reacts when a flare is within line of sight
+    public abstract void ReactToFlare(Transform other);
 
     // Returns the height of a fish
     public virtual float GetHeight()

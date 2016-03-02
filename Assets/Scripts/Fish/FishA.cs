@@ -11,6 +11,10 @@ public class FishA : AbstractFish
     [Tooltip("Then action performed when the fish detects the player")]
     [SerializeField]
     private SeekOrFleeLight playerBehaviour;
+
+    [Tooltip("The action performed when flare is within the fish's line of sight")]    
+    [SerializeField]
+    private SeekFlare flareBehaviour;
     
     public override void Awake()
     {
@@ -20,9 +24,13 @@ public class FishA : AbstractFish
         flockingBehaviour.SetPriority(0);   // Lowest priority
         flockingBehaviour.SetID(GetID());
         
-        playerBehaviour.SetPriority(2);     // Highest priority
+        playerBehaviour.SetPriority(1);     // Medium priority
         playerBehaviour.SetID(-1);
         playerBehaviour.Init();
+        
+        flareBehaviour.SetPriority(2);      // Highest priority
+        flareBehaviour.SetID(-2);
+        flareBehaviour.Init();
     }
     
     public override void Move() 
@@ -49,5 +57,12 @@ public class FishA : AbstractFish
         int id = fish.GetID();
         Flee flee = new Flee(1, other);
         actions.InsertAction(id, flee);*/
+    }
+    
+    public override void ReactToFlare(Transform flare)
+    {
+        // Seek the flare
+        flareBehaviour.TargetFlare = flare;
+        AddAction(flareBehaviour);
     }
 }

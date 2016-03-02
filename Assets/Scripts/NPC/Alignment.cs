@@ -11,6 +11,7 @@ public class Alignment : NPCActionable
 	public override void Execute(Steerable steerable) 
     {
         base.Execute(steerable);
+        
         steerable.AddAlignmentForce(strengthMultiplier);
     }
     

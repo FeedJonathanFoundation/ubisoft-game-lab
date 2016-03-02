@@ -48,6 +48,13 @@ public class Neighbourhood : MonoBehaviour
 	{
 		for (int i = 0; i < neighbours.Count; i++)
         {
+            // If the neighbour was destroyed, remove it from the list of neighbours
+            if (neighbours[i] == null)
+            {
+                neighbours.RemoveAt(i);
+                continue;
+            }
+                
             // Notify each subscriber that this neighbour is still in the GameObject's line-of-sight
             NeighbourStay(neighbours[i]);
         }

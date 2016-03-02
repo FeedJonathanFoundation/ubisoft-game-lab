@@ -39,6 +39,11 @@ public class School : AbstractFish
            fish.ReactToNPC(other);
        }
     }
+    
+    public override void ReactToFlare(Transform flare)
+    {
+        
+    }
 
     public int GetSchoolPopulation()
     {

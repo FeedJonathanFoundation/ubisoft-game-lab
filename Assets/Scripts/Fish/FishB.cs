@@ -35,4 +35,9 @@ public class FishB : AbstractFish
         // Flee flee = new Flee(2, other);
         // actions.InsertAction(id, seek);
     }
+    
+    public override void ReactToFlare(Transform flare)
+    {
+        
+    }
 }
