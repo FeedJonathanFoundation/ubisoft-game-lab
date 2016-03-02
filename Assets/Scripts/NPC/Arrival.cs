@@ -24,16 +24,12 @@ public class Arrival : NPCActionable
     {
         base.Execute(steerable);
         
-        Debug.Log("Arrival.Execute(): targetTransform: " + targetTransform);
-        
         if (targetTransform)
         {
             steerable.AddArrivalForce(targetTransform.position, slowingRadius, strengthMultiplier);
         }
         else
         {
-            Debug.Log("Arrival.Execute(): targetTransform is null");
-            
             // If the target transform is null, there is nothing to seek. Thus, stop the action
             ActionCompleted();
         }

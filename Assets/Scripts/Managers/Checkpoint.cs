@@ -8,7 +8,7 @@ public class Checkpoint : LightSource
         base.Awake(); // call parent LightSource Awake() first
     }
 
-    public override void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {

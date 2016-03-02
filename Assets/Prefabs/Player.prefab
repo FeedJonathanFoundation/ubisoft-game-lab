@@ -12,7 +12,6 @@ GameObject:
   - 135: {fileID: 13568648}
   - 114: {fileID: 11441870}
   - 114: {fileID: 11464098}
-  - 114: {fileID: 11494626}
   - 114: {fileID: 11422050}
   - 54: {fileID: 5478908}
   m_Layer: 9
@@ -282,9 +281,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 488890}
-  - 135: {fileID: 13500436}
+  - 114: {fileID: 11442326}
   m_Layer: 8
-  m_Name: LightCollider
+  m_Name: LightAbsorber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2190,9 +2189,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canAbsorb: 1
-  absorptionRate: 15
+  absorptionRate: 50000
   defaultEnergy: 10
   debugInfiniteLight: 0
+  absorbableLightDetector: {fileID: 11442326}
   massEjectionTransform: {fileID: 451912}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
   thrustForce: 1
@@ -2202,6 +2202,22 @@ MonoBehaviour:
   energyCostLightToggle: 0
   minimalEnergyRestrictionToggleLights: 0
   disableCheckpoints: 0
+--- !u!114 &11442326
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9807d0e018a2bb44aa20d697950d438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerOffset: {x: 0, y: -0.4, z: 0}
+  radius: 0.4
+  layerToDetect:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &11450230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2280,21 +2296,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.4
---- !u!114 &11494626
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d54fd3ad18d24c459c54c2d1a496880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canAbsorb: 1
-  absorptionRate: 15
-  defaultEnergy: 10
-  debugInfiniteLight: 0
 --- !u!114 &11495008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2307,18 +2308,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.13
---- !u!135 &13500436
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130588}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &13541488
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -22,7 +22,7 @@ public class Flee : NPCActionable
         // If the action has elapsed its timer
         if (useTimer && timeActive > timer)
         {
-            Debug.Log("Flee timer elapsed.");
+            //Debug.Log("Flee timer elapsed.");
             
             // Inform subscribers that the action is completed. This stops the action's execution.
             ActionCompleted();
@@ -51,7 +51,7 @@ public class Flee : NPCActionable
                         steerable.MaxForce = maxForce;
                     }
                     
-                    Debug.Log("FLEE THE PLAYER [Flee.Execute()]");
+                    //Debug.Log("FLEE THE PLAYER [Flee.Execute()]");
                     
                     steerable.AddFleeForce(targetTransform.position, strengthMultiplier);
                 }

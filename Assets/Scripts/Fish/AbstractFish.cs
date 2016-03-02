@@ -40,24 +40,30 @@ public abstract class AbstractFish : LightSource
 		stoppingCondition.Init();
     }
     
-    void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+        
         // Subscribe to the events dictating when lights enter/exit the fish's line-of-sight 
         lightDetector.NeighbourEnter += OnLightEnter;
         lightDetector.NeighbourExit += OnLightExit;
         lightDetector.NeighbourStay += OnLightStay;
     }
     
-    void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
+        
         // Unsubscribe to the events dictating when lights enter/exit the fish's line-of-sight 
         lightDetector.NeighbourEnter -= OnLightEnter;
         lightDetector.NeighbourExit -= OnLightExit;
         lightDetector.NeighbourStay -= OnLightStay; 
     }
 
-    void Update()
-    {        
+    public override void Update()
+    {     
+        base.Update();
+           
         if(stoppingCondition.Complete())
 		{
 			//return;
@@ -151,7 +157,7 @@ public abstract class AbstractFish : LightSource
             else if (lightSource.CompareTag("Player"))
             {
                 //Debug.Log("Before RemoveAction()\n" + actions.ToString());
-                Debug.Log("Player out of sight of fish : " + lightSource.name);
+                //Debug.Log("Player out of sight of fish : " + lightSource.name);
                 // Player id = -1
                 RemoveAction(-1);
                 
@@ -166,6 +172,14 @@ public abstract class AbstractFish : LightSource
         }
     }
     
+    // Called the instant the fish loses all its light.
+    protected override void OnLightDepleted()
+    {
+        base.OnLightDepleted();
+        
+        GameObject.Destroy(this.gameObject);
+    }
+    
     protected void AddAction(NPCActionable action)
     {
         action.ActionComplete += OnActionComplete;
@@ -174,7 +188,7 @@ public abstract class AbstractFish : LightSource
     
     protected void RemoveAction(int id)
     {
-        Debug.Log("Remove the action with ID : " + id);
+        //Debug.Log("Remove the action with ID : " + id);
         RemoveAction(actions.GetAction(id));
     }
     

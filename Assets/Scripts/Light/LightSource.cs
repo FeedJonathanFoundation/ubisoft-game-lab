@@ -20,8 +20,8 @@ public class LightSource : MonoBehaviour
     [Tooltip("If true, the light source has infinite energy")]
     public bool debugInfiniteLight = false;
 
-    // The light sources this GameObject is touching
-    private List<LightSource> lightsInContact = new List<LightSource>();
+    [Tooltip("Detects absorbable lights that are in contact with this light source" )]
+    public Neighbourhood absorbableLightDetector;
 
     private LightEnergy lightEnergy;
 
@@ -29,18 +29,32 @@ public class LightSource : MonoBehaviour
     {
         lightEnergy = new LightEnergy(defaultEnergy, gameObject, debugInfiniteLight);
     }
+    
+    public virtual void OnEnable()
+    {
+        this.LightEnergy.LightDepleted += OnLightDepleted;
+    }
+    
+    public virtual void OnDisable()
+    {
+        this.LightEnergy.LightDepleted -= OnLightDepleted;
+    }
 
     public virtual void Update()
     {
-        // Cycle through each light source being touched by this GameObject
-        for (int i = 0; i < lightsInContact.Count; i++)
+        // Cycle through each absorbable light source being touched by this GameObject
+        for (int i = 0; i < absorbableLightDetector.NeighbourCount; i++)
         {
-            LightSource otherLightSource = lightsInContact[i];
+            GameObject absorbableLight = absorbableLightDetector.GetNeighbour(i);
+            
+            if (absorbableLight == null) { continue; }
+            
+            LightSource otherLightSource = absorbableLight.GetComponentInParent<LightSource>();
 
             if (otherLightSource == null)
             {
                 // Remove the null light source from the list
-                lightsInContact.RemoveAt(i);
+                // lightsInContact.RemoveAt(i);
                 continue;
             }
             
@@ -83,7 +97,7 @@ public class LightSource : MonoBehaviour
         }
     }
 
-    public virtual void OnTriggerEnter(Collider otherCollider)
+    /*public virtual void OnTriggerEnter(Collider otherCollider)
     {
         LightSource otherLightSource = otherCollider.GetComponent<LightSource>();
 
@@ -103,6 +117,13 @@ public class LightSource : MonoBehaviour
             // Remove the LightSource from to the list of lights sources being touched
             lightsInContact.Remove(otherLightSource);
         }
+    }*/
+    
+    /// <summary>
+    /// Called the instant the light depletes to zero. Called from the LightEnergy.LightDepleted event.
+    /// </summary>
+    protected virtual void OnLightDepleted()
+    {
     }
 
     /// <summary>
