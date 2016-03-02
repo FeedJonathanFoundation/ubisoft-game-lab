@@ -76,7 +76,7 @@ public class SeekOrFleeLight : NPCActionable
                 // Flee the light source since it is stronger than this fish
                 fleeWhenWeaker.Execute(steerable);
                 
-                // Debug.Log("FLEE THE PLAYER");
+                //Debug.Log("FLEE THE FISH: " + targetLightSource.name);
             }
             // Else, if this fish has more light than its target
             else
@@ -84,6 +84,11 @@ public class SeekOrFleeLight : NPCActionable
                 // Seek the light source
                 seekWhenStronger.Execute(steerable);
             }
+        }
+        else 
+        {
+            // If the light source has been destroyed, stop performing this action.
+            ActionCompleted();
         }
         
         wallAvoidance.Execute(steerable);
@@ -110,8 +115,16 @@ public class SeekOrFleeLight : NPCActionable
         { 
             targetLightSource = value; 
             
-            seekWhenStronger.TargetTransform = value.transform;
-            fleeWhenWeaker.TargetTransform = value.transform;
+            if (value)
+            {
+                seekWhenStronger.TargetTransform = value.transform;
+                fleeWhenWeaker.TargetTransform = value.transform;
+            }
+            else
+            {
+                seekWhenStronger.TargetTransform = null;
+                fleeWhenWeaker.TargetTransform = null;
+            }
         }
     }
     

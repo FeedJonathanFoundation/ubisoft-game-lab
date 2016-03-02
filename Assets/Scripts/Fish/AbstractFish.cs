@@ -18,7 +18,10 @@ public abstract class AbstractFish : LightSource
     // The condition that must be met for this action to return 'Success'
     protected StoppingCondition stoppingCondition = new StoppingCondition();
     
-    static int globalId = 0;
+    [Tooltip("If true, the fish prints every action it performs every frame in the console")]
+    public bool debugLogActions = false;
+    
+    static int globalId = 1;
     private int myId;
 
     public override void Awake()
@@ -28,6 +31,9 @@ public abstract class AbstractFish : LightSource
         // Initialize action priority dictionary
         actions = new PriorityDictionary();
         Move();
+        
+        // Assign the next available ID
+        myId = globalId++;
 
         // Cache the 'Steerable' component attached to the GameObject performing this action
 		steerable = transform.GetComponent<Steerable>();
@@ -73,10 +79,14 @@ public abstract class AbstractFish : LightSource
         foreach(NPCActionable action in activeActions)
         {
             //Debug.Log("Before performing action : \n" + actions.ToString());
-            //Debug.Log("Execute action : " + action.ToString());
+            
+            if (debugLogActions) { Debug.Log("Execute action : " + action.ToString()); }
+            
             action.Execute(steerable);
             //Debug.Log("After performing action : \n" + actions.ToString());
         }
+        
+        if (debugLogActions) { Debug.Log(actions.ToString()); }
         
         // NPCActionable playerSeek = actions.GetAction(-1);
         // if(playerSeek != null)
@@ -117,7 +127,7 @@ public abstract class AbstractFish : LightSource
             }
             else if (lightSource.tag.Equals("Fish")) 
             {
-                ReactToNPC(lightSource.transform);
+                //ReactToNPC(lightSource.transform);
             }
         }
         
@@ -130,14 +140,18 @@ public abstract class AbstractFish : LightSource
     private void OnLightStay(GameObject lightObject)
     {
         LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
+        
+        //Debug.Log(lightObject.name + " is visible by " + gameObject.name);
 
         if (lightSource)
         {
             if (lightSource.tag.Equals("Player")) 
             {
                 ReactToPlayer(lightSource.transform);
-                
-                //Debug.Log(actions.ToString());
+            }
+            else if (lightSource.tag.Equals("Fish"))
+            {
+                ReactToNPC(lightSource.transform);
             }
         }
     }
@@ -151,6 +165,9 @@ public abstract class AbstractFish : LightSource
         {
             if (lightSource.CompareTag("Fish")) 
             {
+                // Inform subclasses that the NPC went out of sight
+                NPCOutOfSight(lightSource.transform);
+                
                 int otherID = lightSource.GetComponent<AbstractFish>().GetID();
                 RemoveAction(otherID);
             }
@@ -215,11 +232,13 @@ public abstract class AbstractFish : LightSource
     // How the fish moves when it is not proximate to the player
     public abstract void Move();
 
-    // How the fish moves when it is proximate to the player
+    // How the fish moves when it is proximate to the player (called every frame when the player is in sight)
     public abstract void ReactToPlayer(Transform player);
 
-    // How the fish moves when it is proximate to the player
+    // How the fish moves when it is proximate to the player (called every frame when a fish is in sight)
     public abstract void ReactToNPC(Transform other);
+    // Called the instant an NPC becomes out of sight
+    public abstract void NPCOutOfSight(Transform other);
     
     // How the fish reacts when a flare is within line of sight
     public abstract void ReactToFlare(Transform other);

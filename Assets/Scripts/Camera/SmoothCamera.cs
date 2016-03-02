@@ -63,7 +63,7 @@ public class SmoothCamera : MonoBehaviour
             // Lock the camera's depth
             newPosition.z = zPosition;
             
-            Debug.Log("Move camera to: " + (Vector2)targetPosition);
+            //Debug.Log("Move camera to: " + (Vector2)targetPosition);
 
             transform.position = newPosition;
         }

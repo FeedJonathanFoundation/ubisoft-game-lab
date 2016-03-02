@@ -52,8 +52,6 @@ public class Flee : NPCActionable
                     }
                     
                     //Debug.Log("FLEE THE PLAYER [Flee.Execute()]");
-                    
-                    steerable.AddFleeForce(targetTransform.position, strengthMultiplier);
                 }
                 else
                 {
@@ -63,8 +61,20 @@ public class Flee : NPCActionable
             }
             else
             {
-                steerable.AddFleeForce(targetTransform.position, strengthMultiplier);
+                // Override the steerable's min/max speed
+                if (overrideSteerableSpeed)
+                {
+                    steerable.MinSpeed = minSpeed;
+                    steerable.MaxSpeed = maxSpeed;
+                }
+                // Override the steerable's max force
+                if (overrideMaxForce)
+                {
+                    steerable.MaxForce = maxForce;
+                }
             }
+            
+            steerable.AddFleeForce(targetTransform.position, strengthMultiplier);
         }
     }
     

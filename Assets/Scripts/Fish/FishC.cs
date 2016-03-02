@@ -29,6 +29,10 @@ public class FishC : AbstractFish
         actions.InsertAction(-1, seek);*/
     }
     
+    public override void NPCOutOfSight(Transform other)
+    {
+    }
+    
     public override void ReactToFlare(Transform flare)
     {
         

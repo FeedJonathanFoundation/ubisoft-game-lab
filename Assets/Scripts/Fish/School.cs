@@ -40,6 +40,10 @@ public class School : AbstractFish
        }
     }
     
+    public override void NPCOutOfSight(Transform other)
+    {
+    }
+    
     public override void ReactToFlare(Transform flare)
     {
         

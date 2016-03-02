@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 // Medium, hard to kill NPCs
 // Seeks smaller fish by default
@@ -8,6 +9,10 @@ public class FishB : AbstractFish
 {
     [SerializeField]
     private Flocking flockingBehaviour;
+    
+    [Tooltip("When another fish is in sight, this fish will either seek or flee it")]
+    [SerializeField]
+    private SeekOrFleeLight otherFishBehaviour;
     
     [Tooltip("Then action performed when the fish detects the player")]
     [SerializeField]
@@ -25,11 +30,14 @@ public class FishB : AbstractFish
         flockingBehaviour.SetPriority(0);   // Lowest priority
         flockingBehaviour.SetID(GetID());
         
-        playerBehaviour.SetPriority(1);     // Medium priority
+        otherFishBehaviour.SetPriority(1);  // Medium priority
+        otherFishBehaviour.Init();
+        
+        playerBehaviour.SetPriority(2);     // High priority
         playerBehaviour.SetID(-1);
         playerBehaviour.Init();
         
-        flareBehaviour.SetPriority(2);      // Highest priority
+        flareBehaviour.SetPriority(3);      // Very high priority
         flareBehaviour.SetID(-2);
         flareBehaviour.Init();
     }
@@ -53,11 +61,28 @@ public class FishB : AbstractFish
     }
     
     public override void ReactToNPC(Transform other)
+    {                
+        LightSource currentFishTarget = otherFishBehaviour.TargetLightSource;
+        
+        if (currentFishTarget == null)
+        {
+            Debug.Log("React to new fish: " + other.name);
+            AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
+            int id = fish.GetID();
+            
+            otherFishBehaviour.TargetLightSource = fish;
+            otherFishBehaviour.SetID(id);
+            AddAction(otherFishBehaviour);
+        }
+    }
+    
+    public override void NPCOutOfSight(Transform other)
     {
-        /*AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
-        int id = fish.GetID();
-        Flee flee = new Flee(1, other);
-        actions.InsertAction(id, flee);*/
+        if (otherFishBehaviour.TargetLightSource != null 
+            && otherFishBehaviour.TargetLightSource.transform == other)
+        {
+            otherFishBehaviour.TargetLightSource = null;
+        }
     }
     
     public override void ReactToFlare(Transform flare)

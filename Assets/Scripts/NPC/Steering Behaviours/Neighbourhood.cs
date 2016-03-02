@@ -63,7 +63,8 @@ public class Neighbourhood : MonoBehaviour
     void OnTriggerEnter(Collider collider)
     {
         // If the collider which entered the trigger volume is on the correct layer
-        if(((1 << collider.gameObject.layer) & layerToDetect) == layerToDetect)
+        if(((1 << collider.gameObject.layer) & layerToDetect) == layerToDetect 
+            /*&& collider.transform.parent != transform.parent*/)
         {
 			//Debug.LogWarning("Collider entered in " + transform.parent.name + "'s neighbourhood: " + collider.transform.name);
             

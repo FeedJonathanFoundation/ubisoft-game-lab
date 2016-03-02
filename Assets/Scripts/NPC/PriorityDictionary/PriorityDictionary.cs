@@ -15,6 +15,7 @@ public class PriorityDictionary
     private Dictionary<int, NPCActionable> lowPriorityAction;
     private Dictionary<int, NPCActionable> medPriorityAction;
     private Dictionary<int, NPCActionable> highPriorityAction;
+    private Dictionary<int, NPCActionable> veryHighPriorityAction;
     private List<NPCActionable> constantActions;
     
     // Helper list to avoid instantiation in GetActiveActions()
@@ -27,6 +28,7 @@ public class PriorityDictionary
         lowPriorityAction = new Dictionary<int, NPCActionable>();
         medPriorityAction = new Dictionary<int, NPCActionable>();
         highPriorityAction = new Dictionary<int, NPCActionable>();
+        veryHighPriorityAction = new Dictionary<int, NPCActionable>();
         constantActions = new List<NPCActionable>();
         activeActions = new List<NPCActionable>();
         
@@ -37,6 +39,9 @@ public class PriorityDictionary
     {
         switch (action.priority)
         {
+            case 3:
+                InsertVeryHighPriority(action);
+                break;
             case 2: 
                 InsertHighPriority(action);
                 break;
@@ -89,6 +94,15 @@ public class PriorityDictionary
         }
     }
     
+    public void InsertVeryHighPriority(NPCActionable action)
+    {
+        if (!veryHighPriorityAction.ContainsKey(action.id))
+        {
+            veryHighPriorityAction.Add(action.id, action);
+            UpdatePriority();
+        }
+    }
+    
     public void RemoveConstantAction(NPCActionable action)
     {
         if (!constantActions.Contains(action))
@@ -130,15 +144,29 @@ public class PriorityDictionary
         return false;
     }
     
+    public bool RemoveVeryHighPriority(int id)
+    {
+        if (veryHighPriorityAction.ContainsKey(id))
+        {
+            veryHighPriorityAction.Remove(id);
+            UpdatePriority();
+            return true;
+        }
+        return false;
+    }
+    
     public void RemoveAction(int id)
     {
         switch (activePriority)
         {
+            case 3:
+                if (RemoveVeryHighPriority(id)) { break; }
+                else { goto case 2; }
             case 2:
-                if(RemoveHighPriority(id)) { break; }
+                if (RemoveHighPriority(id)) { break; }
                 else { goto case 1; }
             case 1:
-                if(RemoveMedPriority(id)) { break; }
+                if (RemoveMedPriority(id)) { break; }
                 else { goto default; }
             case 0:
                 RemoveLowPriority(id);
@@ -151,13 +179,18 @@ public class PriorityDictionary
 
     public void UpdatePriority()
     {
-        int count = 2;
-        if (highPriorityAction.Count == 0)
+        int count = 3;
+        
+        if (veryHighPriorityAction.Count == 0)
         {
             count--;
-            if(medPriorityAction.Count == 0)
+            if (highPriorityAction.Count == 0)
             {
                 count--;
+                if(medPriorityAction.Count == 0)
+                {
+                    count--;
+                }
             }
         }
         activePriority = count;
@@ -171,6 +204,9 @@ public class PriorityDictionary
         Dictionary<int, NPCActionable> activeDictionary; 
         switch(activePriority)
         {
+            case 3:
+                activeDictionary = veryHighPriorityAction;
+                break;
             case 2:
                 activeDictionary = highPriorityAction;
                 break;
@@ -198,11 +234,13 @@ public class PriorityDictionary
     {
         NPCActionable action = null;
         
-        if (highPriorityAction.ContainsKey(id))
+        if (veryHighPriorityAction.ContainsKey(id))
+            action = veryHighPriorityAction[id];
+        else if (highPriorityAction.ContainsKey(id))
             action = highPriorityAction[id];
-        if (medPriorityAction.ContainsKey(id))
-            action = medPriorityAction[id];
-        if (lowPriorityAction.ContainsKey(id))
+        else if (medPriorityAction.ContainsKey(id))
+             action = medPriorityAction[id];
+        else if (lowPriorityAction.ContainsKey(id))
             action = lowPriorityAction[id];
             
         return action;
@@ -211,6 +249,14 @@ public class PriorityDictionary
     public string ToString()
     {
         string output = "";
+        
+        output += "Very High Priority\n";
+        output += "{\n";
+        foreach (KeyValuePair<int, NPCActionable> entry in veryHighPriorityAction)
+        {
+            output += "\t" + entry.Key + " : " + entry.Value.ToString() + "\n";
+        }
+        output += "}\n\n";
         
         output += "High Priority\n";
         output += "{\n";

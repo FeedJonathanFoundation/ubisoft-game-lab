@@ -59,6 +59,10 @@ public class FishA : AbstractFish
         actions.InsertAction(id, flee);*/
     }
     
+    public override void NPCOutOfSight(Transform other)
+    {
+    }
+    
     public override void ReactToFlare(Transform flare)
     {
         // Seek the flare

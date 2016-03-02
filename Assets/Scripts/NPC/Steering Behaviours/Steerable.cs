@@ -500,8 +500,12 @@ public class Steerable : MonoBehaviour
         // Cycle through each neighbour of this steerable
         for(int i = 0; i < neighbourhood.NeighbourCount; i++)
         {
+            GameObject neighbourObject = neighbourhood.GetNeighbour(i);
+            
+            if (neighbourObject == null) { continue; }
+            
             // Cache the neighbour's Transform
-            Transform neighbour = neighbourhood.GetNeighbour(i).transform;
+            Transform neighbour = neighbourObject.transform;
 
             // Compute the vector from the neighbour to this steerable's position.
             Vector2 toSteerable = Transform.position - neighbour.position;
@@ -542,8 +546,12 @@ public class Steerable : MonoBehaviour
         // Cycle through each neighbour for this steerable. This agent will try to align himself with his neighbours
         for(int i = 0; i < neighbourhood.NeighbourCount; i++)
         {
+            GameObject neighbourObject = neighbourhood.GetNeighbour(i);
+            
+            if (neighbourObject == null) { continue; }
+            
             // Cache the neighbour's Rigidbody
-            Rigidbody neighbour = neighbourhood.GetNeighbour(i).GetComponentInParent<Rigidbody>();
+            Rigidbody neighbour = neighbourObject.GetComponentInParent<Rigidbody>();
 
             // Add the neighbour's velocity to the average. 
             averageNeighbourVelocity += (Vector2)neighbour.velocity;
@@ -590,8 +598,12 @@ public class Steerable : MonoBehaviour
         // Cycle through each neighbour of this steerable
         for(int i = 0; i < neighbourhood.NeighbourCount; i++)
         {
+            GameObject neighbourObject = neighbourhood.GetNeighbour(i);
+            
+            if (neighbourObject == null) { continue; }
+            
             // Cache the neighbour's Transform
-            Transform neighbour = neighbourhood.GetNeighbour (i).transform;
+            Transform neighbour = neighbourObject.transform;
 
             // Add the neighbour's position to the neighbourhood's center of mass
             neighbourCenterOfMass += (Vector2)neighbour.position;
