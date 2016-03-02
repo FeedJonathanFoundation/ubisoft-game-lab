@@ -98,6 +98,11 @@ public class FishAFlocking : NPCActionable
             steerable.MinSpeed = minSpeed;
             steerable.MaxSpeed = maxSpeed;
         }
+        // Override the steerable's max force
+        if (overrideMaxForce)
+        {
+            steerable.MaxForce = maxForce;
+        }
         
         cohesion.Execute(steerable);
         alignment.Execute(steerable);

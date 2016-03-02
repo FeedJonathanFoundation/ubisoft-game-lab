@@ -45,6 +45,11 @@ public class Flee : NPCActionable
                         steerable.MinSpeed = minSpeed;
                         steerable.MaxSpeed = maxSpeed;
                     }
+                    // Override the steerable's max force
+                    if (overrideMaxForce)
+                    {
+                        steerable.MaxForce = maxForce;
+                    }
                     
                     Debug.Log("FLEE THE PLAYER [Flee.Execute()]");
                     

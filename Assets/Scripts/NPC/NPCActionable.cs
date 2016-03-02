@@ -36,6 +36,9 @@ public abstract class NPCActionable
     public float minSpeed;
     public float maxSpeed;
     
+    public bool overrideMaxForce = false;
+    public float maxForce;
+    
     protected float timeActive;
     
     /** Called when the action is done being performed. The AbstractFish class then knows to stop performing the action. */
