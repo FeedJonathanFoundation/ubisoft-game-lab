@@ -231,6 +231,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 463772}
   - 108: {fileID: 10879888}
+  - 114: {fileID: 11489390}
   m_Layer: 0
   m_Name: Halo
   m_TagString: Untagged
@@ -299,6 +300,7 @@ GameObject:
   - 4: {fileID: 447412}
   - 33: {fileID: 3389268}
   - 23: {fileID: 2354560}
+  - 114: {fileID: 11478296}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -523,7 +525,7 @@ Transform:
   m_GameObject: {fileID: 170278}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071067}
   m_LocalPosition: {x: 0, y: 0.082, z: -0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children:
   - {fileID: 447412}
   - {fileID: 479192}
@@ -626,7 +628,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159134}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.67, z: 0}
   m_LocalScale: {x: 100, y: 100.00001, z: 100.00001}
   m_Children: []
   m_Father: {fileID: 408066}
@@ -699,7 +701,7 @@ Transform:
   m_GameObject: {fileID: 140724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10.97, y: -2.7, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 481450}
   - {fileID: 467968}
@@ -1428,7 +1430,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 0.18620694, b: 0, a: 1}
   m_Intensity: 0.58
-  m_Range: 0.86
+  m_Range: 1.3
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -1654,11 +1656,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canAbsorb: 1
   absorptionRate: 5000
-  defaultEnergy: 25
+  defaultEnergy: 20
   debugInfiniteLight: 0
   absorbableLightDetector: {fileID: 11471974}
   lightDetector: {fileID: 11443570}
-  debugLogActions: 1
+  debugLogActions: 0
   flockingBehaviour:
     strengthMultiplier: 1
     overrideSteerableSpeed: 1
@@ -1855,6 +1857,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRadiusRatio: 0.03
+--- !u!114 &11478296
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13182bab344a44e45b1705c45ba8b884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minColour: {r: 0, g: 0.91724133, b: 1, a: 0}
+  maxColour: {r: 1, g: 0, b: 0, a: 0}
+  changeSpeed: 3
+  updateChildren: 0
 --- !u!114 &11480356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1868,6 +1885,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spinSpeed: -150
   rotationAxis: 2
+--- !u!114 &11489390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 143058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5226cedadbcaa4371863c4e16b776110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minColour: {r: 0, g: 0.8758622, b: 1, a: 0}
+  maxColour: {r: 1, g: 0.18431373, b: 0, a: 0}
+  changeSpeed: 5
+  updateChildren: 0
 --- !u!135 &13507584
 SphereCollider:
   m_ObjectHideFlags: 1

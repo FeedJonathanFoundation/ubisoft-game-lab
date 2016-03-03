@@ -23,11 +23,11 @@ public class LightSource : MonoBehaviour
     [Tooltip("Detects absorbable lights that are in contact with this light source" )]
     public Neighbourhood absorbableLightDetector;
 
+    // DO NOT ACCESS DIRECTLY. Use LightEnergy property instead.
     private LightEnergy lightEnergy;
 
     public virtual void Awake()
     {
-        lightEnergy = new LightEnergy(defaultEnergy, gameObject, debugInfiniteLight);
     }
     
     public virtual void OnEnable()
@@ -131,6 +131,14 @@ public class LightSource : MonoBehaviour
     /// </summary>
     public LightEnergy LightEnergy
     {
-        get { return lightEnergy; }
+        get 
+        { 
+            if (lightEnergy == null)
+            {
+                lightEnergy = new LightEnergy(defaultEnergy, gameObject, debugInfiniteLight);    
+            }
+            
+            return lightEnergy; 
+        }
     }
 }
