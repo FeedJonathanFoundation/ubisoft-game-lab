@@ -143,7 +143,7 @@ public class LightSource : MonoBehaviour
         { 
             if (lightEnergy == null)
             {
-                lightEnergy = new LightEnergy(defaultEnergy, gameObject, debugInfiniteLight);    
+                lightEnergy = new LightEnergy(defaultEnergy, gameObject, infiniteEnergy);    
             }
             
             return lightEnergy; 
