@@ -20,6 +20,7 @@ public abstract class ColourRelativeToPlayer : MonoBehaviour
     
     private LightSource lightSource;
     private static Player player;   // Do not access directly. Use Player property instead.
+    private static bool playerSearched; // If true, the player has been searched using GameObject.FindTag().
 
     public virtual void Awake()
     {
@@ -38,7 +39,7 @@ public abstract class ColourRelativeToPlayer : MonoBehaviour
     
     void OnDisable()
     {
-        Player.LightEnergy.LightChanged -= OnLightChanged;
+        if (Player != null) { Player.LightEnergy.LightChanged -= OnLightChanged; }
         lightSource.LightEnergy.LightChanged -= OnLightChanged;
     }
 
@@ -74,11 +75,14 @@ public abstract class ColourRelativeToPlayer : MonoBehaviour
     {
         get 
         {
-            if (player == null)
+            // Only search for the player once
+            if (!playerSearched && player == null)
             {
                 GameObject playerObject = GameObject.FindWithTag("Player");
                 Debug.Log("Found player (EmissiveColourRelativeToPlayer.cs): " + playerObject);
                 player = playerObject.GetComponent<Player>();
+                
+                playerSearched = true;
             }
             
             return player;
