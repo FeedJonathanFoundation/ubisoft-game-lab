@@ -21,7 +21,7 @@ public class LightSource : MonoBehaviour
     public float defaultEnergy = 10;
 
     [Tooltip("If true, the light source has infinite energy")]
-    public bool debugInfiniteLight = false;
+    public bool infiniteEnergy = false;
 
     [Tooltip("Detects absorbable lights that are in contact with this light source" )]
     public Neighbourhood absorbableLightDetector;

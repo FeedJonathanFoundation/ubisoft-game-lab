@@ -29,11 +29,13 @@ public class SmoothCamera : MonoBehaviour
     
     private Vector2 velocity = Vector2.zero;
 
-    void Start()
+    void Awake()
     {
         transform = GetComponent<Transform>();
         
         deadzoneRadiusSquared = deadzoneRadius * deadzoneRadius;
+        
+        DontDestroyOnLoad(this.gameObject); 
     }
     
     void FixedUpdate()

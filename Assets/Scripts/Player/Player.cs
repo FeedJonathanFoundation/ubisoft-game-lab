@@ -54,6 +54,7 @@ public class Player : LightSource
     public override void Awake()
     {
        base.Awake(); // call parent LightSource Awake() first
+       
        transform = GetComponent<Transform>();
        rigidbody = GetComponent<Rigidbody>();
        
@@ -62,8 +63,15 @@ public class Player : LightSource
        
        this.isDead = false;
        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
+       DontDestroyOnLoad(this.gameObject);
        
        LoadGame();
+    }
+    
+    void OnLevelWasLoaded(int level) 
+    {
+        Debug.Log("Scene " + level + " is loaded!");
+        this.transform.position = new Vector3(0, 0, 0); 
     }
 
     // Update is called once per frame
@@ -128,8 +136,15 @@ public class Player : LightSource
     {              
         PlayerData data = DataManager.LoadFile();
         
-        if (data != null && data.levelID == this.currentLevel && !disableCheckpoints)
+        if (data != null && !disableCheckpoints)
         {
+            if (data.levelID != this.currentLevel) 
+            {
+                if (SceneManager.sceneCountInBuildSettings > data.levelID)
+                {
+                    SceneManager.LoadScene(data.levelID, LoadSceneMode.Single);
+                }                    
+            }
             transform.position = DataManager.Vector3FromString(data.playerPosition);
             transform.localEulerAngles = DataManager.Vector3FromString(data.playerRotation);
         } 
