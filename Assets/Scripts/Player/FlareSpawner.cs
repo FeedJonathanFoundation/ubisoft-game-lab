@@ -14,15 +14,19 @@ public class FlareSpawner : MonoBehaviour
     public float flareEnergyCost;
     [Tooltip("Percentage of energy needed to use flare. 1 = 100%")]
     public float flareCostPercentage;
+    [Tooltip("The amount of recoil applied on the player when shooting the flare")]
+    public float recoilForce;
 
     private float timer;
     private LightSource lightSource;
-	// Use this for initialization
+    private new Rigidbody rigidbody;
+	
+    // Use this for initialization
 	void Start () 
 	{
         timer = cooldownTime;
         lightSource = GetComponent<LightSource>();
-
+        rigidbody = GetComponent<Rigidbody>();
     }
 	
 	// Update is called once per frame
@@ -36,6 +40,8 @@ public class FlareSpawner : MonoBehaviour
                 {
                     Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
                     lightSource.LightEnergy.Deplete(flareEnergyCost);
+                    // Apply recoil in the opposite direction the flare was shot
+                    rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
                     timer = 0.0f;
                 }
             }

@@ -46,9 +46,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 428062}
-  - 135: {fileID: 13508478}
+  - 114: {fileID: 11422128}
   m_Layer: 8
-  m_Name: Light Collider
+  m_Name: Absorbable Light Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -272,6 +272,22 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &11422128
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9807d0e018a2bb44aa20d697950d438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerOffset: {x: 0, y: 0, z: 0}
+  radius: 0.5
+  layerToDetect:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &11453794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -310,6 +326,8 @@ MonoBehaviour:
   canAbsorb: 0
   absorptionRate: 15
   defaultEnergy: 0.3
+  debugInfiniteLight: 0
+  absorbableLightDetector: {fileID: 11422128}
 --- !u!114 &11467018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -343,18 +361,6 @@ SphereCollider:
   m_GameObject: {fileID: 191022}
   m_Material: {fileID: 13400000, guid: 13a848b283702bd4a942d9ee7dcc776d, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &13508478
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157500}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5

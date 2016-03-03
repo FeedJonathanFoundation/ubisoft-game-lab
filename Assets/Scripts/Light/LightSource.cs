@@ -6,11 +6,13 @@ using System.Collections.Generic;
 /// If attached to a GameObject, this GameObject can absorb light
 /// from other GameObjects with a LightEnergy component
 /// <summary>
-[RequireComponent(typeof(Collider))]
 public class LightSource : MonoBehaviour
 {
     [Tooltip("If true, this GameObject can absorb other GameObjects with a LightSource component")]
     public bool canAbsorb;
+    
+    [Tooltip("If true, the player can always absorb this GameObject, even if it has higher light.")]
+    public bool playerWillAlwaysAbsorb;
 
     [Tooltip("The higher the value, the faster light is absorbed from other light sources")]
     public float absorptionRate = 15;
@@ -21,33 +23,48 @@ public class LightSource : MonoBehaviour
     [Tooltip("If true, the light source has infinite energy")]
     public bool infiniteEnergy = false;
 
-    // The light sources this GameObject is touching
-    private List<LightSource> lightsInContact = new List<LightSource>();
+    [Tooltip("Detects absorbable lights that are in contact with this light source" )]
+    public Neighbourhood absorbableLightDetector;
 
+    // DO NOT ACCESS DIRECTLY. Use LightEnergy property instead.
     private LightEnergy lightEnergy;
 
     public virtual void Awake()
     {
-        lightEnergy = new LightEnergy(defaultEnergy, gameObject, infiniteEnergy);
+    }
+    
+    public virtual void OnEnable()
+    {
+        this.LightEnergy.LightDepleted += OnLightDepleted;
+    }
+    
+    public virtual void OnDisable()
+    {
+        this.LightEnergy.LightDepleted -= OnLightDepleted;
     }
 
     public virtual void Update()
     {
-        // Cycle through each light source being touched by this GameObject
-        for (int i = 0; i < lightsInContact.Count; i++)
+        // Cycle through each absorbable light source being touched by this GameObject
+        for (int i = 0; i < absorbableLightDetector.NeighbourCount; i++)
         {
-            LightSource otherLightSource = lightsInContact[i];
+            GameObject absorbableLight = absorbableLightDetector.GetNeighbour(i);
+            
+            if (absorbableLight == null) { continue; }
+            
+            LightSource otherLightSource = absorbableLight.GetComponentInParent<LightSource>();
 
             if (otherLightSource == null)
             {
                 // Remove the null light source from the list
-                lightsInContact.RemoveAt(i);
+                // lightsInContact.RemoveAt(i);
                 continue;
             }
-
+            
             // If this GameObject can absorb the touched light source
             if (CanAbsorb(otherLightSource))
             {
+                //Debug.Log(gameObject.name + " absorb " + otherLightSource.name);
                 LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
 
                 // Calculate the amount of light to absorb from the other light source
@@ -67,7 +84,7 @@ public class LightSource : MonoBehaviour
     {
         // If this light source has more energy than the other one,
         // return true. This light source can absorb the given argument.
-        if (LightEnergy.CurrentEnergy > otherLightSource.LightEnergy.CurrentEnergy)
+        if (canAbsorb && LightEnergy.CurrentEnergy > otherLightSource.LightEnergy.CurrentEnergy)
         {
             return true;
         }
@@ -77,13 +94,18 @@ public class LightSource : MonoBehaviour
         {
             return true;
         }
+        // The player can always absorb a light source with LightSource.playerWillAlwaysAbsorb set to true
+        else if (this is Player && otherLightSource.playerWillAlwaysAbsorb)
+        {
+            return true;
+        }
         else
         {
             return false;
         }
     }
 
-    public virtual void OnTriggerEnter(Collider otherCollider)
+    /*public virtual void OnTriggerEnter(Collider otherCollider)
     {
         LightSource otherLightSource = otherCollider.GetComponent<LightSource>();
 
@@ -103,6 +125,13 @@ public class LightSource : MonoBehaviour
             // Remove the LightSource from to the list of lights sources being touched
             lightsInContact.Remove(otherLightSource);
         }
+    }*/
+    
+    /// <summary>
+    /// Called the instant the light depletes to zero. Called from the LightEnergy.LightDepleted event.
+    /// </summary>
+    protected virtual void OnLightDepleted()
+    {
     }
 
     /// <summary>
@@ -110,6 +139,14 @@ public class LightSource : MonoBehaviour
     /// </summary>
     public LightEnergy LightEnergy
     {
-        get { return lightEnergy; }
+        get 
+        { 
+            if (lightEnergy == null)
+            {
+                lightEnergy = new LightEnergy(defaultEnergy, gameObject, infiniteEnergy);    
+            }
+            
+            return lightEnergy; 
+        }
     }
 }

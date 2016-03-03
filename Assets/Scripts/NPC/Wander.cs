@@ -10,34 +10,30 @@ public class Wander : NPCActionable
 	/// and the more likely the entity will change directions. 
 	/// </summary>
     [Tooltip("Wander: The greater this value, the stronger the wander force, and the more likely the entity will change directions whilst moving.")]
-	public float circleDistance;
+	public float circleDistance = 1f;
     
 	/// <summary>
 	/// The greater the radius, the stronger the wander force, and the more likely the entity will change directions
 	/// </summary>
     [Tooltip("Wander: The greater the radius, the stronger the wander force, and the more likely the entity will change directions")]
-	public float circleRadius;
+	public float circleRadius = .5f;
     
 	/// <summary>
 	/// The maximum angle in degrees that the wander force can change between two frames
 	/// </summary>
     [Tooltip("Wander: The maximum angle in degrees that the wander force can change between two frames")]
-	public float angleChange;
+	public float angleChange = 30f;
     
-    public float strengthMultiplier = 9.9f;
-    
-    public Wander(int priority) : base(priority) 
+    public Wander(int priority, int id) : base(priority, id) 
     {
     }
     
     // Need to be able to set these floats elsewhere;
     
 	public override void Execute(Steerable steerable) 
-    {
-        circleDistance = 1f;
-        circleRadius = .5f;
-        angleChange = 30f;
-        
+    {      
+        base.Execute(steerable);
+          
         steerable.AddWanderForce(circleDistance, circleRadius, angleChange, strengthMultiplier);
     }
 }
