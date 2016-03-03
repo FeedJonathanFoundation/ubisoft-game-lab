@@ -12,7 +12,7 @@ public class Checkpoint : LightSource
         this.infiniteEnergy = true; // override default LightSource value
     }
 
-    public override void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {

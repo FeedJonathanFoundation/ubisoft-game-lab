@@ -54,14 +54,17 @@ public class Player : LightSource
     public override void Awake()
     {
        base.Awake(); // call parent LightSource Awake() first
-       this.transform = GetComponent<Transform>();
-       this.rigidbody = GetComponent<Rigidbody>();       
-       this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, thrustEnergyCost, transform, rigidbody, this.LightEnergy);
-       this.lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
-       this.LightEnergy.LightDepleted += OnLightDepleted;
+       
+       transform = GetComponent<Transform>();
+       rigidbody = GetComponent<Rigidbody>();
+       
+       movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, thrustEnergyCost, transform, rigidbody, this.LightEnergy);
+       lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
+       
        this.isDead = false;
        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
-       DontDestroyOnLoad(this.transform.gameObject);
+       DontDestroyOnLoad(this.gameObject);
+       
        LoadGame();
     }
     
@@ -72,8 +75,10 @@ public class Player : LightSource
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
+        base.Update(); 
+        
         if (isDead)
         {
             Restart();
@@ -154,8 +159,10 @@ public class Player : LightSource
     /// Listens for LightDepleted event from LightEnergy
     /// Sets player to dead when it occurs
     /// </summary>
-    public void OnLightDepleted()
+    protected override void OnLightDepleted()
     {
+        base.OnLightDepleted(); 
+        
         isDead = true;
         Debug.Log("Game OVER! Press 'R' to restart!");
     }

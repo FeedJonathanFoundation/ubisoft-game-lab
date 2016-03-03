@@ -9,6 +9,10 @@ using System.Collections;
 public class Steerable : MonoBehaviour
 {
     /// <summary>
+    /// The steerable can never travel slower than this speed
+    /// </summary>
+    public float minSpeed;
+    /// <summary>
     /// The maximum speed at which the GameObject can move 
     /// </summary>
     public float maxSpeed;
@@ -118,7 +122,7 @@ public class Steerable : MonoBehaviour
         /*rigidbody.velocity = Vector2.SmoothDamp((Vector2)previousVelocity, 
                                                 Vector2.ClampMagnitude(previousVelocity + steeringForce, maxSpeed),
                                                 ref dampVelocity, timeToReachDesiredVelocity).Truncate(maxSpeed);*/
-        Vector2 newVelocity = (previousVelocity + (steeringAcceleration * deltaTime)).Truncate (MaxSpeed);
+        Vector2 newVelocity = (previousVelocity + (steeringAcceleration * deltaTime)).Clamp(MinSpeed, MaxSpeed);
 
         // Update this entity's previous velocity. This allows us to keep track of the steerable's velocity before future physics collisions.
         previousVelocity = newVelocity;
@@ -434,7 +438,7 @@ public class Steerable : MonoBehaviour
         
         Vector2 forward = previousVelocity.normalized;
         
-        if (obstacleDetector != null &&  obstacleDetector.GetNearestObstacle() != null)
+        if (true)//obstacleDetector != null &&  obstacleDetector.GetNearestObstacle() != null)
         {
             RaycastHit hitInfo;
             // Shoot a SphereCast in front of the object. Stores the first hit obstacle in front of the object in 'hitInfo".
@@ -450,7 +454,18 @@ public class Steerable : MonoBehaviour
                 Vector2 projection = Vector2.Dot(forward,hitInfo.normal) * forward;
                 // The avoidance force should steer the object perpendicular to its forward vector, along the direction of the normal 
                 Vector2 avoidDirection = normal - projection;
-                avoidForce = avoidDirection.SetMagnitude(avoidanceForce);
+                
+                float distanceToObstacleSqr = (hitInfo.point - transform.position).sqrMagnitude;
+                float distanceToObstaclePow4 = distanceToObstacleSqr * distanceToObstacleSqr;
+                // Don't allow the distance to be greater than 1. Otherwise, the force will be weakened if the obstacle is far away.
+                distanceToObstaclePow4 = Mathf.Clamp(distanceToObstaclePow4, 0, 1);
+                
+                // The closer to an obstacle, the stronger the avoidance force
+                avoidForce = avoidDirection.SetMagnitude(avoidanceForce / distanceToObstaclePow4);
+                
+                // Adjust the wander angle to ensure the steerable wanders away from the obstacle
+                this.wanderAngle = Mathf.Rad2Deg * Mathf.Atan2(avoidDirection.y, avoidDirection.x);
+                //Debug.Log("New wander angle: " + wanderAngle);
                 
                 //Debug.Log("Avoid obstacle: " + hitInfo.transform.name + " normal = " + hitInfo.normal + " projection = " + projection);
                 //Debug.Log("Avoidance direction: " + avoidDirection);
@@ -485,8 +500,12 @@ public class Steerable : MonoBehaviour
         // Cycle through each neighbour of this steerable
         for(int i = 0; i < neighbourhood.NeighbourCount; i++)
         {
+            GameObject neighbourObject = neighbourhood.GetNeighbour(i);
+            
+            if (neighbourObject == null) { continue; }
+            
             // Cache the neighbour's Transform
-            Transform neighbour = neighbourhood.GetNeighbour(i).transform;
+            Transform neighbour = neighbourObject.transform;
 
             // Compute the vector from the neighbour to this steerable's position.
             Vector2 toSteerable = Transform.position - neighbour.position;
@@ -527,8 +546,12 @@ public class Steerable : MonoBehaviour
         // Cycle through each neighbour for this steerable. This agent will try to align himself with his neighbours
         for(int i = 0; i < neighbourhood.NeighbourCount; i++)
         {
+            GameObject neighbourObject = neighbourhood.GetNeighbour(i);
+            
+            if (neighbourObject == null) { continue; }
+            
             // Cache the neighbour's Rigidbody
-            Rigidbody neighbour = neighbourhood.GetNeighbour(i).GetComponent<Rigidbody>();
+            Rigidbody neighbour = neighbourObject.GetComponentInParent<Rigidbody>();
 
             // Add the neighbour's velocity to the average. 
             averageNeighbourVelocity += (Vector2)neighbour.velocity;
@@ -575,8 +598,12 @@ public class Steerable : MonoBehaviour
         // Cycle through each neighbour of this steerable
         for(int i = 0; i < neighbourhood.NeighbourCount; i++)
         {
+            GameObject neighbourObject = neighbourhood.GetNeighbour(i);
+            
+            if (neighbourObject == null) { continue; }
+            
             // Cache the neighbour's Transform
-            Transform neighbour = neighbourhood.GetNeighbour (i).transform;
+            Transform neighbour = neighbourObject.transform;
 
             // Add the neighbour's position to the neighbourhood's center of mass
             neighbourCenterOfMass += (Vector2)neighbour.position;
@@ -614,8 +641,14 @@ public class Steerable : MonoBehaviour
         }
     }
     
-    /** The max speed at which the GameObject can move. The larger the value,
-      * the larger the steering forces? */
+    /** The min speed at which the GameObject can move */
+    public float MinSpeed
+    {
+        get { return minSpeed; }
+        set { minSpeed = value; }    
+    }
+    
+    /** The max speed at which the GameObject can move */
     public float MaxSpeed
     {
         get { return maxSpeed; }
