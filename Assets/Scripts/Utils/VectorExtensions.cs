@@ -39,4 +39,17 @@ public static class Vector2Extensions
 
 		return vector;
 	}
+    
+    public static Vector2 Clamp(this Vector2 vector, float minMagnitude, float maxMagnitude)
+    {
+       float magnitude = vector.magnitude;
+       
+        // Clamp the vector's magnitude
+		if(magnitude > maxMagnitude)
+			vector = vector.SetMagnitude(maxMagnitude);
+        else if(magnitude < minMagnitude)
+            vector = vector.SetMagnitude(minMagnitude);
+
+		return vector;
+    }
 }

@@ -67,16 +67,20 @@ public class LightEnergy
 
         // Notify subscribers that the amount of energy in this light has changed
         LightChanged(this.currentEnergy);
-
+        
         // If all light was depleted from this light source
         if (this.currentEnergy <= 0)
         {
             LightDepleted();
             if (this.gameObject.tag == "Player")
             {
-                // stops players inert movement
-                this.gameObject.GetComponent<Rigidbody>().drag = 10;
-            }           
+                Rigidbody rigidbody = gameObject.GetComponent<Rigidbody>();
+                if (rigidbody)
+                {
+                    rigidbody.drag = 10;                
+                }
+                //UnityEngine.Object.Destroy(this.gameObject);
+            }
         }
 
         return actualLightRemoved;

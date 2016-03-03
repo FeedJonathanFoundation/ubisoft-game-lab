@@ -43,7 +43,6 @@ public class PlayerFlare : MonoBehaviour
         
         if ((timer += Time.deltaTime) > timeBeforeDecay)
         {
-            Debug.Log(Time.deltaTime.ToString());
             lightObject.intensity -= Time.deltaTime * lightReduction;
             flareLens.brightness -= Time.deltaTime * fadeSpeed;
             timer = 0.0f;

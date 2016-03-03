@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Fish
   - Disabler
+  - Flare
+  - Fish A
+  - Fish B
+  - Fish C
   layers:
   - Default
   - TransparentFX
@@ -18,6 +22,11 @@ TagManager:
   - Light (Absorbable)
   - Light (Collider)
   - SpawnVolume
+  - Neighbourhood
+  - Obstacle
+  - LightDetector
+  - Light (Detectable)
+  - DisableCollider
   - 
   - 
   - 
@@ -26,17 +35,12 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - FishA
+  - FishB
+  - FishC
+  - Light (Collider, FishA)
+  - Light (Collider, FishB)
+  - Light (Collider, FishC)
   - 
   - 
   m_SortingLayers:
