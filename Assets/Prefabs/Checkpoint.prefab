@@ -19,6 +19,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &120896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 438182}
+  - 114: {fileID: 11418968}
+  m_Layer: 0
+  m_Name: AbsorbableLightDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &123206
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,7 +83,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 434496}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &434496
 Transform:
   m_ObjectHideFlags: 1
@@ -75,12 +91,25 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 123206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.1, y: 2.7, z: 0}
+  m_LocalPosition: {x: 412.12793, y: -54.742355, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
+  - {fileID: 438182}
   - {fileID: 431236}
   - {fileID: 463660}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!4 &438182
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120896}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 434496}
   m_RootOrder: 0
 --- !u!4 &463660
 Transform:
@@ -93,7 +122,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 434496}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!23 &2344334
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -260,9 +289,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canAbsorb: 0
+  playerWillAlwaysAbsorb: 0
   absorptionRate: 15
   defaultEnergy: 10
-  debugInfiniteLight: 0
+  infiniteEnergy: 0
+  absorbableLightDetector: {fileID: 11418968}
+  changeScene: 0
+--- !u!114 &11418968
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9807d0e018a2bb44aa20d697950d438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerOffset: {x: 0, y: 0, z: 0}
+  radius: 1.5
+  layerToDetect:
+    serializedVersion: 2
+    m_Bits: 256
+  tagsToIgnore:
+  - Fish A
+  - Fish B
+  - Fish C
 --- !u!114 &11469210
 MonoBehaviour:
   m_ObjectHideFlags: 1
