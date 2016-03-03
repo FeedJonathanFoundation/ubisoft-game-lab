@@ -60,7 +60,7 @@ GameObject:
   - 114: {fileID: 11420322}
   m_Layer: 8
   m_Name: AbsorbableLightDetector
-  m_TagString: Untagged
+  m_TagString: Fish A
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,7 +128,7 @@ GameObject:
   - 114: {fileID: 11476632}
   - 114: {fileID: 11407286}
   m_Layer: 24
-  m_Name: Fish A (Refactored)
+  m_Name: Fish A
   m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -542,6 +542,9 @@ MonoBehaviour:
   layerToDetect:
     serializedVersion: 2
     m_Bits: 256
+  tagsToIgnore:
+  - Fish A
+  - Player
 --- !u!114 &11441622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -593,6 +596,7 @@ MonoBehaviour:
   layerToDetect:
     serializedVersion: 2
     m_Bits: 16777216
+  tagsToIgnore: []
 --- !u!114 &11474742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -617,6 +621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canAbsorb: 1
+  playerWillAlwaysAbsorb: 1
   absorptionRate: 15
   defaultEnergy: 5
   debugInfiniteLight: 0
@@ -754,6 +759,7 @@ MonoBehaviour:
   layerToDetect:
     serializedVersion: 2
     m_Bits: 16384
+  tagsToIgnore: []
 --- !u!114 &11493122
 MonoBehaviour:
   m_ObjectHideFlags: 1

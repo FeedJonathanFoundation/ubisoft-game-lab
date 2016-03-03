@@ -80,7 +80,7 @@ public abstract class ColourRelativeToPlayer : MonoBehaviour
             {
                 GameObject playerObject = GameObject.FindWithTag("Player");
                 Debug.Log("Found player (EmissiveColourRelativeToPlayer.cs): " + playerObject);
-                player = playerObject.GetComponent<Player>();
+                player = playerObject.transform.parent.GetComponent<Player>();
                 
                 playerSearched = true;
             }

@@ -19,6 +19,9 @@ public class Neighbourhood : MonoBehaviour
 
     /** Colliders on this layer will be added to the neighbourhood. */
     public LayerMask layerToDetect;
+    
+    /** Tags in this array will not be added to the neighbourhood. */
+    public string[] tagsToIgnore;
 
 	/** The trigger volume that detects if a GameObject is inside this neighbourhood or not. */
 	private SphereCollider circleCollider;
@@ -61,11 +64,18 @@ public class Neighbourhood : MonoBehaviour
 	}
 
     void OnTriggerEnter(Collider collider)
-    {
+    {        
         // If the collider which entered the trigger volume is on the correct layer
-        if(((1 << collider.gameObject.layer) & layerToDetect) == layerToDetect 
-            /*&& collider.transform.parent != transform.parent*/)
+        if(((1 << collider.gameObject.layer) & layerToDetect) == layerToDetect)
         {
+            string colliderTag = collider.tag;
+            
+            // Ignore this collider if it has a tag that should be ignored
+            for (int i = 0; i < tagsToIgnore.Length; i++)
+            {
+                if (tagsToIgnore[i].Equals(colliderTag)) { return; }
+            }
+            
 			//Debug.LogWarning("Collider entered in " + transform.parent.name + "'s neighbourhood: " + collider.transform.name);
             
             GameObject neighbour = collider.gameObject;

@@ -10,6 +10,9 @@ public class LightSource : MonoBehaviour
 {
     [Tooltip("If true, this GameObject can absorb other GameObjects with a LightSource component")]
     public bool canAbsorb;
+    
+    [Tooltip("If true, the player can always absorb this GameObject, even if it has higher light.")]
+    public bool playerWillAlwaysAbsorb;
 
     [Tooltip("The higher the value, the faster light is absorbed from other light sources")]
     public float absorptionRate = 15;
@@ -88,6 +91,11 @@ public class LightSource : MonoBehaviour
         // If this GameObject can absorb light sources but the given argument
         // can't, this GameObject can absorb the given light source
         else if (canAbsorb && !otherLightSource.canAbsorb)
+        {
+            return true;
+        }
+        // The player can always absorb a light source with LightSource.playerWillAlwaysAbsorb set to true
+        else if (this is Player && otherLightSource.playerWillAlwaysAbsorb)
         {
             return true;
         }
