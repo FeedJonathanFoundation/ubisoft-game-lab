@@ -70,6 +70,7 @@ public class SpawnVolume : MonoBehaviour {
     private int fishCount;
     
     private bool disabled;
+    private bool initialized = false;
     
     // private List<AbstractFish> fishes;
     private List<GameObject> fishes;
@@ -79,13 +80,27 @@ public class SpawnVolume : MonoBehaviour {
     /// Spawns the minimum number of fish without delay
     /// Spawns the maximum number of fish incrementally
     /// </summary>
-	void Start () 
+	void Start() 
     {
-        disabled = false;
-        
+        disabled = true;
         fishes = new List<GameObject>();
-        
         fishCount = 0;
+	}
+    
+    void Update()
+    {
+        if (disabled)
+        {
+            return;
+        }
+        if (!initialized) 
+        {
+            Initialize();
+        }
+    }
+    
+    void Initialize()
+    {
         SpawnCircle(minFishCount);    
         
         // Spawn after a delay of spawnTime
@@ -93,7 +108,9 @@ public class SpawnVolume : MonoBehaviour {
         {
             InvokeRepeating ("Spawn", spawnTime, spawnTime);
         }
-	}
+        
+        initialized = true;
+    }
 
     /// <summary>
     /// If player is dead or max number of fish have been spawned,
@@ -227,7 +244,11 @@ public class SpawnVolume : MonoBehaviour {
     // If player enters spawn volume, disable spawning
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player")) 
+        if (other.gameObject.CompareTag("SpawnSignal")) 
+        {
+            disabled = false;
+        }
+        if (other.gameObject.CompareTag("Disabler")) 
         {
             disabled = true;
         }
@@ -240,7 +261,10 @@ public class SpawnVolume : MonoBehaviour {
         {
             foreach(GameObject fish in fishes)
             {
-                fish.SetActive(false);
+                if (fish != null)
+                {
+                    fish.SetActive(false);
+                }
             }
             fishes.Clear();
         }

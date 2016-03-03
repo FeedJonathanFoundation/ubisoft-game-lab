@@ -24,7 +24,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 156226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -38.4, y: -39.4, z: 0}
+  m_LocalPosition: {x: -8.9, y: -6.7, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -42,17 +42,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnTime: 1
   spawnObject:
-  - {fileID: 134216, guid: bf98822168cb648a192b517ed10381c5, type: 2}
+  - {fileID: 114192, guid: dd5962043a4074bdb9912bc53a29a593, type: 2}
+  - {fileID: 166000, guid: 246b6ac97065c4fb6a2a8caf4194994d, type: 2}
+  - {fileID: 140610, guid: 38d0002f615f542afba0a194a8ad5b31, type: 2}
+  - {fileID: 126260, guid: 031b3c20622814d5eb2efa60c665d4d4, type: 2}
   probabilities:
-  - 0.75
+  - 1
+  - 1
+  - 0.5
+  - 0.25
   overrideSpawnLocations: 0
   spawnRandom: 0
   spawnPoints:
   - {fileID: 0}
   - {fileID: 0}
   spawnPointRadius: 1
-  minFishCount: 15
-  maxFishCount: 50
+  minFishCount: 7
+  maxFishCount: 7
   minFishDifficulty: 0
   maxFishDifficulty: 0
 --- !u!135 &13559234
@@ -65,7 +71,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 15
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
