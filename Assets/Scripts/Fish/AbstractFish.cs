@@ -18,6 +18,9 @@ public abstract class AbstractFish : LightSource
     // The condition that must be met for this action to return 'Success'
     protected StoppingCondition stoppingCondition = new StoppingCondition();
     
+    [Tooltip("If true, the fish will not react to fish of the same type, except in the default flocking behaviour")]
+    public bool ignoreFishOfSameType = false;
+    
     [Tooltip("If true, the fish prints every action it performs every frame in the console")]
     public bool debugLogActions = false;
     
@@ -127,7 +130,10 @@ public abstract class AbstractFish : LightSource
             }
             else if (lightSource.tag.Equals("Fish")) 
             {
-                //ReactToNPC(lightSource.transform);
+                if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer) 
+                { 
+                    ReactToNPC(lightSource.transform); 
+                }
             }
         }
         
@@ -151,7 +157,10 @@ public abstract class AbstractFish : LightSource
             }
             else if (lightSource.tag.Equals("Fish"))
             {
-                ReactToNPC(lightSource.transform);
+                if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer) 
+                { 
+                    ReactToNPC(lightSource.transform); 
+                }
             }
         }
     }
@@ -165,11 +174,14 @@ public abstract class AbstractFish : LightSource
         {
             if (lightSource.CompareTag("Fish")) 
             {
-                // Inform subclasses that the NPC went out of sight
-                NPCOutOfSight(lightSource.transform);
-                
-                int otherID = lightSource.GetComponent<AbstractFish>().GetID();
-                RemoveAction(otherID);
+                if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer)
+                {
+                    // Inform subclasses that the NPC went out of sight
+                    NPCOutOfSight(lightSource.transform);
+                    
+                    int otherID = lightSource.GetComponent<AbstractFish>().GetID();
+                    RemoveAction(otherID);
+                }
             }
             else if (lightSource.CompareTag("Player"))
             {

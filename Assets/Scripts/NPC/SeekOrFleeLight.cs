@@ -5,7 +5,9 @@ using System.Collections;
 public class SeekOrFleeLight : NPCActionable
 {
     [Tooltip("If true, this NPC will always flee the light source.")]   
-    public bool alwaysFlee;
+    public bool alwaysFlee = false;
+    [Tooltip("If true, this NPC will always seek the light source.")]   
+    public bool alwaysSeek = false;
     
     /// <summary>
 	/// The light that this NPC can see
@@ -71,7 +73,7 @@ public class SeekOrFleeLight : NPCActionable
         if (targetLightSource)
         {
             // If this fish has less light than its target
-            if(myLightEnergy < targetLightSource.LightEnergy.CurrentEnergy || alwaysFlee)
+            if(!alwaysSeek && (myLightEnergy < targetLightSource.LightEnergy.CurrentEnergy || alwaysFlee))
             {
                 // Flee the light source since it is stronger than this fish
                 fleeWhenWeaker.Execute(steerable);

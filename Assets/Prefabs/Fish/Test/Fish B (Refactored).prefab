@@ -215,7 +215,7 @@ GameObject:
   - 114: {fileID: 11404194}
   - 114: {fileID: 11469602}
   - 114: {fileID: 11421326}
-  m_Layer: 13
+  m_Layer: 25
   m_Name: Fish B (Refactored)
   m_TagString: Fish
   m_Icon: {fileID: 0}
@@ -700,7 +700,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.4, y: 4.5, z: 0}
+  m_LocalPosition: {x: 3.09, y: -3.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 481450}
@@ -1660,6 +1660,7 @@ MonoBehaviour:
   debugInfiniteLight: 0
   absorbableLightDetector: {fileID: 11471974}
   lightDetector: {fileID: 11443570}
+  ignoreFishOfSameType: 0
   debugLogActions: 0
   flockingBehaviour:
     strengthMultiplier: 1
@@ -1719,6 +1720,7 @@ MonoBehaviour:
     overrideMaxForce: 0
     maxForce: 0
     alwaysFlee: 0
+    alwaysSeek: 0
     seekWhenStronger:
       strengthMultiplier: 5
       overrideSteerableSpeed: 1
@@ -1755,6 +1757,7 @@ MonoBehaviour:
     overrideMaxForce: 0
     maxForce: 0
     alwaysFlee: 0
+    alwaysSeek: 0
     seekWhenStronger:
       strengthMultiplier: 5
       overrideSteerableSpeed: 1
