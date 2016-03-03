@@ -1623,6 +1623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canAbsorb: 1
+  playerWillAlwaysAbsorb: 0
   absorptionRate: 5000
   defaultEnergy: 25
   debugInfiniteLight: 0
@@ -1729,8 +1730,8 @@ MonoBehaviour:
     seekWhenStronger:
       strengthMultiplier: 5
       overrideSteerableSpeed: 1
-      minSpeed: 4
-      maxSpeed: 4
+      minSpeed: 3
+      maxSpeed: 3
       overrideMaxForce: 1
       maxForce: 15
     fleeWhenWeaker:
