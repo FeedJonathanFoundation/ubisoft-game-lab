@@ -748,6 +748,51 @@ MeshCollider:
   serializedVersion: 2
   m_Convex: 0
   m_Mesh: {fileID: 4300000, guid: 0e8d9a35188a64434aacdd67940e7fc8, type: 3}
+--- !u!1 &335276973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 335276974}
+  - 114: {fileID: 335276975}
+  m_Layer: 8
+  m_Name: AbsorbableLightDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &335276974
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 335276973}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1935136147}
+  m_RootOrder: 2
+--- !u!114 &335276975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 335276973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9807d0e018a2bb44aa20d697950d438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerOffset: {x: 0, y: 0, z: 0}
+  radius: 0.5
+  layerToDetect:
+    serializedVersion: 2
+    m_Bits: 256
+  tagsToIgnore: []
 --- !u!1001 &366732378
 Prefab:
   m_ObjectHideFlags: 0
@@ -4023,6 +4068,7 @@ Transform:
   m_Children:
   - {fileID: 918303572}
   - {fileID: 81262311}
+  - {fileID: 335276974}
   m_Father: {fileID: 0}
   m_RootOrder: 3
 --- !u!114 &1935136148
@@ -4053,7 +4099,7 @@ MonoBehaviour:
   absorptionRate: 15
   defaultEnergy: 10
   infiniteEnergy: 0
-  absorbableLightDetector: {fileID: 2118833453}
+  absorbableLightDetector: {fileID: 335276975}
 --- !u!4 &1980157508 stripped
 Transform:
   m_PrefabParentObject: {fileID: 444290, guid: 1e3089721c22b44629b709e1fb44d52c, type: 2}
@@ -4309,9 +4355,3 @@ Light:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 1ceb9a4fcbd444e3d98c4acf7e780438, type: 3}
   m_PrefabInternal: {fileID: 1328451430}
---- !u!114 &2118833453 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11498880, guid: 4e57e8815dd9a49bf9e68ce6fd9ee4bc,
-    type: 2}
-  m_PrefabInternal: {fileID: 81262310}
-  m_Script: {fileID: 11500000, guid: f9807d0e018a2bb44aa20d697950d438, type: 3}
