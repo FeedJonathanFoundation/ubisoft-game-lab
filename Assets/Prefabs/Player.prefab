@@ -1132,8 +1132,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181402}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.59, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: -0.00000016292068}
+  m_LocalPosition: {x: 0, y: -0.35, z: 0}
   m_LocalScale: {x: 0.32847098, y: 0.32847098, z: 0.32847098}
   m_Children: []
   m_Father: {fileID: 479988}
@@ -1260,7 +1260,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152602}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: -0.00000016292068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2225,8 +2225,9 @@ MonoBehaviour:
   absorbableLightDetector: {fileID: 11442326}
   massEjectionTransform: {fileID: 451912}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
-  thrustForce: 1
-  thrustEnergyCost: 0.2
+  thrustForce: 3
+  changeDirectionBoost: 4.5
+  thrustEnergyCost: 0.001
   defaultLightStatus: 1
   lostOfLightTime: 0
   energyCostLightToggle: 0
