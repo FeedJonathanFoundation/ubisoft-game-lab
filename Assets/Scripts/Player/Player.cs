@@ -21,6 +21,9 @@ public class Player : LightSource
     [Tooltip("The amount of force applied on the player when ejecting one piece of mass.")]
     public float thrustForce;
 
+    [Tooltip("The higher the value, the faster the propulsion when changing directions")]
+    public float changeDirectionBoost;
+
     /// <summary>
     /// The amount of light energy spent when ejecting one piece of mass.
     /// </summary>
@@ -58,7 +61,7 @@ public class Player : LightSource
        transform = GetComponent<Transform>();
        rigidbody = GetComponent<Rigidbody>();
        
-       movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, thrustEnergyCost, transform, rigidbody, this.LightEnergy);
+       movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, transform, rigidbody, this.LightEnergy);
        lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
        
        this.isDead = false;
@@ -95,10 +98,10 @@ public class Player : LightSource
     /// </summary>
     private void Move()
     {
-        if (Input.GetButtonDown("Thrust"))
+        if (Input.GetButton("Thrust"))
         {
-            // Eject mass in the direction of the left stick
-            movement.EjectMass(massEjectionTransform.up);
+            // Propulse in the direction of the left stick (opposite to the rear of the probe)
+            movement.Propulse(-massEjectionTransform.up);
         }
 
         // Makes the character follow the left stick's rotation

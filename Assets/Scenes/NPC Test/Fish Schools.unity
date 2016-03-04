@@ -1880,9 +1880,37 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 119940, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: m_IsActive
+    - target: {fileID: 11441870, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: thrustEnergyCost
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 11441870, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: thrustForce
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 470782, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: m_LocalRotation.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 470782, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: -0.00000016292068
+      objectReference: {fileID: 0}
+    - target: {fileID: 451912, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 451912, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 451912, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: -0.00000016292068
+      objectReference: {fileID: 0}
+    - target: {fileID: 11441870, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: changeDirectionBoost
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
