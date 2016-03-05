@@ -179,7 +179,7 @@ public class Steerable : MonoBehaviour
         // Compute the distance vector to the target position
         Vector2 desiredVelocity = (Vector2)target - (Vector2)transform.position;
         // Store the distance from this entity to his target position
-        float distanceToTarget = desiredVelocity.magnitude;
+        //float distanceToTarget = desiredVelocity.magnitude;
 
         // Compute the direction the GameObject must travel to reach his target
         desiredVelocity = desiredVelocity.normalized;
@@ -622,6 +622,44 @@ public class Steerable : MonoBehaviour
         // Return the cohesion force computed above.
         return cohesionForce;
 
+    }
+    
+     public void AddMoveWaypointForce(GameObject wpList, Transform bigFish, float slowingRadius, float multiplier)
+    {
+        steeringForce += MoveWaypointForce (wpList, bigFish, slowingRadius) * multiplier;
+    }
+
+    private Vector2 MoveWaypointForce(GameObject wpList, Transform bigFish,float slowingRadius)
+    {
+        // Update the steerable's 'normalizedVelocity' variable
+        CheckDirty ();
+        
+        float closestDistance = 100.00f;
+        Vector2 desiredVelocity = Vector2.zero;
+        
+        foreach(Transform child in wpList.transform)
+        {
+            float distanceToTarget = Vector2.Distance((Vector2)child.position, (Vector2)bigFish.position);
+            if(closestDistance > distanceToTarget)
+            {
+                closestDistance = distanceToTarget;
+                desiredVelocity = ((Vector2)child.position - (Vector2)bigFish.position).normalized;
+            }
+        }
+
+        // Calculate the velocity at which this object should move to reach his target
+        desiredVelocity *= maxSpeed;
+        
+        if(closestDistance <= 0.50f)
+        {
+            desiredVelocity = Vector2.zero;
+        }
+
+        // Compute the steering force applied to make this object seek his target
+        
+        Vector2 steeringForce = desiredVelocity - previousVelocity;
+        
+        return steeringForce;
     }
 
     /// <summary>
