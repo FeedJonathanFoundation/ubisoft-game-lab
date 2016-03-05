@@ -19,9 +19,19 @@ public class PlayerMovement
     private float thrustForce;
 
     /// <summary>
+    /// The higher the value, the faster the propulsion when changing directions
+    /// </summary>
+    private float changeDirectionBoost;
+    
+    /// <summary>
     /// The amount of light energy spent when ejecting one piece of mass.
     /// </summary>
     private float thrustEnergyCost = 1;
+    
+    /// <summary>
+    /// The propulsion effect activated when the player is propulsing
+    /// </summary>
+    private GameObject jetFuelEffect;
 
     /** Caches the player's components */
     private Transform transform;
@@ -31,16 +41,20 @@ public class PlayerMovement
     /// <summary>
     /// Public constructor
     /// </summary>
-    public PlayerMovement(Transform massEjectionTransform, GameObject lightBallPrefab, float thrustForce, float thrustEnergyCost, Transform transform, Rigidbody rigidbody, LightEnergy lightEnergy)
+    public PlayerMovement(Transform massEjectionTransform, GameObject lightBallPrefab, float thrustForce, float changeDirectionBoost, float thrustEnergyCost, Transform transform, Rigidbody rigidbody, LightEnergy lightEnergy, GameObject jetFuelEffect)
     {
         this.massEjectionTransform = massEjectionTransform;
         this.lightBallPrefab = lightBallPrefab;
         this.thrustForce = thrustForce;
+        this.changeDirectionBoost = changeDirectionBoost;
         this.thrustEnergyCost = thrustEnergyCost;
+        this.jetFuelEffect = jetFuelEffect;
 
         this.transform = transform;
         this.rigidbody = rigidbody;
         this.lightEnergy = lightEnergy;
+        
+        OnPropulsionEnd();
     }
 
     /// <summary>
@@ -67,23 +81,52 @@ public class PlayerMovement
             transform.localEulerAngles = new Vector3(0,0,leftStickAngle);
         }
     }
+    
+    /// <summary>
+    /// Call this the instant the player starts propulsing
+    /// </summary>
+    public void OnPropulsionStart()
+    {
+        foreach (ParticleSystem particles in jetFuelEffect.GetComponentsInChildren<ParticleSystem>())
+        {
+            particles.Play();
+            particles.enableEmission = true;
+        }
+        //jetFuelEffect.enableEmission = true;
+    }
 
     /// <summary>
-    /// Ejects mass in the given direction, pushing the gameObject in the opposite direction.
+    /// Propulse in the given direction, pushing the gameObject in the given direction
     /// </summary>
-    public void EjectMass(Vector2 direction)
+    public void Propulse(Vector2 direction)
     {
         // Spawn a light mass at the position of the character's mass ejector
-        GameObject lightMass = GameObject.Instantiate(lightBallPrefab);
-        lightMass.transform.position = massEjectionTransform.position;  
+        //GameObject lightMass = GameObject.Instantiate(lightBallPrefab);
+        //lightMass.transform.position = massEjectionTransform.position;  
         // Push the light mass in the given direction
-        lightMass.GetComponent<Rigidbody>().AddForce(thrustForce * direction, ForceMode.Impulse);
+        //lightMass.GetComponent<Rigidbody>().AddForce(thrustForce * -direction, ForceMode.Force);
         //delete mass after an amount of time
-        GameObject.Destroy(lightMass, 1.0f);
+        //GameObject.Destroy(lightMass, 1.0f);
+        
+        // Compute how much the gameObject has to turn opposite to its velocity vector
+        float angleChange = Vector2.Angle((Vector2)rigidbody.velocity, direction);
+        Debug.Log("Change in angle (PlayerMovement.Propulse()): " + angleChange);
 
-        // Push the character in the opposite direction that the mass was ejected
-        rigidbody.AddForce(-thrustForce * direction, ForceMode.Impulse);
+        // Augment the thrusting power depending on how much the player has to turn
+        float thrustBoost = 1 + (angleChange/180) * changeDirectionBoost;
+
+        // Push the character in the given direction
+        rigidbody.AddForce(thrustForce * direction * thrustBoost, ForceMode.Force);
         // Deplete energy from the player for each ejection
         lightEnergy.Deplete(thrustEnergyCost);
+    }
+    
+    /// <summary>
+    /// Call this the frame the player releases the propulsion button
+    /// </summary>
+    public void OnPropulsionEnd()
+    {
+        foreach (ParticleSystem particles in jetFuelEffect.GetComponentsInChildren<ParticleSystem>())
+            particles.enableEmission = false;
     }
 }

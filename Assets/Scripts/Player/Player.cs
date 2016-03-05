@@ -15,17 +15,29 @@ public class Player : LightSource
     /// </summary>
     public GameObject lightBallPrefab;
 
+    [Tooltip("The player's max speed in m/s")]
+    public float maxSpeed;
+
     /// <summary>
     /// The amount of force applied on the player when ejecting one piece of mass.
     /// </summary>
     [Tooltip("The amount of force applied on the player when ejecting one piece of mass.")]
     public float thrustForce;
 
+    [Tooltip("The higher the value, the faster the propulsion when changing directions")]
+    public float changeDirectionBoost;
+
     /// <summary>
     /// The amount of light energy spent when ejecting one piece of mass.
     /// </summary>
     [Tooltip("The amount of light energy spent when ejecting one piece of mass.")]
     public float thrustEnergyCost = 1;
+    
+    /// <summary>
+    /// The propulsion effect activated when the player is propulsing
+    /// </summary>
+    [Tooltip("The parent of the propulsion particle effects activated when the player is propulsing")]
+    public GameObject jetFuelEffect;
 
     [Tooltip("If true, the lights are enabled on scene start.")]
     public bool defaultLightStatus = true;
@@ -58,7 +70,7 @@ public class Player : LightSource
        transform = GetComponent<Transform>();
        rigidbody = GetComponent<Rigidbody>();
        
-       movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, thrustEnergyCost, transform, rigidbody, this.LightEnergy);
+       movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
        lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
        
        this.isDead = false;
@@ -79,6 +91,12 @@ public class Player : LightSource
     {
         base.Update(); 
         
+        // Clamp the player's velocity
+        if (rigidbody.velocity.sqrMagnitude > maxSpeed*maxSpeed)
+        {
+            rigidbody.velocity = ((Vector2)rigidbody.velocity).SetMagnitude(maxSpeed);
+        }
+        
         if (isDead)
         {
             Restart();
@@ -97,8 +115,18 @@ public class Player : LightSource
     {
         if (Input.GetButtonDown("Thrust"))
         {
-            // Eject mass in the direction of the left stick
-            movement.EjectMass(massEjectionTransform.up);
+            movement.OnPropulsionStart();
+        }
+        
+        if (Input.GetButton("Thrust"))
+        {
+            // Propulse in the direction of the left stick (opposite to the rear of the probe)
+            movement.Propulse(-massEjectionTransform.up);
+        }
+        
+        if (Input.GetButtonUp("Thrust"))
+        {
+            movement.OnPropulsionEnd();
         }
 
         // Makes the character follow the left stick's rotation
@@ -163,6 +191,7 @@ public class Player : LightSource
     {
         base.OnLightDepleted(); 
         
+        movement.OnPropulsionEnd();
         isDead = true;
         Debug.Log("Game OVER! Press 'R' to restart!");
     }
