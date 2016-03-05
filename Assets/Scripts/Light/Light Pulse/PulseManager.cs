@@ -9,27 +9,44 @@ public class PulseManager : MonoBehaviour
 {
     public GameObject pulse;
     public Transform target;
+    public bool activePulse = true;
     Camera camera;
     private float x;
     private float y;
+    private LightPulse lightPulse;
     
 	void Start()
     {
 	   camera = GetComponent<Camera>();
-       Pulse();
+       StartCoroutine(Pulse());
 	}
 	
-	void Update()
+	void Update()  
     {
-        // InvokeRepeating("Pulse", 2, 10f);
+
 	}
     
-    void Pulse()
+    IEnumerator Pulse()
     {
         CalculatePosition();
         GameObject currentPulse = (GameObject)Instantiate(pulse, new Vector3(x, y, 0f), Quaternion.identity);
-        // yield return new WaitForSeconds(3);
-        // currentPulse.SetActive(false);
+        lightPulse = currentPulse.GetComponent("LightPulse") as LightPulse;
+        yield return new WaitForSeconds(5);
+        currentPulse.SetActive(false);
+        yield return new WaitForSeconds(3);
+        while (activePulse)
+        {
+            yield return new WaitForSeconds(2);
+            CalculatePosition();
+            currentPulse.transform.position = new Vector3(x, y, 0f);
+            lightPulse.currentAngle = 0f;
+            lightPulse.thisTime = Time.time;
+            currentPulse.SetActive(true);
+            yield return new WaitForSeconds(5);
+            currentPulse.SetActive(false);
+            yield return new WaitForSeconds(3);
+        }
+
     }
     
     void CalculatePosition()
@@ -41,6 +58,8 @@ public class PulseManager : MonoBehaviour
        }
        
        Vector3 viewPos = camera.WorldToViewportPoint(target.position);
+       
+       Debug.Log(viewPos.x);
        
        // If on screen, don't generate
        if (viewPos.x > 0f && viewPos.x < 1f && viewPos.y > 0f && viewPos.y < 1f)

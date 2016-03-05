@@ -9,9 +9,9 @@ public class LightPulse : MonoBehaviour
 {
     public float degreesPerSegment;
     public float radialScale;
-    private float currentAngle = 0f;
+    public float currentAngle;
+    public float thisTime = 0f;
     private LineRenderer lineRenderer;
-    
     private int count = 0;
     
 	void Awake()
@@ -20,6 +20,7 @@ public class LightPulse : MonoBehaviour
        lineRenderer.SetVertexCount((int)(360 / degreesPerSegment + 1));
        lineRenderer.useWorldSpace = false;
        lineRenderer.SetWidth(0.08f, 0.08f);
+       currentAngle = 0f;
 	}
 	
 	void Update()
@@ -35,13 +36,13 @@ public class LightPulse : MonoBehaviour
         
         for (int i = 0; i < 360 / degreesPerSegment + 1; i++)
         {
-            float t = Time.time;
+            float t = Time.time; 
             
             x = Mathf.Sin(Mathf.Deg2Rad * currentAngle);
             y = Mathf.Cos(Mathf.Deg2Rad * currentAngle);
             Vector3 position = new Vector3(x,y,z);
             
-            lineRenderer.SetPosition(i, position * t * radialScale);
+            lineRenderer.SetPosition(i, position * (t - thisTime) * radialScale);
             currentAngle += degreesPerSegment;
         }
     }
