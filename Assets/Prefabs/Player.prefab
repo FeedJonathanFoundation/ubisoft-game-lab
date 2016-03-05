@@ -1183,7 +1183,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 197154}
   m_LocalRotation: {x: -0.7071066, y: 0, z: 0, w: -0.70710695}
-  m_LocalPosition: {x: 0, y: 0, z: 0.05}
+  m_LocalPosition: {x: 0, y: -1.02, z: 0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 464650}
@@ -2495,7 +2495,7 @@ MonoBehaviour:
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
   maxSpeed: 500
   thrustForce: 3
-  changeDirectionBoost: 4.5
+  changeDirectionBoost: 5.2
   thrustEnergyCost: 0.001
   jetFuelEffect: {fileID: 134692}
   defaultLightStatus: 1
@@ -13289,7 +13289,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: 0.35
+      scalar: 0.3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -13305,7 +13305,7 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: 0.14285715
+          value: 0.03333333
           inSlope: 0
           outSlope: 0
           tangentMode: 0

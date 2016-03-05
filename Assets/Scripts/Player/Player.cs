@@ -191,6 +191,7 @@ public class Player : LightSource
     {
         base.OnLightDepleted(); 
         
+        movement.OnPropulsionEnd();
         isDead = true;
         Debug.Log("Game OVER! Press 'R' to restart!");
     }
