@@ -38,6 +38,9 @@ public class Player : LightSource
     /// </summary>
     [Tooltip("The parent of the propulsion particle effects activated when the player is propulsing")]
     public GameObject jetFuelEffect;
+    
+    [Tooltip("Particle effect played when the player dies")]
+    public ParticleSystem playerDeathParticles;
 
     [Tooltip("If true, the lights are enabled on scene start.")]
     public bool defaultLightStatus = true;
@@ -69,6 +72,7 @@ public class Player : LightSource
     private float lastTimeHit = -100;  // The last time player was hit by an enemy
     private float defaultDrag;  // Default rigidbody drag
     private bool isDead; // determines is current player is dead
+    private bool deathParticlesPlayed;
     private new Transform transform;
     private new Rigidbody rigidbody;
     private int currentLevel;
@@ -181,9 +185,13 @@ public class Player : LightSource
         if (Input.GetButtonDown("Restart"))
         {
             Debug.Log("Game Restarted");
+            Transform.localScale = new Vector3(1,1,1);
+            Rigidbody.useGravity = false;
+            
             this.LightEnergy.Add(this.defaultEnergy);
             this.isDead = false;
-            this.rigidbody.drag = 0; // reset drag
+            this.deathParticlesPlayed = false;
+            this.rigidbody.drag = defaultDrag; // reset drag
             LoadGame();
         }
     }
@@ -263,6 +271,26 @@ public class Player : LightSource
         isDead = true;
                
         Debug.Log("Game OVER! Press 'R' to restart!");
+    }
+    
+    void OnCollisionEnter(Collision collision)
+    {
+        // Player has collided upon death
+        if (isDead && !deathParticlesPlayed)
+        {
+            // Calculate the angle of the player's velocity upon impact
+            float crashAngle = Mathf.Rad2Deg * Mathf.Atan2(Rigidbody.velocity.y,Rigidbody.velocity.x);
+            // Orient the explosion opposite to the player's velocity
+            float explosionAngle = crashAngle + 180;
+            // Spawn the explosion
+            ParticleSystem explosion = GameObject.Instantiate(playerDeathParticles,
+                                        Transform.position,Quaternion.Euler(-90,explosionAngle,0)) as ParticleSystem;
+            
+            Transform.localScale = Vector3.zero;  
+            
+            // Only play the death particles the first time the player crashes on an obstacle
+            deathParticlesPlayed = true;      
+        }
     }
 
     public int CurrentLevel
