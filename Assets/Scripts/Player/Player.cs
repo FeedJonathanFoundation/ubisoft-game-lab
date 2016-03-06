@@ -150,6 +150,12 @@ public class Player : LightSource
         {
             movement.OnPropulsionEnd();
         }
+        
+        if (isDead)
+        {
+            // Slow down gravity;
+            Rigidbody.AddForce(Vector3.up * 20, ForceMode.Force);
+        }
 
         // Makes the character follow the left stick's rotation
         movement.FollowLeftStickRotation();
@@ -247,8 +253,15 @@ public class Player : LightSource
     {
         base.OnLightDepleted(); 
         
-        movement.OnPropulsionEnd();
+        // If the player just died
+        if (!isDead)
+        {
+            movement.OnPropulsionEnd();
+            Rigidbody.useGravity = true; 
+        }
+        
         isDead = true;
+               
         Debug.Log("Game OVER! Press 'R' to restart!");
     }
 
