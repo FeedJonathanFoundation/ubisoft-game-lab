@@ -552,7 +552,7 @@ public class Steerable : MonoBehaviour
             
             // Cache the neighbour's Rigidbody
             Rigidbody neighbour = neighbourObject.GetComponentInParent<Rigidbody>();
-
+            if (neighbour == null) { Debug.Log("booyaka"); Debug.Log(neighbourObject); }
             // Add the neighbour's velocity to the average. 
             averageNeighbourVelocity += (Vector2)neighbour.velocity;
         }
