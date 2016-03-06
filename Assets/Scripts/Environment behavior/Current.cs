@@ -2,6 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum Direction
+{
+    down,
+    up,
+    left,
+    right
+}
+
 // Acts as an invisible boundary
 // Be mindful of the direction the player will hit the boundary
 // This should be the side of the trigger box collider
@@ -10,8 +18,11 @@ public class Current : MonoBehaviour
     [Tooltip("The strength of current force.")]
     public float strength;
     // The direction of the current force.
+    [Tooltip("The direction of current force.")]
+    public Direction currentDirection;
     private Vector3 direction;
     
+
     // Whether the current object is empty.
     private bool empty;
     // Holds all rigidbodies in the current.
@@ -21,7 +32,7 @@ public class Current : MonoBehaviour
     {
         rbs = new List<Rigidbody>();
         // By default, the current pushes downward.
-        direction = new Vector3(0f, -1f, 0f);
+        SetDirection();
         empty = true;
     }
     
@@ -30,6 +41,25 @@ public class Current : MonoBehaviour
         if (!empty)
         {
             AddCurrentForce();
+        }
+    }
+    
+    void SetDirection()
+    {
+        switch(currentDirection)
+        {
+            case Direction.down:
+                direction = new Vector3(0f, -1f, 0f);
+                break;
+            case Direction.up:
+                direction = new Vector3(0f, 1f, 0f);
+                break;
+            case Direction.left:
+                direction = new Vector3(-1f, 0f, 0f);
+                break;
+            case Direction.right:
+                direction = new Vector3(1f, 0f, 0f);
+                break;    
         }
     }
     
