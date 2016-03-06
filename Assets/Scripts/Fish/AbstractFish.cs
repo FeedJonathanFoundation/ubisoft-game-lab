@@ -7,6 +7,9 @@ public abstract class AbstractFish : LightSource
 {
     /** The steerable component attached to the GameObject performing this action. */
     protected Steerable steerable;
+
+    [Tooltip("Amount of light absorbed from the player upon collision")]
+    public float damageInflicted = 4;
     
     [Tooltip("Detects lights within the fish's line of sight")]
     [SerializeField]

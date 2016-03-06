@@ -737,7 +737,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126260}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.05, y: -5.02, z: 0}
+  m_LocalPosition: {x: -3.26, y: -4.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 480706}
@@ -1418,7 +1418,7 @@ TextMesh:
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4282515200
+    rgba: 4278234879
 --- !u!108 &10854736
 Light:
   m_ObjectHideFlags: 1
@@ -1487,10 +1487,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canAbsorb: 1
+  playerWillAlwaysAbsorb: 0
   absorptionRate: 5000
-  defaultEnergy: 500
-  debugInfiniteLight: 0
+  defaultEnergy: 520
+  infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11442102}
+  damageInflicted: 9
   lightDetector: {fileID: 11474248}
   ignoreFishOfSameType: 1
   debugLogActions: 0
@@ -1689,7 +1691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerOffset: {x: 0, y: 0, z: 0}
-  radius: 0.4
+  radius: 1
   layerToDetect:
     serializedVersion: 2
     m_Bits: 256

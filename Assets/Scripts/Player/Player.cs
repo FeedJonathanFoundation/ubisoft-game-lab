@@ -11,7 +11,7 @@ public class Player : LightSource
     public Transform massEjectionTransform;
 
     /// <summary>
-    /// The light ball ejected by the player when thrusting
+    /// The light ball ejected by the player when thrustingz\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     /// </summary>
     public GameObject lightBallPrefab;
 
@@ -41,6 +41,15 @@ public class Player : LightSource
 
     [Tooltip("If true, the lights are enabled on scene start.")]
     public bool defaultLightStatus = true;
+    
+    [Tooltip("The amount of force applied on the player when hit by an enemy")]
+    public float knockbackForce = 10;
+    
+    [Tooltip("Amount of time invulnerable after being hit by an enemy")]
+    public float invulnerabilityTime = 3;
+    
+    [Tooltip("Linear drag applied when player is hit by enemy")]
+    public float invulnerabilityDrag = 2;
 
     [Tooltip("Time interval for lost of lights while lights are on")]
     public float lostOfLightTime;
@@ -57,6 +66,8 @@ public class Player : LightSource
     /** Caches the player's components */
     private PlayerMovement movement;
     private PlayerLightToggle lightToggle;
+    private float lastTimeHit = -100;  // The last time player was hit by an enemy
+    private float defaultDrag;  // Default rigidbody drag
     private bool isDead; // determines is current player is dead
     private new Transform transform;
     private new Rigidbody rigidbody;
@@ -73,6 +84,7 @@ public class Player : LightSource
        movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
        lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
        
+       this.defaultDrag = Rigidbody.drag;
        this.isDead = false;
        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
        DontDestroyOnLoad(this.gameObject);
@@ -96,6 +108,16 @@ public class Player : LightSource
         {
             rigidbody.velocity = ((Vector2)rigidbody.velocity).SetMagnitude(maxSpeed);
         }
+        
+        // Modify player drag if invulnerable
+        if (IsInvulnerable()) 
+        { 
+            // 0 = just became invulnerable
+            // 1 = not invulnerable anymore
+            float invulnerabilityPercent = (Time.time-lastTimeHit)/invulnerabilityTime;
+            Rigidbody.drag = (invulnerabilityDrag-defaultDrag) * (1-invulnerabilityPercent) + defaultDrag; 
+        }
+        else { Rigidbody.drag = defaultDrag; }
         
         if (isDead)
         {
@@ -181,6 +203,40 @@ public class Player : LightSource
             transform.position = new Vector3(0, 0, 0);
             transform.localEulerAngles = new Vector3(0, 0, 0);                                
         }
+    }
+    
+    public override void Knockback(LightSource enemyLightSource)
+    {        
+        // Calculate a knockback force pushing the player away from the enemy fish
+        Vector2 distance = (Transform.position - enemyLightSource.Transform.position);
+        Vector2 knockback = distance.normalized * knockbackForce;
+        
+        Rigidbody.velocity = Vector3.zero;
+        Rigidbody.AddForce(knockback, ForceMode.Impulse);
+        
+        // The player was just hit
+        lastTimeHit = Time.time;
+    }
+    
+    /// <summary>
+    /// If true, the player has been hit and is temporarily
+    /// invulnerable
+    /// </summary>
+    public bool IsInvulnerable()
+    {
+        return (Time.time - lastTimeHit) < invulnerabilityTime;
+    }
+    
+    public override bool CanBeAbsorbed()
+    {
+        // The player cannot be absorbed if invulnerable
+        if (IsInvulnerable())
+        {
+            Debug.Log("PLAYER CAN'T BE ABSORBED: " + (Time.deltaTime - lastTimeHit));
+            return false;
+        }
+        
+        return true;
     }
 
     /// <summary>

@@ -26,11 +26,14 @@ public class LightSource : MonoBehaviour
     [Tooltip("Detects absorbable lights that are in contact with this light source" )]
     public Neighbourhood absorbableLightDetector;
 
+    private new Transform transform;
+    private new Rigidbody rigidbody;
     // DO NOT ACCESS DIRECTLY. Use LightEnergy property instead.
     private LightEnergy lightEnergy;
 
     public virtual void Awake()
     {
+        rigidbody = GetComponent<Rigidbody>();
     }
     
     public virtual void OnEnable()
@@ -69,7 +72,23 @@ public class LightSource : MonoBehaviour
 
                 // Calculate the amount of light to absorb from the other light source
                 float lightToAbsorb = absorptionRate * Time.deltaTime;
-
+                
+                // If the player was hit
+                if (otherLightSource is Player)
+                {
+                    if (this is AbstractFish)
+                    {
+                        // Absorb a certain amount of light from the player to the fish
+                        AbstractFish fish = (AbstractFish)this;
+                        lightToAbsorb = fish.damageInflicted;
+                    }
+                    
+                    Debug.Log("Absorb " + lightToAbsorb + " from player");
+                     
+                    // Knockback the player away from the enemy fish
+                    otherLightSource.Knockback(this);
+                }
+                
                 // Transfer light energy from the other light source to this one
                 float lightAbsorbed = lightEnergyToAbsorb.Deplete(lightToAbsorb);
                 lightEnergy.Add(lightAbsorbed);
@@ -82,6 +101,11 @@ public class LightSource : MonoBehaviour
     /// </summary>
     public bool CanAbsorb(LightSource otherLightSource)
     {
+        if (!otherLightSource.CanBeAbsorbed()) 
+        { 
+            return false; 
+        }
+        
         // If this light source has more energy than the other one,
         // return true. This light source can absorb the given argument.
         if (canAbsorb && LightEnergy.CurrentEnergy > otherLightSource.LightEnergy.CurrentEnergy)
@@ -103,6 +127,15 @@ public class LightSource : MonoBehaviour
         {
             return false;
         }
+    }
+    
+    /// <summary>
+    /// Returns true if this light source be absorbed 
+    /// </summary>
+    public virtual bool CanBeAbsorbed()
+    {
+        // A light source can always be absorbed by default
+        return true;
     }
 
     /*public virtual void OnTriggerEnter(Collider otherCollider)
@@ -128,10 +161,43 @@ public class LightSource : MonoBehaviour
     }*/
     
     /// <summary>
+    /// Applies a knockback force going away from the enemy light source
+    /// </summary>
+    public virtual void Knockback(LightSource enemyLightSource)
+    {
+    }
+    
+    /// <summary>
     /// Called the instant the light depletes to zero. Called from the LightEnergy.LightDepleted event.
     /// </summary>
     protected virtual void OnLightDepleted()
     {
+    }
+    
+    /// <summary>
+    /// Cached transform component
+    /// </summary>
+    public Transform Transform
+    {
+        get 
+        {
+            if (this.transform == null) { transform = GetComponent<Transform>(); }
+            return transform;
+        }
+        set { this.transform = value; }
+    }
+    
+    /// <summary>
+    /// Cached rigidbody component
+    /// </summary>
+    public Rigidbody Rigidbody
+    {
+        get 
+        {
+            if (this.rigidbody == null) { rigidbody = GetComponent<Rigidbody>(); }
+            return rigidbody;
+        }
+        set { this.rigidbody = value; }
     }
 
     /// <summary>

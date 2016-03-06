@@ -567,7 +567,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.51, y: -6.27, z: 0}
+  m_LocalPosition: {x: 3.46, y: -1.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 427610}
@@ -1464,7 +1464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerOffset: {x: 0, y: 0, z: 0}
-  radius: 0.4
+  radius: 0.5
   layerToDetect:
     serializedVersion: 2
     m_Bits: 256
@@ -1626,8 +1626,9 @@ MonoBehaviour:
   playerWillAlwaysAbsorb: 0
   absorptionRate: 5000
   defaultEnergy: 25
-  debugInfiniteLight: 0
+  infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11407974}
+  damageInflicted: 4
   lightDetector: {fileID: 11492956}
   ignoreFishOfSameType: 0
   debugLogActions: 0
@@ -1693,7 +1694,7 @@ MonoBehaviour:
     seekWhenStronger:
       strengthMultiplier: 5
       overrideSteerableSpeed: 1
-      minSpeed: 5
+      minSpeed: 3
       maxSpeed: 5
       overrideMaxForce: 1
       maxForce: 20
