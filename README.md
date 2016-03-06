@@ -13,7 +13,7 @@ FJF's entry for the Ubisoft 2016 Game Lab Competition.
 ## Team
 **Programmers:** Alex Ilea, Karl Chiraz, Stella Lee, Simon Thompson, Jonathan Lucuix-André
 
-**Artists:** Roxanne Sirois, Tristan Mirza
+**Artists:** Roxanne Sirois, Tristan Mirza, Carlos Sulpizio
 
 ------------------
 
