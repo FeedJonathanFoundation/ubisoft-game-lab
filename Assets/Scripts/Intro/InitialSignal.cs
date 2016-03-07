@@ -4,48 +4,93 @@ using System.Collections;
 
 public class InitialSignal : MonoBehaviour
 {
-
-
-    public Text signalPrompt;
-    public Text signalText;
-
+    [Tooltip("Prompts player to open message.")]
+    public TextMesh prompt;
+    [Tooltip("The message in the hologram signal.")]
+    public TextMesh message;
+    [Tooltip("The hologram with a projection child.")]
     public Transform target;
 
     private bool receivedSignal = false;
+    private GameObject projection;
+
+    private int count = 0;
 
     void Start()
     {
-       // "Receive" signal
-	   setSignalPrompt();
-       signalText.text = "";
-	}
+        SetPrompt();
+        ResetMessage();
+
+        foreach (Transform child in target)
+        {
+            if (child.gameObject.CompareTag("Projection"))
+            {
+                projection = child.gameObject;
+            }
+        }
+        if (ProjectionEnabled)
+        {
+            ToggleProjection();
+        }
+    }
 
     
 	void Update()
     {
         if (Input.GetButtonDown("Accept"))
         {
-            receivedSignal = true;
+            if (count == 0)
+            {
+                receivedSignal = true;
+            }
+            else if (count == 2)
+            {
+                ToggleProjection();
+                ResetPrompt();
+                ResetMessage();
+            }
+            count++;
         }
-        if (receivedSignal)
+        if (receivedSignal && count == 1)
         {
-            // TO DO: Emit blue particle system cone
-            setSignalText();
+            ResetPrompt();
+            ToggleProjection();
+            SetMessage();
+            count++;
         }
     }
     
-    void setSignalPrompt()
+    void SetPrompt()
     {
-        // TO DO: Generate above the player
-        signalPrompt.text = "Press X to accept signal";
+        prompt.text = "Press X to accept signal";
     }
     
-    void setSignalText()
+    void SetMessage()
     {
-        // TO DO: disappear after a delay
-        signalText.text = "FIND ME";
+        message.text = "FIND ME";
     }
     
+    void ResetPrompt()
+    {
+        prompt.text = "";
+    }
     
+    void ResetMessage()
+    {
+        message.text = "";
+    }
     
+    void ToggleProjection()
+    {
+        projection.SetActive(!ProjectionEnabled);
+    }
+    
+    public bool ProjectionEnabled
+    {
+        get
+        { 
+            return projection.activeSelf;
+        }
+    }
+
 }
