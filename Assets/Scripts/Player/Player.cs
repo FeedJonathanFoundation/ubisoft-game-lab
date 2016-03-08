@@ -60,24 +60,26 @@ public class Player : LightSource
     private bool isDead; // determines is current player is dead
     private new Transform transform;
     private new Rigidbody rigidbody;
+    private MaterialExtensions materials;
     private int currentLevel;
 
     // Use this for initialization
     public override void Awake()
     {
-       base.Awake(); // call parent LightSource Awake() first
-       
-       transform = GetComponent<Transform>();
-       rigidbody = GetComponent<Rigidbody>();
-       
-       movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
-       lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
-       
-       this.isDead = false;
-       this.currentLevel = SceneManager.GetActiveScene().buildIndex;
-       DontDestroyOnLoad(this.gameObject);
-       
-       LoadGame();
+        base.Awake(); // call parent LightSource Awake() first
+
+        transform = GetComponent<Transform>();
+        rigidbody = GetComponent<Rigidbody>();
+
+        movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
+        lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
+
+        this.isDead = false;
+        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
+        this.materials = new MaterialExtensions();
+        DontDestroyOnLoad(this.gameObject);
+        LoadGame();        
+        ChangeProbeColor(Color.black);
     }
     
     void OnLevelWasLoaded(int level) 
@@ -144,8 +146,28 @@ public class Player : LightSource
         if (Input.GetButtonDown("LightToggle") && minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
         {
             lightToggle.ToggleLights();
+            if (lightToggle.LightsEnabled)
+            {
+                this.ChangeProbeColor(new Color(1f, 0.3103448f, 0f, 1f));
+            }
+            else
+            {
+                this.ChangeProbeColor(Color.black);
+            }                                                 
         }
         lightToggle.LostOfLight(lostOfLightTime, energyCostLightToggle);
+    }
+    
+    private void ChangeProbeColor(Color color)
+    {
+        foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
+        {            
+            Renderer renderer = probe.GetComponent<Renderer>();
+            foreach (Material mat in renderer.materials)
+            {
+                StartCoroutine(materials.LerpColor(mat, color, 0.3f));
+            }                    
+        }                    
     }
 
     private void Restart()
