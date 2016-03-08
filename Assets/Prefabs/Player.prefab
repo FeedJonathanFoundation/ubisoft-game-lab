@@ -255,7 +255,7 @@ GameObject:
   - 23: {fileID: 2326820}
   m_Layer: 0
   m_Name: Cone
-  m_TagString: Untagged
+  m_TagString: Probe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -321,7 +321,7 @@ GameObject:
   - 23: {fileID: 2331116}
   m_Layer: 0
   m_Name: Cone
-  m_TagString: Untagged
+  m_TagString: Probe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -369,7 +369,7 @@ GameObject:
   - 23: {fileID: 2389480}
   m_Layer: 0
   m_Name: Cone
-  m_TagString: Untagged
+  m_TagString: Probe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -466,7 +466,7 @@ GameObject:
   - 23: {fileID: 2320080}
   m_Layer: 0
   m_Name: Cone
-  m_TagString: Untagged
+  m_TagString: Probe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -644,7 +644,7 @@ GameObject:
   - 23: {fileID: 2380936}
   m_Layer: 0
   m_Name: Cone
-  m_TagString: Untagged
+  m_TagString: Probe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -708,7 +708,7 @@ GameObject:
   - 23: {fileID: 2327844}
   m_Layer: 0
   m_Name: Cone
-  m_TagString: Untagged
+  m_TagString: Probe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -755,7 +755,7 @@ GameObject:
   - 23: {fileID: 2386384}
   m_Layer: 0
   m_Name: Cone
-  m_TagString: Untagged
+  m_TagString: Probe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -772,7 +772,7 @@ GameObject:
   - 23: {fileID: 2374078}
   m_Layer: 0
   m_Name: Cone
-  m_TagString: Untagged
+  m_TagString: Probe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -882,7 +882,7 @@ GameObject:
   - 23: {fileID: 2387146}
   m_Layer: 0
   m_Name: Cone
-  m_TagString: Untagged
+  m_TagString: Probe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -914,7 +914,7 @@ GameObject:
   - 23: {fileID: 2356404}
   m_Layer: 0
   m_Name: Cone
-  m_TagString: Untagged
+  m_TagString: Probe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2488,7 +2488,7 @@ MonoBehaviour:
   canAbsorb: 1
   playerWillAlwaysAbsorb: 0
   absorptionRate: 50000
-  defaultEnergy: 10
+  defaultEnergy: 40
   infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11442326}
   massEjectionTransform: {fileID: 451912}
@@ -2502,7 +2502,7 @@ MonoBehaviour:
   lostOfLightTime: 0
   energyCostLightToggle: 0
   minimalEnergyRestrictionToggleLights: 0
-  disableCheckpoints: 0
+  disableCheckpoints: 1
 --- !u!114 &11442326
 MonoBehaviour:
   m_ObjectHideFlags: 1
