@@ -13,6 +13,9 @@ public class LightRangeModifier : LightEnergyListener
     [Tooltip("The higher the value, the larger the range of light per unit of light energy")]
     public float lightToRangeRatio;
 
+    public float maxIntensity;
+    public float lightToIntensityRatio = 0.05f;
+
     // Cached components
     private new Light light;
 
@@ -21,6 +24,12 @@ public class LightRangeModifier : LightEnergyListener
         // Modifies the range of the attached light component based on the current amount of light energy
         float newRange = currentLight * lightToRangeRatio;
         Light.range = newRange;
+
+        float newIntensity = maxIntensity * lightToIntensityRatio * currentLight;
+        if (newIntensity <= maxIntensity)
+        {
+            Light.intensity = newIntensity;
+        }
     }
 
     /** Cached light component */

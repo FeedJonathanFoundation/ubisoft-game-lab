@@ -1205,74 +1205,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 10883376, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: m_Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 10883376, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: m_Shadows.m_Type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 10883376, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: m_Shadows.m_Strength
-      value: 0.869
-      objectReference: {fileID: 0}
-    - target: {fileID: 10883376, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: m_Shadows.m_Resolution
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 116746, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 10876902, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: m_Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 10876902, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: m_DrawHalo
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 10895348, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: m_Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11479848, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: maxIntensity
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489478, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: maxIntensity
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11495008, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: maxIntensity
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11495008, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: intensityRatio
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489478, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: intensityRatio
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 11479848, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: intensityRatio
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 11479848, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: lightToRangeRatio
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 11489478, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: lightToRangeRatio
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11495008, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
-      propertyPath: lightToRangeRatio
-      value: 0.17
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
   m_IsPrefabParent: 0
@@ -2493,10 +2425,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 142196, guid: 9972ffb20fae6a4409bacb042503b3fd, type: 2}
-      propertyPath: m_Name
-      value: Main Camera
-      objectReference: {fileID: 0}
     - target: {fileID: 11451590, guid: 9972ffb20fae6a4409bacb042503b3fd, type: 2}
       propertyPath: target
       value: 
@@ -2504,23 +2432,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9972ffb20fae6a4409bacb042503b3fd, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1020063510 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 142196, guid: 9972ffb20fae6a4409bacb042503b3fd, type: 2}
-  m_PrefabInternal: {fileID: 1020063509}
---- !u!114 &1020063511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1020063510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27a5fde272ebb46918752095bbc66bc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  intensity: 0.24
-  vignetteShader: {fileID: 4800000, guid: 627943dc7a9a74286b70a4f694a0acd5, type: 3}
 --- !u!1001 &1044915720
 Prefab:
   m_ObjectHideFlags: 0
@@ -4515,7 +4426,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.4
   maxIntensity: 0
-  intensityRatio: 0
+  lightToIntensityRatio: 0.05
 --- !u!108 &2075366088
 Light:
   m_ObjectHideFlags: 0
