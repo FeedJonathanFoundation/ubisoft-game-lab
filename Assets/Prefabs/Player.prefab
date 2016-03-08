@@ -1583,7 +1583,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100762}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.71, y: 0.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 464650}
@@ -2498,14 +2498,16 @@ MonoBehaviour:
   changeDirectionBoost: 5.2
   thrustEnergyCost: 0.01
   jetFuelEffect: {fileID: 134692}
+  playerDeathParticles: {fileID: 19877132, guid: 0e81d1fbc28c98f48879bfa184f476c2,
+    type: 2}
   defaultLightStatus: 1
   knockbackForce: 5
   invulnerabilityTime: 3
   invulnerabilityDrag: 1
   lostOfLightTime: 0
-  energyCostLightToggle: 0
+  energyCostLightToggle: 0.005
   minimalEnergyRestrictionToggleLights: 0
-  disableCheckpoints: 0
+  disableCheckpoints: 1
 --- !u!114 &11442326
 MonoBehaviour:
   m_ObjectHideFlags: 1

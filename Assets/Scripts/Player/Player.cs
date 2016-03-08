@@ -32,6 +32,9 @@ public class Player : LightSource
     /// </summary>
     [Tooltip("The amount of light energy spent when ejecting one piece of mass.")]
     public float thrustEnergyCost = 1;
+
+    [Tooltip("The damping to apply when the brakes are on at full strength")]
+    public float brakeDrag = 1;
     
     /// <summary>
     /// The propulsion effect activated when the player is propulsing
@@ -71,6 +74,7 @@ public class Player : LightSource
     private PlayerLightToggle lightToggle;
     private float lastTimeHit = -100;  // The last time player was hit by an enemy
     private float defaultDrag;  // Default rigidbody drag
+    private float previousThrustAxis; // Previous value of Input.GetAxis("ThrustAxis")
     private bool isDead; // determines is current player is dead
     private bool deathParticlesPlayed;
     private new Transform transform;
@@ -85,7 +89,7 @@ public class Player : LightSource
        transform = GetComponent<Transform>();
        rigidbody = GetComponent<Rigidbody>();
        
-       movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
+       movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
        lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
        
        this.defaultDrag = Rigidbody.drag;
@@ -139,7 +143,10 @@ public class Player : LightSource
     /// </summary>
     private void Move()
     {
-        if (Input.GetButtonDown("Thrust"))
+        float thrustAxis = Input.GetAxis("ThrustAxis");
+        float brakeAxis = Input.GetAxis("BrakeAxis");
+        
+        if (Input.GetButtonDown("Thrust") || (previousThrustAxis == 0 && thrustAxis > 0))
         {
             movement.OnPropulsionStart();
         }
@@ -150,9 +157,25 @@ public class Player : LightSource
             movement.Propulse(-massEjectionTransform.up);
         }
         
-        if (Input.GetButtonUp("Thrust"))
+        if (thrustAxis != 0)
+        {
+            // Propulse in the direction of the left stick (opposite to the rear of the probe)
+            movement.Propulse(-massEjectionTransform.up, thrustAxis);
+        }
+        
+        if (Input.GetButtonUp("Thrust") || (previousThrustAxis > 0 && thrustAxis == 0))
         {
             movement.OnPropulsionEnd();
+        }
+        
+        // Brake
+        if (Input.GetButton("Brake"))
+        {
+            movement.Brake(1);
+        }
+        if (brakeAxis != 0)
+        {
+            movement.Brake(brakeAxis);
         }
         
         if (isDead)
@@ -166,6 +189,8 @@ public class Player : LightSource
 
         // Ensure that the rigidbody never spins
         rigidbody.angularVelocity = Vector3.zero;
+        
+        previousThrustAxis = thrustAxis;
     }
 
     /// <summary>
