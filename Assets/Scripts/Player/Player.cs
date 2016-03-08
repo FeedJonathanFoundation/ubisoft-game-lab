@@ -65,19 +65,25 @@ public class Player : LightSource
     // Use this for initialization
     public override void Awake()
     {
-       base.Awake(); // call parent LightSource Awake() first
-       
-       transform = GetComponent<Transform>();
-       rigidbody = GetComponent<Rigidbody>();
-       
-       movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
-       lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
-       
-       this.isDead = false;
-       this.currentLevel = SceneManager.GetActiveScene().buildIndex;
-       DontDestroyOnLoad(this.gameObject);
-       
-       LoadGame();
+        base.Awake(); // call parent LightSource Awake() first
+
+        transform = GetComponent<Transform>();
+        rigidbody = GetComponent<Rigidbody>();
+
+        movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
+        lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
+
+        this.isDead = false;
+        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
+        DontDestroyOnLoad(this.gameObject);
+
+        LoadGame();
+        
+        foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
+        {
+            MaterialExtensions.SetEmissiveLight(probe, Color.black, 1);
+        }
+        
     }
     
     void OnLevelWasLoaded(int level) 
@@ -143,7 +149,18 @@ public class Player : LightSource
     {
         if (Input.GetButtonDown("LightToggle") && minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
         {
-            lightToggle.ToggleLights();
+            lightToggle.ToggleLights();            
+            foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
+            {
+                if (lightToggle.LightsEnabled)
+                {
+                    MaterialExtensions.SetEmissiveLight(probe, new Color(1f, 0.3103448f, 0f, 1f), 1);
+                }
+                else 
+                {
+                    MaterialExtensions.SetEmissiveLight(probe, Color.black, 1);   
+                }                    
+            }                           
         }
         lightToggle.LostOfLight(lostOfLightTime, energyCostLightToggle);
     }
