@@ -66,7 +66,7 @@ public class Player : LightSource
     // Use this for initialization
     public override void Awake()
     {
-        //base.Awake(); // call parent LightSource Awake() first
+        base.Awake(); // call parent LightSource Awake() first
 
         transform = GetComponent<Transform>();
         rigidbody = GetComponent<Rigidbody>();

@@ -50,7 +50,7 @@ public class Checkpoint : LightSource
         if (SceneManager.sceneCountInBuildSettings > levelID)
         {
             SceneManager.LoadScene(levelID, LoadSceneMode.Single);
-            Destroy(this.gameObject);
+            Destroy(this.gameObject); // destroys checkpoint to prevent it from appearing in the following scene
         }
     }
 
