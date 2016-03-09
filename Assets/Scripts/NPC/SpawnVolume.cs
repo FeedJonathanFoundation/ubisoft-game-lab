@@ -65,8 +65,7 @@ public class SpawnVolume : MonoBehaviour
     [Tooltip("Mass of largest fish.")]
     public int maxFishDifficulty;
 
-    [Tooltip("Player's neighbourhood.")]
-    public Neighbourhood neighbourhood;
+    private Neighbourhood neighbourhood;
 
     /// <summary>
     /// Tracks number of fish spawned.
@@ -90,8 +89,10 @@ public class SpawnVolume : MonoBehaviour
         disabled = true;
         fishes = new List<GameObject>();
         fishCount = 0;
-        
-	}
+
+        GameObject player = GameObject.FindWithTag("Player");
+        neighbourhood = player.GetComponentInChildren<Neighbourhood>();
+    }
     
     void Update()
     {
@@ -267,14 +268,17 @@ public class SpawnVolume : MonoBehaviour
                 if (fish != null)
                 {
                     delete = true;
-                    for (int i = 0; i < neighbourhood.NeighbourCount; i++)
+                    if (neighbourhood != null)
                     {
-                        GameObject neighbourObject = neighbourhood.GetNeighbour(i);
-                        Debug.Log("NEIGHBOUR:" + neighbourObject);
-                        if (neighbourObject == null) { continue; }
-                        if (fish == neighbourObject)
+                        for (int i = 0; i < neighbourhood.NeighbourCount; i++)
                         {
-                            delete = false;
+                            GameObject neighbourObject = neighbourhood.GetNeighbour(i);
+                            Debug.Log("NEIGHBOUR:" + neighbourObject);
+                            if (neighbourObject == null) { continue; }
+                            if (fish == neighbourObject)
+                            {
+                                delete = false;
+                            }
                         }
                     }
                     if (delete)
