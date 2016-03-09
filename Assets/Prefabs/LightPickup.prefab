@@ -72,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 123838}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.94, y: -0.68, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400436}
@@ -101,7 +101,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2d1518e12ba7c7d40917c600a7fdfa15, type: 2}
+  - {fileID: 2100000, guid: b531291099f2e41a79f0df7b8c4c8698, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -146,9 +146,9 @@ Light:
   serializedVersion: 6
   m_Type: 2
   m_Color: {r: 0.58475345, g: 0.6397059, b: 0.07055579, a: 1}
-  m_Intensity: 1.64
-  m_Range: 4
-  m_SpotAngle: 30
+  m_Intensity: 8
+  m_Range: 1
+  m_SpotAngle: 1.9
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -209,7 +209,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4906f634a9b27624c9e41234e3122bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightToRangeRatio: 0.4
+  lightToRangeRatio: 0.2
+  maxIntensity: 1
+  lightToIntensityRatio: 1
 --- !u!114 &11472480
 MonoBehaviour:
   m_ObjectHideFlags: 1
