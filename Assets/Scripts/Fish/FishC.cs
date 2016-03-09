@@ -64,7 +64,7 @@ public class FishC : AbstractFish
         
         if (currentFishTarget == null)
         {
-            Debug.Log("React to new fish: " + other.name);
+            // Debug.Log("React to new fish: " + other.name);
             AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
             int id = fish.GetID();
             

@@ -90,7 +90,8 @@ public class PlayerMovement
         foreach (ParticleSystem particles in jetFuelEffect.GetComponentsInChildren<ParticleSystem>())
         {
             particles.Play();
-            particles.enableEmission = true;
+            var em = particles.emission;
+            em.enabled = true;
         }
         //jetFuelEffect.enableEmission = true;
     }
@@ -127,6 +128,9 @@ public class PlayerMovement
     public void OnPropulsionEnd()
     {
         foreach (ParticleSystem particles in jetFuelEffect.GetComponentsInChildren<ParticleSystem>())
-            particles.enableEmission = false;
+        {
+            var em = particles.emission;
+            em.enabled = true;
+        }
     }
 }

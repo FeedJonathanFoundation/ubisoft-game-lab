@@ -226,13 +226,13 @@ public abstract class AbstractFish : LightSource
         if (action == null || !action.CanBeCancelled())
             return;        
         
-        Debug.Log("Remove the action : " + action.ToString());
+        // Debug.Log("Remove the action : " + action.ToString());
         
         // Unsubscribe from events before removing the action
         action.ActionComplete -= OnActionComplete;
         actions.RemoveAction(action.id);
         
-        Debug.Log("Priority dictionary after removing action:\n" + actions.ToString());
+        // Debug.Log("Priority dictionary after removing action:\n" + actions.ToString());
     }
 
     // Removes the completed action from the list of actions to perform.

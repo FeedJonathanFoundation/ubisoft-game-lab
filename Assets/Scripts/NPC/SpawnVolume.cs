@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 /// implement probabilities to spawn certain fish types
 
-public class SpawnVolume : MonoBehaviour {
+public class SpawnVolume : MonoBehaviour
+{
     
     /// <summary>
     /// Delay between spawns
@@ -63,7 +64,10 @@ public class SpawnVolume : MonoBehaviour {
     /// </summary>
     [Tooltip("Mass of largest fish.")]
     public int maxFishDifficulty;
-    
+
+    [Tooltip("Player's neighbourhood.")]
+    public Neighbourhood neighbourhood;
+
     /// <summary>
     /// Tracks number of fish spawned.
     /// </summary>
@@ -74,6 +78,7 @@ public class SpawnVolume : MonoBehaviour {
     
     // private List<AbstractFish> fishes;
     private List<GameObject> fishes;
+   
 
     /// <summary>
     /// Initializes fish count to 0,
@@ -85,6 +90,7 @@ public class SpawnVolume : MonoBehaviour {
         disabled = true;
         fishes = new List<GameObject>();
         fishCount = 0;
+        
 	}
     
     void Update()
@@ -248,31 +254,47 @@ public class SpawnVolume : MonoBehaviour {
         {
             disabled = false;
         }
-        if (other.gameObject.CompareTag("Disabler")) 
-        {
-            disabled = true;
-        }
     }
     
     // Destroys spawned objects
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Disabler"))
+        if (other.gameObject.CompareTag("SpawnSignal"))
         {
+            bool delete = false;
             foreach(GameObject fish in fishes)
             {
                 if (fish != null)
                 {
-                    fish.SetActive(false);
+                    delete = true;
+                    for (int i = 0; i < neighbourhood.NeighbourCount; i++)
+                    {
+                        GameObject neighbourObject = neighbourhood.GetNeighbour(i);
+                        Debug.Log("NEIGHBOUR:" + neighbourObject);
+                        if (neighbourObject == null) { continue; }
+                        if (fish == neighbourObject)
+                        {
+                            delete = false;
+                        }
+                    }
+                    if (delete)
+                    {
+                        fish.SetActive(false);
+                    }
                 }
             }
-            fishes.Clear();
+            if (delete)
+            {
+                fishes.Clear();
+                initialized = false;
+                disabled = true;
+            }
         }
     }
     
     public float GetSpawnVolumeRadius()
     {
-        float radius = this.GetComponent<SphereCollider>().radius;
+        float radius = gameObject.GetComponent<SphereCollider>().radius;
         return radius;
     }
     
@@ -281,15 +303,4 @@ public class SpawnVolume : MonoBehaviour {
     {
         return fishCount;
     }
-    
-    public void IncrementFishCount()
-    {
-        fishCount++;
-    }
-    
-    public void DecrementFishCount()
-    {
-        fishCount--;
-    }
 }
-

@@ -141,7 +141,7 @@ public class Neighbourhood : MonoBehaviour
         set { layerToDetect = value; }
     }
     
-    public string ToString()
+    public new string ToString()
     {
         string log = "Neighbours: ";
 
