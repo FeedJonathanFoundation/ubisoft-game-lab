@@ -60,6 +60,14 @@ public static class DataManager
         
         return data;
     }
+    
+    public static void ClearSavedData()
+    {
+        if (File.Exists(Application.persistentDataPath + fileName))
+        {
+            File.Delete(Application.persistentDataPath + fileName);
+        }
+    }
 
 
     /// <summary>

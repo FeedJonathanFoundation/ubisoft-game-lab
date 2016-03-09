@@ -16,19 +16,20 @@ public class Checkpoint : LightSource
     {
         if (other.tag == "Player")
         {
-            int currentLevel = other.gameObject.GetComponent<Player>().CurrentLevel;
+            Player player = other.gameObject.GetComponent<Player>();
+            
             PlayerData data = new PlayerData();
             
             if (changeScene)
             {
                 // if checkpoint changes scene, save values for the new scene
                 data.playerPosition = DataManager.Vector3ToString(new Vector3(0, 0, 0));
-                data.levelID = currentLevel + 1;    
+                data.levelID = player.CurrentLevel;                    
             } 
             else
             {
                 data.playerPosition = DataManager.Vector3ToString(other.gameObject.transform.position);
-                data.levelID = currentLevel;    
+                data.levelID = player.CurrentLevel;    
             }            
             
             data.playerRotation = DataManager.Vector3ToString(other.gameObject.transform.localEulerAngles);
@@ -38,7 +39,8 @@ public class Checkpoint : LightSource
             
             if (changeScene)
             {
-                ChangeLevel(currentLevel + 1);
+                ChangeLevel(player.CurrentLevel + 1);
+                player.CurrentLevel = player.CurrentLevel + 1;
             }        
         }
     }
@@ -48,6 +50,7 @@ public class Checkpoint : LightSource
         if (SceneManager.sceneCountInBuildSettings > levelID)
         {
             SceneManager.LoadScene(levelID, LoadSceneMode.Single);
+            Destroy(this.gameObject);
         }
     }
 

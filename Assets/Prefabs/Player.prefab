@@ -174,7 +174,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 455708}
-  - 114: {fileID: 11413014}
   m_Layer: 0
   m_Name: LightsToToggle
   m_TagString: Untagged
@@ -2404,17 +2403,6 @@ MonoBehaviour:
   lightToRangeRatio: 0.02
   maxIntensity: 0
   lightToIntensityRatio: 0.05
---- !u!114 &11413014
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 119940}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11422050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2493,7 +2481,7 @@ MonoBehaviour:
   playerWillAlwaysAbsorb: 0
   absorptionRate: 50000
   defaultEnergy: 40
-  infiniteEnergy: 0
+  infiniteEnergy: 1
   absorbableLightDetector: {fileID: 11442326}
   massEjectionTransform: {fileID: 451912}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}

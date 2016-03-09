@@ -91,8 +91,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 123206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 412.12793, y: -54.742355, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 636, y: 9, z: 0}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 438182}
   - {fileID: 431236}
@@ -289,12 +289,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canAbsorb: 0
-  playerWillAlwaysAbsorb: 0
+  playerWillAlwaysAbsorb: 1
   absorptionRate: 15
-  defaultEnergy: 10
-  infiniteEnergy: 0
+  defaultEnergy: 1000
+  infiniteEnergy: 1
   absorbableLightDetector: {fileID: 11418968}
-  changeScene: 0
+  changeScene: 1
 --- !u!114 &11418968
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -340,6 +340,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.4
+  maxIntensity: 0
+  lightToIntensityRatio: 0.05
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

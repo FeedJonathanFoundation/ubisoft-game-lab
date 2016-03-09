@@ -906,6 +906,22 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 11414324, guid: 05d9fc8758ff84fd087eead2438110c6, type: 2}
+      propertyPath: changeScene
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414324, guid: 05d9fc8758ff84fd087eead2438110c6, type: 2}
+      propertyPath: canAbsorb
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414324, guid: 05d9fc8758ff84fd087eead2438110c6, type: 2}
+      propertyPath: playerWillAlwaysAbsorb
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414324, guid: 05d9fc8758ff84fd087eead2438110c6, type: 2}
+      propertyPath: defaultEnergy
+      value: 1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 05d9fc8758ff84fd087eead2438110c6, type: 2}
   m_IsPrefabParent: 0
@@ -1068,7 +1084,8 @@ Prefab:
       propertyPath: infiniteEnergy
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11413014, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &955304146

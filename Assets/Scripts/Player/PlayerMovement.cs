@@ -110,7 +110,7 @@ public class PlayerMovement
         
         // Compute how much the gameObject has to turn opposite to its velocity vector
         float angleChange = Vector2.Angle((Vector2)rigidbody.velocity, direction);
-        Debug.Log("Change in angle (PlayerMovement.Propulse()): " + angleChange);
+        // Debug.Log("Change in angle (PlayerMovement.Propulse()): " + angleChange);
 
         // Augment the thrusting power depending on how much the player has to turn
         float thrustBoost = 1 + (angleChange/180) * changeDirectionBoost;

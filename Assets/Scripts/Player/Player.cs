@@ -66,7 +66,7 @@ public class Player : LightSource
     // Use this for initialization
     public override void Awake()
     {
-        base.Awake(); // call parent LightSource Awake() first
+        //base.Awake(); // call parent LightSource Awake() first
 
         transform = GetComponent<Transform>();
         rigidbody = GetComponent<Rigidbody>();
@@ -201,7 +201,8 @@ public class Player : LightSource
         else 
         {
             transform.position = new Vector3(0, 0, 0);
-            transform.localEulerAngles = new Vector3(0, 0, 0);                                
+            transform.localEulerAngles = new Vector3(0, 0, 0);    
+            DataManager.ClearSavedData();                            
         }
     }
 
@@ -221,6 +222,7 @@ public class Player : LightSource
     public int CurrentLevel
     {
         get { return this.currentLevel; }
+        set { this.currentLevel = value; }
     }
     
     /// <summary>
