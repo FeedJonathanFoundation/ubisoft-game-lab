@@ -24,7 +24,7 @@ public class Checkpoint : LightSource
             {
                 // if checkpoint changes scene, save values for the new scene
                 data.playerPosition = DataManager.Vector3ToString(new Vector3(0, 0, 0));
-                data.levelID = player.CurrentLevel;                    
+                data.levelID = player.CurrentLevel + 1;                    
             } 
             else
             {
