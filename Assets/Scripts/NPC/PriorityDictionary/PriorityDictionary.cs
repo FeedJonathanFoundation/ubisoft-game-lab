@@ -246,7 +246,7 @@ public class PriorityDictionary
         return action;
     }
     
-    public string ToString()
+    public new string ToString()
     {
         string output = "";
         

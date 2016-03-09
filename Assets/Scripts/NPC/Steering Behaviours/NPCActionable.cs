@@ -77,7 +77,7 @@ public abstract class NPCActionable
         timeActive += Time.deltaTime;
     }
     
-    public string ToString()
+    public new string ToString()
     {
         return base.ToString() + ", Priority = " + priority + ", ID = " + id;
     }
