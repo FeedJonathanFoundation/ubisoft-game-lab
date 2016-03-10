@@ -9,7 +9,7 @@ public class FishBoss : AbstractFish
     public GameObject player;
     [Tooltip("Then action performed when the fish detects the player")]
     [SerializeField]
-    private SeekOrFleeLight playerBehaviour;
+    private BossSeekPlayer followPlayer;
 
     [Tooltip("The action performed when flare is within the fish's line of sight")]    
     [SerializeField]
@@ -18,15 +18,16 @@ public class FishBoss : AbstractFish
     [Tooltip("Then action performed when the player is in a safe zone")]
     [SerializeField]
     private MoveClosestWaypoint moveToWaypoint;
+    public bool atSafeZone;
     
     public override void Awake()
     {
         // call parent LightSource Awake() first
         base.Awake();
         
-        playerBehaviour.SetPriority(2);     // High priority
-        playerBehaviour.SetID(-1);
-        playerBehaviour.Init();
+        followPlayer.SetPriority(2);     // High priority
+        followPlayer.SetID(-1);
+        followPlayer.Init();
         
         flareBehaviour.SetPriority(3);      // Very high priority
         flareBehaviour.SetID(-2);
@@ -35,6 +36,25 @@ public class FishBoss : AbstractFish
         moveToWaypoint.SetBigFish(this.transform);
         moveToWaypoint.SetPriority(0);
         moveToWaypoint.SetID(-3);
+        
+        atSafeZone = false;
+    }
+    
+    public override void Update()
+    {
+        base.Update();
+        //only for the boss ai, always seeks player if is isn't in a safe zone
+        BossReactToPlayer();
+        
+    }
+    
+    public void BossReactToPlayer()
+    {
+        if (!player.GetComponent<Player>().isSafe)
+        {
+            followPlayer.TargetLightSource = player.GetComponent<LightSource>();
+            AddAction(followPlayer);
+        }
     }
     
     public override void Move() 
@@ -45,9 +65,7 @@ public class FishBoss : AbstractFish
     
     // Called every frame when the fish can see the player
     public override void ReactToPlayer(Transform player)
-    {        
-        playerBehaviour.TargetLightSource = player.GetComponent<LightSource>();
-        AddAction(playerBehaviour);
+    {
     }
     
     public override void ReactToNPC(Transform other)

@@ -49,7 +49,7 @@ public class Player : LightSource
     private new Transform transform;
     private new Rigidbody rigidbody;
     private int currentLevel;
-
+    public bool isSafe; //for boss AI dont touch plz
     // Use this for initialization
     public override void Awake()
     {
@@ -62,6 +62,7 @@ public class Player : LightSource
        lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
        
        this.isDead = false;
+       this.isSafe = false;
        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
        DontDestroyOnLoad(this.gameObject);
        
@@ -179,6 +180,4 @@ public class Player : LightSource
     {
         return lightToggle.LightsEnabled;
     }
-
-
 }

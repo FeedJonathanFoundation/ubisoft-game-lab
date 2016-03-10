@@ -650,7 +650,7 @@ public class Steerable : MonoBehaviour
         // Calculate the velocity at which this object should move to reach his target
         desiredVelocity *= maxSpeed;
         
-        if(closestDistance <= 0.50f)
+        if(closestDistance <= slowingRadius)
         {
             desiredVelocity = Vector2.zero;
         }
