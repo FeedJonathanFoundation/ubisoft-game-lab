@@ -12,11 +12,13 @@ using System.Collections;
 public class LightEnergy
 {
     public delegate void LightChangedHandler(float currentLight);
-    /** Called when the GameObject's amount of stored light changes */
+    
+    // Called when the GameObject's amount of stored light changes
     public event LightChangedHandler LightChanged = delegate {};
 
     public delegate void LightDepletedHandler();
-    /** Called when all light was depleted from the light source. */
+    
+    // Called when all light was depleted from the light source.
     public event LightDepletedHandler LightDepleted = delegate {};
     
     private float currentEnergy;
