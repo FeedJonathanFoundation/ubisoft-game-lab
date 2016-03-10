@@ -91,7 +91,10 @@ public class SpawnVolume : MonoBehaviour
         fishCount = 0;
 
         GameObject player = GameObject.FindWithTag("Player");
-        neighbourhood = player.GetComponentInChildren<Neighbourhood>();
+        if (player != null)
+        {
+            neighbourhood = player.GetComponentInChildren<Neighbourhood>();
+        }
     }
     
     void Update()
@@ -268,6 +271,7 @@ public class SpawnVolume : MonoBehaviour
                 if (fish != null)
                 {
                     delete = true;
+                    Debug.Log("STELLA:" + neighbourhood);
                     if (neighbourhood != null)
                     {
                         for (int i = 0; i < neighbourhood.NeighbourCount; i++)
@@ -284,15 +288,13 @@ public class SpawnVolume : MonoBehaviour
                     if (delete)
                     {
                         fish.SetActive(false);
+                        fishes.Remove(fish);
                     }
+
                 }
             }
-            if (delete)
-            {
-                fishes.Clear();
-                initialized = false;
-                disabled = true;
-            }
+            initialized = false;
+            disabled = true;
         }
     }
     
