@@ -112,7 +112,7 @@ public class Player : LightSource
         {
             lightToggle.ToggleLights();
         }
-        lightToggle.LostOfLight(lostOfLightTime, energyCostLightToggle);
+        lightToggle.UpdateLossOfLight(lostOfLightTime, energyCostLightToggle);
     }
 
     private void Restart()
