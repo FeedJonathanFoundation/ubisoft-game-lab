@@ -1,17 +1,16 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// ???????
+///
+/// @author - Jonathan L.A
+/// @author - Alex I.
+/// @version - 1.0.0
+///
+/// </summary>
 public class LightEnergy
 {
-    /// <summary>
-    /// The current amount of energy held by the GameObject
-    /// </summary>
-    private float currentEnergy;
-
-    private GameObject gameObject;
-
-    private bool debugInfiniteLight = false;
-
     public delegate void LightChangedHandler(float currentLight);
     /** Called when the GameObject's amount of stored light changes */
     public event LightChangedHandler LightChanged = delegate {};
@@ -19,7 +18,17 @@ public class LightEnergy
     public delegate void LightDepletedHandler();
     /** Called when all light was depleted from the light source. */
     public event LightDepletedHandler LightDepleted = delegate {};
+    
+    private float currentEnergy;
 
+    private GameObject gameObject;
+    
+    private bool debugInfiniteLight = false;
+
+    /// <summary>
+    /// Light energy constructor initializes
+    /// current energy to default energy for the given game object
+    /// </summary>
     public LightEnergy(float defaultEnergy, GameObject gameObject, bool debugInfiniteLight)
     {
         this.currentEnergy = defaultEnergy;
@@ -29,19 +38,19 @@ public class LightEnergy
     }
 
     /// <summary>
-    /// Adds the given amount of light energy
+    /// Adds the specified amount of light energy and
+    /// informs all all interested subscribers that the amount of energy
+    /// possessed by the game object has changed
     /// </summary>
     public void Add(float lightEnergy)
     {
         this.currentEnergy += lightEnergy;
-
-        // Inform all interested subscribers that the amount of energy possessed by
-        // GameObject has changed
         LightChanged(this.currentEnergy);
     }
 
     /// <summary>
-    /// Depletes the desired amount of light energy from this component.
+    /// Depletes the desired amount of light energy from this component
+    /// if there is enough existing energy to remove
     /// Returns the actual amount of energy removed.
     /// </summary>
     public float Deplete(float lightToRemove)
@@ -51,13 +60,9 @@ public class LightEnergy
             return lightToRemove;
         }
 
-        // Stores the actual amount of light depleted from this energy source
         float actualLightRemoved = lightToRemove;
-
-        // If there is more light to remove than there is actual energy
         if (lightToRemove > this.currentEnergy)
         {
-            // Remove 'currentEnergy' amount of light from this component.
             actualLightRemoved = this.currentEnergy;
         }
 
@@ -79,10 +84,8 @@ public class LightEnergy
                 {
                     rigidbody.drag = 10;                
                 }
-                //UnityEngine.Object.Destroy(this.gameObject);
             }
         }
-
         return actualLightRemoved;
     }
 
@@ -94,4 +97,5 @@ public class LightEnergy
         get { return currentEnergy; }
         set { currentEnergy = value; }
     }
+    
 }
