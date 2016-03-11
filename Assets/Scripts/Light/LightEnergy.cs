@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// ???????
+/// Represents the amount of energy maintained by a LightSource
 ///
 /// @author - Jonathan L.A
 /// @author - Alex I.
