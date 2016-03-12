@@ -5,13 +5,14 @@ using UnityEngine;
 ///
 /// @author - Simon T.
 /// @author - Alex I.
+/// @author - Karl C.
 /// @version - 1.0.0
 ///
 /// </summary>
 public class PlayerLightToggle
 {
     // If true, the lights that are children of this object are enabled.
-	private bool lightsEnabled;
+    private bool lightsEnabled;
     private GameObject lightsToToggle;
     private float timerLostOfLight; 
     private LightSource lightSource;
