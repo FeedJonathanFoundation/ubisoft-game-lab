@@ -105,7 +105,7 @@ public class Player : LightSource
                       
         if (this.isDead)
         {
-            Restart();
+            RestartGame();
         }
         else
         {
@@ -119,23 +119,28 @@ public class Player : LightSource
             }
         }
     }
-    
+        
     /// <summary>
     /// Invoked when a new scene is loaded
     /// </summary>
     /// <param name="level">id of the scene that is loaded</param>
-    public void OnLevelWasLoaded(int level) 
+    protected void OnLevelWasLoaded(int level) 
     {
         Debug.Log("Scene " + level + " is loaded!");
         this.transform.position = new Vector3(0, 0, 0); 
     }
-                 
-    public int CurrentLevel
+          
+    /// <summary>
+    /// Sets player state to 'dead' when LightDepleted event is triggered
+    /// </summary>
+    protected override void OnLightDepleted()
     {
-        get { return this.currentLevel; }
-        set { this.currentLevel = value; }
+        base.OnLightDepleted();         
+        movement.OnPropulsionEnd();
+        isDead = true;
+        Debug.Log("Game OVER! Press 'R' to restart!");
     }
-    
+                      
     /// <summary>
     /// If player lights are on, player is visible
     /// </summary>
@@ -151,52 +156,26 @@ public class Player : LightSource
         }        
     }
     
-    /// <summary>
-    /// Sets player state to 'dead' when LightDepleted event is triggered
-    /// </summary>
-    protected override void OnLightDepleted()
+    public int CurrentLevel
     {
-        base.OnLightDepleted();         
-        movement.OnPropulsionEnd();
-        isDead = true;
-        Debug.Log("Game OVER! Press 'R' to restart!");
+        get { return this.currentLevel; }
+        set { this.currentLevel = value; }
     }
-       
-    /// <summary>
-    /// Helper method to validate parameters passed through Unity EditorApplication
-    /// In case of missing asset, shows debug error and halts the game
-    /// </summary>
-    private void ValidateInputs()
-    {
-        if (massEjectionTransform == null || lightBallPrefab == null || jetFuelEffect == null)
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
-            Debug.LogError("Missing prefab on Player object!");                
-        }
-
-        if (this.transform.Find("LightsToToggle").gameObject == null)
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
-            Debug.LogError("Could not find LightsToToggle object!");
-        }
-    }
-
-    /// <summary>
-    /// Listens for input related to movement of the player 
-    /// </summary>
-    private void Move()
-    {        
-        // Ensure that the rigidbody never spins
-        rigidbody.angularVelocity = Vector3.zero;
-        
-        if (movement != null) 
-        {         
-            if (Input.GetButtonDown("Thrust")) { movement.OnPropulsionStart(); }        
-            if (Input.GetButton("Thrust"))     { movement.Propulse(-massEjectionTransform.up); }       
-            if (Input.GetButtonUp("Thrust"))   { movement.OnPropulsionEnd(); }
             
-            movement.FollowLeftStickRotation();            
-        }         
+    /// <summary>
+    /// Smoothly changes color of the player avatar to the given one 
+    /// </summary>
+    /// <param name="color"></param>
+    private void ChangeProbeColor(Color color)
+    {
+        foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
+        {            
+            Renderer renderer = probe.GetComponent<Renderer>();
+            foreach (Material mat in renderer.materials)
+            {
+                StartCoroutine(materials.LerpColor(mat, color, 0.3f));
+            }                    
+        }                    
     }
 
     /// <summary>
@@ -220,37 +199,6 @@ public class Player : LightSource
             }
             lightToggle.LostOfLight(lostOfLightTime, energyCostLightToggle);   
         }        
-    }
-    
-    /// <summary>
-    /// Smoothly changes color of the player avatar to the given one 
-    /// </summary>
-    /// <param name="color"></param>
-    private void ChangeProbeColor(Color color)
-    {
-        foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
-        {            
-            Renderer renderer = probe.GetComponent<Renderer>();
-            foreach (Material mat in renderer.materials)
-            {
-                StartCoroutine(materials.LerpColor(mat, color, 0.3f));
-            }                    
-        }                    
-    }
-
-    /// <summary>
-    /// Listens for restart button clicks 
-    /// </summary>
-    private void Restart()
-    {
-        if (Input.GetButtonDown("Restart"))
-        {
-            Debug.Log("Game Restarted");
-            this.LightEnergy.Add(this.DefaultEnergy);
-            this.isDead = false;
-            this.rigidbody.drag = 0; // reset drag
-            LoadGame();
-        }
     }
 
     /// <summary>
@@ -277,6 +225,58 @@ public class Player : LightSource
             transform.position = new Vector3(0, 0, 0);
             transform.localEulerAngles = new Vector3(0, 0, 0);    
             DataManager.ClearSavedData();                            
+        }
+    }
+    
+    /// <summary>
+    /// Listens for input related to movement of the player 
+    /// </summary>
+    private void Move()
+    {        
+        // Ensure that the rigidbody never spins
+        rigidbody.angularVelocity = Vector3.zero;
+        
+        if (movement != null) 
+        {         
+            if (Input.GetButtonDown("Thrust")) { movement.OnPropulsionStart(); }        
+            if (Input.GetButton("Thrust"))     { movement.Propulse(-massEjectionTransform.up); }       
+            if (Input.GetButtonUp("Thrust"))   { movement.OnPropulsionEnd(); }
+            
+            movement.FollowLeftStickRotation();            
+        }         
+    }
+    
+    /// <summary>
+    /// Listens for restart button clicks 
+    /// </summary>
+    private void RestartGame()
+    {
+        if (Input.GetButtonDown("Restart"))
+        {
+            Debug.Log("Game Restarted");
+            this.LightEnergy.Add(this.DefaultEnergy);
+            this.isDead = false;
+            this.rigidbody.drag = 0; // reset drag
+            LoadGame();
+        }
+    }
+ 
+    /// <summary>
+    /// Helper method to validate parameters passed through Unity EditorApplication
+    /// In case of missing asset, shows debug error and halts the game
+    /// </summary>
+    private void ValidateInputs()
+    {
+        if (massEjectionTransform == null || lightBallPrefab == null || jetFuelEffect == null)
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+            Debug.LogError("Missing prefab on Player object!");                
+        }
+
+        if (this.transform.Find("LightsToToggle").gameObject == null)
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+            Debug.LogError("Could not find LightsToToggle object!");
         }
     }
  
