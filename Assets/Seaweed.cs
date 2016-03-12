@@ -3,9 +3,10 @@ using System.Collections;
 
 public class Seaweed : MonoBehaviour
 {
-    public float gravity = -9.8f;
+    [SerializeField]
+    private float gravity = -9.8f;
 
-    Rigidbody rb;
+    private Rigidbody rb;
 
     // Use this for initialization
     void Start()
@@ -14,7 +15,7 @@ public class Seaweed : MonoBehaviour
         rb.useGravity = false;
         ReverseGravity();
     }
-    void Update () 
+    void Update() 
     {
         rb.velocity += new Vector3(0, gravity * Time.deltaTime, 0);
     }
