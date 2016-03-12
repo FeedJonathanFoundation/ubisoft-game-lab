@@ -42,9 +42,8 @@ public class LightSource : MonoBehaviour
 
     public virtual void Awake() 
     {       
-        this.lightSourceId = GenerateID(this.name);
-        Debug.Log(lightSourceId);
-        
+        // Generates a unique id prefixed by object name
+        this.lightSourceId = GenerateID(this.name);        
     }
     
     public virtual void Update()
@@ -74,9 +73,7 @@ public class LightSource : MonoBehaviour
     /// Called the instant the light depletes to zero. 
     /// Called from the LightEnergy.LightDepleted event.
     /// </summary>
-    protected virtual void OnLightDepleted()
-    {
-    }
+    protected virtual void OnLightDepleted() {}
    
     public virtual void OnEnable()
     {
