@@ -50,7 +50,7 @@ public class PlayerLightToggle
     }
     
     /// <summary>
-    /// If true, the lights are enabled and the GameObject is visible.
+    /// If true, the lights are enabled and the GameObject is visible
     /// </summary>
     public bool LightsEnabled
     {
