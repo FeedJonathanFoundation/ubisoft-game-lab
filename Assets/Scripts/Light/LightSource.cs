@@ -40,13 +40,12 @@ public class LightSource : MonoBehaviour
     private LightEnergy lightEnergy;
     private string lightSourceId;
 
-    public virtual void Awake() 
-    {       
+    protected virtual void Awake() {
         // Generates a unique id prefixed by object name
-        this.lightSourceId = GenerateID(this.name);        
+        this.lightSourceId = GenerateID(this.name);
     }
-    
-    public virtual void Update()
+        
+    protected virtual void Update()
     {
         // Cycle through each absorbable light source being touched by this GameObject
         for (int i = 0; i < absorbableLightDetector.NeighbourCount; i++)

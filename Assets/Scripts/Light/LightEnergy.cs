@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 /// <summary>
 /// Represents the amount of energy maintained by a LightSource
@@ -12,19 +11,16 @@ using System.Collections;
 public class LightEnergy
 {
     public delegate void LightChangedHandler(float currentLight);
+    public delegate void LightDepletedHandler();
     
     // Called when the GameObject's amount of stored light changes
     public event LightChangedHandler LightChanged = delegate {};
-
-    public delegate void LightDepletedHandler();
-    
+        
     // Called when all light was depleted from the light source.
     public event LightDepletedHandler LightDepleted = delegate {};
     
     private float currentEnergy;
-
-    private GameObject gameObject;
-    
+    private GameObject gameObject;    
     private bool debugInfiniteLight = false;
 
     /// <summary>
