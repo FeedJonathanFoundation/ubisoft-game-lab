@@ -123,7 +123,6 @@ public class Player : LightSource
     /// <summary>
     /// Invoked when a new scene is loaded
     /// </summary>
-    /// <param name="level">id of the scene that is loaded</param>
     protected void OnLevelWasLoaded(int level) 
     {
         Debug.Log("Scene " + level + " is loaded!");
@@ -165,7 +164,6 @@ public class Player : LightSource
     /// <summary>
     /// Smoothly changes color of the player avatar to the given one 
     /// </summary>
-    /// <param name="color"></param>
     private void ChangeProbeColor(Color color)
     {
         foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))

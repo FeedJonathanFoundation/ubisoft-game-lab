@@ -85,8 +85,6 @@ public class LightSource : MonoBehaviour
     /// Returns true if this LightSource can absorb the given light source.
     /// Calculated based on which LightSource has more energy
     /// </summary>
-    /// <param name="otherLightSource"></param>
-    /// <returns></returns>
     private bool CanAbsorb(LightSource otherLightSource)
     {
         if (canAbsorb && LightEnergy.CurrentEnergy > otherLightSource.LightEnergy.CurrentEnergy)
