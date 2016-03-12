@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -37,8 +38,14 @@ public class LightSource : MonoBehaviour
     private Neighbourhood absorbableLightDetector;
     
     private LightEnergy lightEnergy;
+    private string lightSourceId;
 
-    public virtual void Awake() {}
+    public virtual void Awake() 
+    {       
+        this.lightSourceId = GenerateID(this.name);
+        Debug.Log(lightSourceId);
+        
+    }
     
     public virtual void Update()
     {
@@ -105,6 +112,18 @@ public class LightSource : MonoBehaviour
             return false;
         }
     }
+    
+    private string GenerateID(string objectName)
+    {
+        if (objectName != null)
+        {
+            return string.Format("{0}_{1:N}", objectName, Guid.NewGuid());    
+        }
+        else 
+        {
+            return Guid.NewGuid().ToString();
+        }        
+    }
      
      
     public LightEnergy LightEnergy
@@ -124,6 +143,11 @@ public class LightSource : MonoBehaviour
     {
         get { return this.defaultEnergy; }
         set { this.defaultEnergy = value; }
+    }
+    
+    public string LightSourceID
+    {
+        get { return this.lightSourceId; }        
     }
     
     public bool InfiniteEnergy
