@@ -9,7 +9,7 @@ public class Checkpoint : LightSource
     public override void Awake()
     {       
         base.Awake(); // call parent LightSource Awake() first
-        this.infiniteEnergy = true; // override default LightSource value
+        this.InfiniteEnergy = true; // override default LightSource value
     }
 
     void OnTriggerEnter(Collider other)

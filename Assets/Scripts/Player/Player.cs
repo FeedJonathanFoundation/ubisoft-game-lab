@@ -1,163 +1,169 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(Rigidbody))]
+/// <summary>
+/// Player class is responsible for behaviour related to player's object 
+///
+/// @author - Jonathan L.A
+/// @author - Alex I.
+/// @version - 1.0.0
+///
+/// </summary>
+[RequireComponent(typeof(Rigidbody), typeof(Transform))]
 public class Player : LightSource
 {
-
-    /// <summary>
-    /// The position at which the character ejects mass.
-    /// </summary>
-    public Transform massEjectionTransform;
-
-    /// <summary>
-    /// The light ball ejected by the player when thrusting
-    /// </summary>
-    public GameObject lightBallPrefab;
-
-    [Tooltip("The player's max speed in m/s")]
-    public float maxSpeed;
-
-    /// <summary>
-    /// The amount of force applied on the player when ejecting one piece of mass.
-    /// </summary>
-    [Tooltip("The amount of force applied on the player when ejecting one piece of mass.")]
-    public float thrustForce;
-
-    [Tooltip("The higher the value, the faster the propulsion when changing directions")]
-    public float changeDirectionBoost;
-
-    /// <summary>
-    /// The amount of light energy spent when ejecting one piece of mass.
-    /// </summary>
-    [Tooltip("The amount of light energy spent when ejecting one piece of mass.")]
-    public float thrustEnergyCost = 1;
+    [Header("Player Movement")]
+    [SerializeField]
+    [Tooltip("The position at which the character ejects mass.")]
+    private Transform massEjectionTransform;    
     
-    /// <summary>
-    /// The propulsion effect activated when the player is propulsing
-    /// </summary>
+    [SerializeField]            
+    [Tooltip("The light ball ejected by the player when thrusting")]
+    private GameObject lightBallPrefab;
+
+    [SerializeField]
+    [Tooltip("The player's max speed in m/s")]
+    private float maxSpeed = 100;
+
+    [SerializeField]
+    [Tooltip("The amount of force applied on the player when ejecting one piece of mass.")]
+    private float thrustForce = 0;
+
+    [SerializeField]
+    [Tooltip("The higher the value, the faster the propulsion when changing directions")]
+    private float changeDirectionBoost = 0;
+
+    [SerializeField]
+    [Tooltip("The amount of light energy spent when ejecting one piece of mass.")]
+    private float thrustEnergyCost = 1;
+    
+    [SerializeField]
     [Tooltip("The parent of the propulsion particle effects activated when the player is propulsing")]
-    public GameObject jetFuelEffect;
+    private GameObject jetFuelEffect;
 
+
+    [Header("Player Lights")]
+    [SerializeField]
     [Tooltip("If true, the lights are enabled on scene start.")]
-    public bool defaultLightStatus = true;
+    private bool defaultLightStatus = true;
 
+    [SerializeField]
     [Tooltip("Time interval for lost of lights while lights are on")]
-    public float lostOfLightTime;
+    private float lostOfLightTime = 0;
 
+    [SerializeField]
     [Tooltip("Amount of light lost while lights are turned on")]
-    public float energyCostLightToggle;
+    private float energyCostLightToggle = 0;
 
+    [SerializeField]
     [Tooltip("Energy needed to activate light and that light will turn off if reached")]
-    public float minimalEnergyRestrictionToggleLights;
+    private float minimalEnergyRestrictionToggleLights = 0;
 
+    [SerializeField]
     [Tooltip("If true, checkpoints are not used and user is spawned at the initial position")]
-    public bool disableCheckpoints;
-
-    /** Caches the player's components */
+    private bool disableCheckpoints = true;
+        
+        
     private PlayerMovement movement;
     private PlayerLightToggle lightToggle;
-    private bool isDead; // determines is current player is dead
-    private new Transform transform;
-    private new Rigidbody rigidbody;
     private MaterialExtensions materials;
+    private new Transform transform;
+    private new Rigidbody rigidbody;    
     private int currentLevel;
-
-    // Use this for initialization
+    private bool isDead;
+    
+    /// <summary>
+    /// Initializes Player components   
+    /// </summary>
     public override void Awake()
     {
-        base.Awake(); // call parent LightSource Awake() first
-
-        transform = GetComponent<Transform>();
-        rigidbody = GetComponent<Rigidbody>();
-
-        movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
-        lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
-
+        // Call parent LightSource Awake() first
+        base.Awake();
+        
         this.isDead = false;
-        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
+        this.currentLevel = SceneManager.GetActiveScene().buildIndex;        
+        this.transform = GetComponent<Transform>();
+        this.rigidbody = GetComponent<Rigidbody>();
         this.materials = new MaterialExtensions();
-        DontDestroyOnLoad(this.gameObject);
-        LoadGame();        
+        
+        this.ValidateInputs();               
+        this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
+        this.lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);    
+              
+        DontDestroyOnLoad(this.gameObject);                
         ChangeProbeColor(Color.black);
+        LoadGame();
     }
     
-    void OnLevelWasLoaded(int level) 
-    {
-        Debug.Log("Scene " + level + " is loaded!");
-        this.transform.position = new Vector3(0, 0, 0); 
-    }
-
-    // Update is called once per frame
+    /// <summary>
+    /// Listens for player states such as movement, light controls and death
+    /// Called once per frame
+    /// </summary>
     public override void Update()
     {
         base.Update(); 
-        
-        // Clamp the player's velocity
-        if (rigidbody.velocity.sqrMagnitude > maxSpeed*maxSpeed)
+                      
+        if (this.isDead)
         {
-            rigidbody.velocity = ((Vector2)rigidbody.velocity).SetMagnitude(maxSpeed);
-        }
-        
-        if (isDead)
-        {
-            Restart();
+            RestartGame();
         }
         else
         {
             Move();
             LightControl();
-        }
-    }
-
-    /// <summary>
-    /// Player movements responding to user input
-    /// </summary>
-    private void Move()
-    {
-        if (Input.GetButtonDown("Thrust"))
-        {
-            movement.OnPropulsionStart();
-        }
-        
-        if (Input.GetButton("Thrust"))
-        {
-            // Propulse in the direction of the left stick (opposite to the rear of the probe)
-            movement.Propulse(-massEjectionTransform.up);
-        }
-        
-        if (Input.GetButtonUp("Thrust"))
-        {
-            movement.OnPropulsionEnd();
-        }
-
-        // Makes the character follow the left stick's rotation
-        movement.FollowLeftStickRotation();
-
-        // Ensure that the rigidbody never spins
-        rigidbody.angularVelocity = Vector3.zero;
-    }
-
-    /// <summary>
-    /// Player lights responding to user input
-    /// </summary>
-    private void LightControl()
-    {
-        if (Input.GetButtonDown("LightToggle") && minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
-        {
-            lightToggle.ToggleLights();
-            if (lightToggle.LightsEnabled)
+            
+            // Clamp the player's velocity
+            if (rigidbody.velocity.sqrMagnitude > this.maxSpeed * this.maxSpeed)
             {
-                this.ChangeProbeColor(new Color(1f, 0.3103448f, 0f, 1f));
+                rigidbody.velocity = ((Vector2)rigidbody.velocity).SetMagnitude(this.maxSpeed);
             }
-            else
-            {
-                this.ChangeProbeColor(Color.black);
-            }                                                 
         }
-        lightToggle.LostOfLight(lostOfLightTime, energyCostLightToggle);
+    }
+        
+    /// <summary>
+    /// Invoked when a new scene is loaded
+    /// </summary>
+    protected void OnLevelWasLoaded(int level) 
+    {
+        Debug.Log("Scene " + level + " is loaded!");
+        this.transform.position = new Vector3(0, 0, 0); 
+    }
+          
+    /// <summary>
+    /// Sets player state to 'dead' when LightDepleted event is triggered
+    /// </summary>
+    protected override void OnLightDepleted()
+    {
+        base.OnLightDepleted();         
+        movement.OnPropulsionEnd();
+        isDead = true;
+        Debug.Log("Game OVER! Press 'R' to restart!");
+    }
+                      
+    /// <summary>
+    /// If player lights are on, player is visible
+    /// </summary>
+    public bool IsDetectable()
+    {
+        if (lightToggle != null) 
+        {
+            return lightToggle.LightsEnabled;    
+        }
+        else 
+        {
+            return false;
+        }        
     }
     
+    public int CurrentLevel
+    {
+        get { return this.currentLevel; }
+        set { this.currentLevel = value; }
+    }
+            
+    /// <summary>
+    /// Smoothly changes color of the player avatar to the given one 
+    /// </summary>
     private void ChangeProbeColor(Color color)
     {
         foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
@@ -170,18 +176,32 @@ public class Player : LightSource
         }                    
     }
 
-    private void Restart()
+    /// <summary>
+    /// Listens for lights button clicks
+    /// </summary>
+    private void LightControl()
     {
-        if (Input.GetButtonDown("Restart"))
+        if (lightToggle != null)
         {
-            Debug.Log("Game Restarted");
-            this.LightEnergy.Add(this.defaultEnergy);
-            this.isDead = false;
-            this.rigidbody.drag = 0; // reset drag
-            LoadGame();
-        }
+            if (Input.GetButtonDown("LightToggle") && minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
+            {
+                lightToggle.ToggleLights();
+                if (lightToggle.LightsEnabled)
+                {
+                    this.ChangeProbeColor(new Color(1f, 0.3103448f, 0f, 1f));
+                }
+                else
+                {
+                    this.ChangeProbeColor(Color.black);
+                }                                                 
+            }
+            lightToggle.LostOfLight(lostOfLightTime, energyCostLightToggle);   
+        }        
     }
 
+    /// <summary>
+    /// Loads the last saved game state on the scene or places player at the origin
+    /// </summary>
     private void LoadGame()
     {              
         PlayerData data = DataManager.LoadFile();
@@ -205,33 +225,57 @@ public class Player : LightSource
             DataManager.ClearSavedData();                            
         }
     }
-
+    
     /// <summary>
-    /// Listens for LightDepleted event from LightEnergy
-    /// Sets player to dead when it occurs
+    /// Listens for input related to movement of the player 
     /// </summary>
-    protected override void OnLightDepleted()
-    {
-        base.OnLightDepleted(); 
+    private void Move()
+    {        
+        // Ensure that the rigidbody never spins
+        rigidbody.angularVelocity = Vector3.zero;
         
-        movement.OnPropulsionEnd();
-        isDead = true;
-        Debug.Log("Game OVER! Press 'R' to restart!");
-    }
-
-    public int CurrentLevel
-    {
-        get { return this.currentLevel; }
-        set { this.currentLevel = value; }
+        if (movement != null) 
+        {         
+            if (Input.GetButtonDown("Thrust")) { movement.OnPropulsionStart(); }        
+            if (Input.GetButton("Thrust"))     { movement.Propulse(-massEjectionTransform.up); }       
+            if (Input.GetButtonUp("Thrust"))   { movement.OnPropulsionEnd(); }
+            
+            movement.FollowLeftStickRotation();            
+        }         
     }
     
     /// <summary>
-    /// If player lights are on, player is visible
+    /// Listens for restart button clicks 
     /// </summary>
-    public bool IsDetectable()
+    private void RestartGame()
     {
-        return lightToggle.LightsEnabled;
+        if (Input.GetButtonDown("Restart"))
+        {
+            Debug.Log("Game Restarted");
+            this.LightEnergy.Add(this.DefaultEnergy);
+            this.isDead = false;
+            this.rigidbody.drag = 0; // reset drag
+            LoadGame();
+        }
     }
+ 
+    /// <summary>
+    /// Helper method to validate parameters passed through Unity EditorApplication
+    /// In case of missing asset, shows debug error and halts the game
+    /// </summary>
+    private void ValidateInputs()
+    {
+        if (massEjectionTransform == null || lightBallPrefab == null || jetFuelEffect == null)
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+            Debug.LogError("Missing prefab on Player object!");                
+        }
 
-
+        if (this.transform.Find("LightsToToggle").gameObject == null)
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+            Debug.LogError("Could not find LightsToToggle object!");
+        }
+    }
+ 
 }
