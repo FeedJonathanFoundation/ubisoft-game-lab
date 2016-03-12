@@ -266,20 +266,20 @@ public class SpawnVolume : MonoBehaviour
         if (other.gameObject.CompareTag("SpawnSignal"))
         {
             bool delete = false;
-            foreach(GameObject fish in fishes)
+            for (int i = fishes.Count - 1; i > -1; i--)
             {
-                if (fish != null)
+                if (fishes[i] != null)
                 {
                     delete = true;
                     Debug.Log("STELLA:" + neighbourhood);
                     if (neighbourhood != null)
                     {
-                        for (int i = 0; i < neighbourhood.NeighbourCount; i++)
+                        for (int j = 0; j < neighbourhood.NeighbourCount; j++)
                         {
-                            GameObject neighbourObject = neighbourhood.GetNeighbour(i);
+                            GameObject neighbourObject = neighbourhood.GetNeighbour(j);
                             Debug.Log("NEIGHBOUR:" + neighbourObject);
                             if (neighbourObject == null) { continue; }
-                            if (fish == neighbourObject)
+                            if (fishes[i] == neighbourObject)
                             {
                                 delete = false;
                             }
@@ -287,8 +287,8 @@ public class SpawnVolume : MonoBehaviour
                     }
                     if (delete)
                     {
-                        fish.SetActive(false);
-                        fishes.Remove(fish);
+                        fishes[i].SetActive(false);
+                        fishes.Remove(fishes[i]);
                     }
 
                 }
