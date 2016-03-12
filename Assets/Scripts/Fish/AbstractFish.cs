@@ -2,153 +2,247 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// AbstractFish class is responsible for behaviour related to fish objects
+///
+/// @author - Stella L.
+/// @author - Jonathan L.A
+/// @version - 1.0.0
+///
+/// </summary>
 [RequireComponent(typeof(Steerable))]
 public abstract class AbstractFish : LightSource
 {
-    /** The steerable component attached to the GameObject performing this action. */
     protected Steerable steerable;
+    
+    static int globalId = 1;
+    
+    // Fish object's unique ID
+    private int myId;
     
     [Tooltip("Detects lights within the fish's line of sight")]
     [SerializeField]
     private Neighbourhood lightDetector;
 
-    // The steering behaviors to apply every frame
+    // Holds the steering behaviors of this fish
     private PriorityDictionary actions;
-
-    // The condition that must be met for this action to return 'Success'
-    protected StoppingCondition stoppingCondition = new StoppingCondition();
     
     [Tooltip("If true, the fish will not react to fish of the same type, except in the default flocking behaviour")]
-    public bool ignoreFishOfSameType = false;
+    [SerializeField]
+    private bool ignoreFishOfSameType = false;
     
-    [Tooltip("If true, the fish prints every action it performs every frame in the console")]
-    public bool debugLogActions = false;
-    
-    static int globalId = 1;
-    private int myId;
-
+    /// <summary>
+    /// Initializes the fish object
+    /// </summary>
     public override void Awake()
     {
-        base.Awake(); // call parent LightSource Awake() first
+        // Call parent LightSource Awake() first
+        base.Awake();
         
         // Initialize action priority dictionary
         actions = new PriorityDictionary();
         Move();
         
-        // Assign the next available ID
+        // Assign the next available ID to this fish
         myId = globalId++;
-
+        
         // Cache the 'Steerable' component attached to the GameObject performing this action
 		steerable = transform.GetComponent<Steerable>();
-
-		// Set the stopping condition's transform to the same Transform that is performing this 'Steer' action.
-		// This way, the stopping condition will be tested using this GameObject's position
-		stoppingCondition.SetTransform(transform);
-
-        // Reset the stopping condition. The stopping condition now knows that the 'Steer' action just started.
-		stoppingCondition.Init();
     }
     
+    /// <summary>
+    /// Subscribe to the events dictating when lights enter
+    /// or exit the fish's line-of-sight.
+    /// </summary>
     public override void OnEnable()
     {
         base.OnEnable();
-        
-        // Subscribe to the events dictating when lights enter/exit the fish's line-of-sight 
         lightDetector.NeighbourEnter += OnLightEnter;
         lightDetector.NeighbourExit += OnLightExit;
         lightDetector.NeighbourStay += OnLightStay;
     }
     
+    /// <summary>
+    /// Unsubscribe to the events dictating when lights enter
+    /// or exit the fish's line-of-sight.
+    /// </summary>
     public override void OnDisable()
     {
         base.OnDisable();
-        
-        // Unsubscribe to the events dictating when lights enter/exit the fish's line-of-sight 
         lightDetector.NeighbourEnter -= OnLightEnter;
         lightDetector.NeighbourExit -= OnLightExit;
         lightDetector.NeighbourStay -= OnLightStay; 
     }
 
+    /// <summary>
+    /// Retrieves and executes active actions every frame
+    /// </summary>
     public override void Update()
     {     
         base.Update();
-           
-        if(stoppingCondition.Complete())
-		{
-			//return;
-		}
-        
-        List<NPCActionable> activeActions = actions.GetActiveActions(); 
-        foreach(NPCActionable action in activeActions)
+        List<NPCActionable> activeActions = actions.GetActiveActions();
+         
+        foreach (NPCActionable action in activeActions)
         {
-            //Debug.Log("Before performing action : \n" + actions.ToString());
-            
-            if (debugLogActions) { Debug.Log("Execute action : " + action.ToString()); }
-            
             action.Execute(steerable);
-            //Debug.Log("After performing action : \n" + actions.ToString());
         }
-        
-        if (debugLogActions) { Debug.Log(actions.ToString()); }
-        
-        // NPCActionable playerSeek = actions.GetAction(-1);
-        // if(playerSeek != null)
-        //     Debug.Log("Flee player: " + gameObject.name);
-            
-        //Debug.Log("After foreach loop : \n" + actions.ToString());
-            
     }
 
-    void FixedUpdate()
+    /// <summary>
+    /// Called the instant the fish loses all its light.
+    /// </summary>
+    protected override void OnLightDepleted()
     {
-        steerable.ApplyForces (Time.fixedDeltaTime); 
+        base.OnLightDepleted();
+        GameObject.Destroy(this.gameObject);
     }
     
-    // Returns the fish's unique ID
+    /// <summary>
+    /// How the fish moves when it is not proximate to the player
+    /// </summary>
+    public abstract void Move();
+
+    /// <summary>
+    /// How the fish moves when it is proximate to the player
+    /// (called every frame when the player is in sight).
+    /// </summary>
+    public abstract void ReactToPlayer(Transform player);
+
+    /// <summary>
+    /// How the fish moves when it is proximate to the player
+    /// (called every frame when a fish is in sight).
+    /// </summary>
+    public abstract void ReactToNPC(Transform other);
+    
+    /// <summary>
+    /// Called the instant an NPC becomes out of sight
+    /// </summary>
+    public abstract void NPCOutOfSight(Transform other);
+    
+    /// <summary>
+    /// How the fish reacts when a flare is within line of sight
+    /// </summary>
+    public abstract void ReactToFlare(Transform other);
+
+    /// <summary>
+    /// Returns the height of a fish
+    /// </summary>
+    public virtual float GetHeight()
+    {
+        return transform.lossyScale.y;
+    }
+
+    /// <summary>
+    /// Returns the width of a fish
+    /// </summary>
+    public virtual float GetWidth()
+    {
+        return transform.lossyScale.x;
+    }
+        
+    /// <summary>
+    /// Returns the fish object's unique ID
+    /// </summary>
     public int GetID()
     {
         return myId;
     }
 
-    // Detects if fish is close to another light
+    /// <summary>
+    /// Calculates the radius of a sphere around the fish
+    /// </summary>
+    public float CalculateRadius()
+    {
+        float height = GetHeight();
+        float width = GetWidth();
+
+        if (height > width)
+        {
+            return height / 2;
+        }
+        else
+        {
+            return width / 2;
+        }
+    }
+    
+    /// <summary>
+    /// Applies the steerable forces to the object every physics step
+    /// </summary>
+    protected void FixedUpdate()
+    {
+        steerable.ApplyForces (Time.fixedDeltaTime); 
+    }
+        
+    /// <summary>
+    /// Adds an action to the priority dictionary
+    /// </summary>
+    protected void AddAction(NPCActionable action)
+    {
+        action.ActionComplete += OnActionComplete;
+        actions.InsertAction(action);
+    }
+    
+    /// <summary>
+    /// Removes an action from the list of actions to perform
+    /// using an ID
+    /// </summary>
+    protected void RemoveAction(int id)
+    {
+        RemoveAction(actions.GetAction(id));
+    }
+    
+    /// <summary>
+    /// Removes an action from the list of actions to perform
+    /// using an action type
+    /// </summary>
+    protected void RemoveAction(NPCActionable action)
+    {
+        if (action == null || !action.CanBeCancelled())
+        {
+            return;
+        }
+        // Unsubscribe from events before removing the action
+        action.ActionComplete -= OnActionComplete;
+        actions.RemoveAction(action.id);
+    }
+
+    /// <summary>
+    /// Removes the completed action from the list of actions to perform.
+    /// </summary>
+    protected void OnActionComplete(NPCActionable completedAction)
+    {
+        actions.RemoveAction(completedAction.id);
+    }
+
+    /// <summary>
+    /// Detects if fish is close to another light
+    /// </summary>
     private void OnLightEnter(GameObject lightObject) 
     {
         LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
-        
-        // if (lightSource.name == "Fish B") 
-        // {
-        //     Debug.Log("Collided with : " + lightSource.tag);
-        // }
-        
         if (lightSource)
         {
-            if (lightSource.tag.Equals("Player")) 
-            {
-                // ReactToPlayer(lightSource.transform);
-                
-                //Debug.Log(actions.ToString());
-            }
-            else if (lightSource.tag.Equals("Fish")) 
+            if (lightSource.tag.Equals("Fish")) 
             {
                 if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer) 
                 { 
                     ReactToNPC(lightSource.transform); 
                 }
             }
-        }
-        
+        } 
         if (lightObject.tag.Equals("Flare"))
         {
             ReactToFlare(lightObject.transform);
         }
     }
     
+    /// <summary>
+    /// While another light is in the viewable region of the fish
+    /// </summary>
     private void OnLightStay(GameObject lightObject)
     {
         LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
-        
-        //Debug.Log(lightObject.name + " is visible by " + gameObject.name);
-
         if (lightSource)
         {
             if (lightSource.tag.Equals("Player")) 
@@ -165,11 +259,12 @@ public abstract class AbstractFish : LightSource
         }
     }
     
-    // Detects if fish is no longer close to another light
+    /// <summary>
+    /// Detects if fish is no longer close to another light
+    /// </summary>
     private void OnLightExit(GameObject lightObject) 
     {
         LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
-        
         if (lightSource)
         {
             if (lightSource.CompareTag("Fish")) 
@@ -178,103 +273,21 @@ public abstract class AbstractFish : LightSource
                 {
                     // Inform subclasses that the NPC went out of sight
                     NPCOutOfSight(lightSource.transform);
-                    
                     int otherID = lightSource.GetComponent<AbstractFish>().GetID();
                     RemoveAction(otherID);
                 }
             }
             else if (lightSource.CompareTag("Player"))
             {
-                //Debug.Log("Before RemoveAction()\n" + actions.ToString());
-                //Debug.Log("Player out of sight of fish : " + lightSource.name);
                 // Player id = -1
                 RemoveAction(-1);
-                
-                //Debug.Log("After RemoveAction()\n" + actions.ToString());
             }
         }
-        
         if (lightObject.CompareTag("Flare"))
         {
             // Stop reacting to the flare 
             RemoveAction(-2);
         }
-    }
-    
-    // Called the instant the fish loses all its light.
-    protected override void OnLightDepleted()
-    {
-        base.OnLightDepleted();
-        
-        GameObject.Destroy(this.gameObject);
-    }
-    
-    protected void AddAction(NPCActionable action)
-    {
-        action.ActionComplete += OnActionComplete;
-        actions.InsertAction(action);
-    }
-    
-    protected void RemoveAction(int id)
-    {
-        //Debug.Log("Remove the action with ID : " + id);
-        RemoveAction(actions.GetAction(id));
-    }
-    
-    protected void RemoveAction(NPCActionable action)
-    {
-        if (action == null || !action.CanBeCancelled())
-            return;        
-        
-        // Debug.Log("Remove the action : " + action.ToString());
-        
-        // Unsubscribe from events before removing the action
-        action.ActionComplete -= OnActionComplete;
-        actions.RemoveAction(action.id);
-        
-        // Debug.Log("Priority dictionary after removing action:\n" + actions.ToString());
-    }
-
-    // Removes the completed action from the list of actions to perform.
-    protected void OnActionComplete(NPCActionable completedAction)
-    {
-        actions.RemoveAction(completedAction.id);
-    }
-
-    // How the fish moves when it is not proximate to the player
-    public abstract void Move();
-
-    // How the fish moves when it is proximate to the player (called every frame when the player is in sight)
-    public abstract void ReactToPlayer(Transform player);
-
-    // How the fish moves when it is proximate to the player (called every frame when a fish is in sight)
-    public abstract void ReactToNPC(Transform other);
-    // Called the instant an NPC becomes out of sight
-    public abstract void NPCOutOfSight(Transform other);
-    
-    // How the fish reacts when a flare is within line of sight
-    public abstract void ReactToFlare(Transform other);
-
-    // Returns the height of a fish
-    public virtual float GetHeight()
-    {
-        return transform.lossyScale.y;
-    }
-
-    // Returns the width of a fish
-    public virtual float GetWidth()
-    {
-        return transform.lossyScale.x;
-    }
-
-    // Calculates the radius of a sphere around the fish
-    public float CalculateRadius()
-    {
-        float height = GetHeight();
-        float width = GetWidth();
-
-        if (height > width) { return height / 2; }
-        else { return width / 2; }
     }
 
 }
