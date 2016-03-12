@@ -14,74 +14,50 @@ using System.Collections.Generic;
 public abstract class AbstractFish : LightSource
 {
     protected Steerable steerable;
-    
-    static int globalId = 1;
-    
+
+    protected static int globalId = 1;
+
     // Fish object's unique ID
     private int myId;
-    
+
     [Tooltip("Detects lights within the fish's line of sight")]
     [SerializeField]
     private Neighbourhood lightDetector;
 
     // Holds the steering behaviors of this fish
     private PriorityDictionary actions;
-    
+
     [Tooltip("If true, the fish will not react to fish of the same type, except in the default flocking behaviour")]
     [SerializeField]
     private bool ignoreFishOfSameType = false;
-    
+
     /// <summary>
     /// Initializes the fish object
     /// </summary>
-    public override void Awake()
+    protected override void Awake()
     {
         // Call parent LightSource Awake() first
         base.Awake();
-        
+
         // Initialize action priority dictionary
         actions = new PriorityDictionary();
         Move();
-        
+
         // Assign the next available ID to this fish
         myId = globalId++;
-        
+
         // Cache the 'Steerable' component attached to the GameObject performing this action
-		steerable = transform.GetComponent<Steerable>();
-    }
-    
-    /// <summary>
-    /// Subscribe to the events dictating when lights enter
-    /// or exit the fish's line-of-sight.
-    /// </summary>
-    public override void OnEnable()
-    {
-        base.OnEnable();
-        lightDetector.NeighbourEnter += OnLightEnter;
-        lightDetector.NeighbourExit += OnLightExit;
-        lightDetector.NeighbourStay += OnLightStay;
-    }
-    
-    /// <summary>
-    /// Unsubscribe to the events dictating when lights enter
-    /// or exit the fish's line-of-sight.
-    /// </summary>
-    public override void OnDisable()
-    {
-        base.OnDisable();
-        lightDetector.NeighbourEnter -= OnLightEnter;
-        lightDetector.NeighbourExit -= OnLightExit;
-        lightDetector.NeighbourStay -= OnLightStay; 
+        steerable = transform.GetComponent<Steerable>();
     }
 
     /// <summary>
     /// Retrieves and executes active actions every frame
     /// </summary>
-    public override void Update()
-    {     
+    protected override void Update()
+    {
         base.Update();
         List<NPCActionable> activeActions = actions.GetActiveActions();
-         
+
         foreach (NPCActionable action in activeActions)
         {
             action.Execute(steerable);
@@ -96,7 +72,31 @@ public abstract class AbstractFish : LightSource
         base.OnLightDepleted();
         GameObject.Destroy(this.gameObject);
     }
-    
+
+    /// <summary>
+    /// Subscribe to the events dictating when lights enter
+    /// or exit the fish's line-of-sight.
+    /// </summary>
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        lightDetector.NeighbourEnter += OnLightEnter;
+        lightDetector.NeighbourExit += OnLightExit;
+        lightDetector.NeighbourStay += OnLightStay;
+    }
+
+    /// <summary>
+    /// Unsubscribe to the events dictating when lights enter
+    /// or exit the fish's line-of-sight.
+    /// </summary>
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        lightDetector.NeighbourEnter -= OnLightEnter;
+        lightDetector.NeighbourExit -= OnLightExit;
+        lightDetector.NeighbourStay -= OnLightStay;
+    }
+
     /// <summary>
     /// How the fish moves when it is not proximate to the player
     /// </summary>
@@ -113,12 +113,12 @@ public abstract class AbstractFish : LightSource
     /// (called every frame when a fish is in sight).
     /// </summary>
     public abstract void ReactToNPC(Transform other);
-    
+
     /// <summary>
     /// Called the instant an NPC becomes out of sight
     /// </summary>
     public abstract void NPCOutOfSight(Transform other);
-    
+
     /// <summary>
     /// How the fish reacts when a flare is within line of sight
     /// </summary>
@@ -139,7 +139,7 @@ public abstract class AbstractFish : LightSource
     {
         return transform.lossyScale.x;
     }
-        
+
     /// <summary>
     /// Returns the fish object's unique ID
     /// </summary>
@@ -165,15 +165,15 @@ public abstract class AbstractFish : LightSource
             return width / 2;
         }
     }
-    
+
     /// <summary>
     /// Applies the steerable forces to the object every physics step
     /// </summary>
     protected void FixedUpdate()
     {
-        steerable.ApplyForces (Time.fixedDeltaTime); 
+        steerable.ApplyForces(Time.fixedDeltaTime);
     }
-        
+
     /// <summary>
     /// Adds an action to the priority dictionary
     /// </summary>
@@ -182,7 +182,7 @@ public abstract class AbstractFish : LightSource
         action.ActionComplete += OnActionComplete;
         actions.InsertAction(action);
     }
-    
+
     /// <summary>
     /// Removes an action from the list of actions to perform
     /// using an ID
@@ -191,7 +191,7 @@ public abstract class AbstractFish : LightSource
     {
         RemoveAction(actions.GetAction(id));
     }
-    
+
     /// <summary>
     /// Removes an action from the list of actions to perform
     /// using an action type
@@ -218,25 +218,25 @@ public abstract class AbstractFish : LightSource
     /// <summary>
     /// Detects if fish is close to another light
     /// </summary>
-    private void OnLightEnter(GameObject lightObject) 
+    private void OnLightEnter(GameObject lightObject)
     {
         LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
         if (lightSource)
         {
-            if (lightSource.tag.Equals("Fish")) 
+            if (lightSource.tag.Equals("Fish"))
             {
-                if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer) 
-                { 
-                    ReactToNPC(lightSource.transform); 
+                if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer)
+                {
+                    ReactToNPC(lightSource.transform);
                 }
             }
-        } 
+        }
         if (lightObject.tag.Equals("Flare"))
         {
             ReactToFlare(lightObject.transform);
         }
     }
-    
+
     /// <summary>
     /// While another light is in the viewable region of the fish
     /// </summary>
@@ -245,29 +245,29 @@ public abstract class AbstractFish : LightSource
         LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
         if (lightSource)
         {
-            if (lightSource.tag.Equals("Player")) 
+            if (lightSource.tag.Equals("Player"))
             {
                 ReactToPlayer(lightSource.transform);
             }
             else if (lightSource.tag.Equals("Fish"))
             {
-                if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer) 
-                { 
-                    ReactToNPC(lightSource.transform); 
+                if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer)
+                {
+                    ReactToNPC(lightSource.transform);
                 }
             }
         }
     }
-    
+
     /// <summary>
     /// Detects if fish is no longer close to another light
     /// </summary>
-    private void OnLightExit(GameObject lightObject) 
+    private void OnLightExit(GameObject lightObject)
     {
         LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
         if (lightSource)
         {
-            if (lightSource.CompareTag("Fish")) 
+            if (lightSource.CompareTag("Fish"))
             {
                 if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer)
                 {
