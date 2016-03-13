@@ -15,22 +15,23 @@ public enum Direction
 // This should be the side of the trigger box collider
 public class Current : MonoBehaviour
 {
+    [SerializeField]
     [Tooltip("The strength of current force.")]
-    public float strength;
-    // The direction of the current force.
+    private float strength;
+    [SerializeField]
     [Tooltip("The direction of current force.")]
-    public Direction currentDirection;
+    private Direction currentDirection;
     private Vector3 direction;
     
 
     // Whether the current object is empty.
     private bool empty;
     // Holds all rigidbodies in the current.
-    private List<Rigidbody> rbs;
+    private List<Rigidbody> rigidbodies;
     
     void Start()
     {
-        rbs = new List<Rigidbody>();
+        rigidbodies = new List<Rigidbody>();
         // By default, the current pushes downward.
         SetDirection();
         empty = true;
@@ -66,22 +67,22 @@ public class Current : MonoBehaviour
     // Get rigidbody of the colliding game object and add to the list
     void OnTriggerEnter(Collider col) 
     {
-        Rigidbody rb = col.gameObject.GetComponent<Rigidbody>();
-        if (rb != null) 
+        Rigidbody rigidbody = col.gameObject.GetComponent<Rigidbody>();
+        if (rigidbody != null) 
         {
-            rbs.Add(rb);
+            rigidbodies.Add(rigidbody);
             empty = false;
-        } 
+        }
     }
     
     // Remove rigidbody of game object that has exited the current
     void OnTriggerExit(Collider col)
     {
         Rigidbody rb = col.gameObject.GetComponent<Rigidbody>();
-        if (rb != null && rbs.Contains(rb)) 
+        if (rb != null && rigidbodies.Contains(rb)) 
         {
-            rbs.Remove(rb);
-            if (rbs.Count == 0)
+            rigidbodies.Remove(rb);
+            if (rigidbodies.Count == 0)
             {
                 empty = true;
             } 
@@ -90,13 +91,14 @@ public class Current : MonoBehaviour
     
     void AddCurrentForce()
     {
-        foreach (Rigidbody rb in rbs)
+        foreach (Rigidbody rigidbody in rigidbodies)
         {
-            if (rb != null) 
+            if (rigidbody != null)
             {
-                rb.AddForce(direction * strength);
+                Vector3 initialVelocity = rigidbody.velocity;
+                rigidbody.AddForce(-initialVelocity);
+                rigidbody.AddForce(strength * direction);
             }
         }
     }
-    
 }
