@@ -20,6 +20,11 @@ public class SpawnVolume : MonoBehaviour
     private float[] probabilities;
     
     [SerializeField]
+    [Range(0,1)]
+    [Tooltip("Percent of maximum variance from default energy.")]
+    private float energyVariance;
+    
+    [SerializeField]
     [Tooltip("If true, uses specific spawn points. Else, uses randomly generated spawn points.")]
     private bool overrideSpawnLocations = false;
     
@@ -38,15 +43,6 @@ public class SpawnVolume : MonoBehaviour
     [SerializeField]
     [Tooltip("Maximum number of fish to be spawned.")]
     private int maxFishCount; 
-    
-    [SerializeField]
-    [Tooltip("Mass of smallest fish.")]
-    private int minFishDifficulty;
-    /// <summary>
-    /// Mass of largest fish.
-    /// </summary>
-    [Tooltip("Mass of largest fish.")]
-    private int maxFishDifficulty;
 
     [SerializeField]
     [Tooltip("Max distance between player and fish before fish is disabled.")]
@@ -138,17 +134,25 @@ public class SpawnVolume : MonoBehaviour
     
     private void SpawnCircle(int numberOfFish)
     {
+        if (numberOfFish < 1) { return; }
         for (int i = 0; i < numberOfFish; i++)
         {
             int spawnTypeIndex = ChooseFish();
+            
             float radius = GetSpawnVolumeRadius() / 2;
             float angle = i * Mathf.PI * 2 / numberOfFish;
             Vector3 spawnLocation = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius + transform.position;
             if (spawnObject.Length > 0 && spawnObject[spawnTypeIndex] != null)
             {
                 GameObject fish = (GameObject)Instantiate(spawnObject[spawnTypeIndex], spawnLocation, Quaternion.identity);
-                fishes.Add(fish);
-                fishCount++;
+                if (fish.GetComponent<LightSource>() != null)
+                {
+                    float variance = Random.Range(0, fish.GetComponent<LightSource>().LightEnergy.CurrentEnergy * energyVariance);
+                    fish.GetComponent<LightSource>().LightEnergy.Deplete(variance);
+                    
+                    fishes.Add(fish);
+                    fishCount++;
+                }
             }
         }
     }
