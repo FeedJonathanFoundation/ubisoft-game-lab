@@ -50,10 +50,10 @@ public class BossSeekPlayer : NPCActionable
         wallAvoidance.id = id;
     }
     
-	public override void Execute(Steerable steerable) 
+    public override void Execute(Steerable steerable) 
     {
         base.Execute(steerable);
-        
+
         if (overrideSteerableSpeed)
         {
             steerable.MinSpeed = minSpeed;
@@ -64,9 +64,9 @@ public class BossSeekPlayer : NPCActionable
         {
             steerable.MaxForce = maxForce;
         }
-        
+
         Player player = targetLightSource.gameObject.GetComponent<Player>();
-        
+
         if (!player.isSafe)
         {
             steerable.AddSeekForce(targetLightSource.transform.position, strengthMultiplier);
@@ -75,7 +75,7 @@ public class BossSeekPlayer : NPCActionable
         {
             ActionCompleted();
         }
-        
+
         wallAvoidance.Execute(steerable);
     }
     

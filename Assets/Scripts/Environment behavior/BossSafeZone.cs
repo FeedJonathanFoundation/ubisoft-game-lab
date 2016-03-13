@@ -6,7 +6,7 @@ public class BossSafeZone : MonoBehaviour
 
 	// Use this for initialization
     //STILL UNDER DEVELOPMENT
-	void OnTriggerEnter(Collider col) 
+    void OnTriggerEnter(Collider col) 
     {
         if(col.tag == "Fish") 
         {

@@ -20,8 +20,8 @@ public enum NPCActionType
 	Separation,
 	Alignment,
 	Cohesion,
-    BossSeekPlayer,
-    MoveClosestWaypoint,
+	BossSeekPlayer,
+	MoveClosestWaypoint,
 	None
 }
 
