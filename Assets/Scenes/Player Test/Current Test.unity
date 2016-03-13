@@ -274,6 +274,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114192, guid: dd5962043a4074bdb9912bc53a29a593, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd5962043a4074bdb9912bc53a29a593, type: 2}
   m_IsPrefabParent: 0
@@ -768,7 +772,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 140610, guid: 38d0002f615f542afba0a194a8ad5b31, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11441648, guid: 38d0002f615f542afba0a194a8ad5b31, type: 2}
       propertyPath: playerBehaviour.seekWhenStronger.minSpeed
@@ -1379,6 +1383,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.4
+  maxIntensity: 0
+  lightToIntensityRatio: 0.05
 --- !u!108 &918303574
 Light:
   m_ObjectHideFlags: 0
@@ -1600,6 +1606,10 @@ Prefab:
     - target: {fileID: 408412, guid: bebe5861aaf7845d1aff34364d39ba3c, type: 2}
       propertyPath: m_RootOrder
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6563444, guid: bebe5861aaf7845d1aff34364d39ba3c, type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bebe5861aaf7845d1aff34364d39ba3c, type: 2}
@@ -1874,7 +1884,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 126260, guid: 031b3c20622814d5eb2efa60c665d4d4, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 10222536, guid: 031b3c20622814d5eb2efa60c665d4d4, type: 2}
       propertyPath: m_Color.rgba
@@ -1924,6 +1934,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11441870, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
       propertyPath: infiniteEnergy
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11441870, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: playerWillAlwaysAbsorb
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2939,6 +2953,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.4
+  maxIntensity: 0
+  lightToIntensityRatio: 0.05
 --- !u!108 &2095772448
 Light:
   m_ObjectHideFlags: 0
