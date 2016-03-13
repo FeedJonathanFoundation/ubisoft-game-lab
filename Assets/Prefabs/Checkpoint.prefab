@@ -12,7 +12,7 @@ GameObject:
   - 114: {fileID: 11482764}
   - 23: {fileID: 2392772}
   - 33: {fileID: 3331498}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: 'Checkpoint Light '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 438182}
   - 114: {fileID: 11418968}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AbsorbableLightDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   - 114: {fileID: 11414324}
   - 114: {fileID: 11469210}
   - 23: {fileID: 2344334}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Checkpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   - 33: {fileID: 3340006}
   - 23: {fileID: 2359502}
   - 95: {fileID: 9596986}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LightTowerPlaceholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 123206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 636, y: 9, z: 0}
+  m_LocalPosition: {x: 36.418865, y: 4.798356, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 438182}
@@ -291,10 +291,10 @@ MonoBehaviour:
   canAbsorb: 0
   playerWillAlwaysAbsorb: 1
   absorptionRate: 15
-  defaultEnergy: 1000
+  defaultEnergy: 100
   infiniteEnergy: 1
   absorbableLightDetector: {fileID: 11418968}
-  changeScene: 1
+  changeScene: 0
 --- !u!114 &11418968
 MonoBehaviour:
   m_ObjectHideFlags: 1

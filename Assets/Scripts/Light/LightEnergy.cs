@@ -20,6 +20,7 @@ public class LightEnergy
     public event LightDepletedHandler LightDepleted = delegate {};
     
     private float currentEnergy;
+    private float defaultEnergy;
     private GameObject gameObject;    
     private bool debugInfiniteLight = false;
 
@@ -29,6 +30,7 @@ public class LightEnergy
     /// </summary>
     public LightEnergy(float defaultEnergy, GameObject gameObject, bool debugInfiniteLight)
     {
+        this.defaultEnergy = defaultEnergy;
         this.currentEnergy = defaultEnergy;
         this.gameObject = gameObject;
         this.debugInfiniteLight = debugInfiniteLight;
@@ -42,7 +44,14 @@ public class LightEnergy
     /// </summary>
     public void Add(float lightEnergy)
     {
-        this.currentEnergy += lightEnergy;
+        if (this.currentEnergy + lightEnergy > this.defaultEnergy)
+        {
+            this.currentEnergy = this.defaultEnergy;    
+        }
+        else 
+        {
+            this.currentEnergy += lightEnergy;    
+        }        
         LightChanged(this.currentEnergy);
     }
 
