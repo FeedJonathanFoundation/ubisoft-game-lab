@@ -34,11 +34,11 @@ public class FishB : AbstractFish
         otherFishBehaviour.Init();
         
         playerBehaviour.SetPriority(2);     // High priority
-        playerBehaviour.SetID(-1);
+        playerBehaviour.SetID("-1");
         playerBehaviour.Init();
         
         flareBehaviour.SetPriority(3);      // Very high priority
-        flareBehaviour.SetID(-2);
+        flareBehaviour.SetID("-2");
         flareBehaviour.Init();
     }
     
@@ -68,7 +68,7 @@ public class FishB : AbstractFish
         {
             // Debug.Log("React to new fish: " + other.name);
             AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
-            int id = fish.GetID();
+            string id = fish.GetID();
             
             otherFishBehaviour.TargetLightSource = fish;
             otherFishBehaviour.SetID(id);

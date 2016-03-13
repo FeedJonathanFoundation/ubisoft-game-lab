@@ -40,7 +40,8 @@ public class LightSource : MonoBehaviour
     private LightEnergy lightEnergy;
     private string lightSourceId;
 
-    protected virtual void Awake() {
+    protected virtual void Awake() 
+    {
         // Generates a unique id prefixed by object name
         this.lightSourceId = GenerateID(this.name);
     }
@@ -111,14 +112,15 @@ public class LightSource : MonoBehaviour
     
     private string GenerateID(string objectName)
     {
-        if (objectName != null)
-        {
-            return string.Format("{0}_{1:N}", objectName, Guid.NewGuid());    
-        }
-        else 
-        {
-            return Guid.NewGuid().ToString();
-        }        
+        return Guid.NewGuid().ToString();
+        // if (objectName != null)
+        // {
+        //     return string.Format("{0}_{1:N}", objectName, Guid.NewGuid());    
+        // }
+        // else 
+        // {
+        //     return Guid.NewGuid().ToString();
+        // }        
     }
      
      

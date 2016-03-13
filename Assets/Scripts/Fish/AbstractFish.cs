@@ -15,10 +15,10 @@ public abstract class AbstractFish : LightSource
 {
     protected Steerable steerable;
 
-    protected static int globalId = 1;
+    //protected static int globalId = 1;
 
     // Fish object's unique ID
-    private int myId;
+    //private int myId;
 
     [Tooltip("Detects lights within the fish's line of sight")]
     [SerializeField]
@@ -44,7 +44,7 @@ public abstract class AbstractFish : LightSource
         Move();
 
         // Assign the next available ID to this fish
-        myId = globalId++;
+        //myId = globalId++;
 
         // Cache the 'Steerable' component attached to the GameObject performing this action
         steerable = transform.GetComponent<Steerable>();
@@ -143,9 +143,9 @@ public abstract class AbstractFish : LightSource
     /// <summary>
     /// Returns the fish object's unique ID
     /// </summary>
-    public int GetID()
+    public string GetID()
     {
-        return myId;
+        return this.LightSourceID;
     }
 
     /// <summary>
@@ -179,6 +179,7 @@ public abstract class AbstractFish : LightSource
     /// </summary>
     protected void AddAction(NPCActionable action)
     {
+        Debug.Log(action.id);
         action.ActionComplete += OnActionComplete;
         actions.InsertAction(action);
     }
@@ -187,7 +188,7 @@ public abstract class AbstractFish : LightSource
     /// Removes an action from the list of actions to perform
     /// using an ID
     /// </summary>
-    protected void RemoveAction(int id)
+    protected void RemoveAction(string id)
     {
         RemoveAction(actions.GetAction(id));
     }
@@ -273,20 +274,20 @@ public abstract class AbstractFish : LightSource
                 {
                     // Inform subclasses that the NPC went out of sight
                     NPCOutOfSight(lightSource.transform);
-                    int otherID = lightSource.GetComponent<AbstractFish>().GetID();
+                    string otherID = lightSource.GetComponent<AbstractFish>().GetID();
                     RemoveAction(otherID);
                 }
             }
             else if (lightSource.CompareTag("Player"))
             {
                 // Player id = -1
-                RemoveAction(-1);
+                RemoveAction("-1");
             }
         }
         if (lightObject.CompareTag("Flare"))
         {
             // Stop reacting to the flare 
-            RemoveAction(-2);
+            RemoveAction("-2");
         }
     }
 

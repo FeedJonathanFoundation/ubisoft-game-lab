@@ -29,7 +29,7 @@ public abstract class NPCActionable
     [System.NonSerialized]
     public int priority;
     [System.NonSerialized]
-    public int id;
+    public string id;
     public float strengthMultiplier;
     
     public bool overrideSteerableSpeed = false; // If true, the Steerable performing this action is given a new min/maxSpeed 
@@ -45,7 +45,7 @@ public abstract class NPCActionable
     public delegate void ActionCompleteHandler(NPCActionable completedAction);
     public event ActionCompleteHandler ActionComplete = delegate {};
     
-    public NPCActionable(int priority, int id)
+    public NPCActionable(int priority, string id)
     {
         this.priority = priority;
         this.id = id;
