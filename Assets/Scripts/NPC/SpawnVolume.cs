@@ -65,7 +65,11 @@ public class SpawnVolume : MonoBehaviour
     [Tooltip("Mass of largest fish.")]
     public int maxFishDifficulty;
 
-    private Neighbourhood neighbourhood;
+    [SerializeField]
+    [Tooltip("Max distance between player and fish before fish is disabled.")]
+    private float maxDistance = 60f;
+
+    private Transform player;
 
     /// <summary>
     /// Tracks number of fish spawned.
@@ -90,11 +94,7 @@ public class SpawnVolume : MonoBehaviour
         fishes = new List<GameObject>();
         fishCount = 0;
 
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null)
-        {
-            neighbourhood = player.GetComponentInChildren<Neighbourhood>();
-        }
+        player = GameObject.FindWithTag("Player").transform;
     }
     
     void Update()
@@ -107,6 +107,23 @@ public class SpawnVolume : MonoBehaviour
         {
             Initialize();
         }
+        else if (fishes.Count > 0 && initialized)
+        {
+            for (int i = 0; i < fishes.Count; i++)
+            {
+                if (fishes[i] != null)
+                {
+                    float distance = Vector3.Distance(fishes[i].transform.position, player.position);
+                    if (distance > maxDistance)
+                    {
+                        Debug.Log("Distance " + distance);
+                        Debug.Log("Max Distance " + maxDistance);
+                        fishes[i].SetActive(false);
+                        fishes.Remove(fishes[i]);
+                    }
+                }
+            }
+        }
     }
     
     void Initialize()
@@ -118,7 +135,6 @@ public class SpawnVolume : MonoBehaviour
         {
             InvokeRepeating ("Spawn", spawnTime, spawnTime);
         }
-        
         initialized = true;
     }
 
@@ -265,37 +281,14 @@ public class SpawnVolume : MonoBehaviour
     {
         if (other.gameObject.CompareTag("SpawnSignal"))
         {
-            bool delete = false;
-            for (int i = fishes.Count - 1; i > -1; i--)
-            {
-                if (fishes[i] != null)
-                {
-                    delete = true;
-                    Debug.Log("STELLA:" + neighbourhood);
-                    if (neighbourhood != null)
-                    {
-                        for (int j = 0; j < neighbourhood.NeighbourCount; j++)
-                        {
-                            GameObject neighbourObject = neighbourhood.GetNeighbour(j);
-                            Debug.Log("NEIGHBOUR:" + neighbourObject);
-                            if (neighbourObject == null) { continue; }
-                            if (fishes[i] == neighbourObject)
-                            {
-                                delete = false;
-                            }
-                        }
-                    }
-                    if (delete)
-                    {
-                        fishes[i].SetActive(false);
-                        fishes.Remove(fishes[i]);
-                    }
-
-                }
-            }
-            initialized = false;
-            disabled = true;
+            Reset();
         }
+    }
+    
+    void Reset()
+    {
+        initialized = false;
+            disabled = true;
     }
     
     public float GetSpawnVolumeRadius()
