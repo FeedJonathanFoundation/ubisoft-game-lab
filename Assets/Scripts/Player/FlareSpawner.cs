@@ -34,20 +34,20 @@ public class FlareSpawner : MonoBehaviour
     private new Rigidbody rigidbody;
 	
 	void Start() 
-	{
+    {
         timer = cooldownTime;
         lightSource = GetComponent<LightSource>();
         rigidbody = GetComponent<Rigidbody>();
     }
 
 	void Update() 
-	{
+    {
         if((timer += Time.deltaTime) >= cooldownTime)
         {
             if (Input.GetButtonDown("UseFlare"))
             {
-                float cost = flareEnergyCost;
-                buffer = flareEnergyCost;
+                float cost = flareEnergyCost * flareCostPercentage;
+                buffer = flareEnergyCost * flareCostPercentage;
 
                 if(lightSource.LightEnergy.CurrentEnergy > (cost + buffer))
                 {
@@ -59,5 +59,5 @@ public class FlareSpawner : MonoBehaviour
                 }
             }
         }
-	}
+    }
 }
