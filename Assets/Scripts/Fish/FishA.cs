@@ -19,9 +19,6 @@ public class FishA : AbstractFish
     protected override void Awake()
     {        
         base.Awake(); 
-        
-        flockingBehaviour.SetPriority(0);   // Lowest priority
-        flockingBehaviour.SetID("asdasd");
                                       
         playerBehaviour.SetPriority(1);     // Medium priority
         playerBehaviour.SetID("-1");
@@ -34,6 +31,8 @@ public class FishA : AbstractFish
     
     public override void Move() 
     {
+        flockingBehaviour.SetPriority(0);   // Lowest priority
+        flockingBehaviour.SetID(this.LightSourceID);
         AddAction(flockingBehaviour);
     }
     

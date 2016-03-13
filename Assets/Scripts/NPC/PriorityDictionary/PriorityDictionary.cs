@@ -70,7 +70,6 @@ public class PriorityDictionary
     
     public void InsertLowPriority(NPCActionable action)
     {
-        Debug.Log(action.id);
         if (!lowPriorityAction.ContainsKey(action.id))
         {
             lowPriorityAction.Add(action.id, action);

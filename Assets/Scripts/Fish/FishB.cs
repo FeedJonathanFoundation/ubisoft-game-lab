@@ -27,9 +27,6 @@ public class FishB : AbstractFish
         // call parent LightSource Awake() first
         base.Awake(); 
         
-        flockingBehaviour.SetPriority(0);   // Lowest priority
-        flockingBehaviour.SetID(GetID());
-        
         otherFishBehaviour.SetPriority(1);  // Medium priority
         otherFishBehaviour.Init();
         
@@ -44,6 +41,8 @@ public class FishB : AbstractFish
     
     public override void Move() 
     {
+        flockingBehaviour.SetPriority(0);   // Lowest priority
+        flockingBehaviour.SetID(GetID());
         AddAction(flockingBehaviour);
     }
     
