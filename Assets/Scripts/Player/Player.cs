@@ -75,7 +75,7 @@ public class Player : LightSource
     /// <summary>
     /// Initializes Player components   
     /// </summary>
-    public override void Awake()
+    protected override void Awake()
     {
         // Call parent LightSource Awake() first
         base.Awake();
@@ -99,7 +99,7 @@ public class Player : LightSource
     /// Listens for player states such as movement, light controls and death
     /// Called once per frame
     /// </summary>
-    public override void Update()
+    protected override void Update()
     {
         base.Update(); 
                       

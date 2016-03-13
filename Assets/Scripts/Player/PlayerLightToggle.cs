@@ -1,22 +1,27 @@
 using UnityEngine;
-using System.Collections;
 
+/// <summary>
+/// PlayerLightToggle class is responsible for behaviour related to player lights.  
+///
+/// @author - Simon T.
+/// @author - Alex I.
+/// @version - 1.0.0
+///
+/// </summary>
 public class PlayerLightToggle
 {
-    /// <summary>
-    /// If true, the lights that are children of this object are enabled.
-    /// </summary>
+    // If true, the lights that are children of this object are enabled.
 	private bool lightsEnabled;
     private GameObject lightsToToggle;
-    private float timerLostOfLight; //timer for lost of light
+    private float timerLostOfLight; 
     private LightSource lightSource;
     private float minimalEnergyRestriction;
 
-    public PlayerLightToggle(GameObject lightsToToggle, bool defaultLightStatus,LightSource lightSourceRef, float minimalEnergy)
-    {
-        this.lightsEnabled = defaultLightStatus;
+    public PlayerLightToggle(GameObject lightsToToggle, bool defaultLightStatus, LightSource lightSource, float minimalEnergy)
+    {        
         this.lightsToToggle = lightsToToggle;
-        this.lightSource = lightSourceRef; //initiate lightSource
+        this.lightsEnabled = defaultLightStatus;
+        this.lightSource = lightSource;                
         this.minimalEnergyRestriction = minimalEnergy;
         ToggleLights();
     }
@@ -48,15 +53,12 @@ public class PlayerLightToggle
             }
         }
     }
-    
+
     /// <summary>
-    /// If true, the lights are enabled and the GameObject is visible.
+    /// If true, the lights are enabled and the GameObject is visible
     /// </summary>
     public bool LightsEnabled
     {
-        get
-        { 
-            return this.lightsEnabled;
-        }
+        get { return this.lightsEnabled; }
     }
 }

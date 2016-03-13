@@ -38,9 +38,9 @@ public class LightSource : MonoBehaviour
     
     private LightEnergy lightEnergy;
 
-    public virtual void Awake() {}
+    protected virtual void Awake() {}
     
-    public virtual void Update()
+    protected virtual void Update()
     {
         // Cycle through each absorbable light source being touched by this GameObject
         for (int i = 0; i < absorbableLightDetector.NeighbourCount; i++)
@@ -67,9 +67,7 @@ public class LightSource : MonoBehaviour
     /// Called the instant the light depletes to zero. 
     /// Called from the LightEnergy.LightDepleted event.
     /// </summary>
-    protected virtual void OnLightDepleted()
-    {
-    }
+    protected virtual void OnLightDepleted() {}
    
     public virtual void OnEnable()
     {

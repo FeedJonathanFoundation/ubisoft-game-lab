@@ -3,16 +3,17 @@ using UnityEngine.SceneManagement;
 
 public class Checkpoint : LightSource
 {
+    [SerializeField]
     [Tooltip("If set to true, this checkpoint will teleport player to the next scene")]
-    public bool changeScene = false;
+    private bool changeScene = false;
     
-    public override void Awake()
+    protected override void Awake()
     {       
         base.Awake(); // call parent LightSource Awake() first
         this.InfiniteEnergy = true; // override default LightSource value
     }
 
-    void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {

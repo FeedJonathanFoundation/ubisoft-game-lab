@@ -16,7 +16,7 @@ public class FishA : AbstractFish
     [SerializeField]
     private SeekFlare flareBehaviour;
     
-    public override void Awake()
+    protected override void Awake()
     {
         // call parent LightSource Awake() first
         base.Awake(); 
