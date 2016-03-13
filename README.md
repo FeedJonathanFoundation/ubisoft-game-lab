@@ -15,6 +15,8 @@ FJF's entry for the Ubisoft 2016 Game Lab Competition.
 
 **Artists:** Roxanne Sirois, Tristan Mirza, Carlos Sulpizio
 
+**Sound Designers:** Mark Latimer, Jeremy Segal
+
 ------------------
 
 ## Dev Repo Setup:
