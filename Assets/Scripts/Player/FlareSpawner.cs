@@ -34,8 +34,8 @@ public class FlareSpawner : MonoBehaviour
     private new Rigidbody rigidbody;
 	
 
-    void Start() 
-	{
+    void Start()
+    {
         timer = cooldownTime;
         lightSource = GetComponent<LightSource>();
         rigidbody = GetComponent<Rigidbody>();
