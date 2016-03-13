@@ -13,24 +13,19 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Steerable))]
 public abstract class AbstractFish : LightSource
 {
-    protected Steerable steerable;
-
-    protected static int globalId = 1;
-
-    // Fish object's unique ID
-    private int myId;
-
+   
     [Tooltip("Detects lights within the fish's line of sight")]
     [SerializeField]
     private Neighbourhood lightDetector;
 
-    // Holds the steering behaviors of this fish
-    private PriorityDictionary actions;
-
     [Tooltip("If true, the fish will not react to fish of the same type, except in the default flocking behaviour")]
     [SerializeField]
     private bool ignoreFishOfSameType = false;
-
+        
+    // Holds the steering behaviors of this fish
+    private PriorityDictionary actions;
+    protected Steerable steerable;
+    
     /// <summary>
     /// Initializes the fish object
     /// </summary>
@@ -40,14 +35,11 @@ public abstract class AbstractFish : LightSource
         base.Awake();
 
         // Initialize action priority dictionary
-        actions = new PriorityDictionary();
-        Move();
-
-        // Assign the next available ID to this fish
-        myId = globalId++;
+        this.actions = new PriorityDictionary();
+        this.Move();
 
         // Cache the 'Steerable' component attached to the GameObject performing this action
-        steerable = transform.GetComponent<Steerable>();
+        this.steerable = transform.GetComponent<Steerable>();
     }
 
     /// <summary>
@@ -143,9 +135,9 @@ public abstract class AbstractFish : LightSource
     /// <summary>
     /// Returns the fish object's unique ID
     /// </summary>
-    public int GetID()
+    public string GetID()
     {
-        return myId;
+        return this.LightSourceID;
     }
 
     /// <summary>
@@ -187,7 +179,7 @@ public abstract class AbstractFish : LightSource
     /// Removes an action from the list of actions to perform
     /// using an ID
     /// </summary>
-    protected void RemoveAction(int id)
+    protected void RemoveAction(string id)
     {
         RemoveAction(actions.GetAction(id));
     }
@@ -273,20 +265,20 @@ public abstract class AbstractFish : LightSource
                 {
                     // Inform subclasses that the NPC went out of sight
                     NPCOutOfSight(lightSource.transform);
-                    int otherID = lightSource.GetComponent<AbstractFish>().GetID();
+                    string otherID = lightSource.GetComponent<AbstractFish>().GetID();
                     RemoveAction(otherID);
                 }
             }
             else if (lightSource.CompareTag("Player"))
             {
                 // Player id = -1
-                RemoveAction(-1);
+                RemoveAction("-1");
             }
         }
         if (lightObject.CompareTag("Flare"))
         {
             // Stop reacting to the flare 
-            RemoveAction(-2);
+            RemoveAction("-2");
         }
     }
 

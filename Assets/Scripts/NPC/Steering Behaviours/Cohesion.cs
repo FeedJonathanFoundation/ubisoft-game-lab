@@ -4,7 +4,7 @@ using System.Collections;
 [System.Serializable]
 public class Cohesion : NPCActionable
 {       
-    public Cohesion(int priority, int id) : base(priority, id)
+    public Cohesion(int priority, string id) : base(priority, id)
     {
     }
     

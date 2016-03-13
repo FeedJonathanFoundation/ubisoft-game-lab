@@ -18,7 +18,7 @@ public class SeekFlare : NPCActionable
     [SerializeField]
     private WallAvoidance wallAvoidance;
     
-    public SeekFlare(int priority, int id, Transform targetFlare) : base(priority, id)
+    public SeekFlare(int priority, string id, Transform targetFlare) : base(priority, id)
     {
         this.targetFlare = targetFlare;
         
@@ -42,7 +42,7 @@ public class SeekFlare : NPCActionable
         wallAvoidance.priority = priority;
     }
     
-    public void SetID(int id)
+    public void SetID(string id)
     {
         this.id = id;
         

@@ -17,24 +17,22 @@ public class FishA : AbstractFish
     private SeekFlare flareBehaviour;
     
     protected override void Awake()
-    {
-        // call parent LightSource Awake() first
+    {        
         base.Awake(); 
-        
-        flockingBehaviour.SetPriority(0);   // Lowest priority
-        flockingBehaviour.SetID(GetID());
-        
+                                      
         playerBehaviour.SetPriority(1);     // Medium priority
-        playerBehaviour.SetID(-1);
+        playerBehaviour.SetID("-1");
         playerBehaviour.Init();
         
         flareBehaviour.SetPriority(2);      // Highest priority
-        flareBehaviour.SetID(-2);
+        flareBehaviour.SetID("-2");
         flareBehaviour.Init();
     }
     
     public override void Move() 
     {
+        flockingBehaviour.SetPriority(0);   // Lowest priority
+        flockingBehaviour.SetID(this.LightSourceID);
         AddAction(flockingBehaviour);
     }
     

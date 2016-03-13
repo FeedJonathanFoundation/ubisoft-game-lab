@@ -15,7 +15,7 @@ public class Arrival : NPCActionable
     /// </summary>
     public float slowingRadius;
     
-    public Arrival(int priority, int id, Transform targetTransform) : base(priority, id)
+    public Arrival(int priority, string id, Transform targetTransform) : base(priority, id)
     {
         this.targetTransform = targetTransform;
     }
