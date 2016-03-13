@@ -6,7 +6,7 @@ public class MoveClosestWaypoint : NPCActionable
 {
     [Tooltip("The list of waypoints that the big fish can go when the player is in a safe zone")]
     public GameObject waypointList;
-    [Tooltip("Distance that big fish slows down before getting to waypoint")]
+    [Tooltip("Distance at which then big fish slows down before getting to waypoint")]
     public float slowingRadius;
     private Transform bigFish;
 
@@ -58,6 +58,7 @@ public class MoveClosestWaypoint : NPCActionable
             steerable.MaxForce = maxForce;
         }
         
+        //checks if the boss fish is at the waypoint, if so then no need to move to waypoint anymore
         if((Vector2)bigFish.GetComponent<Rigidbody>().velocity == Vector2.zero)
         {
             ActionCompleted();

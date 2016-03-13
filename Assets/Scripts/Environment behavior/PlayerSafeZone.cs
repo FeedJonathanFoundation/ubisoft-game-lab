@@ -5,7 +5,7 @@ public class PlayerSafeZone : MonoBehaviour
 {
     void OnTriggerEnter(Collider col) 
     {
-        if(col.tag == "Player") // have to put this because LightAbsorber has a player tag also...why does it have a player tag?
+        if(col.tag == "Player") // have to put this because LightAbsorber has a player tag
         {
             Player player = col.GetComponent<Player>();
             if(player)
@@ -18,7 +18,7 @@ public class PlayerSafeZone : MonoBehaviour
     
     void OnTriggerExit(Collider col) 
     {
-        if(col.tag == "Player")
+        if(col.tag == "Player") // have to put this because LightAbsorber has a player tag
         {
             Player player = col.GetComponent<Player>();
             if(player)

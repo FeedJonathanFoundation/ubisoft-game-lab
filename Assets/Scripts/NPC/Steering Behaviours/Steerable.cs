@@ -87,11 +87,16 @@ public class Steerable : MonoBehaviour
     //private Vector2 dampVelocity = Vector2.zero;
     //public float timeToReachDesiredVelocity = 0.5f;
     
+    //waypoint variables
+    private Vector2 waypointDesiredVelocity;
+    public bool hasWaypoint = false;
+    
     void Awake()
     {
         // Cache this GameObject's Transform component
         transform = GetComponent<Transform>();
         rigidbody = GetComponent<Rigidbody>();
+        waypointDesiredVelocity = Vector2.zero; //for waypoints for boss fish
     }
 
     // NOTE: This method is called after the physics update. Therefore, the ApplyForces() has already been called by the time this is called.
@@ -624,7 +629,7 @@ public class Steerable : MonoBehaviour
 
     }
     
-     public void AddMoveWaypointForce(GameObject wpList, Transform bigFish, float slowingRadius, float multiplier)
+    public void AddMoveWaypointForce(GameObject wpList, Transform bigFish, float slowingRadius, float multiplier)
     {
         steeringForce += MoveWaypointForce (wpList, bigFish, slowingRadius) * multiplier;
     }
@@ -637,22 +642,29 @@ public class Steerable : MonoBehaviour
         float closestDistance = 100.00f;
         Vector2 desiredVelocity = Vector2.zero;
         
-        foreach(Transform child in wpList.transform)
+        //checks all the checkpoints and saves the closest one
+        if(!hasWaypoint)
         {
-            float distanceToTarget = Vector2.Distance((Vector2)child.position, (Vector2)bigFish.position);
-            if(closestDistance > distanceToTarget)
+            foreach(Transform child in wpList.transform)
             {
-                closestDistance = distanceToTarget;
-                desiredVelocity = ((Vector2)child.position - (Vector2)bigFish.position).normalized;
+                float distanceToTarget = Vector2.Distance((Vector2)child.position, (Vector2)bigFish.position);
+                if(closestDistance > distanceToTarget)
+                {
+                    closestDistance = distanceToTarget;
+                    waypointDesiredVelocity = ((Vector2)child.position - (Vector2)bigFish.position).normalized;
+                }
             }
+            hasWaypoint = !hasWaypoint;
         }
+            
 
         // Calculate the velocity at which this object should move to reach his target
-        desiredVelocity *= maxSpeed;
+        desiredVelocity = waypointDesiredVelocity * maxSpeed;
         
         if(closestDistance <= slowingRadius)
         {
             desiredVelocity = Vector2.zero;
+            hasWaypoint = !hasWaypoint;
         }
 
         // Compute the steering force applied to make this object seek his target

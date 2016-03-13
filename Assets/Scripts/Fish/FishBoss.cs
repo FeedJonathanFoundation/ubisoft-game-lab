@@ -25,15 +25,15 @@ public class FishBoss : AbstractFish
         // call parent LightSource Awake() first
         base.Awake();
         
-        followPlayer.SetPriority(2);     // High priority
+        followPlayer.SetPriority(2);                    // High priority
         followPlayer.SetID(-1);
         followPlayer.Init();
         
-        flareBehaviour.SetPriority(3);      // Very high priority
+        flareBehaviour.SetPriority(3);                  // Very high priority
         flareBehaviour.SetID(-2);
         flareBehaviour.Init();
         
-        moveToWaypoint.SetBigFish(this.transform);
+        moveToWaypoint.SetBigFish(this.transform);      //lowest priority
         moveToWaypoint.SetPriority(0);
         moveToWaypoint.SetID(-3);
         
@@ -43,13 +43,12 @@ public class FishBoss : AbstractFish
     public override void Update()
     {
         base.Update();
-        //only for the boss ai, always seeks player if is isn't in a safe zone
         BossReactToPlayer();
-        
     }
     
     public void BossReactToPlayer()
     {
+        //only for the boss ai, always seeks player if it isn't in a safe zone
         if (!player.GetComponent<Player>().isSafe)
         {
             followPlayer.TargetLightSource = player.GetComponent<LightSource>();
@@ -60,10 +59,8 @@ public class FishBoss : AbstractFish
     public override void Move() 
     {
         AddAction(moveToWaypoint);
-        //use waypoints??? wtf new npc actionnable subclass look at flocking thingy
     }
     
-    // Called every frame when the fish can see the player
     public override void ReactToPlayer(Transform player)
     {
     }
