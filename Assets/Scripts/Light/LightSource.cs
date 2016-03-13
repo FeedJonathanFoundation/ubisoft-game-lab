@@ -111,16 +111,15 @@ public class LightSource : MonoBehaviour
     }
     
     private string GenerateID(string objectName)
-    {
-        return Guid.NewGuid().ToString();
-        // if (objectName != null)
-        // {
-        //     return string.Format("{0}_{1:N}", objectName, Guid.NewGuid());    
-        // }
-        // else 
-        // {
-        //     return Guid.NewGuid().ToString();
-        // }        
+    {        
+        if (objectName != null)
+        {
+            return string.Format("{0}_{1:N}", objectName, Guid.NewGuid());    
+        }
+        else 
+        {
+            return Guid.NewGuid().ToString();
+        }        
     }
      
      
