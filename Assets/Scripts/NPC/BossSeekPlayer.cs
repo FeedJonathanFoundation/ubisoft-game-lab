@@ -7,8 +7,10 @@ public class BossSeekPlayer : NPCActionable
     /// <summary>
 	/// The light that this NPC can see
 	/// </summary>
+    [Tooltip("Distance at which then big fish slows down before getting to player inside of a safe zone")]
+    public float slowingRadius;
     private LightSource targetLightSource;
-
+    private bool bossAtSafeZone;
     /// <summary>
     /// The seek action performed when the NPC has more light than the target light source.
     /// </summary>
@@ -18,10 +20,10 @@ public class BossSeekPlayer : NPCActionable
     [SerializeField]
     private WallAvoidance wallAvoidance;
     
-    public BossSeekPlayer(int priority, int id, LightSource targetLightSource) : base(priority, id)
+    public BossSeekPlayer(int priority, int id, LightSource targetLightSource, bool bossSafe) : base(priority, id)
     {
         this.targetLightSource = targetLightSource;
-        
+        this.bossAtSafeZone = bossSafe;
         SetPriority(priority);
         SetID(id);
     }
@@ -32,6 +34,11 @@ public class BossSeekPlayer : NPCActionable
         // Call ChildActionComplete() when either the seek or flee actions are completed.
         seekPlayer.ActionComplete += ChildActionComplete;
         wallAvoidance.ActionComplete += ChildActionComplete;
+    }
+    
+    public void SetBossSafeState(bool bossSafe)
+    {
+        this.bossAtSafeZone = bossSafe;
     }
     
     public void SetPriority(int priority)

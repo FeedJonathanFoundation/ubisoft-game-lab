@@ -18,7 +18,6 @@ public class FishBoss : AbstractFish
     [Tooltip("Then action performed when the player is in a safe zone")]
     [SerializeField]
     private MoveClosestWaypoint moveToWaypoint;
-    public bool atSafeZone;
     
     public override void Awake()
     {
@@ -36,8 +35,6 @@ public class FishBoss : AbstractFish
         moveToWaypoint.SetBigFish(this.transform);      //lowest priority
         moveToWaypoint.SetPriority(0);
         moveToWaypoint.SetID(-3);
-        
-        atSafeZone = false;
     }
     
     public override void Update()
