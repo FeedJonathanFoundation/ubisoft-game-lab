@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿    using UnityEngine;
 using System.Collections;
 
 public class BossSafeZone : MonoBehaviour 
@@ -11,7 +11,7 @@ public class BossSafeZone : MonoBehaviour
         if(col.tag == "Fish") 
         {
             FishBoss fishBoss = col.GetComponent<FishBoss>();
-            fishBoss.atSafeZone = true;
+            //fishBoss.atSafeZone = true;
         }
     }
 }
