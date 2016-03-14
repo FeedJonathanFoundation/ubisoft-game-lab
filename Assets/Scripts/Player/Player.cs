@@ -71,6 +71,7 @@ public class Player : LightSource
     private new Rigidbody rigidbody;    
     private int currentLevel;
     private bool isDead;
+    public bool isSafe; //for boss AI dont touch plz
     
     /// <summary>
     /// Initializes Player components   
@@ -80,6 +81,7 @@ public class Player : LightSource
         // Call parent LightSource Awake() first
         base.Awake();
         
+        this.isSafe = false;
         this.isDead = false;
         this.currentLevel = SceneManager.GetActiveScene().buildIndex;        
         this.transform = GetComponent<Transform>();
