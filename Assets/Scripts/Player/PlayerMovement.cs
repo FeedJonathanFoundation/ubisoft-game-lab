@@ -48,7 +48,18 @@ public class PlayerMovement
     /// <summary>
     /// Public constructor
     /// </summary>
-    public PlayerMovement(Transform massEjectionTransform, GameObject lightBallPrefab, float thrustForce, float changeDirectionBoost, float thrustEnergyCost, float brakeDrag, Transform transform, Rigidbody rigidbody, LightEnergy lightEnergy, GameObject jetFuelEffect)
+    public PlayerMovement(
+        Transform massEjectionTransform, 
+        GameObject lightBallPrefab, 
+        float thrustForce, 
+        float changeDirectionBoost, 
+        float thrustEnergyCost, 
+        float brakeDrag, 
+        Transform transform, 
+        Rigidbody rigidbody, 
+        LightEnergy lightEnergy, 
+        GameObject jetFuelEffect
+    )
     {
         this.massEjectionTransform = massEjectionTransform;
         this.lightBallPrefab = lightBallPrefab;
