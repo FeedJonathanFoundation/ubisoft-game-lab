@@ -14,7 +14,7 @@ public class Player : LightSource
 {
     [Header("Player Movement")]
     [SerializeField]
-    [Tooltip("The position at which the character ejects mass.")]
+    [Tooltip("The position at which the character ejects mass")]
     private Transform massEjectionTransform;    
     
     [SerializeField]            
@@ -26,7 +26,7 @@ public class Player : LightSource
     private float maxSpeed = 100;
 
     [SerializeField]
-    [Tooltip("The amount of force applied on the player when ejecting one piece of mass.")]
+    [Tooltip("The amount of force applied on the player when ejecting one piece of mass")]
     private float thrustForce = 0;
 
     [SerializeField]
@@ -34,7 +34,7 @@ public class Player : LightSource
     private float changeDirectionBoost = 0;
 
     [SerializeField]
-    [Tooltip("The amount of light energy spent when ejecting one piece of mass.")]
+    [Tooltip("The amount of light energy spent when ejecting one piece of mass")]
     private float thrustEnergyCost = 1;
 
     [SerializeField]
@@ -51,7 +51,7 @@ public class Player : LightSource
 
     [Header("Player Lights")]
     [SerializeField]
-    [Tooltip("If true, the lights are enabled on scene start.")]
+    [Tooltip("If true, the lights are enabled on scene start")]
     private bool defaultLightStatus = true;
     
     [SerializeField]
@@ -67,12 +67,12 @@ public class Player : LightSource
     private float invulnerabilityDrag = 2;
 
     [SerializeField]
-    [Tooltip("Time interval for lost of lights while lights are on")]
-    private float lostOfLightTime = 0;
+    [Tooltip("Time interval for energy depletion while lights are on")]
+    private float timeToDeplete = 0;
 
     [SerializeField]
     [Tooltip("Amount of light lost while lights are turned on")]
-    private float energyCostLightToggle = 0;
+    private float lightToggleEnergyCost = 0;
 
     [SerializeField]
     [Tooltip("Energy needed to activate light and that light will turn off if reached")]
@@ -85,8 +85,7 @@ public class Player : LightSource
     [SerializeField]
     [Tooltip("If true, checkpoints are not used and user is spawned at the initial position")]
     private bool disableCheckpoints = true;
-        
-        
+                
     private PlayerMovement movement;
     private PlayerLightToggle lightToggle;
     private float lastTimeHit = -100;  // The last time player was hit by an enemy
@@ -221,16 +220,17 @@ public class Player : LightSource
     }
 
     /// <summary>
-    /// Listens for lights button clicks
+    /// Listens for Lights button click
+    /// When Lights button is clicked toggle the lights ON or OFF
     /// </summary>
     private void LightControl()
     {
-        if (lightToggle != null)
+        if (this.lightToggle != null)
         {
             if (Input.GetButtonDown("LightToggle") && minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
             {
-                lightToggle.ToggleLights();
-                if (lightToggle.LightsEnabled)
+                this.lightToggle.ToggleLights();
+                if (this.lightToggle.LightsEnabled)
                 {
                     this.ChangeProbeColor(new Color(1f, lightToggleTime, 0f, 1f));
                 }
@@ -239,7 +239,8 @@ public class Player : LightSource
                     this.ChangeProbeColor(Color.black);
                 }                                                 
             }
-            lightToggle.LostOfLight(lostOfLightTime, energyCostLightToggle);   
+
+            this.lightToggle.DepleteLight(timeToDeplete, lightToggleEnergyCost); 
         }
     }
 
@@ -417,5 +418,5 @@ public class Player : LightSource
             Debug.LogError("Could not find LightsToToggle object!");
         }
     }
- 
 }
+
