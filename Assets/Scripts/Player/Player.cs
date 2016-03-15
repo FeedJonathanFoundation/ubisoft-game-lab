@@ -92,27 +92,31 @@ public class Player : LightSource
     private float defaultDrag;  // Default rigidbody drag
     private float previousThrustAxis; // Previous value of Input.GetAxis("ThrustAxis")
     private bool isDead; // determines is current player is dead
+    public bool isSafe; // used for boss AI
     private bool deathParticlesPlayed;
     private MaterialExtensions materials;
     private new Transform transform;
     private new Rigidbody rigidbody;    
-    private int currentLevel;
-
-    // Use this for initialization
+    private int currentLevel;   
+        
+    /// <summary>
+    /// Initializes Player components   
+    /// </summary>
     protected override void Awake()
     {
        base.Awake(); // call parent LightSource Awake() first
        
-       transform = GetComponent<Transform>();
-       rigidbody = GetComponent<Rigidbody>();
+       this.transform = GetComponent<Transform>();
+       this.rigidbody = GetComponent<Rigidbody>();
        
-       movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
-       lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
+       this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
+       this.lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
        this.materials = new MaterialExtensions();
         
        this.ValidateInputs(); 
        this.defaultDrag = Rigidbody.drag;
        this.isDead = false;
+       this.isSafe = false;
        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
        DontDestroyOnLoad(this.gameObject);
        
