@@ -11,7 +11,10 @@ using System.Collections.Generic;
 /// </summary>
 [RequireComponent(typeof(Steerable))]
 public abstract class AbstractFish : LightSource
-{   
+{
+    [Tooltip("Amount of light absorbed from the player upon collision")]
+    public float damageInflicted = 4;
+    
     [Tooltip("Detects lights within the fish's line of sight")]
     [SerializeField]
     private Neighbourhood lightDetector;

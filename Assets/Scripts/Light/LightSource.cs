@@ -19,7 +19,7 @@ public class LightSource : MonoBehaviour
     [Header("Light Source")]
     [SerializeField]
     [Tooltip("If true, this GameObject will absorb other GameObjects with a LightSource component")]
-    private bool willAbsorb = false;
+    private bool canAbsorb = false;
     
     [SerializeField]
     [Tooltip("If true, the player will always absorb this GameObject, even if it has higher light")]
@@ -39,10 +39,14 @@ public class LightSource : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Detects absorbable lights that are in contact with this light source" )]
-    private Neighbourhood absorbableLightDetector;
-    
+    public Neighbourhood absorbableLightDetector;
+
+    private new Transform transform;
+    private new Rigidbody rigidbody;
+    // DO NOT ACCESS DIRECTLY. Use LightEnergy property instead.
     private LightEnergy lightEnergy;
     private string lightSourceId;
+
 
     /// <summary>
     /// Awake is called when the script instance is being loaded
@@ -52,8 +56,25 @@ public class LightSource : MonoBehaviour
     {
         // Generates a unique id prefixed by object name
         this.lightSourceId = GenerateID(this.name);
+        this.rigidbody = GetComponent<Rigidbody>();        
     }
-        
+    
+    /// <summary>
+    /// Subscribe to OnLightDepleted event
+    /// </summary>
+    public virtual void OnEnable()
+    {
+        this.LightEnergy.LightDepleted += OnLightDepleted;
+    }
+    
+    /// <summary>
+    /// Unsubscribe from OnLightDepleted event
+    /// </summary>
+    public virtual void OnDisable()
+    {        
+        this.LightEnergy.LightDepleted -= OnLightDepleted;
+    }
+
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled
     /// <see cref="Unity Documentation">
@@ -70,15 +91,71 @@ public class LightSource : MonoBehaviour
             if (otherLightSource == null) { continue; }
             
             // If this GameObject can absorb the touched light source, 
-            // transfer light energy from the other light source to this one
-            if (WillAbsorb(otherLightSource))
+            // Transfer light energy from the other light source to this one
+            if (CanAbsorb(otherLightSource))
             {
                 LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
-                float lightToAbsorb = absorptionRate * Time.deltaTime; 
+
+                // Calculate the amount of light to absorb from the other light source
+                float lightToAbsorb = absorptionRate * Time.deltaTime;
+                
+                // If the player was hit
+                if (otherLightSource is Player)
+                {
+                    if (this is AbstractFish)
+                    {
+                        // Absorb a certain amount of light from the player to the fish
+                        AbstractFish fish = (AbstractFish)this;
+                        lightToAbsorb = fish.damageInflicted;
+                    }
+                    
+                    Debug.Log("Absorb " + lightToAbsorb + " from player");
+                     
+                    // Knockback the player away from the enemy fish
+                    otherLightSource.Knockback(this);
+                }
+                
+                // Transfer light energy from the other light source to this one
                 float lightAbsorbed = lightEnergyToAbsorb.Deplete(lightToAbsorb);
                 lightEnergy.Add(lightAbsorbed);
             }
         }
+    }
+     
+    /// <summary>
+    /// Returns true if this LightSource can absorb the given LightSource
+    /// Calculated by comparing the amount of energy in LightEnergy property of LightSources 
+    /// </summary>
+    private bool CanAbsorb(LightSource otherLightSource)
+    {
+        if (!otherLightSource.CanBeAbsorbed()) { return false; }
+        
+        // If this light source has more energy than the other one, return true. This light source can absorb the given argument.
+        if (canAbsorb && LightEnergy.CurrentEnergy > otherLightSource.LightEnergy.CurrentEnergy) { return true; }
+                       
+        if (canAbsorb && !otherLightSource.canAbsorb) { return true; }        
+        
+        // The player can always absorb a light source with LightSource.playerWillAlwaysAbsorb set to true
+        if (this is Player && otherLightSource.playerWillAlwaysAbsorb) { return true; }
+
+        return false;        
+    }
+
+    
+    /// <summary>
+    /// Returns true if this light source be absorbed
+    /// A light source can always be absorbed by default 
+    /// </summary>
+    public virtual bool CanBeAbsorbed()
+    {        
+        return true;
+    }
+    
+    /// <summary>
+    /// Applies a knockback force going away from the enemy light source
+    /// </summary>
+    public virtual void Knockback(LightSource enemyLightSource)
+    {
     }
     
     /// <summary>
@@ -88,55 +165,38 @@ public class LightSource : MonoBehaviour
     /// Implemented in child classes
     /// </summary>
     protected virtual void OnLightDepleted() {}
-   
-    /// <summary>
-    /// Subscribe to OnLightDepleted event
-    /// </summary>
-    public virtual void OnEnable()
-    {
-        this.LightEnergy.LightDepleted += OnLightDepleted;
-    }
     
     /// <summary>
-    /// Unsubscribe from OnLightDepleted event
+    /// Cached transform component
     /// </summary>
-    public virtual void OnDisable()
+    public Transform Transform
     {
-        this.LightEnergy.LightDepleted -= OnLightDepleted;
-    }
-        
-    /// <summary>
-    /// Returns true if this LightSource can absorb the given LightSource
-    /// Calculated by comparing the amount of energy in LightEnergy property of LightSources 
-    /// </summary>
-    private bool WillAbsorb(LightSource otherLightSource)
-    {         
-        // If current light source has more energy, it will absorb other object 
-        if (this.LightEnergy.CurrentEnergy > otherLightSource.LightEnergy.CurrentEnergy)
+        get 
         {
-            return true;
-        }        
-        
-        // LightSource with willAbsorb true will absorb all object with willAbsorb set to false
-        if (willAbsorb && !otherLightSource.willAbsorb)
-        {
-            return true;
-        }        
-        
-        // Player can always absorb a light source with LightSource.playerWillAlwaysAbsorb set to true
-        if (this is Player && otherLightSource.playerWillAlwaysAbsorb)
-        {            
-            return true;
+            if (this.transform == null) { transform = GetComponent<Transform>(); }
+            return transform;
         }
-       
-       return false;       
+        set { this.transform = value; }
     }
     
+    /// <summary>
+    /// Cached rigidbody component
+    /// </summary>
+    public Rigidbody Rigidbody
+    {
+        get 
+        {
+            if (this.rigidbody == null) { rigidbody = GetComponent<Rigidbody>(); }
+            return rigidbody;
+        }
+        set { this.rigidbody = value; }
+    }
+        
     /// <summary>
     /// Generates an unique ID for each LightSource
     /// </summary>
     /// <param name="objectName">name of the object used to prefix generated ID</param>
-    /// <returns></returns>
+    /// <returns></returns>       
     private string GenerateID(string objectName)
     {        
         if (objectName != null)
@@ -149,9 +209,12 @@ public class LightSource : MonoBehaviour
         }        
     }
     
-    
+   
     /// PROPERTIES
       
+    /// <summary>
+    /// The LightEnergy component accessor controlling this object's amount of energy
+    /// </summary>
     public LightEnergy LightEnergy
     {
         get 
