@@ -34,6 +34,8 @@ public class PlayerLightToggle
         }
         // Update the status of the lights
         this.lightsEnabled = !this.lightsEnabled;
+        
+        Debug.Log("Toggle lights");
     }
 
     public void LostOfLight(float lostOfLightTimeInterval, float energyCostLightToggle)
