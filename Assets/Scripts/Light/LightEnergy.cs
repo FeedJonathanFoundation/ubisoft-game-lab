@@ -22,7 +22,7 @@ public class LightEnergy
     private float currentEnergy;
     private float defaultEnergy;
     private GameObject gameObject;    
-    private bool debugInfiniteLight = false;
+    private bool hasInfiniteEnergy = false;
 
     /// <summary>
     /// Light energy constructor initializes
@@ -33,13 +33,13 @@ public class LightEnergy
         this.defaultEnergy = defaultEnergy;
         this.currentEnergy = defaultEnergy;
         this.gameObject = gameObject;
-        this.debugInfiniteLight = debugInfiniteLight;
+        this.hasInfiniteEnergy = debugInfiniteLight;
         LightChanged(this.currentEnergy);
     }
 
     /// <summary>
     /// Adds the specified amount of light energy and
-    /// informs all all interested subscribers that the amount of energy
+    /// informs all interested subscribers that the amount of energy
     /// possessed by the game object has changed
     /// </summary>
     public void Add(float lightEnergy)
@@ -56,25 +56,25 @@ public class LightEnergy
     }
 
     /// <summary>
-    /// Depletes the desired amount of light energy from this component
-    /// if there is enough existing energy to remove
-    /// Returns the actual amount of energy removed.
+    /// Depletes the desired amount of light energy from the component
+    /// 
+    /// Returns the amount of energy removed.
     /// </summary>
-    public float Deplete(float lightToRemove)
+    /// <param name="energyToRemove">amount of energy to remove</param>
+    /// <returns>float - amount of energy removed</returns>
+    public float Deplete(float energyToRemove)
     {
-        if (debugInfiniteLight)
+        if (hasInfiniteEnergy) { return 0; }
+        
+        float energyRemoved = energyToRemove;
+        
+        if (energyToRemove > this.currentEnergy)
         {
-            return lightToRemove;
-        }
-
-        float actualLightRemoved = lightToRemove;
-        if (lightToRemove > this.currentEnergy)
-        {
-            actualLightRemoved = this.currentEnergy;
+            energyRemoved = this.currentEnergy;
         }
 
         // Remove the desired amount of light energy and clamp it to zero
-        this.currentEnergy -= lightToRemove;
+        this.currentEnergy -= energyToRemove;
         this.currentEnergy = Mathf.Max(0, this.currentEnergy);
 
         // Notify subscribers that the amount of energy in this light has changed
@@ -83,17 +83,16 @@ public class LightEnergy
         // If all light was depleted from this light source
         if (this.currentEnergy <= 0)
         {
+            // Notify subscribers that the amount of energy in this light is 0
             LightDepleted();
             if (this.gameObject.tag == "Player")
             {
                 Rigidbody rigidbody = gameObject.GetComponent<Rigidbody>();
-                if (rigidbody)
-                {
-                    rigidbody.drag = 10;                
-                }
+                if (rigidbody) { rigidbody.drag = 10; }
             }
         }
-        return actualLightRemoved;
+        
+        return energyRemoved;
     }
 
     /// <summary>
