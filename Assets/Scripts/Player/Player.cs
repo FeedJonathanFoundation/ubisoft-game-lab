@@ -14,7 +14,7 @@ public class Player : LightSource
 {
     [Header("Player Movement")]
     [SerializeField]
-    [Tooltip("The position at which the character ejects mass.")]
+    [Tooltip("The position at which the character ejects mass")]
     private Transform massEjectionTransform;
 
     [SerializeField]
@@ -26,7 +26,7 @@ public class Player : LightSource
     private float maxSpeed = 100;
 
     [SerializeField]
-    [Tooltip("The amount of force applied on the player when ejecting one piece of mass.")]
+    [Tooltip("The amount of force applied on the player when ejecting one piece of mass")]
     private float thrustForce = 0;
 
     [SerializeField]
@@ -34,7 +34,7 @@ public class Player : LightSource
     private float changeDirectionBoost = 0;
 
     [SerializeField]
-    [Tooltip("The amount of light energy spent when ejecting one piece of mass.")]
+    [Tooltip("The amount of light energy spent when ejecting one piece of mass")]
     private float thrustEnergyCost = 1;
 
     [SerializeField]
@@ -44,16 +44,16 @@ public class Player : LightSource
 
     [Header("Player Lights")]
     [SerializeField]
-    [Tooltip("If true, the lights are enabled on scene start.")]
+    [Tooltip("If true, the lights are enabled on scene start")]
     private bool defaultLightStatus = true;
 
     [SerializeField]
-    [Tooltip("Time interval for lost of lights while lights are on")]
-    private float lostOfLightTime = 0;
+    [Tooltip("Time interval for energy depletion while lights are on")]
+    private float timeToDeplete = 0;
 
     [SerializeField]
     [Tooltip("Amount of light lost while lights are turned on")]
-    private float energyCostLightToggle = 0;
+    private float lightToggleEnergyCost = 0;
 
     [SerializeField]
     [Tooltip("Energy needed to activate light and that light will turn off if reached")]
@@ -179,16 +179,17 @@ public class Player : LightSource
     }
 
     /// <summary>
-    /// Listens for lights button clicks
+    /// Listens for Lights button click
+    /// When Lights button is clicked toggle the lights ON or OFF
     /// </summary>
     private void LightControl()
     {
-        if (lightToggle != null)
+        if (this.lightToggle != null)
         {
             if (Input.GetButtonDown("LightToggle") && minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
             {
-                lightToggle.ToggleLights();
-                if (lightToggle.LightsEnabled)
+                this.lightToggle.ToggleLights();
+                if (this.lightToggle.LightsEnabled)
                 {
                     this.ChangeProbeColor(new Color(1f, 0.3103448f, 0f, 1f));
                 }
@@ -197,7 +198,7 @@ public class Player : LightSource
                     this.ChangeProbeColor(Color.black);
                 }
             }
-            lightToggle.LostOfLight(lostOfLightTime, energyCostLightToggle);
+            this.lightToggle.DepleteLight(timeToDeplete, lightToggleEnergyCost);
         }
     }
 
@@ -266,18 +267,18 @@ public class Player : LightSource
     /// Helper method to validate parameters passed through Unity EditorApplication
     /// In case of missing asset, shows debug error and halts the game
     /// </summary>
-    // private void ValidateInputs()
-    // {
-    //     if (massEjectionTransform == null || lightBallPrefab == null || jetFuelEffect == null)
-    //     {
-    //         UnityEditor.EditorApplication.isPlaying = false;
-    //         Debug.LogError("Missing prefab on Player object!");                
-    //     }
+    private void ValidateInputs()
+    {
+        if (massEjectionTransform == null || lightBallPrefab == null || jetFuelEffect == null)
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+            Debug.LogError("Missing prefab on Player object!");                
+        }
 
-    //     if (this.transform.Find("LightsToToggle").gameObject == null)
-    //     {
-    //         UnityEditor.EditorApplication.isPlaying = false;
-    //         Debug.LogError("Could not find LightsToToggle object!");
-    //     }
-    // }
+        if (this.transform.Find("LightsToToggle").gameObject == null)
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+            Debug.LogError("Could not find LightsToToggle object!");
+        }
+    }
 }
