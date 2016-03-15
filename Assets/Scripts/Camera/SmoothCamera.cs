@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class SmoothCamera : MonoBehaviour
 {
@@ -57,7 +56,7 @@ public class SmoothCamera : MonoBehaviour
             {
                 // Compute the target position of the camera
                 Vector3 distanceFromPlayer = target.position - transform.position;
-                targetPosition = target.position - (Vector3)distanceFromPlayer.SetMagnitude(deadzoneRadius);
+                targetPosition = target.position - distanceFromPlayer.SetMagnitude(deadzoneRadius);
             }
 
             // Move the camera to its target smoothly.
