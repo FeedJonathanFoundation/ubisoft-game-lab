@@ -87,7 +87,7 @@ public class Player : LightSource
         this.materials = new MaterialExtensions();
 
         // Comment this out when building:
-        this.ValidateInputs();   
+        // this.ValidateInputs();   
                     
         this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
         this.lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
@@ -266,18 +266,18 @@ public class Player : LightSource
     /// Helper method to validate parameters passed through Unity EditorApplication
     /// In case of missing asset, shows debug error and halts the game
     /// </summary>
-    private void ValidateInputs()
-    {
-        if (massEjectionTransform == null || lightBallPrefab == null || jetFuelEffect == null)
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
-            Debug.LogError("Missing prefab on Player object!");                
-        }
+    // private void ValidateInputs()
+    // {
+    //     if (massEjectionTransform == null || lightBallPrefab == null || jetFuelEffect == null)
+    //     {
+    //         UnityEditor.EditorApplication.isPlaying = false;
+    //         Debug.LogError("Missing prefab on Player object!");                
+    //     }
 
-        if (this.transform.Find("LightsToToggle").gameObject == null)
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
-            Debug.LogError("Could not find LightsToToggle object!");
-        }
-    }
+    //     if (this.transform.Find("LightsToToggle").gameObject == null)
+    //     {
+    //         UnityEditor.EditorApplication.isPlaying = false;
+    //         Debug.LogError("Could not find LightsToToggle object!");
+    //     }
+    // }
 }
