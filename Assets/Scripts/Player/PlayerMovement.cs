@@ -99,7 +99,8 @@ public class PlayerMovement
         foreach (ParticleSystem particles in jetFuelEffect.GetComponentsInChildren<ParticleSystem>())
         {
             particles.Play();
-            particles.enableEmission = true;
+            var em = particles.emission;
+            em.enabled = true;
         }
         //jetFuelEffect.enableEmission = true;
     }
@@ -115,23 +116,17 @@ public class PlayerMovement
     /// </summary>
     public void Propulse(Vector2 direction, float strength)
     {
-        // Spawn a light mass at the position of the character's mass ejector
-        //GameObject lightMass = GameObject.Instantiate(lightBallPrefab);
-        //lightMass.transform.position = massEjectionTransform.position;  
-        // Push the light mass in the given direction
-        //lightMass.GetComponent<Rigidbody>().AddForce(thrustForce * -direction, ForceMode.Force);
-        //delete mass after an amount of time
-        //GameObject.Destroy(lightMass, 1.0f);
-        
         // Compute how much the gameObject has to turn opposite to its velocity vector
         float angleChange = Vector2.Angle((Vector2)rigidbody.velocity, direction);
-        Debug.Log("Change in angle (PlayerMovement.Propulse()): " + angleChange);
+        // Debug.Log("Change in angle (PlayerMovement.Propulse()): " + angleChange);
 
         // Augment the thrusting power depending on how much the player has to turn
         float thrustBoost = 1 + (angleChange/180) * changeDirectionBoost;
 
+        // Calculate the final propulsion force
+        Vector3 thrustVector = thrustForce * direction * thrustBoost * strength;
         // Push the character in the given direction
-        rigidbody.AddForce(thrustForce * direction * thrustBoost * strength, ForceMode.Force);
+        rigidbody.AddForce(thrustVector, ForceMode.Force);
         // Deplete energy from the player for each ejection
         lightEnergy.Deplete(thrustEnergyCost * strength);
     }
@@ -142,7 +137,10 @@ public class PlayerMovement
     public void OnPropulsionEnd()
     {
         foreach (ParticleSystem particles in jetFuelEffect.GetComponentsInChildren<ParticleSystem>())
-            particles.enableEmission = false;
+        {
+            var em = particles.emission;
+            em.enabled = false;
+        }
     }
     
     /// <summary>
