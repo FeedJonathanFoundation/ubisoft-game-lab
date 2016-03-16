@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/* Disregard this class. Use FishSchool instead. */
+
 public class School : AbstractFish
 {
     private AbstractFish[] fishes;
