@@ -165,8 +165,28 @@ public class LightSource : MonoBehaviour
     /// Implemented in child classes
     /// </summary>
     protected virtual void OnLightDepleted() {}
-    
+          
     /// <summary>
+    /// Generates an unique ID for each LightSource
+    /// </summary>
+    /// <param name="objectName">name of the object used to prefix generated ID</param>
+    /// <returns></returns>       
+    private string GenerateID(string objectName)
+    {        
+        if (objectName != null)
+        {
+            return string.Format("{0}_{1:N}", objectName, Guid.NewGuid());    
+        }
+        else 
+        {
+            return Guid.NewGuid().ToString();
+        }        
+    }
+    
+   
+    /// PROPERTIES
+    
+     /// <summary>
     /// Cached transform component
     /// </summary>
     public Transform Transform
@@ -191,26 +211,6 @@ public class LightSource : MonoBehaviour
         }
         set { this.rigidbody = value; }
     }
-        
-    /// <summary>
-    /// Generates an unique ID for each LightSource
-    /// </summary>
-    /// <param name="objectName">name of the object used to prefix generated ID</param>
-    /// <returns></returns>       
-    private string GenerateID(string objectName)
-    {        
-        if (objectName != null)
-        {
-            return string.Format("{0}_{1:N}", objectName, Guid.NewGuid());    
-        }
-        else 
-        {
-            return Guid.NewGuid().ToString();
-        }        
-    }
-    
-   
-    /// PROPERTIES
       
     /// <summary>
     /// The LightEnergy component accessor controlling this object's amount of energy

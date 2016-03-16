@@ -5,19 +5,42 @@ public class WhaleMovement : MonoBehaviour
 {
 
     [Tooltip("The strength of movement force.")]
-    public float speed;
-    public Transform target;
+    [SerializeField]
+    private float movementSpeed;
+    [SerializeField]
+    private float frequency;
+    [SerializeField]
+    private float magnitude;
+    
+    [SerializeField]
+    private float animationSpeed;
+    
+    [Tooltip("What the game object moves toward.")]
+    [SerializeField]
+    private Transform target;
 
-	
-	// Update is called once per frame
-	void Update()
+    private Vector3 axis;
+    private Vector3 position;
+
+    void Start()
+    {
+        frequency = movementSpeed / 2;
+        magnitude = movementSpeed / 50;
+        position = transform.position;
+        axis = transform.up;
+        Animator animator = GetComponentInParent<Animator>();
+        animator.SetFloat("Speed", animationSpeed);
+    }
+
+    void Update()
     {
         Move();
     }
     
     void Move()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        position = Vector3.MoveTowards(transform.position, target.position, movementSpeed * Time.deltaTime);
+        transform.position = position + axis * Mathf.Sin(Time.time * frequency) * magnitude;
     }
     
     // If in contact with a disable collider, disables the game object
