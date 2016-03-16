@@ -15,10 +15,10 @@ public class Flocking : NPCActionable
     [SerializeField]
     private Separation separation;
     
-    public Flocking(int priority, int id) : base(priority, id)
+    public Flocking(int priority, string id) : base(priority, id)
     {
-        SetPriority(priority);
-        SetID(id);
+        this.SetPriority(priority);
+        this.SetID(id);
     }
     
     public void SetPriority(int priority)
@@ -32,7 +32,7 @@ public class Flocking : NPCActionable
         separation.priority = priority;
     }
     
-    public void SetID(int id)
+    public void SetID(string id)
     {
         this.id = id;
         

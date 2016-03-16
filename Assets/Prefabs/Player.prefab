@@ -817,6 +817,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 439638}
   - 135: {fileID: 13588346}
+  - 114: {fileID: 11449654}
   m_Layer: 10
   m_Name: SpawnCollider
   m_TagString: SpawnSignal
@@ -2481,7 +2482,7 @@ MonoBehaviour:
   playerWillAlwaysAbsorb: 0
   absorptionRate: 50000
   defaultEnergy: 40
-  infiniteEnergy: 1
+  infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11442326}
   massEjectionTransform: {fileID: 451912}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
@@ -2511,6 +2512,23 @@ MonoBehaviour:
   layerToDetect:
     serializedVersion: 2
     m_Bits: 256
+  tagsToIgnore: []
+--- !u!114 &11449654
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9807d0e018a2bb44aa20d697950d438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerOffset: {x: 0, y: 0, z: 0}
+  radius: 0
+  layerToDetect:
+    serializedVersion: 2
+    m_Bits: 0
   tagsToIgnore: []
 --- !u!114 &11450230
 MonoBehaviour:
@@ -2656,7 +2674,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 25
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &19817822
 ParticleSystem:

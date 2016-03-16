@@ -10,7 +10,7 @@ public class Flee : NPCActionable
     
     private Transform targetTransform;
     
-    public Flee(int priority, int id, Transform transform) : base(priority, id)
+    public Flee(int priority, string id, Transform transform) : base(priority, id)
     {
         targetTransform = transform;
     }
