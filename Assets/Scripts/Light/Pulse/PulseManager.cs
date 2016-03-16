@@ -7,11 +7,11 @@ using System.Collections;
 
 public class PulseManager : MonoBehaviour
 {
-    public Player player;
-    public Transform target;
+    private Transform player;
+    [SerializeField]
+    private Transform target;
     public bool activePulse = true;
     Camera camera;
-    private float duration;
     private float x;
     private float y;
     private Vector3 lastPosition = Vector3.zero;
@@ -19,31 +19,14 @@ public class PulseManager : MonoBehaviour
 	void Start()
     {
 	   camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-       // duration = GameObject.FindGameObjectWithTag("Pulse").GetComponent<ParticleSystem>().duration;
-       // StartCoroutine(Pulse());
+       player = GameObject.FindGameObjectWithTag("Player").transform;
 	}
 	
 	void Update()  
     {
-        // x += player.GetComponent<Rigidbody>().velocity.x;
-        // y += player.GetComponent<Rigidbody>().velocity.y;
-        // x += player.transform.position.x - lastPosition.x;
-        // y += player.transform.position.y - lastPosition.y;
-        CalculatePosition();
-        this.transform.position = new Vector3(x, y, 0f);
-        // lastPosition = this.transform.position;
-	}
-    
-    IEnumerator Pulse()
-    {
-        // Recalculate the position of the pulse each time it loops
-        while (activePulse)
-        {
-            CalculatePosition();
-            this.transform.position = new Vector3(x, y, 0f);
-            yield return new WaitForSeconds(duration);
-        }
-
+       // Find the position to place the pulse, as an intersection of the camera bounds and the player-target vector
+       CalculatePosition();
+       this.transform.position = new Vector3(x, y, 0f);
     }
     
     void CalculatePosition()
@@ -97,10 +80,6 @@ public class PulseManager : MonoBehaviour
         else if (botRight.x <= target.position.x)
         {
             // Debug.Log("botRight: " + botRight + " topRight: " + topRight + "\n botLeft: " + botLeft + " topLeft: " + topLeft);
-            camPoint1.x = botRight.x; 
-            camPoint1.y = botRight.y;
-            camPoint2.x = botLeft.x;
-            camPoint2.y = botLeft.y;
             Vector2 intersection = lineIntersection(camPoint1, camPoint2);
             // Intersection is between botLeft and botRight
             if (intersection.y <= botLeft.y + 1 && intersection.y >= botLeft.y - 1 && intersection.x >= botLeft.x && intersection.x <= botRight.x)
@@ -114,8 +93,7 @@ public class PulseManager : MonoBehaviour
             {
                 // Intersection wasn't between botLeft and botRight, check botRight and topRight
                 // Debug.Log("Intersection is at the right \n x-value: " + intersection.x + " y-value: " + intersection.y);
-                camPoint2.x = topRight.x;
-                camPoint2.y = topRight.y;
+                camPoint2 = topRight;
                 intersection = lineIntersection(camPoint1, camPoint2);
                 x = intersection.x;
                 y = intersection.y;
@@ -125,10 +103,6 @@ public class PulseManager : MonoBehaviour
         // Intersection is between the left and right points
         else 
         {
-            camPoint1.x = botRight.x; 
-            camPoint1.y = botRight.y;
-            camPoint2.x = botLeft.x;
-            camPoint2.y = botLeft.y;
             Vector2 intersection = lineIntersection(camPoint1, camPoint2);
             x = intersection.x;
             y = intersection.y;
