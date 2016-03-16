@@ -7,7 +7,7 @@ using System.Collections;
 
 public class PulseManager : MonoBehaviour
 {
-    public Player player;
+    private Transform player;
     public Transform target;
     public bool activePulse = true;
     Camera camera;
@@ -19,12 +19,14 @@ public class PulseManager : MonoBehaviour
     {
 	   camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
        duration = GameObject.FindGameObjectWithTag("Pulse").GetComponent<ParticleSystem>().duration;
-       StartCoroutine(Pulse());
-	}
+       // StartCoroutine(Pulse());
+       player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 	
 	void Update()  
     {
-
+        CalculatePosition();
+        this.transform.position = new Vector3(x, y, 0f);
 	}
     
     IEnumerator Pulse()
