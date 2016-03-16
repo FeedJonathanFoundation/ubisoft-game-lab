@@ -20,28 +20,27 @@ public class FishC : AbstractFish
     [SerializeField]
     private SeekFlare flareBehaviour;
     
-    public override void Awake()
+    protected override void Awake()
     {
         // call parent LightSource Awake() first
         base.Awake(); 
-        
-        flockingBehaviour.SetPriority(0);   // Lowest priority
-        flockingBehaviour.SetID(GetID());
         
         otherFishBehaviour.SetPriority(1);  // Medium priority
         otherFishBehaviour.Init();
         
         playerBehaviour.SetPriority(2);     // High priority
-        playerBehaviour.SetID(-1);
+        playerBehaviour.SetID("-1");
         playerBehaviour.Init();
         
         flareBehaviour.SetPriority(3);      // Very high priority
-        flareBehaviour.SetID(-2);
+        flareBehaviour.SetID("-2");
         flareBehaviour.Init();
     }
     
     public override void Move() 
     {
+        flockingBehaviour.SetPriority(0);   // Lowest priority
+        flockingBehaviour.SetID(GetID());
         AddAction(flockingBehaviour);
     }
     
@@ -64,9 +63,8 @@ public class FishC : AbstractFish
         
         if (currentFishTarget == null)
         {
-            // Debug.Log("React to new fish: " + other.name);
             AbstractFish fish = other.gameObject.GetComponent<AbstractFish>();
-            int id = fish.GetID();
+            string id = fish.GetID();
             
             otherFishBehaviour.TargetLightSource = fish;
             otherFishBehaviour.SetID(id);

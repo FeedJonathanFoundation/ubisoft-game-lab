@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
@@ -13,43 +12,60 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Steerable))]
 public abstract class AbstractFish : LightSource
 {
-    protected Steerable steerable;
-    
-    static int globalId = 1;
-    
-    // Fish object's unique ID
-    private int myId;
+    [Tooltip("Amount of light absorbed from the player upon collision")]
+    public float damageInflicted = 4;
     
     [Tooltip("Detects lights within the fish's line of sight")]
     [SerializeField]
     private Neighbourhood lightDetector;
 
-    // Holds the steering behaviors of this fish
-    private PriorityDictionary actions;
-    
     [Tooltip("If true, the fish will not react to fish of the same type, except in the default flocking behaviour")]
     [SerializeField]
     private bool ignoreFishOfSameType = false;
+        
+    // Holds the steering behaviors of this fish
+    private PriorityDictionary actions;
+    protected Steerable steerable;
     
     /// <summary>
     /// Initializes the fish object
     /// </summary>
-    public override void Awake()
+    protected override void Awake()
     {
         // Call parent LightSource Awake() first
         base.Awake();
-        
+
         // Initialize action priority dictionary
-        actions = new PriorityDictionary();
-        Move();
-        
-        // Assign the next available ID to this fish
-        myId = globalId++;
-        
+        this.actions = new PriorityDictionary();
+        this.Move();
+
         // Cache the 'Steerable' component attached to the GameObject performing this action
-		steerable = transform.GetComponent<Steerable>();
+        this.steerable = transform.GetComponent<Steerable>();
     }
-    
+
+    /// <summary>
+    /// Retrieves and executes active actions every frame
+    /// </summary>
+    protected override void Update()
+    {
+        base.Update();
+        List<NPCActionable> activeActions = actions.GetActiveActions();
+
+        foreach (NPCActionable action in activeActions)
+        {
+            action.Execute(steerable);
+        }
+    }
+
+    /// <summary>
+    /// Destroys the fish when it loses all its light
+    /// </summary>
+    protected override void OnLightDepleted()
+    {
+        base.OnLightDepleted();
+        GameObject.Destroy(this.gameObject);
+    }
+
     /// <summary>
     /// Subscribe to the events dictating when lights enter
     /// or exit the fish's line-of-sight.
@@ -61,7 +77,7 @@ public abstract class AbstractFish : LightSource
         lightDetector.NeighbourExit += OnLightExit;
         lightDetector.NeighbourStay += OnLightStay;
     }
-    
+
     /// <summary>
     /// Unsubscribe to the events dictating when lights enter
     /// or exit the fish's line-of-sight.
@@ -71,32 +87,9 @@ public abstract class AbstractFish : LightSource
         base.OnDisable();
         lightDetector.NeighbourEnter -= OnLightEnter;
         lightDetector.NeighbourExit -= OnLightExit;
-        lightDetector.NeighbourStay -= OnLightStay; 
+        lightDetector.NeighbourStay -= OnLightStay;
     }
 
-    /// <summary>
-    /// Retrieves and executes active actions every frame
-    /// </summary>
-    public override void Update()
-    {     
-        base.Update();
-        List<NPCActionable> activeActions = actions.GetActiveActions();
-         
-        foreach (NPCActionable action in activeActions)
-        {
-            action.Execute(steerable);
-        }
-    }
-
-    /// <summary>
-    /// Called the instant the fish loses all its light.
-    /// </summary>
-    protected override void OnLightDepleted()
-    {
-        base.OnLightDepleted();
-        GameObject.Destroy(this.gameObject);
-    }
-    
     /// <summary>
     /// How the fish moves when it is not proximate to the player
     /// </summary>
@@ -113,12 +106,12 @@ public abstract class AbstractFish : LightSource
     /// (called every frame when a fish is in sight).
     /// </summary>
     public abstract void ReactToNPC(Transform other);
-    
+
     /// <summary>
     /// Called the instant an NPC becomes out of sight
     /// </summary>
     public abstract void NPCOutOfSight(Transform other);
-    
+
     /// <summary>
     /// How the fish reacts when a flare is within line of sight
     /// </summary>
@@ -139,13 +132,13 @@ public abstract class AbstractFish : LightSource
     {
         return transform.lossyScale.x;
     }
-        
+
     /// <summary>
     /// Returns the fish object's unique ID
     /// </summary>
-    public int GetID()
+    public string GetID()
     {
-        return myId;
+        return this.LightSourceID;
     }
 
     /// <summary>
@@ -165,15 +158,15 @@ public abstract class AbstractFish : LightSource
             return width / 2;
         }
     }
-    
+
     /// <summary>
     /// Applies the steerable forces to the object every physics step
     /// </summary>
     protected void FixedUpdate()
     {
-        steerable.ApplyForces (Time.fixedDeltaTime); 
+        steerable.ApplyForces(Time.fixedDeltaTime);
     }
-        
+
     /// <summary>
     /// Adds an action to the priority dictionary
     /// </summary>
@@ -182,16 +175,16 @@ public abstract class AbstractFish : LightSource
         action.ActionComplete += OnActionComplete;
         actions.InsertAction(action);
     }
-    
+
     /// <summary>
     /// Removes an action from the list of actions to perform
     /// using an ID
     /// </summary>
-    protected void RemoveAction(int id)
+    protected void RemoveAction(string id)
     {
         RemoveAction(actions.GetAction(id));
     }
-    
+
     /// <summary>
     /// Removes an action from the list of actions to perform
     /// using an action type
@@ -218,25 +211,24 @@ public abstract class AbstractFish : LightSource
     /// <summary>
     /// Detects if fish is close to another light
     /// </summary>
-    private void OnLightEnter(GameObject lightObject) 
+    private void OnLightEnter(GameObject lightObject)
     {
         LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
-        if (lightSource)
+        
+        if (lightSource && lightSource.tag.Equals("Fish"))
         {
-            if (lightSource.tag.Equals("Fish")) 
+            if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer)
             {
-                if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer) 
-                { 
-                    ReactToNPC(lightSource.transform); 
-                }
+                ReactToNPC(lightSource.transform);
             }
-        } 
+        }
+        
         if (lightObject.tag.Equals("Flare"))
         {
             ReactToFlare(lightObject.transform);
         }
     }
-    
+
     /// <summary>
     /// While another light is in the viewable region of the fish
     /// </summary>
@@ -245,48 +237,48 @@ public abstract class AbstractFish : LightSource
         LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
         if (lightSource)
         {
-            if (lightSource.tag.Equals("Player")) 
+            if (lightSource.tag.Equals("Player"))
             {
                 ReactToPlayer(lightSource.transform);
             }
             else if (lightSource.tag.Equals("Fish"))
             {
-                if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer) 
-                { 
-                    ReactToNPC(lightSource.transform); 
+                if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer)
+                {
+                    ReactToNPC(lightSource.transform);
                 }
             }
         }
     }
-    
+
     /// <summary>
     /// Detects if fish is no longer close to another light
     /// </summary>
-    private void OnLightExit(GameObject lightObject) 
+    private void OnLightExit(GameObject lightObject)
     {
         LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
         if (lightSource)
         {
-            if (lightSource.CompareTag("Fish")) 
+            if (lightSource.CompareTag("Fish"))
             {
                 if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer)
                 {
                     // Inform subclasses that the NPC went out of sight
                     NPCOutOfSight(lightSource.transform);
-                    int otherID = lightSource.GetComponent<AbstractFish>().GetID();
+                    string otherID = lightSource.GetComponent<AbstractFish>().GetID();
                     RemoveAction(otherID);
                 }
             }
             else if (lightSource.CompareTag("Player"))
             {
                 // Player id = -1
-                RemoveAction(-1);
+                RemoveAction("-1");
             }
         }
         if (lightObject.CompareTag("Flare"))
         {
             // Stop reacting to the flare 
-            RemoveAction(-2);
+            RemoveAction("-2");
         }
     }
 
