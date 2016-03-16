@@ -1,26 +1,35 @@
 using UnityEngine;
-using System.Collections;
 
+/// <summary>
+/// PlayerLightToggle class is responsible for behaviour related to player lights.
+/// It toggles the lights on or off and depletes the energy from the Player   
+///
+/// @author - Simon T.
+/// @author - Alex I.
+/// @version - 1.0.0
+///
+/// </summary>
 public class PlayerLightToggle
 {
-    /// <summary>
-    /// If true, the lights that are children of this object are enabled.
-    /// </summary>
-	private bool lightsEnabled;
-    private GameObject lightsToToggle;
-    private float timerLostOfLight; //timer for lost of light
-    private LightSource lightSource;
+    // If true, the lights that are children of this object are enabled.
+	private bool lightsEnabled;    
+    private float timeToDeplete;
     private float minimalEnergyRestriction;
-
-    public PlayerLightToggle(GameObject lightsToToggle, bool defaultLightStatus,LightSource lightSourceRef, float minimalEnergy)
-    {
-        this.lightsEnabled = defaultLightStatus;
+    private GameObject lightsToToggle; 
+    private LightSource lightSource;
+    
+    public PlayerLightToggle(GameObject lightsToToggle, bool defaultLightStatus, LightSource lightSource, float minimalEnergy)
+    {        
         this.lightsToToggle = lightsToToggle;
-        this.lightSource = lightSourceRef; //initiate lightSource
+        this.lightsEnabled = defaultLightStatus;
+        this.lightSource = lightSource;                
         this.minimalEnergyRestriction = minimalEnergy;
-        ToggleLights();
+        this.ToggleLights();
     }
 
+    /// <summary>
+    /// Changes the status of Light component attached to Player 
+    /// </summary>
     public void ToggleLights()
     {
         foreach (Behaviour childComponent in this.lightsToToggle.GetComponentsInChildren<Light>())
@@ -29,17 +38,24 @@ public class PlayerLightToggle
         }
         // Update the status of the lights
         this.lightsEnabled = !this.lightsEnabled;
+        
+        Debug.Log("Toggle lights");
     }
-
-    public void LostOfLight(float lostOfLightTimeInterval, float energyCostLightToggle)
+    
+    /// <summary>
+    /// Gradually depletes Player's energy when lights are turned on 
+    /// </summary>
+    /// <param name="timeToDeplete">Time it takes to deplete a unit of energy when light toggle is on</param>
+    /// <param name="energyCost">Energy cost of having Player lights turned on</param>
+    public void DepleteLight(float timeToDeplete, float energyCost)
     {
         if (this.lightsEnabled)
         {
-            this.timerLostOfLight += Time.deltaTime;
-            if (this.timerLostOfLight > lostOfLightTimeInterval)
+            this.timeToDeplete += Time.deltaTime;
+            if (this.timeToDeplete > timeToDeplete)
             {
-                this.lightSource.LightEnergy.Deplete(energyCostLightToggle);
-                this.timerLostOfLight = 0;
+                this.lightSource.LightEnergy.Deplete(energyCost);
+                this.timeToDeplete = 0;
 
                 if (this.minimalEnergyRestriction >= this.lightSource.LightEnergy.CurrentEnergy)
                 {
@@ -48,15 +64,12 @@ public class PlayerLightToggle
             }
         }
     }
-    
+
     /// <summary>
-    /// If true, the lights are enabled and the GameObject is visible.
+    /// If true, the lights are enabled and the GameObject is visible
     /// </summary>
     public bool LightsEnabled
     {
-        get
-        { 
-            return this.lightsEnabled;
-        }
+        get { return this.lightsEnabled; }
     }
 }

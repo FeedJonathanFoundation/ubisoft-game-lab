@@ -28,7 +28,7 @@ public class SeekOrFleeLight : NPCActionable
     [SerializeField]
     private WallAvoidance wallAvoidance;
     
-    public SeekOrFleeLight(int priority, int id, LightSource targetLightSource) : base(priority, id)
+    public SeekOrFleeLight(int priority, string id, LightSource targetLightSource) : base(priority, id)
     {
         this.targetLightSource = targetLightSource;
         
@@ -54,7 +54,7 @@ public class SeekOrFleeLight : NPCActionable
         wallAvoidance.priority = priority;
     }
     
-    public void SetID(int id)
+    public void SetID(string id)
     {
         this.id = id;
         

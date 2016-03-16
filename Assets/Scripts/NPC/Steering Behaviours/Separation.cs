@@ -4,7 +4,7 @@ using System.Collections;
 [System.Serializable]
 public class Separation : NPCActionable
 {       
-    public Separation(int priority, int id) : base(priority, id)
+    public Separation(int priority, string id) : base(priority, id)
     {
     }
     

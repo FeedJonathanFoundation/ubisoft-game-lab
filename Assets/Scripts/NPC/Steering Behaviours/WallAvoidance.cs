@@ -11,7 +11,7 @@ public class WallAvoidance : NPCActionable
     /** The layer which contains the colliders that can be avoided. */
     public LayerMask obstacleLayer;
     
-    public WallAvoidance(int priority, int id) : base(priority, id)
+    public WallAvoidance(int priority, string id) : base(priority, id)
     {
     }
     
