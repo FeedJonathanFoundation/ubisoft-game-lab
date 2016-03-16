@@ -94,9 +94,7 @@ public class Player : LightSource
     private bool isDead; // determines is current player is dead
     public bool isSafe; // used for boss AI
     private bool deathParticlesPlayed;
-    private MaterialExtensions materials;
-    // private new Transform transform;
-    // private new Rigidbody rigidbody;    
+    private MaterialExtensions materials;      
     private int currentLevel;   
         
     /// <summary>
@@ -105,9 +103,6 @@ public class Player : LightSource
     protected override void Awake()
     {
        base.Awake(); // call parent LightSource Awake() first
-       
-    //    this.transform = GetComponent<Transform>();
-    //    this.rigidbody = GetComponent<Rigidbody>();
        
        this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, this.Transform, this.Rigidbody, this.LightEnergy, this.jetFuelEffect);
        this.lightToggle = new PlayerLightToggle(this.Transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
