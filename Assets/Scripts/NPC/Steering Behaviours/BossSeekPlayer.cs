@@ -7,8 +7,12 @@ public class BossSeekPlayer : NPCActionable
     /// <summary>
 	/// The light that this NPC can see
 	/// </summary>
-    [Tooltip("Distance at which then big fish slows down before getting to player inside of a safe zone")]
-    public float slowingRadius;
+    [Tooltip("Set maxSpeed to this value when the player is too far")]
+    public float speedMaxIncreased;
+    [Tooltip("Set minSpeed to this value when the player is too far")]
+    public float speedMinIncreased;
+    [Tooltip("Distance at which the boss will increase its speed to presue the player")]
+    public float distanceSpeedIncrease;
     private LightSource targetLightSource;
     private bool bossAtSafeZone;
     /// <summary>
@@ -59,24 +63,29 @@ public class BossSeekPlayer : NPCActionable
     
     public override void Execute(Steerable steerable) 
     {
-        base.Execute(steerable);
-
-        if (overrideSteerableSpeed)
-        {
-            steerable.MinSpeed = minSpeed;
-            steerable.MaxSpeed = maxSpeed;
-        }
-        // Override the steerable's max force
-        if (overrideMaxForce)
-        {
-            steerable.MaxForce = maxForce;
-        }
-
         Player player = targetLightSource.gameObject.GetComponent<Player>();
-
         if (!player.isSafe)
         {
-            steerable.AddSeekForce(targetLightSource.transform.position, strengthMultiplier);
+            base.Execute(steerable);
+
+            if (overrideSteerableSpeed)
+            {
+                steerable.MinSpeed = minSpeed;
+                steerable.MaxSpeed = maxSpeed;
+            }
+            // Override the steerable's max force
+            if (overrideMaxForce)
+            {
+                steerable.MaxForce = maxForce;
+            }
+
+            Vector3 position = targetLightSource.transform.position;
+            if(overrideBossSpeed(steerable,position))
+            {
+                steerable.MinSpeed = speedMinIncreased;
+                steerable.MaxSpeed = speedMaxIncreased;
+            }
+            steerable.AddSeekForce(position, strengthMultiplier);
         }
         else
         {
@@ -84,6 +93,16 @@ public class BossSeekPlayer : NPCActionable
         }
 
         wallAvoidance.Execute(steerable);
+    }
+    
+    private bool overrideBossSpeed(Steerable steerable,Vector3 target)
+    {
+        float distance = Vector2.Distance(steerable.transform.position, target);
+        if(distance > distanceSpeedIncrease)
+        {
+            return true;
+        }
+        return false;
     }
     
     private void ChildActionComplete(NPCActionable childAction)
