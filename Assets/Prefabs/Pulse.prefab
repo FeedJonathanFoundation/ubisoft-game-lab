@@ -41,7 +41,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d7146ebdc354049a6ad6414b9c35bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   target: {fileID: 0}
   activePulse: 1
 --- !u!198 &19810408
@@ -98,7 +97,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -262,7 +261,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: 7
+      scalar: 12
       maxCurve:
         serializedVersion: 2
         m_Curve:

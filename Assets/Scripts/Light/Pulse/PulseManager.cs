@@ -7,49 +7,39 @@ using System.Collections;
 
 public class PulseManager : MonoBehaviour
 {
-    public Player player;
-    public Transform target;
+    private Transform player;
+    [SerializeField]
+    private Transform target;
     public bool activePulse = true;
     Camera camera;
-    private float duration;
     private float x;
     private float y;
+    private Vector3 lastPosition = Vector3.zero;
     
 	void Start()
     {
 	   camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-       duration = GameObject.FindGameObjectWithTag("Pulse").GetComponent<ParticleSystem>().duration;
-       StartCoroutine(Pulse());
+       player = GameObject.FindGameObjectWithTag("Player").transform;
 	}
 	
 	void Update()  
     {
-
-	}
-    
-    IEnumerator Pulse()
-    {
-        // Recalculate the position of the pulse each time it loops
-        while (activePulse)
-        {
-            CalculatePosition();
-            this.transform.position = new Vector3(x, y, 0f);
-            yield return new WaitForSeconds(duration);
-        }
-
+       // Find the position to place the pulse, as an intersection of the camera bounds and the player-target vector
+       CalculatePosition();
+       this.transform.position = new Vector3(x, y, 0f);
     }
     
     void CalculatePosition()
     {
         if (player == null) 
         {
-           Debug.Log("Please set a player for the Pulse Manager");
+           // Debug.Log("Please set a player for the Pulse Manager");
            return; 
         }
         
           if (target == null)
        {
-           Debug.Log("Please set a target for the Pulse Manager");
+           // Debug.Log("Please set a target for the Pulse Manager");
            return;
        }
        
@@ -60,20 +50,17 @@ public class PulseManager : MonoBehaviour
         Vector3 topRight = new Vector2(player.transform.position.x + 16, player.transform.position.y + 16);
         
         // Find the closest two camera points to the target 
-        Vector2 camPoint1 = new Vector2(0, 0);
-        Vector2 camPoint2 = new Vector2(0, 0);
+        Vector2 camPoint1 = botLeft;
+        Vector2 camPoint2 = botRight;
         
         // Target is on the left of the camera bounds
         if (botLeft.x >= target.position.x)
         {
-            camPoint1.x = botLeft.x; 
-            camPoint1.y = botLeft.y;
-            camPoint2.x = botRight.x;
-            camPoint2.y = botRight.y;
             Vector2 intersection = lineIntersection(camPoint1, camPoint2);
-            if (intersection.y == botLeft.y && intersection.x >= botLeft.x && intersection.x <= botRight.x)
+            // Intersection is between botLeft and botRight
+            if (intersection.y <= botLeft.y + 1 && intersection.y >= botLeft.y - 1 && intersection.x >= botLeft.x && intersection.x <= botRight.x)
             {
-                Debug.Log("Intersection is at the bottom \n x-value: " + intersection.x + " y-value: " + intersection.y);
+                //Debug.Log("Intersection is at the bottom \n x-value: " + intersection.x + " y-value: " + intersection.y);
                 x = intersection.x;
                 y = intersection.y;
                 return;
@@ -81,9 +68,8 @@ public class PulseManager : MonoBehaviour
             else
             {
                 // Intersection wasn't between botLeft and botRight, check botLeft and topLeft
-                Debug.Log("Intersection is at the left side \n x-value: " + intersection.x + " y-value: " + intersection.y);
-                camPoint2.x = topLeft.x;
-                camPoint2.y = topLeft.y;
+                // Debug.Log("Intersection is at the left side \n x-value: " + intersection.x + " y-value: " + intersection.y);
+                camPoint2 = topLeft;
                 intersection = lineIntersection(camPoint1, camPoint2);
                 x = intersection.x;
                 y = intersection.y;
@@ -93,15 +79,12 @@ public class PulseManager : MonoBehaviour
         // Target is on the right of the camera bounds
         else if (botRight.x <= target.position.x)
         {
-            Debug.Log("botRight: " + botRight + " topRight: " + topRight + "\n botLeft: " + botLeft + " topLeft: " + topLeft);
-            camPoint1.x = botRight.x; 
-            camPoint1.y = botRight.y;
-            camPoint2.x = botLeft.x;
-            camPoint2.y = botLeft.y;
+            // Debug.Log("botRight: " + botRight + " topRight: " + topRight + "\n botLeft: " + botLeft + " topLeft: " + topLeft);
             Vector2 intersection = lineIntersection(camPoint1, camPoint2);
-            if (intersection.y == botLeft.y && intersection.x >= botLeft.x && intersection.x <= botRight.x)
+            // Intersection is between botLeft and botRight
+            if (intersection.y <= botLeft.y + 1 && intersection.y >= botLeft.y - 1 && intersection.x >= botLeft.x && intersection.x <= botRight.x)
             {
-                Debug.Log("Intersection is at the bottom \n x-value: " + intersection.x + " y-value: " + intersection.y);
+                // Debug.Log("Intersection is at the bottom \n x-value: " + intersection.x + " y-value: " + intersection.y);
                 x = intersection.x;
                 y = intersection.y;
                 return;
@@ -109,14 +92,22 @@ public class PulseManager : MonoBehaviour
             else
             {
                 // Intersection wasn't between botLeft and botRight, check botRight and topRight
-                Debug.Log("Intersection is at the right \n x-value: " + intersection.x + " y-value: " + intersection.y);
-                camPoint2.x = topRight.x;
-                camPoint2.y = topRight.y;
+                // Debug.Log("Intersection is at the right \n x-value: " + intersection.x + " y-value: " + intersection.y);
+                camPoint2 = topRight;
                 intersection = lineIntersection(camPoint1, camPoint2);
                 x = intersection.x;
                 y = intersection.y;
                 return;
             }
+        }
+        // Intersection is between the left and right points
+        else 
+        {
+            Vector2 intersection = lineIntersection(camPoint1, camPoint2);
+            x = intersection.x;
+            y = intersection.y;
+            // Debug.Log("Intersection is at the right \n x-value: " + intersection.x + " y-value: " + intersection.y);
+            return;
         }
     }
     

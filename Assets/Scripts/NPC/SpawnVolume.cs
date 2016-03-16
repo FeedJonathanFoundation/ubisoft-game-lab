@@ -52,6 +52,7 @@ public class SpawnVolume : MonoBehaviour
     private int fishCount;
     private bool disabled;
     private bool initialized;
+    private float maxDistanceSquared;
     
     private List<GameObject> fishes;
    
@@ -65,6 +66,7 @@ public class SpawnVolume : MonoBehaviour
         Reset();
         fishes = new List<GameObject>();
         fishCount = 0;
+        maxDistanceSquared = maxDistance * maxDistance;
 
         player = GameObject.FindWithTag("Player").transform;
     }
@@ -75,7 +77,7 @@ public class SpawnVolume : MonoBehaviour
         {
             return;
         }
-        if (!initialized) 
+        if (!initialized)
         {
             Initialize();
         }
@@ -85,14 +87,56 @@ public class SpawnVolume : MonoBehaviour
             {
                 if (fishes[i] != null)
                 {
-                    float distance = Vector3.Distance(fishes[i].transform.position, player.position);
-                    if (distance > maxDistance)
+                    //Debug.Log("Check with fish layer: " + LayerMask.LayerToName(fishes[i].layer));
+                
+                    if (fishes[i].CompareTag("School"))
                     {
-                        fishes[i].SetActive(false);
-                        fishes.Remove(fishes[i]);
+                        // Cycle through each fish in the school
+                        FishSchool school = fishes[i].GetComponent<FishSchool>();
+                        //Debug.Log("Checking distance with fish in school " + school.Fishes.Length + ", " + school);
+                        for (int j = 0; j < school.Fishes.Length; j++)
+                        {
+                            AbstractFish fish = school.Fishes[j];
+                            
+                            if (fish != null)
+                            {
+                                // Deactivate the fish if it is unviewable
+                                CheckDistanceToPlayer(fish.gameObject);
+                            }
+                            else
+                            {
+                                // school.Fishes.RemoveAt(j);
+                            }
+                        }
+                    }
+                    // Else, if the fish is an individual fish
+                    else
+                    {
+                        // Deactivate the fish if it is unviewable
+                        CheckDistanceToPlayer(fishes[i]);
                     }
                 }
             }
+        }
+    }
+    
+    /// <summary>
+    /// Checks the distance from the fish to the player.
+    /// Activates the fish if sufficiently close to the player,
+    /// and deactivates it otherwise.
+    /// </summary>
+    private void CheckDistanceToPlayer(GameObject fish)
+    {
+        float distanceSquared = (fish.transform.position - player.position).sqrMagnitude;
+        
+        if (distanceSquared > maxDistanceSquared)
+        {
+            fish.SetActive(false);
+            //fishes.RemoveAt(i);
+        }
+        else if (fish.active == false)
+        {
+            fish.SetActive(true);
         }
     }
     
@@ -145,14 +189,15 @@ public class SpawnVolume : MonoBehaviour
             if (spawnObject.Length > 0 && spawnObject[spawnTypeIndex] != null)
             {
                 GameObject fish = (GameObject)Instantiate(spawnObject[spawnTypeIndex], spawnLocation, Quaternion.identity);
+                //Debug.Log("Spawn fish: " + fish + " of type: " + spawnTypeIndex);
                 if (fish.GetComponent<LightSource>() != null)
                 {
                     float variance = Random.Range(0, fish.GetComponent<LightSource>().LightEnergy.CurrentEnergy * energyVariance);
                     fish.GetComponent<LightSource>().LightEnergy.Deplete(variance);
+                }    
                     
-                    fishes.Add(fish);
-                    fishCount++;
-                }
+                fishes.Add(fish);
+                fishCount++;
             }
         }
     }
@@ -258,13 +303,13 @@ public class SpawnVolume : MonoBehaviour
         }
     }
     
-    void OnTriggerExit(Collider other)
+    /*void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("SpawnSignal"))
         {
             Reset();
         }
-    }
+    }*/
     
     private void Reset()
     {
