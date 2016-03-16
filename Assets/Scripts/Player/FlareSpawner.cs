@@ -26,9 +26,6 @@ public class FlareSpawner : MonoBehaviour
     [SerializeField]
     [Tooltip("The amount of recoil applied on the player when shooting the flare")]
     private float recoilForce;
-
-    private float buffer;
-
     private float timer;
     private LightSource lightSource;
     private new Rigidbody rigidbody;
@@ -48,9 +45,8 @@ public class FlareSpawner : MonoBehaviour
             if (Input.GetButtonDown("UseFlare"))
             {
                 float cost = flareEnergyCost * flareCostPercentage;
-                buffer = flareEnergyCost * flareCostPercentage;
 
-                if(lightSource.LightEnergy.CurrentEnergy > (cost + buffer))
+                if(lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost))
                 {
                     Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
                     lightSource.LightEnergy.Deplete(flareEnergyCost);
