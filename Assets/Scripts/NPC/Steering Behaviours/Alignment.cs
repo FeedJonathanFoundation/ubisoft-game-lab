@@ -4,7 +4,7 @@ using System.Collections;
 [System.Serializable]
 public class Alignment : NPCActionable
 {       
-    public Alignment(int priority, int id) : base(priority, id)
+    public Alignment(int priority, string id) : base(priority, id)
     {
     }
     

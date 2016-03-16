@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public enum Priority
 {
@@ -12,10 +13,10 @@ public enum Priority
 
 public class PriorityDictionary
 {
-    private Dictionary<int, NPCActionable> lowPriorityAction;
-    private Dictionary<int, NPCActionable> medPriorityAction;
-    private Dictionary<int, NPCActionable> highPriorityAction;
-    private Dictionary<int, NPCActionable> veryHighPriorityAction;
+    private Dictionary<String, NPCActionable> lowPriorityAction;
+    private Dictionary<String, NPCActionable> medPriorityAction;
+    private Dictionary<String, NPCActionable> highPriorityAction;
+    private Dictionary<String, NPCActionable> veryHighPriorityAction;
     private List<NPCActionable> constantActions;
     
     // Helper list to avoid instantiation in GetActiveActions()
@@ -25,10 +26,10 @@ public class PriorityDictionary
     
     public PriorityDictionary()
     {
-        lowPriorityAction = new Dictionary<int, NPCActionable>();
-        medPriorityAction = new Dictionary<int, NPCActionable>();
-        highPriorityAction = new Dictionary<int, NPCActionable>();
-        veryHighPriorityAction = new Dictionary<int, NPCActionable>();
+        lowPriorityAction = new Dictionary<String, NPCActionable>();
+        medPriorityAction = new Dictionary<String, NPCActionable>();
+        highPriorityAction = new Dictionary<String, NPCActionable>();
+        veryHighPriorityAction = new Dictionary<String, NPCActionable>();
         constantActions = new List<NPCActionable>();
         activeActions = new List<NPCActionable>();
         
@@ -111,7 +112,7 @@ public class PriorityDictionary
         }
     }
 
-    public bool RemoveLowPriority(int id)
+    public bool RemoveLowPriority(string id)
     {
         if (lowPriorityAction.ContainsKey(id))
         {
@@ -122,7 +123,7 @@ public class PriorityDictionary
         return false;
     }
     
-    public bool RemoveMedPriority(int id)
+    public bool RemoveMedPriority(string id)
     {
         if (medPriorityAction.ContainsKey(id))
         {
@@ -133,7 +134,7 @@ public class PriorityDictionary
         return false;
     }
     
-    public bool RemoveHighPriority(int id)
+    public bool RemoveHighPriority(string id)
     {
         if (highPriorityAction.ContainsKey(id))
         {
@@ -144,7 +145,7 @@ public class PriorityDictionary
         return false;
     }
     
-    public bool RemoveVeryHighPriority(int id)
+    public bool RemoveVeryHighPriority(string id)
     {
         if (veryHighPriorityAction.ContainsKey(id))
         {
@@ -155,7 +156,7 @@ public class PriorityDictionary
         return false;
     }
     
-    public void RemoveAction(int id)
+    public void RemoveAction(string id)
     {
         switch (activePriority)
         {
@@ -201,7 +202,7 @@ public class PriorityDictionary
         // Clear the current contents of the helper list
         activeActions.Clear();
         
-        Dictionary<int, NPCActionable> activeDictionary; 
+        Dictionary<string, NPCActionable> activeDictionary; 
         switch(activePriority)
         {
             case 3:
@@ -230,7 +231,7 @@ public class PriorityDictionary
         return activeActions;
     }
     
-    public NPCActionable GetAction(int id)
+    public NPCActionable GetAction(string id)
     {
         NPCActionable action = null;
         
@@ -252,7 +253,7 @@ public class PriorityDictionary
         
         output += "Very High Priority\n";
         output += "{\n";
-        foreach (KeyValuePair<int, NPCActionable> entry in veryHighPriorityAction)
+        foreach (KeyValuePair<string, NPCActionable> entry in veryHighPriorityAction)
         {
             output += "\t" + entry.Key + " : " + entry.Value.ToString() + "\n";
         }
@@ -260,7 +261,7 @@ public class PriorityDictionary
         
         output += "High Priority\n";
         output += "{\n";
-        foreach (KeyValuePair<int, NPCActionable> entry in highPriorityAction)
+        foreach (KeyValuePair<string, NPCActionable> entry in highPriorityAction)
         {
             output += "\t" + entry.Key + " : " + entry.Value.ToString() + "\n";
         }
@@ -268,7 +269,7 @@ public class PriorityDictionary
         
         output += "Med Priority\n";
         output += "{\n";
-        foreach (KeyValuePair<int, NPCActionable> entry in medPriorityAction)
+        foreach (KeyValuePair<string, NPCActionable> entry in medPriorityAction)
         {
             output += "\t" + entry.Key + " : " + entry.Value.ToString() + "\n";
         }
@@ -276,7 +277,7 @@ public class PriorityDictionary
         
         output += "Low Priority\n";
         output += "{\n";
-        foreach (KeyValuePair<int, NPCActionable> entry in lowPriorityAction)
+        foreach (KeyValuePair<string, NPCActionable> entry in lowPriorityAction)
         {
             output += "\t" + entry.Key + " : " + entry.Value.ToString() + "\n";
         }
