@@ -625,6 +625,45 @@ public class Steerable : MonoBehaviour
         return cohesionForce;
 
     }
+    
+    public void AddMoveWaypointForce(GameObject wpList, Transform bigFish, float slowingRadius, float multiplier)
+    {
+        steeringForce += MoveWaypointForce (wpList, bigFish, slowingRadius) * multiplier;
+    }
+
+    private Vector2 MoveWaypointForce(GameObject wpList, Transform bigFish,float slowingRadius)
+    {
+        // Update the steerable's 'normalizedVelocity' variable
+        CheckDirty ();
+        
+        Vector2 desiredVelocity = Vector2.zero;
+        bool hasWaypoint;
+        float closestDistanceWaypoint = -1.00f;
+        //checks all the checkpoints and saves the closest one
+        foreach(Transform child in wpList.transform)
+        {
+            float distanceToTarget = Vector2.Distance((Vector2)child.position, (Vector2)bigFish.position);
+            if(closestDistanceWaypoint > distanceToTarget || closestDistanceWaypoint < 0)
+            {
+                closestDistanceWaypoint = distanceToTarget;
+                desiredVelocity = ((Vector2)child.position - (Vector2)bigFish.position).normalized;
+            }
+        }
+        
+        if(closestDistanceWaypoint <= slowingRadius && closestDistanceWaypoint > 0)
+        {
+            desiredVelocity = Vector2.zero;
+        }
+        
+        // Calculate the velocity at which this object should move to reach his target
+        desiredVelocity *= maxSpeed;
+
+        // Compute the steering force applied to make this object seek his target
+        
+        Vector2 steeringForce = desiredVelocity - previousVelocity;
+        
+        return steeringForce;
+    }
 
     /// <summary>
     /// Called every time a steering force is calculated. If this is the first steering force added this frame, the steerable's

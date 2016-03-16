@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
@@ -13,7 +12,9 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Steerable))]
 public abstract class AbstractFish : LightSource
 {
-   
+    [Tooltip("Amount of light absorbed from the player upon collision")]
+    public float damageInflicted = 4;
+    
     [Tooltip("Detects lights within the fish's line of sight")]
     [SerializeField]
     private Neighbourhood lightDetector;
@@ -57,7 +58,7 @@ public abstract class AbstractFish : LightSource
     }
 
     /// <summary>
-    /// Called the instant the fish loses all its light.
+    /// Destroys the fish when it loses all its light
     /// </summary>
     protected override void OnLightDepleted()
     {
@@ -213,16 +214,15 @@ public abstract class AbstractFish : LightSource
     private void OnLightEnter(GameObject lightObject)
     {
         LightSource lightSource = lightObject.GetComponentInParent<LightSource>();
-        if (lightSource)
+        
+        if (lightSource && lightSource.tag.Equals("Fish"))
         {
-            if (lightSource.tag.Equals("Fish"))
+            if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer)
             {
-                if (!ignoreFishOfSameType || lightSource.gameObject.layer != gameObject.layer)
-                {
-                    ReactToNPC(lightSource.transform);
-                }
+                ReactToNPC(lightSource.transform);
             }
         }
+        
         if (lightObject.tag.Equals("Flare"))
         {
             ReactToFlare(lightObject.transform);
