@@ -2486,16 +2486,23 @@ MonoBehaviour:
   absorbableLightDetector: {fileID: 11442326}
   massEjectionTransform: {fileID: 451912}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
-  maxSpeed: 200
+  maxSpeed: 8
   thrustForce: 3
   changeDirectionBoost: 5.2
   thrustEnergyCost: 0.01
+  brakeDrag: 1
   jetFuelEffect: {fileID: 134692}
+  playerDeathParticles: {fileID: 0}
   defaultLightStatus: 1
-  lostOfLightTime: 0
-  energyCostLightToggle: 0
+  knockbackForce: 10
+  invulnerabilityTime: 3
+  invulnerabilityDrag: 2
+  timeToDeplete: 0
+  lightToggleEnergyCost: 0
   minimalEnergyRestrictionToggleLights: 0
+  lightToggleTime: 0.1
   disableCheckpoints: 1
+  isSafe: 0
 --- !u!114 &11442326
 MonoBehaviour:
   m_ObjectHideFlags: 1
