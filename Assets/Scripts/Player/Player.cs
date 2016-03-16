@@ -95,8 +95,8 @@ public class Player : LightSource
     public bool isSafe; // used for boss AI
     private bool deathParticlesPlayed;
     private MaterialExtensions materials;
-    private new Transform transform;
-    private new Rigidbody rigidbody;    
+    // private new Transform transform;
+    // private new Rigidbody rigidbody;    
     private int currentLevel;   
         
     /// <summary>
@@ -106,14 +106,13 @@ public class Player : LightSource
     {
        base.Awake(); // call parent LightSource Awake() first
        
-       this.transform = GetComponent<Transform>();
-       this.rigidbody = GetComponent<Rigidbody>();
+    //    this.transform = GetComponent<Transform>();
+    //    this.rigidbody = GetComponent<Rigidbody>();
        
-       this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, transform, rigidbody, this.LightEnergy, this.jetFuelEffect);
-       this.lightToggle = new PlayerLightToggle(transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
+       this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, this.Transform, this.Rigidbody, this.LightEnergy, this.jetFuelEffect);
+       this.lightToggle = new PlayerLightToggle(this.Transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
        this.materials = new MaterialExtensions();
-        
-       this.ValidateInputs(); 
+                
        this.defaultDrag = Rigidbody.drag;
        this.isDead = false;
        this.isSafe = false;
@@ -122,6 +121,11 @@ public class Player : LightSource
        
        ChangeProbeColor(Color.black);
        LoadGame();
+       
+       #if UNITY_EDITOR
+        this.ValidateInputs();
+       #endif 
+           
     }
     
     /// <summary>
@@ -152,9 +156,9 @@ public class Player : LightSource
             LightControl();
             
             // Clamp the player's velocity
-            if (rigidbody.velocity.sqrMagnitude > this.maxSpeed * this.maxSpeed)
+            if (this.Rigidbody.velocity.sqrMagnitude > this.maxSpeed * this.maxSpeed)
             {
-                rigidbody.velocity = ((Vector2)rigidbody.velocity).SetMagnitude(this.maxSpeed);
+                this.Rigidbody.velocity = ((Vector2)this.Rigidbody.velocity).SetMagnitude(this.maxSpeed);
             }
         }
     }
@@ -315,7 +319,7 @@ public class Player : LightSource
     private void Move()
     {        
         // Ensure that the rigidbody never spins
-        rigidbody.angularVelocity = Vector3.zero;
+        this.Rigidbody.angularVelocity = Vector3.zero;
         
         float thrustAxis = Input.GetAxis("ThrustAxis");
         float brakeAxis = Input.GetAxis("BrakeAxis");
@@ -360,7 +364,7 @@ public class Player : LightSource
         movement.FollowLeftStickRotation();
 
         // Ensure that the rigidbody never spins
-        rigidbody.angularVelocity = Vector3.zero;
+        this.Rigidbody.angularVelocity = Vector3.zero;
         
         previousThrustAxis = thrustAxis;
     }
@@ -399,7 +403,7 @@ public class Player : LightSource
             this.LightEnergy.Add(this.DefaultEnergy);
             this.isDead = false;
             this.deathParticlesPlayed = false;
-            this.rigidbody.drag = defaultDrag; // reset drag
+            this.Rigidbody.drag = defaultDrag; // reset drag
             LoadGame();
         }
     }
@@ -410,6 +414,7 @@ public class Player : LightSource
     /// </summary>
     private void ValidateInputs()
     {
+        #if UNITY_EDITOR
         if (massEjectionTransform == null || lightBallPrefab == null || jetFuelEffect == null)
         {
             UnityEditor.EditorApplication.isPlaying = false;
@@ -421,6 +426,7 @@ public class Player : LightSource
             UnityEditor.EditorApplication.isPlaying = false;
             Debug.LogError("Could not find LightsToToggle object!");
         }
+        #endif        
     }
 }
 
