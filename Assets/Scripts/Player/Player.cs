@@ -84,8 +84,7 @@ public class Player : LightSource
 
     [SerializeField]
     [Tooltip("If true, checkpoints are not used and user is spawned at the initial position")]
-    private bool disableCheckpoints = true;
-                
+    private bool disableCheckpoints = true;                
     private PlayerMovement movement;
     private PlayerLightToggle lightToggle;
     private float lastTimeHit = -100;  // The last time player was hit by an enemy
@@ -110,7 +109,7 @@ public class Player : LightSource
                 
        this.defaultDrag = Rigidbody.drag;
        this.isDead = false;
-       this.isSafe = false;
+       this.isSafe = true;
        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
        DontDestroyOnLoad(this.gameObject);
        
@@ -212,11 +211,12 @@ public class Player : LightSource
     /// </summary>
     private void ChangeProbeColor(Color color)
     {
+        StopAllCoroutines();
         foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
-        {            
+        {                      
             Renderer renderer = probe.GetComponent<Renderer>();
             foreach (Material mat in renderer.materials)
-            {
+            {                
                 StartCoroutine(materials.LerpColor(mat, color, lightToggleTime));
             }                    
         }                    
