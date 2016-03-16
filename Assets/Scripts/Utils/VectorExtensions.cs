@@ -15,6 +15,19 @@ public static class Vector2Extensions
 
 		return vector;
 	}
+    
+    /// <summary>
+	/// Returns a new Vector3 with the same direction as the given vector, but with the new given magnitude.
+	/// Does not mutate the given vector.
+	/// </summary>
+	public static Vector3 SetMagnitude(this Vector3 vector, float magnitude)
+	{
+		vector.Normalize ();
+		// Rescale the vector to the desired magnitude
+		vector *= magnitude;
+
+		return vector;
+	}
 
 	/// <summary>
 	/// Changes the angle of the given vector. Returns the vector. The angle must be given in RADIANS

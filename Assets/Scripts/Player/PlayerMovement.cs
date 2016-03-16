@@ -29,9 +29,16 @@ public class PlayerMovement
     private float thrustEnergyCost = 1;
     
     /// <summary>
+    /// The damping to apply when the brakes are on at full strength
+    /// </summary>
+    private float brakeDrag = 1;
+    
+    /// <summary>
     /// The propulsion effect activated when the player is propulsing
     /// </summary>
     private GameObject jetFuelEffect;
+    
+    private float defaultDrag;
 
     /** Caches the player's components */
     private Transform transform;
@@ -41,14 +48,27 @@ public class PlayerMovement
     /// <summary>
     /// Public constructor
     /// </summary>
-    public PlayerMovement(Transform massEjectionTransform, GameObject lightBallPrefab, float thrustForce, float changeDirectionBoost, float thrustEnergyCost, Transform transform, Rigidbody rigidbody, LightEnergy lightEnergy, GameObject jetFuelEffect)
+    public PlayerMovement(
+        Transform massEjectionTransform, 
+        GameObject lightBallPrefab, 
+        float thrustForce, 
+        float changeDirectionBoost, 
+        float thrustEnergyCost, 
+        float brakeDrag, 
+        Transform transform, 
+        Rigidbody rigidbody, 
+        LightEnergy lightEnergy, 
+        GameObject jetFuelEffect
+    )
     {
         this.massEjectionTransform = massEjectionTransform;
         this.lightBallPrefab = lightBallPrefab;
         this.thrustForce = thrustForce;
         this.changeDirectionBoost = changeDirectionBoost;
         this.thrustEnergyCost = thrustEnergyCost;
+        this.brakeDrag = brakeDrag;
         this.jetFuelEffect = jetFuelEffect;
+        this.defaultDrag = rigidbody.drag;
 
         this.transform = transform;
         this.rigidbody = rigidbody;
@@ -95,20 +115,18 @@ public class PlayerMovement
         }
         //jetFuelEffect.enableEmission = true;
     }
+    
+    public void Propulse(Vector2 direction)
+    {
+        Propulse(direction,1);
+    }
 
     /// <summary>
     /// Propulse in the given direction, pushing the gameObject in the given direction
+    /// <param name="strength">Value between 0 and 1. Determines the speed of the propulsion.</param>
     /// </summary>
-    public void Propulse(Vector2 direction)
+    public void Propulse(Vector2 direction, float strength)
     {
-        // Spawn a light mass at the position of the character's mass ejector
-        //GameObject lightMass = GameObject.Instantiate(lightBallPrefab);
-        //lightMass.transform.position = massEjectionTransform.position;  
-        // Push the light mass in the given direction
-        //lightMass.GetComponent<Rigidbody>().AddForce(thrustForce * -direction, ForceMode.Force);
-        //delete mass after an amount of time
-        //GameObject.Destroy(lightMass, 1.0f);
-        
         // Compute how much the gameObject has to turn opposite to its velocity vector
         float angleChange = Vector2.Angle((Vector2)rigidbody.velocity, direction);
         // Debug.Log("Change in angle (PlayerMovement.Propulse()): " + angleChange);
@@ -116,10 +134,12 @@ public class PlayerMovement
         // Augment the thrusting power depending on how much the player has to turn
         float thrustBoost = 1 + (angleChange/180) * changeDirectionBoost;
 
+        // Calculate the final propulsion force
+        Vector3 thrustVector = thrustForce * direction * thrustBoost * strength;
         // Push the character in the given direction
-        rigidbody.AddForce(thrustForce * direction * thrustBoost, ForceMode.Force);
+        rigidbody.AddForce(thrustVector, ForceMode.Force);
         // Deplete energy from the player for each ejection
-        lightEnergy.Deplete(thrustEnergyCost);
+        lightEnergy.Deplete(thrustEnergyCost * strength);
     }
     
     /// <summary>
@@ -130,7 +150,15 @@ public class PlayerMovement
         foreach (ParticleSystem particles in jetFuelEffect.GetComponentsInChildren<ParticleSystem>())
         {
             var em = particles.emission;
-            em.enabled = true;
+            em.enabled = false;
         }
+    }
+    
+    /// <summary>
+    /// Add linear damping on the player's rigidbody 
+    /// </summary>
+    public void Brake(float strength)
+    {
+        rigidbody.drag = Mathf.Lerp(defaultDrag, brakeDrag, strength);
     }
 }
