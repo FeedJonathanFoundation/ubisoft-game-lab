@@ -261,9 +261,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 458268}
+  - 114: {fileID: 11473286}
   m_Layer: 13
   m_Name: Fish A (School)
-  m_TagString: Untagged
+  m_TagString: School
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4019,9 +4020,9 @@ MonoBehaviour:
   defaultEnergy: 5
   infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11405472}
+  damageInflicted: 4
   lightDetector: {fileID: 11490264}
   ignoreFishOfSameType: 0
-  debugLogActions: 0
   flockingBehaviour:
     strengthMultiplier: 1
     overrideSteerableSpeed: 1
@@ -4314,9 +4315,9 @@ MonoBehaviour:
   defaultEnergy: 5
   infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11461018}
+  damageInflicted: 4
   lightDetector: {fileID: 11473788}
   ignoreFishOfSameType: 0
-  debugLogActions: 0
   flockingBehaviour:
     strengthMultiplier: 1
     overrideSteerableSpeed: 1
@@ -4682,9 +4683,9 @@ MonoBehaviour:
   defaultEnergy: 5
   infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11464082}
+  damageInflicted: 4
   lightDetector: {fileID: 11457802}
   ignoreFishOfSameType: 0
-  debugLogActions: 0
   flockingBehaviour:
     strengthMultiplier: 1
     overrideSteerableSpeed: 1
@@ -5076,9 +5077,9 @@ MonoBehaviour:
   defaultEnergy: 5
   infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11454604}
+  damageInflicted: 4
   lightDetector: {fileID: 11440734}
   ignoreFishOfSameType: 0
-  debugLogActions: 0
   flockingBehaviour:
     strengthMultiplier: 1
     overrideSteerableSpeed: 1
@@ -5225,6 +5226,17 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 4096
+--- !u!114 &11473286
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe1209f00996fe4393a938e38a0819d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11473366
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5278,9 +5290,9 @@ MonoBehaviour:
   defaultEnergy: 5
   infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11409812}
+  damageInflicted: 4
   lightDetector: {fileID: 11482580}
   ignoreFishOfSameType: 0
-  debugLogActions: 0
   flockingBehaviour:
     strengthMultiplier: 1
     overrideSteerableSpeed: 1
@@ -5695,9 +5707,9 @@ MonoBehaviour:
   defaultEnergy: 5
   infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11411348}
+  damageInflicted: 4
   lightDetector: {fileID: 11476854}
   ignoreFishOfSameType: 0
-  debugLogActions: 0
   flockingBehaviour:
     strengthMultiplier: 1
     overrideSteerableSpeed: 1
@@ -5880,9 +5892,9 @@ MonoBehaviour:
   defaultEnergy: 5
   infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11482674}
+  damageInflicted: 4
   lightDetector: {fileID: 11439674}
   ignoreFishOfSameType: 0
-  debugLogActions: 0
   flockingBehaviour:
     strengthMultiplier: 1
     overrideSteerableSpeed: 1
