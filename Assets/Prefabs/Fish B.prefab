@@ -59,7 +59,6 @@ GameObject:
   - 4: {fileID: 425022}
   - 114: {fileID: 11426470}
   - 54: {fileID: 5412154}
-  - 114: {fileID: 11429294}
   - 114: {fileID: 11441648}
   - 114: {fileID: 11467976}
   m_Layer: 25
@@ -315,8 +314,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.864006, y: 38.131367, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -2.7, y: -2.01, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 427610}
   - {fileID: 419526}
@@ -757,87 +756,6 @@ MonoBehaviour:
   maxColour: {r: 0.9411765, g: 0.027681688, b: 0.027681688, a: 0}
   changeSpeed: 0
   updateChildren: 0
---- !u!114 &11429294
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 140610}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48fe9e9835684164999d67cd412e3784, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  steeringBehaviors:
-  - type: 10
-    strengthMultiplier: 0.5
-    targetSteerable: {fileID: 0}
-    targetTransform: {fileID: 0}
-    slowingRadius: 0
-    circleDistance: 0
-    circleRadius: 0
-    angleChange: 0
-    obstacleAvoidanceForce: 0
-    maxObstacleViewDistance: 0
-    obstacleLayer:
-      serializedVersion: 2
-      m_Bits: 0
-  - type: 9
-    strengthMultiplier: 10
-    targetSteerable: {fileID: 0}
-    targetTransform: {fileID: 0}
-    slowingRadius: 0
-    circleDistance: 0
-    circleRadius: 0
-    angleChange: 0
-    obstacleAvoidanceForce: 0
-    maxObstacleViewDistance: 0
-    obstacleLayer:
-      serializedVersion: 2
-      m_Bits: 0
-  - type: 8
-    strengthMultiplier: 1.4
-    targetSteerable: {fileID: 0}
-    targetTransform: {fileID: 0}
-    slowingRadius: 0
-    circleDistance: 0
-    circleRadius: 0
-    angleChange: 0
-    obstacleAvoidanceForce: 0
-    maxObstacleViewDistance: 0
-    obstacleLayer:
-      serializedVersion: 2
-      m_Bits: 4096
-  - type: 7
-    strengthMultiplier: 1
-    targetSteerable: {fileID: 0}
-    targetTransform: {fileID: 0}
-    slowingRadius: 0
-    circleDistance: 0
-    circleRadius: 0
-    angleChange: 0
-    obstacleAvoidanceForce: 4
-    maxObstacleViewDistance: 4
-    obstacleLayer:
-      serializedVersion: 2
-      m_Bits: 4096
-  - type: 5
-    strengthMultiplier: 1
-    targetSteerable: {fileID: 0}
-    targetTransform: {fileID: 0}
-    slowingRadius: 0
-    circleDistance: 1
-    circleRadius: 1
-    angleChange: 20
-    obstacleAvoidanceForce: 0
-    maxObstacleViewDistance: 0
-    obstacleLayer:
-      serializedVersion: 2
-      m_Bits: 0
-  stoppingCondition:
-    target: {fileID: 0}
-    stoppingDistance: 0
-    waitTime: 0
 --- !u!114 &11429868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -877,8 +795,8 @@ MonoBehaviour:
   flockingBehaviour:
     strengthMultiplier: 1
     overrideSteerableSpeed: 1
-    minSpeed: 1.5
-    maxSpeed: 1.5
+    minSpeed: 2
+    maxSpeed: 3
     overrideMaxForce: 1
     maxForce: 2
     wander:
