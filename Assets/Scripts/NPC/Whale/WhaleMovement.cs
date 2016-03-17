@@ -24,8 +24,6 @@ public class WhaleMovement : MonoBehaviour
 
     void Start()
     {
-        frequency = movementSpeed / 2;
-        magnitude = movementSpeed / 50;
         position = transform.position;
         axis = transform.up;
         Animator animator = GetComponentInParent<Animator>();
