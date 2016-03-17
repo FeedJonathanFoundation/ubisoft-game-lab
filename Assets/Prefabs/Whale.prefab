@@ -70,6 +70,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 482478}
   - 95: {fileID: 9500052}
+  - 114: {fileID: 11485700}
+  - 54: {fileID: 5407974}
+  - 135: {fileID: 13571604}
   m_Layer: 0
   m_Name: Whale
   m_TagString: Untagged
@@ -101,8 +104,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 493962}
   - 135: {fileID: 13512282}
-  - 114: {fileID: 11497914}
-  - 54: {fileID: 5492972}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -167,7 +168,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173964}
   m_LocalRotation: {x: 0.1753665, y: -0.9845032, z: 0.000000028570831, w: 0.00000016039594}
-  m_LocalPosition: {x: 164.2, y: 367.2, z: -0}
+  m_LocalPosition: {x: 105.7, y: 345.7, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 493962}
@@ -200,12 +201,12 @@ Transform:
   - {fileID: 432582}
   m_Father: {fileID: 417030}
   m_RootOrder: 0
---- !u!54 &5492972
+--- !u!54 &5407974
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 182112}
+  m_GameObject: {fileID: 173964}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -232,21 +233,21 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11497914
+--- !u!114 &11485700
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 182112}
+  m_GameObject: {fileID: 173964}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 811661b0681ec475c95072d468dff566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 3.5
-  frequency: 1.5
+  frequency: 1
   magnitude: 0.1
-  animationSpeed: 0.4
+  animationSpeed: 0.2
   target: {fileID: 0}
 --- !u!135 &13512282
 SphereCollider:
@@ -256,10 +257,22 @@ SphereCollider:
   m_GameObject: {fileID: 182112}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: -10, y: 0, z: 0}
+--- !u!135 &13571604
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173964}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &13768508
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
