@@ -64,7 +64,7 @@ public class LightEnergy
     /// <returns>float - amount of energy removed</returns>
     public float Deplete(float energyToRemove)
     {
-        if (hasInfiniteEnergy) { return 0; }
+        if (hasInfiniteEnergy) { return energyToRemove; }
         
         float energyRemoved = energyToRemove;
         
