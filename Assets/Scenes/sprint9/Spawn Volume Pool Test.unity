@@ -2443,6 +2443,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 85103961}
   - 135: {fileID: 85103962}
+  - 114: {fileID: 85103963}
   m_Layer: 10
   m_Name: SC (1)
   m_TagString: Untagged
@@ -2474,6 +2475,17 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &85103963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 85103960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a365063b416ea4cfdb8f126c22f2d86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &88986780
 GameObject:
   m_ObjectHideFlags: 0
@@ -2599,6 +2611,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 116394952}
   - 135: {fileID: 116394953}
+  - 114: {fileID: 116394954}
   m_Layer: 10
   m_Name: SC (2)
   m_TagString: Untagged
@@ -2630,6 +2643,17 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &116394954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 116394951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a365063b416ea4cfdb8f126c22f2d86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &123163154 stripped
 Transform:
   m_PrefabParentObject: {fileID: 448832, guid: 0e56885c934c249dfb2884da1da28c78, type: 2}
@@ -4644,6 +4668,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 640720261}
   - 135: {fileID: 640720262}
+  - 114: {fileID: 640720263}
   m_Layer: 10
   m_Name: SC
   m_TagString: Untagged
@@ -4675,6 +4700,17 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &640720263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 640720260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a365063b416ea4cfdb8f126c22f2d86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &657785791
 GameObject:
   m_ObjectHideFlags: 0
@@ -8668,9 +8704,9 @@ GameObject:
   - 4: {fileID: 1980157508}
   - 114: {fileID: 1258225731}
   - 114: {fileID: 1258225730}
-  - 135: {fileID: 1258225732}
   - 135: {fileID: 1258225734}
   - 135: {fileID: 1258225733}
+  - 135: {fileID: 1258225732}
   m_Layer: 10
   m_Name: SpawnVolume
   m_TagString: Untagged
@@ -8726,12 +8762,11 @@ MonoBehaviour:
   - {fileID: 0}
   minFishCount: 30
   maxFishCount: 30
-  maxDistance: 40
+  maxDistance: 200
 --- !u!135 &1258225732
 SphereCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 13559234, guid: 1e3089721c22b44629b709e1fb44d52c,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1258225729}
   m_Material: {fileID: 0}
@@ -8747,7 +8782,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1258225729}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
   m_Radius: 10
@@ -8759,7 +8794,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1258225729}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
   m_Radius: 10
