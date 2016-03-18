@@ -1,6 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
+/// <summary>
+/// Checkpoint class is responsible for behaviour related to Checkpoint object. 
+/// It recharges player object with energy on collision and saves current progress.
+///
+/// Optionally, it switches scenes, to bring the player to the next level.
+///
+/// @author - Alex I.
+/// @version - 1.0.0
+///
+/// </summary>
 public class Checkpoint : LightSource
 {
     [SerializeField]
@@ -9,16 +20,15 @@ public class Checkpoint : LightSource
     
     protected override void Awake()
     {       
-        base.Awake(); // call parent LightSource Awake() first
+        base.Awake();
         this.InfiniteEnergy = true; // override default LightSource value
     }
 
     protected void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && other.name == "Player")
         {
-            Player player = other.gameObject.GetComponent<Player>();
-            
+            Player player = other.gameObject.GetComponent<Player>();                                    
             PlayerData data = new PlayerData();
             
             if (changeScene)
@@ -40,18 +50,30 @@ public class Checkpoint : LightSource
             
             if (changeScene)
             {
-                ChangeLevel(player.CurrentLevel + 1);
-                player.CurrentLevel = player.CurrentLevel + 1;
+                StartCoroutine(ChangeLevel(player.CurrentLevel + 1));
+                player.CurrentLevel = player.CurrentLevel + 1;                                                
             }        
         }
     }
     
-    private void ChangeLevel(int levelID)
+    private IEnumerator ChangeLevel(int levelID)
     {
         if (SceneManager.sceneCountInBuildSettings > levelID)
         {
-            SceneManager.LoadScene(levelID, LoadSceneMode.Single);
-            Destroy(this.gameObject); // destroys checkpoint to prevent it from appearing in the following scene
+            GameObject camera = GameObject.Find("Main Camera");
+            float fadeTime = 0;
+            
+            // Apply camera fade while loading the next scene
+            if (camera != null && camera.GetComponent<Fade>())
+            {                
+                fadeTime = camera.GetComponent<Fade>().BeginFade(1);                                        
+            }
+            
+            yield return new WaitForSeconds(fadeTime);
+            SceneManager.LoadScene(levelID, LoadSceneMode.Single);            
+            
+            // Destroy checkpoint to prevent it from appearing in the next scene
+            Destroy(this.gameObject); 
         }
     }
 
