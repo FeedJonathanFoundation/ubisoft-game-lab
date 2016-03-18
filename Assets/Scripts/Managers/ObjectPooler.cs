@@ -6,46 +6,67 @@ public class ObjectPooler : MonoBehaviour
 {
 
     public static ObjectPooler current;
+    [Tooltip("Game objects to pool and spawn.")]
     [SerializeField]
-    private GameObject pooledObject;
+    private GameObject[] pooledObjects;
+    [Tooltip("Number of game objects to pool (in order).")]
     [SerializeField]
-    private int pooledAmount = 40;
+    private int[] pooledAmount;
+    [Tooltip("If true, more game objects will be instantiated if they 'run out' of pooled objects.")]
     [SerializeField]
     private bool extensible;
 
-    private List<GameObject> pooledObjects;
+    private List<GameObject>[] pool;
 
     void Awake()
     {
         current = this;
+        pooledAmount = new int[pooledObjects.Length];
     }
     
     void Start()
     {
-        pooledObjects = new List<GameObject>();
-        for (int i = 0; i < pooledAmount; i++)
+        pool = new List<GameObject>[pooledObjects.Length];
+        for (int i = 0; i < pooledObjects.Length; i++)
         {
-            GameObject gameobject = (GameObject)Instantiate(pooledObject);
-            gameobject.SetActive(false);
-            pooledObjects.Add(gameobject);
+            pool[i] = new List<GameObject>();
+            for (int j = 0; j < pooledAmount[i]; j++)
+            {
+                GameObject gameobject = (GameObject)Instantiate(pooledObjects[i]);
+                gameobject.SetActive(false);
+                pool[i].Add(gameobject);
+            }
         }
     }
 	
-	public GameObject GetPooledObject()
+	public GameObject GetPooledObject(int objectID)
     {
-        for (int i = 0; i < pooledObjects.Count; i++)
+        if (objectID > pooledObjects.Length)
         {
-            if (!pooledObjects[i].activeInHierarchy)
+            Debug.Log("Trying to rerieve a pooled object that does not exist. Add new object to pooledObjects array.");
+            return null;
+        }
+        for (int i = 0; i < pool[objectID].Count; i++)
+        {
+            if (!pool[objectID][i].activeInHierarchy)
             {
-                return pooledObjects[i];
+                return pool[objectID][i];
             }
         }
         if (extensible)
         {
-            GameObject gameobject = (GameObject)Instantiate(pooledObject);
-            pooledObjects.Add(gameobject);
+            GameObject gameobject = (GameObject)Instantiate(pooledObjects[objectID]);
+            pool[objectID].Add(gameobject);
             return gameobject;
         }
         return null;
+    }
+    
+    public int PooledObjectCount
+    {
+        get
+        {
+            return pooledObjects.Length;
+        }
     }
 }
