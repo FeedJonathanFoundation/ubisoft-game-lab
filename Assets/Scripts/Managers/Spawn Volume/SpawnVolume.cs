@@ -50,30 +50,29 @@ public class SpawnVolume : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Max distance between player and fish before fish is disabled.")]
-    private float maxDistance = 60f;
+    private float maxDistance;
 
     private Transform player;
-    private int fishCount;
     private bool[] disabled;
     private bool[] initialized;
-    private float maxDistanceSquared;
 
     private int colliderCount;
 
     private List<GameObject> fishes;
-   
+
+    private ObjectPooler pool;
+
     /// <summary>
     /// Initializes fish count to 0,
     /// Spawns the minimum number of fish without delay
     /// Spawns the maximum number of fish incrementally
     /// </summary>
-	void Start() 
+    void Start() 
     {
         fishes = new List<GameObject>();
-        fishCount = 0;
-        maxDistanceSquared = maxDistance;// * maxDistance;
         player = GameObject.FindWithTag("Player").transform;
-        numberOfTypes = ObjectPooler.current.PooledObjectCount;
+        pool = ObjectPooler.current;
+        numberOfTypes = pool.PooledObjectCount;
         colliderCount = colliders.Length;
         disabled = new bool[colliderCount];
         initialized = new bool[colliderCount];
@@ -82,11 +81,10 @@ public class SpawnVolume : MonoBehaviour
     
     void Update()
     {
-        int count = 0;
         for (int i = 0; i < colliderCount; i++)
         {
             if (disabled[i]) { continue; }
-            if (!initialized[i]) { Debug.Log("count " + count++); Initialize(i); }
+            if (!initialized[i]) { Initialize(i); }
         }
         if (fishes.Count > 0)
         {
@@ -129,7 +127,7 @@ public class SpawnVolume : MonoBehaviour
     {
         float distanceSquared = (fish.transform.position - player.position).sqrMagnitude;
         
-        if (distanceSquared > maxDistanceSquared)
+        if (distanceSquared > maxDistance)
         {
             fish.SetActive(false);
         }
@@ -151,6 +149,8 @@ public class SpawnVolume : MonoBehaviour
         initialized[colliderIndex] = true;
     }
 
+
+    //////// DEPRECATED ///////////// 
     /// <summary>
     /// If player is dead or max number of fish have been spawned,
     /// exit function
@@ -159,7 +159,6 @@ public class SpawnVolume : MonoBehaviour
     private void Spawn()
     {
         // if (disabled) { return; }
-        // if (fishCount >= maxFishCount) { return; }
         // if (!spawnRandom) { return; }
         
         // int spawnTypeIndex = ChooseFish();
@@ -176,7 +175,6 @@ public class SpawnVolume : MonoBehaviour
         // fish.transform.rotation = Quaternion.identity;
         // fish.SetActive(true);
         // fishes.Add(fish);
-        // fishCount++;
     }
     
     private void SpawnCircle(int numberOfFish, int colliderIndex)
@@ -191,7 +189,7 @@ public class SpawnVolume : MonoBehaviour
             Vector3 spawnLocation = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius + GetSpawnVolumeCenter(colliderIndex);
             if (numberOfTypes > -1)
             {
-                GameObject fish = ObjectPooler.current.GetPooledObject(spawnTypeIndex);
+                GameObject fish = pool.GetPooledObject(spawnTypeIndex);
                 if (fish == null) { return; }
                 fish.transform.position = spawnLocation;
                 fish.transform.rotation = Quaternion.identity;
@@ -204,7 +202,6 @@ public class SpawnVolume : MonoBehaviour
                 }    
                     
                 fishes.Add(fish);
-                fishCount++;
             }
         }
     }
@@ -219,12 +216,9 @@ public class SpawnVolume : MonoBehaviour
         
         // Choose fish based on probabilities
         float total = 0;
-         int count = 0;
         for (int i = 0; i < numberOfTypes; i++)
         {
             total += probabilities[i];
-            Debug.Log(count++);
-            Debug.Log(total);
         }
 
         float randomFish = Random.value * total;
@@ -233,15 +227,12 @@ public class SpawnVolume : MonoBehaviour
             // 
             if (randomFish < probabilities[i])
             {
-                Debug.Log("1: " + i);
                 return i;
             }
             else {
                 randomFish -= probabilities[i];
             }
-            Debug.Log(randomFish);
         }
-        Debug.Log("2: " + (probabilities.Length - 1));
         return (probabilities.Length - 1);
     }
     
@@ -284,7 +275,7 @@ public class SpawnVolume : MonoBehaviour
     private bool IsValidSpawnPoint(Vector3 spawnPoint, int spawnIndex)
     {
         // Calculate spawn radius of fish
-        GameObject obj = ObjectPooler.current.GetPooledObject(spawnIndex);
+        GameObject obj = pool.GetPooledObject(spawnIndex);
         float spawnRadius = obj.GetComponent<SphereCollider>().radius + 1;
         
         if (IsOccupied(spawnPoint, spawnRadius))
@@ -304,21 +295,6 @@ public class SpawnVolume : MonoBehaviour
             return false; 
         }
         return true;
-    }
-    
-    // If player enters spawn volume, disable spawning
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("SpawnSignal")) 
-        {
-            int index = GetSpawnVolumeIndex(name);
-            disabled[index] = false;
-        }
-        if (other.gameObject.CompareTag("Player")) 
-        {
-            int index = GetSpawnVolumeIndex(name);
-            disabled[index] = true;
-        }
     }
     
     private void Reset()
@@ -342,17 +318,28 @@ public class SpawnVolume : MonoBehaviour
         return center;
     }
     
-    private int GetSpawnVolumeIndex(string triggerName)
+    private int GetSpawnVolumeIndex(Vector3 point)
     {
         for (int i = 0; i < colliderCount; i++)
         {
-            if (colliders[i].name == triggerName)
+            Vector3 colliderCenter = colliders[i].GetComponent<SphereCollider>().transform.position;
+
+            if (colliderCenter == point)
             {
                 return i;
             }
         }
         Debug.Log("Spawn volume index not found.");
-        return 0;
+        return -1;
+    }
+    
+    public void UpdateSpawnVolume(Vector3 center, bool disable)
+    {
+        int index = GetSpawnVolumeIndex(center);
+        if (index > -1)
+        {
+            disabled[index] = disable;
+        }
     }
 
 }
