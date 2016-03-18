@@ -31,7 +31,9 @@ public class SmoothCamera : MonoBehaviour
     void Awake()
     {
         transform = GetComponent<Transform>();
-        
+        Vector3 position = transform.position;
+        position.z = zPosition;
+        transform.position = position;
         deadzoneRadiusSquared = deadzoneRadius * deadzoneRadius;
         
         DontDestroyOnLoad(this.gameObject); 
@@ -62,7 +64,7 @@ public class SmoothCamera : MonoBehaviour
             // Move the camera to its target smoothly.
             Vector3 newPosition = Vector2.SmoothDamp(transform.position, (Vector2)targetPosition, ref velocity, dampTime);
             // Lock the camera's depth
-            newPosition.z = zPosition;
+            newPosition.z = transform.position.z;
             
             //Debug.Log("Move camera to: " + (Vector2)targetPosition);
 
