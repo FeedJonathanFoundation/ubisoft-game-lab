@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Checkpoint : LightSource
 {
@@ -15,9 +16,10 @@ public class Checkpoint : LightSource
 
     protected void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && other.name == "Player")
         {
             Player player = other.gameObject.GetComponent<Player>();
+            Debug.Log(other.name);
             
             PlayerData data = new PlayerData();
             
@@ -40,16 +42,18 @@ public class Checkpoint : LightSource
             
             if (changeScene)
             {
-                ChangeLevel(player.CurrentLevel + 1);
+                StartCoroutine(ChangeLevel(player.CurrentLevel + 1));
                 player.CurrentLevel = player.CurrentLevel + 1;
             }        
         }
     }
     
-    private void ChangeLevel(int levelID)
+    private IEnumerator ChangeLevel(int levelID)
     {
         if (SceneManager.sceneCountInBuildSettings > levelID)
         {
+            float fadeTime = GameObject.Find("Main Camera").GetComponent<Fade>().BeginFade(1);                        
+            yield return new WaitForSeconds(fadeTime);
             SceneManager.LoadScene(levelID, LoadSceneMode.Single);
             Destroy(this.gameObject); // destroys checkpoint to prevent it from appearing in the following scene
         }
