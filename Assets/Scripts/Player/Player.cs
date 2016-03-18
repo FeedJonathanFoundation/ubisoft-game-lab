@@ -389,7 +389,7 @@ public class Player : LightSource
     void OnCollisionEnter(Collision collision)
     {
         // Player has collided upon death
-        if (isDead && !deathParticlesPlayed)
+        if (isDead && !deathParticlesPlayed && playerDeathParticles != null)
         {
             // Calculate the angle of the player's velocity upon impact
             float crashAngle = Mathf.Rad2Deg * Mathf.Atan2(Rigidbody.velocity.y,Rigidbody.velocity.x);
