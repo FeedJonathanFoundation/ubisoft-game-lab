@@ -138,7 +138,10 @@ public class Player : LightSource
             float invulnerabilityPercent = (Time.time-lastTimeHit)/invulnerabilityTime;
             Rigidbody.drag = (invulnerabilityDrag-defaultDrag) * (1-invulnerabilityPercent) + defaultDrag; 
         }
-        else { Rigidbody.drag = defaultDrag; }
+        else 
+        { 
+            Rigidbody.drag = defaultDrag; 
+        }
         
         if (isDead)
         {
@@ -162,7 +165,8 @@ public class Player : LightSource
     /// </summary>
     protected void OnLevelWasLoaded(int level) 
     {
-        Debug.Log("Scene " + level + " is loaded!");
+        Debug.Log("Scene " + level + " is loaded!");    
+        GameObject.Find("Main Camera").GetComponent<Fade>().BeginFade(-1);    
         this.transform.position = new Vector3(0, 0, 0); 
     }
           
@@ -328,6 +332,7 @@ public class Player : LightSource
         {
             movement.Propulse(-massEjectionTransform.up);
         }
+        
         if (thrustAxis != 0)
         {
             // Propulse in the direction of the left stick (opposite to the rear of the probe)
