@@ -113,8 +113,9 @@ public class Player : LightSource
        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
        DontDestroyOnLoad(this.gameObject);
        
-       ChangeProbeColor(Color.black);
+       ChangeProbeColor(Color.black, false);
        LoadGame();
+       ResetPlayerState();
        
        #if UNITY_EDITOR
         this.ValidateInputs();
@@ -165,9 +166,8 @@ public class Player : LightSource
     /// </summary>
     protected void OnLevelWasLoaded(int level) 
     {
-        Debug.Log("Scene " + level + " is loaded!");    
-        GameObject.Find("Main Camera").GetComponent<Fade>().BeginFade(-1);    
-        this.transform.position = new Vector3(0, 0, 0); 
+        Debug.Log("Scene " + level + " is loaded!");
+        ResetPlayerState();                                       
     }
           
     /// <summary>
@@ -187,6 +187,13 @@ public class Player : LightSource
         isDead = true;
                
         Debug.Log("Game OVER! Press 'R' to restart!");
+    }
+    
+    public void ResetPlayerState()
+    {                
+        this.Rigidbody.velocity = Vector3.zero;
+        this.Transform.position = Vector3.zero;
+        this.Transform.localEulerAngles = new Vector3(0, 0, -90);
     }
                       
     /// <summary>
@@ -211,17 +218,27 @@ public class Player : LightSource
     }
             
     /// <summary>
-    /// Smoothly changes color of the player avatar to the given one 
+    /// Changes the color of the player avatar to the given one
+    ///  
     /// </summary>
-    private void ChangeProbeColor(Color color)
+    /// <param name="color">target color</param>
+    /// <param name="isSmooth">if true, the color change will follow a smooth gradient</param>
+    private void ChangeProbeColor(Color color, bool isSmooth)
     {
         StopAllCoroutines();
         foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
         {                      
             Renderer renderer = probe.GetComponent<Renderer>();
             foreach (Material mat in renderer.materials)
-            {                
-                StartCoroutine(materials.LerpColor(mat, color, lightToggleTime));
+            {         
+                if (isSmooth)
+                {       
+                    StartCoroutine(materials.LerpColor(mat, color, lightToggleTime));
+                }
+                else
+                {
+                    materials.ChangeColor(mat, color);
+                }
             }                    
         }                    
     }
@@ -239,11 +256,11 @@ public class Player : LightSource
                 this.lightToggle.ToggleLights();
                 if (this.lightToggle.LightsEnabled)
                 {
-                    this.ChangeProbeColor(new Color(1f, lightToggleTime, 0f, 1f));
+                    this.ChangeProbeColor(new Color(1f, lightToggleTime, 0f, 1f), true);
                 }
                 else
                 {
-                    this.ChangeProbeColor(Color.black);
+                    this.ChangeProbeColor(Color.black, true);
                 }                                                 
             }
 

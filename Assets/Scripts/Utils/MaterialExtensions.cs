@@ -20,7 +20,7 @@ public class MaterialExtensions
     }
     
     /// <summary>
-    /// 
+    /// Smoothly changes current color of material to target color
     /// </summary>
     /// <param name="material">target material</param>
     /// <param name="newColor">target color</param>
@@ -38,6 +38,16 @@ public class MaterialExtensions
             progress += increment;
             yield return new WaitForSeconds(increment);
         }
+    }
+    
+    /// <summary>
+    /// Changes the color of the given material 
+    /// </summary>
+    /// <param name="material"></param>
+    /// <param name="color"></param>
+    public void ChangeColor(Material material, Color color)
+    {
+        material.SetColor("_EmissionColor", color);
     }
        
 }
