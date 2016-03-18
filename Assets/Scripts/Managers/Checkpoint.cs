@@ -60,10 +60,18 @@ public class Checkpoint : LightSource
     {
         if (SceneManager.sceneCountInBuildSettings > levelID)
         {
+            GameObject camera = GameObject.Find("Main Camera");
+            float fadeTime = 0;
+            
             // Apply camera fade while loading the next scene
-            float fadeTime = GameObject.Find("Main Camera").GetComponent<Fade>().BeginFade(1);                        
+            if (camera != null && camera.GetComponent<Fade>())
+            {                
+                fadeTime = camera.GetComponent<Fade>().BeginFade(1);                                        
+            }
+            
             yield return new WaitForSeconds(fadeTime);
             SceneManager.LoadScene(levelID, LoadSceneMode.Single);            
+            
             // Destroy checkpoint to prevent it from appearing in the next scene
             Destroy(this.gameObject); 
         }
