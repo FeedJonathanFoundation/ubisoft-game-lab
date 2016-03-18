@@ -6,16 +6,16 @@ public class BossEatFlare : MonoBehaviour
     [Tooltip("Size of the mouth of the boss fish")]
     public float mouthSize;
 
-    // Use this for initialization
-    void Start () 
+    void Start() 
     {
-        //set the radius
+        // Set the radius
         this.GetComponent<SphereCollider>().radius = mouthSize;
     }
     
     void OnTriggerEnter(Collider col) 
     {
-        if(col.tag == "Flare") // have to put this because LightAbsorber has a player tag
+        // LightAbsorber has a player tag
+        if(col.tag == "Flare")
         {
             Destroy(col.transform.parent.gameObject);
         }
