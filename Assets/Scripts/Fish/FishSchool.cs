@@ -6,11 +6,32 @@ using System.Collections;
 /// </summary>
 public class FishSchool : MonoBehaviour
 {
+    [Tooltip("The initial angle at which the fish will start swimming." +
+             " (Angle in degrees, clockwise, relative to +y-axis)")]
+    [SerializeField]
+    private float defaultWanderAngle;    
+    
     private AbstractFish[] fishes;
 
     void Awake()
     {
         fishes = GetComponentsInChildren<AbstractFish>();
+        
+        Initialize();
+    }
+    
+    /// <summary>
+    /// Should be called when the fish are initially spawned. Sets the fishes' default
+    /// wander angle to the one specified in "defaultWanderAngle:float".
+    /// </summary>
+    public void Initialize()
+    {
+        for (int i = 0; i < fishes.Length; i++)
+        {
+            // Set each fish's default wander angle so that they swim in the same direction
+            Steerable fishSteerable = fishes[i].GetComponent<Steerable>();
+            fishSteerable.WanderAngle = defaultWanderAngle;
+        }
     }
 
     /// <summary>
@@ -20,4 +41,13 @@ public class FishSchool : MonoBehaviour
     {
         get { return fishes; }
     }
+    
+    /// <summary>
+    /// The initial angle at which the fish will start swimming. (Angle in degrees, clockwise, relative to +y-axis)
+    /// </summary>
+    private float DefaultWanderAngle
+    {
+        get { return defaultWanderAngle; }
+        set { defaultWanderAngle = value; }
+    }  
 }
