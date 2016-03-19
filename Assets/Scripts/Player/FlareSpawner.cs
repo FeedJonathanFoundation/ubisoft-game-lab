@@ -58,6 +58,10 @@ public class FlareSpawner : MonoBehaviour
                     // Apply recoil in the opposite direction the flare was shot
                     rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
                     timer = 0.0f;
+                    
+                    AkSoundEngine.PostEvent("Flare", this.gameObject);
+                    // STELLA if eaten shut off
+
                     //reset all values for the zoom when ever a player fires a flare
                     if (smoothCamera != null)
                     {
