@@ -97,7 +97,8 @@ public class Player : LightSource
     private bool isDead; // determines is current player is dead
     public bool isSafe; // used for boss AI
     private bool deathParticlesPlayed;
-    private MaterialExtensions materials;      
+    private MaterialExtensions materials;    
+    private ControllerRumble controllerRumble;  // Caches the controller rumble component
     private int currentLevel;   
         
     /// <summary>
@@ -114,6 +115,7 @@ public class Player : LightSource
        this.defaultDrag = Rigidbody.drag;
        this.isDead = false;
        this.isSafe = true;
+       this.controllerRumble = GetComponent<ControllerRumble>();
        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
        DontDestroyOnLoad(this.gameObject);
        
@@ -316,6 +318,9 @@ public class Player : LightSource
         {
             // Instantiate hit particles
             GameObject.Instantiate(fishHitParticles, transform.position, Quaternion.Euler(0,0,0));
+            
+            // Rumble the controller when the player hits a fish.
+            controllerRumble.PlayerHitByFish();
         }
         
         // The player was just hit
@@ -412,6 +417,8 @@ public class Player : LightSource
             // Spawn the explosion
             ParticleSystem explosion = GameObject.Instantiate(playerDeathParticles,
                                         Transform.position,Quaternion.Euler(-90,explosionAngle,0)) as ParticleSystem;
+            // Rumble the controller
+            controllerRumble.PlayerDied();
             
             Transform.localScale = Vector3.zero;  
             Rigidbody.isKinematic = true;
