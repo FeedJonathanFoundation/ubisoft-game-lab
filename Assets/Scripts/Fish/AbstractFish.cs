@@ -63,7 +63,7 @@ public abstract class AbstractFish : LightSource
     protected override void OnLightDepleted()
     {
         base.OnLightDepleted();
-        GameObject.Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 
     /// <summary>
