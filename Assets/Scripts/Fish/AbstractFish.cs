@@ -12,6 +12,11 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Steerable))]
 public abstract class AbstractFish : LightSource
 {
+    [Tooltip("The initial angle at which the fish will start swimming." +
+             " (Angle in degrees, clockwise, relative to +y-axis)")]
+    [SerializeField]
+    private float defaultWanderAngle; 
+    
     [Tooltip("Amount of light absorbed from the player upon collision")]
     public float damageInflicted = 4;
     
@@ -45,6 +50,8 @@ public abstract class AbstractFish : LightSource
 
         // Cache the 'Steerable' component attached to the GameObject performing this action
         this.steerable = transform.GetComponent<Steerable>();
+        // Set the fish's initial swim direction
+        steerable.WanderAngle = defaultWanderAngle;
     }
 
     /// <summary>
@@ -292,5 +299,18 @@ public abstract class AbstractFish : LightSource
             RemoveAction("-2");
         }
     }
+    
+    /// <summary>
+    /// The initial angle at which the fish will start swimming. (Angle in degrees, clockwise, relative to +y-axis)
+    /// </summary>
+    public float DefaultWanderAngle
+    {
+        get { return defaultWanderAngle; }
+        set 
+        { 
+            defaultWanderAngle = value; 
+            steerable.WanderAngle = value;
+        }
+    } 
 
 }
