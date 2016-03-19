@@ -97,18 +97,11 @@ public class Player : LightSource
     private bool isDead; // determines is current player is dead
     public bool isSafe; // used for boss AI
     private bool deathParticlesPlayed;
-<<<<<<< HEAD
     private MaterialExtensions materials;    
     private ControllerRumble controllerRumble;  // Caches the controller rumble component
     private int currentLevel;   
-        
-=======
-    private MaterialExtensions materials;      
-    private int currentLevel;
-
     public int playerVelocity;
 
->>>>>>> master
     /// <summary>
     /// Initializes Player components   
     /// </summary>
