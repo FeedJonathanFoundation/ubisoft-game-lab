@@ -89,13 +89,13 @@ public class LightSource : MonoBehaviour
             
             LightSource otherLightSource = absorbableLight.GetComponentInParent<LightSource>();
             if (otherLightSource == null) { continue; }
-            
+                                    
             // If this GameObject can absorb the touched light source, 
             // Transfer light energy from the other light source to this one
             if (CanAbsorb(otherLightSource))
             {
                 LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
-
+                                        
                 // Calculate the amount of light to absorb from the other light source
                 float lightToAbsorb = absorptionRate * Time.deltaTime;
                 
