@@ -23,27 +23,21 @@ public class FlareSpawner : MonoBehaviour
     [Tooltip("Percentage of energy needed to use flare. 1 = 100%")]
     private float flareCostPercentage;
     
-    [Tooltip("Reference to the main camera")]
-    public GameObject mainCamera;
-    
-    [Tooltip("Z value for camera on flare launch")]
-    public float zoomOutValue;
-    
-    [Tooltip("Amount of time before camera zooms back into the player")]
-    public float timeBeforeZoomIn;
-    
-    [Tooltip("Camera zoom in and out speed")]
-    public float zoomSpeed;
-    
     [SerializeField]
     [Tooltip("The amount of recoil applied on the player when shooting the flare")]
     private float recoilForce;
+    
+    //camera values
+    [SerializeField]
+    [Tooltip("Reference to the main camera")]
+    private GameObject mainCamera;
+    
     private float timer;
     private LightSource lightSource;
     private new Rigidbody rigidbody;
-    private float originalCameraValue;
-    private int isZoom;             //determines if we are zooming in or out
-    private float zoomTimer;        //used for the delayed before zooming back in
+    
+    //values for camera zoom
+    private SmoothCamera smoothCamera;
 	
 
     void Start()
@@ -51,8 +45,7 @@ public class FlareSpawner : MonoBehaviour
         timer = cooldownTime;
         lightSource = GetComponent<LightSource>();
         rigidbody = GetComponent<Rigidbody>();
-        originalCameraValue = mainCamera.transform.position.z;
-        isZoom = 2;
+        smoothCamera = mainCamera.GetComponent<SmoothCamera>();
     }
 
     void Update() 
@@ -71,45 +64,10 @@ public class FlareSpawner : MonoBehaviour
                     rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
                     timer = 0.0f;
                     //reset all values for the zoom when ever a player fires a flare
-                    zoomTimer = timeBeforeZoomIn;
-                    zoomSpeed *= -1;
-                    isZoom = 0;
+                    smoothCamera.FlareShoot();
+                    smoothCamera.ResetTimer();
                 }
             }
-        }
-        
-        if(isZoom != 2)
-        {
-            CameraZoom();
-        }
-    }
-    
-    void CameraZoom()
-    {
-        if((zoomTimer += Time.deltaTime) >= timeBeforeZoomIn)
-        {
-            //calculate new camera position
-            float zValue = mainCamera.transform.position.z;
-            zValue += (Time.deltaTime * zoomSpeed);
-            Vector3 position = mainCamera.transform.position;
-            //sets compared value depending on if we are zooming in or out
-            float compareValue = (isZoom == 0? zoomOutValue : originalCameraValue);
-            if((int)zValue != compareValue)
-            {
-                position.z = zValue;
-            }
-            else
-            {
-                position.z = compareValue;
-                zoomTimer = 0.0f;
-                isZoom++;
-                //this to prevent a mistake when reseting when the user fires a new flare
-                if(isZoom < 2)
-                {
-                    zoomSpeed *= -1;
-                }
-            }
-            mainCamera.transform.position = position;
         }
     }
 }

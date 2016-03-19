@@ -13,6 +13,35 @@ public class SmoothCamera : MonoBehaviour
     public float deadzoneRadius;
     [Tooltip("The higher this value, the slower the camera follows the target in the deadzone")]
     public float deadzoneDampTime = 0.5f;
+    
+    [SerializeField]
+    [Tooltip("The small speed value")]
+    private float speedZommSmall;
+    
+    [SerializeField]
+    [Tooltip("The medium speed value")]
+    private float speedZoomMedium;
+    
+    [SerializeField]
+    [Tooltip("Z value for camera when player has small speed")]
+    private float smallZoomValue;
+    
+    [SerializeField]
+    [Tooltip("Z value for camera when player has medium speed")]
+    private float mediumZoomValue;
+    
+    [SerializeField]
+    [Tooltip("Z value for camera on flare launch")]
+    private float maxZoomValue;
+    
+    [SerializeField]
+    [Tooltip("Amount of time before camera zooms back into the player")]
+    private float timeBeforeZoomIn;
+    
+    [SerializeField]
+    [Tooltip("Camera zoom in and out speed")]
+    private float zoomSpeed;
+    
     /// <summary>
     /// The object that the camera follows.
     /// </summary>
@@ -27,15 +56,21 @@ public class SmoothCamera : MonoBehaviour
     private new Transform transform;
     
     private Vector2 velocity = Vector2.zero;
+    private Rigidbody playerRigidbody;
+    private bool acquiredZoom;
+    private float zoomTimer;
+    public bool shootFlare;
 
     void Awake()
     {
+        playerRigidbody =  target.GetComponent<Rigidbody>();
+        shootFlare = false;
         transform = GetComponent<Transform>();
         Vector3 position = transform.position;
         position.z = zPosition;
         transform.position = position;
         deadzoneRadiusSquared = deadzoneRadius * deadzoneRadius;
-        
+        zoomTimer = timeBeforeZoomIn;
         DontDestroyOnLoad(this.gameObject); 
     }
     
@@ -66,9 +101,87 @@ public class SmoothCamera : MonoBehaviour
             // Lock the camera's depth
             newPosition.z = transform.position.z;
             
+            
+            // camera zoom settings
+            acquiredZoom = false;
+            float playerVelocity = playerRigidbody.velocity.sqrMagnitude;
+            float mediumSpeed = speedZoomMedium * speedZoomMedium;
+            float smallSpeed = speedZommSmall * speedZommSmall;
+            
+            if(shootFlare)
+            {
+                if(maxZoomValue != newPosition.z)
+                {
+                    Debug.Log("flare shot");
+                    newPosition.z = CameraZoom(-zoomSpeed, maxZoomValue);
+                    acquiredZoom = true;
+                }
+                else
+                {
+                    Debug.Log("flare zoom out done");
+                    shootFlare = false;
+                }
+                
+            }
+            
+            if(zoomTimer < timeBeforeZoomIn && !shootFlare)
+            {
+                Debug.Log("wait before zoom in");
+                zoomTimer += Time.deltaTime;
+                acquiredZoom = true;
+            }
+            
+            if(playerVelocity < smallSpeed && !acquiredZoom && zPosition != newPosition.z)
+            {
+                Debug.Log("NORMAL");
+                newPosition.z = CameraZoom(zoomSpeed, zPosition);
+                acquiredZoom = true;
+            }
+            
+            if(playerVelocity > smallSpeed && playerVelocity < mediumSpeed && !acquiredZoom && smallZoomValue != newPosition.z)
+            {
+                Debug.Log("small");
+                newPosition.z = CameraZoom((newPosition.z > smallZoomValue? -zoomSpeed : zoomSpeed), smallZoomValue);
+                acquiredZoom = true;
+            }
+            
+            if(playerVelocity > mediumSpeed && !acquiredZoom && mediumZoomValue != newPosition.z)
+            {
+                Debug.Log("medium");
+                newPosition.z = CameraZoom((newPosition.z > mediumZoomValue? -zoomSpeed : zoomSpeed), mediumZoomValue);
+                acquiredZoom = true;
+            }
+            
             //Debug.Log("Move camera to: " + (Vector2)targetPosition);
-
             transform.position = newPosition;
         }
+    }
+    
+    //this is used for other objects that need the camera to zoom in and out
+    
+    public float CameraZoom(float zoomSpeed, float zoomToValue)
+    {
+        //calculate new camera position
+        float zValue = this.transform.position.z;
+        zValue += (Time.deltaTime * zoomSpeed);
+        
+        if((int)zValue != zoomToValue)
+        {
+            return zValue;
+        }
+        else
+        {
+            return zoomToValue;
+        }
+    }
+    
+    public void FlareShoot()
+    {
+        this.shootFlare = true;
+    }
+    
+    public void ResetTimer()
+    {
+        this.zoomTimer = 0.0f;
     }
 }
