@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class FlareSpawner : MonoBehaviour 
 {
@@ -26,33 +25,45 @@ public class FlareSpawner : MonoBehaviour
     [SerializeField]
     [Tooltip("The amount of recoil applied on the player when shooting the flare")]
     private float recoilForce;
+        
     private float timer;
     private LightSource lightSource;
-    private new Rigidbody rigidbody;
+    private new Rigidbody rigidbody;    
+    private SmoothCamera smoothCamera;
 	
 
     void Start()
     {
-        timer = cooldownTime;
-        lightSource = GetComponent<LightSource>();
-        rigidbody = GetComponent<Rigidbody>();
+        this.timer = cooldownTime;
+        this.lightSource = GetComponent<LightSource>();
+        this.rigidbody = GetComponent<Rigidbody>();
+        if (GameObject.Find("Main Camera") != null)
+        {
+            this.smoothCamera = GameObject.Find("Main Camera").GetComponent<SmoothCamera>();
+        }
     }
 
     void Update() 
     {
-        if((timer += Time.deltaTime) >= cooldownTime)
+        if ((timer += Time.deltaTime) >= cooldownTime)
         {
             if (Input.GetButtonDown("UseFlare"))
             {
                 float cost = flareEnergyCost * flareCostPercentage;
 
-                if(lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost))
+                if (lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost))
                 {
                     Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
                     lightSource.LightEnergy.Deplete(flareEnergyCost);
                     // Apply recoil in the opposite direction the flare was shot
                     rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
                     timer = 0.0f;
+                    //reset all values for the zoom when ever a player fires a flare
+                    if (smoothCamera != null)
+                    {
+                        smoothCamera.FlareShoot();
+                        smoothCamera.ResetTimer();   
+                    }                    
                 }
             }
         }
