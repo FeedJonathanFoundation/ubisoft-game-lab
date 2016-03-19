@@ -94,8 +94,10 @@ public class Player : LightSource
     public bool isSafe; // used for boss AI
     private bool deathParticlesPlayed;
     private MaterialExtensions materials;      
-    private int currentLevel;   
-        
+    private int currentLevel;
+
+    public int playerVelocity;
+
     /// <summary>
     /// Initializes Player components   
     /// </summary>
@@ -109,19 +111,25 @@ public class Player : LightSource
                 
        this.defaultDrag = Rigidbody.drag;
        this.isDead = false;
-       this.isSafe = true;
+       AkSoundEngine.SetState("PlayerLife", "Alive");
+
+        this.isSafe = true;
        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
        DontDestroyOnLoad(this.gameObject);
        
        ChangeProbeColor(Color.black, false);
        LoadGame();
        ResetPlayerState();
+
        
-       #if UNITY_EDITOR
+
+#if UNITY_EDITOR
         this.ValidateInputs();
        #endif 
            
     }
+    
+
     
     /// <summary>
     /// Listens for player states such as movement, light controls and death
@@ -129,8 +137,10 @@ public class Player : LightSource
     /// </summary>
     protected override void Update()
     {
-        base.Update(); 
-        
+        base.Update();
+
+        playerVelocity = (int)this.Rigidbody.velocity.magnitude;
+
         // Modify player drag if invulnerable
         if (IsInvulnerable()) 
         { 
@@ -185,7 +195,9 @@ public class Player : LightSource
         }
         
         isDead = true;
-               
+        AkSoundEngine.SetState("PlayerLife", "Dead");
+        AkSoundEngine.PostEvent("Die", this.gameObject);
+
         Debug.Log("Game OVER! Press 'R' to restart!");
     }
     
@@ -254,6 +266,7 @@ public class Player : LightSource
             if (Input.GetButtonDown("LightToggle") && minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
             {
                 this.lightToggle.ToggleLights();
+                AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
                 if (this.lightToggle.LightsEnabled)
                 {
                     this.ChangeProbeColor(new Color(1f, lightToggleTime, 0f, 1f), true);
