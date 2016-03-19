@@ -400,6 +400,7 @@ public class Player : LightSource
                                         Transform.position,Quaternion.Euler(-90,explosionAngle,0)) as ParticleSystem;
             
             Transform.localScale = Vector3.zero;  
+            Rigidbody.isKinematic = true;
             
             // Only play the death particles the first time the player crashes on an obstacle
             deathParticlesPlayed = true;      
@@ -415,6 +416,7 @@ public class Player : LightSource
         {            
             Debug.Log("Game Restarted");
             Transform.localScale = new Vector3(1,1,1);
+            Rigidbody.isKinematic = false;
             Rigidbody.useGravity = false;
             
             this.LightEnergy.Add(this.DefaultEnergy);
