@@ -112,13 +112,13 @@ public class SmoothCamera : MonoBehaviour
             {
                 if(maxZoomValue != newPosition.z)
                 {
-                    Debug.Log("flare shot");
+                    //Debug.Log("flare shot");
                     newPosition.z = CameraZoom(-zoomSpeed, maxZoomValue);
                     acquiredZoom = true;
                 }
                 else
                 {
-                    Debug.Log("flare zoom out done");
+                    //Debug.Log("flare zoom out done");
                     shootFlare = false;
                 }
                 
@@ -126,28 +126,28 @@ public class SmoothCamera : MonoBehaviour
             
             if(zoomTimer < timeBeforeZoomIn && !shootFlare)
             {
-                Debug.Log("wait before zoom in");
+                //Debug.Log("wait before zoom in");
                 zoomTimer += Time.deltaTime;
                 acquiredZoom = true;
             }
             
             if(playerVelocity < smallSpeed && !acquiredZoom && zPosition != newPosition.z)
             {
-                Debug.Log("NORMAL");
+                //Debug.Log("NORMAL");
                 newPosition.z = CameraZoom(zoomSpeed, zPosition);
                 acquiredZoom = true;
             }
             
             if(playerVelocity > smallSpeed && playerVelocity < mediumSpeed && !acquiredZoom && smallZoomValue != newPosition.z)
             {
-                Debug.Log("small");
+                //Debug.Log("small");
                 newPosition.z = CameraZoom((newPosition.z > smallZoomValue? -zoomSpeed : zoomSpeed), smallZoomValue);
                 acquiredZoom = true;
             }
             
             if(playerVelocity > mediumSpeed && !acquiredZoom && mediumZoomValue != newPosition.z)
             {
-                Debug.Log("medium");
+                //Debug.Log("medium");
                 newPosition.z = CameraZoom((newPosition.z > mediumZoomValue? -zoomSpeed : zoomSpeed), mediumZoomValue);
                 acquiredZoom = true;
             }
