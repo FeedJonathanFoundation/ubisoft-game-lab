@@ -46,6 +46,10 @@ public class Player : LightSource
     private GameObject jetFuelEffect;
     
     [SerializeField]
+    [Tooltip("Particle effect played when the player is hit by a fish")]
+    private ParticleSystem fishHitParticles;
+    
+    [SerializeField]
     [Tooltip("Particle effect played when the player dies")]
     private ParticleSystem playerDeathParticles;
 
@@ -295,6 +299,9 @@ public class Player : LightSource
         }
     }
     
+    /// <summary>
+    /// Called when the player is hit by a light source that is stronger than him
+    /// </summary>
     public override void Knockback(LightSource enemyLightSource)
     {        
         // Calculate a knockback force pushing the player away from the enemy fish
@@ -303,6 +310,13 @@ public class Player : LightSource
         
         Rigidbody.velocity = Vector3.zero;
         Rigidbody.AddForce(knockback, ForceMode.Impulse);
+        
+        // If the player was hit by a fish
+        if (enemyLightSource.CompareTag("Fish"))
+        {
+            // Instantiate hit particles
+            GameObject.Instantiate(fishHitParticles, transform.position, Quaternion.Euler(0,0,0));
+        }
         
         // The player was just hit
         lastTimeHit = Time.time;
