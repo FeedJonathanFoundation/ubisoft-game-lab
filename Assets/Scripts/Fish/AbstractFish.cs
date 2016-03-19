@@ -22,6 +22,10 @@ public abstract class AbstractFish : LightSource
     [Tooltip("If true, the fish will not react to fish of the same type, except in the default flocking behaviour")]
     [SerializeField]
     private bool ignoreFishOfSameType = false;
+    
+    [Tooltip("Spawned when the fish dies")]
+    [SerializeField]
+    private GameObject deathParticles;
         
     // Holds the steering behaviors of this fish
     private PriorityDictionary actions;
@@ -63,6 +67,13 @@ public abstract class AbstractFish : LightSource
     protected override void OnLightDepleted()
     {
         base.OnLightDepleted();
+        
+        if (deathParticles != null)
+        {
+            GameObject.Instantiate(deathParticles, transform.position,
+                                   transform.rotation);
+        }
+        
         GameObject.Destroy(this.gameObject);
     }
 
