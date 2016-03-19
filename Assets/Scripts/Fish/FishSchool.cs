@@ -29,8 +29,7 @@ public class FishSchool : MonoBehaviour
         for (int i = 0; i < fishes.Length; i++)
         {
             // Set each fish's default wander angle so that they swim in the same direction
-            Steerable fishSteerable = fishes[i].GetComponent<Steerable>();
-            fishSteerable.WanderAngle = defaultWanderAngle;
+            fishes[i].DefaultWanderAngle = defaultWanderAngle;
         }
     }
 
@@ -45,9 +44,14 @@ public class FishSchool : MonoBehaviour
     /// <summary>
     /// The initial angle at which the fish will start swimming. (Angle in degrees, clockwise, relative to +y-axis)
     /// </summary>
-    private float DefaultWanderAngle
+    public float DefaultWanderAngle
     {
         get { return defaultWanderAngle; }
-        set { defaultWanderAngle = value; }
+        set
+        { 
+            defaultWanderAngle = value;
+            // Reset the default wander angle for each fish
+            Initialize();
+        }
     }  
 }
