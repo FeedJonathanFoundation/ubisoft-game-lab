@@ -21,7 +21,6 @@ public class ObjectPooler : MonoBehaviour
     void Awake()
     {
         current = this;
-        pooledAmount = new int[pooledObjects.Length];
     }
     
     void Start()

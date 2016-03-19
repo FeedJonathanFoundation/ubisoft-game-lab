@@ -46,11 +46,19 @@ public class SpawnVolume : MonoBehaviour
     
     [SerializeField]
     [Tooltip("Maximum number of fish to be spawned.")]
-    private int maxFishCount; 
+    private int maxFishCount;
+
+    [SerializeField]
+    [Tooltip("Number of fish in school.")]
+    private int schoolSize;
 
     [SerializeField]
     [Tooltip("Max distance between player and fish before fish is disabled.")]
     private float maxDistance;
+    
+    [SerializeField]
+    [Tooltip("If player travels backwards, do spawn volumes respawn fish?")]
+    private bool automaticReset;
 
     private Transform player;
     private bool[] disabled;
@@ -84,7 +92,14 @@ public class SpawnVolume : MonoBehaviour
         for (int i = 0; i < colliderCount; i++)
         {
             if (disabled[i]) { continue; }
-            if (!initialized[i]) { Initialize(i); }
+            if (!initialized[i])
+            { 
+                Initialize(i);
+                if (automaticReset)
+                {
+                    Reset(i - 1);
+                }
+            }
         }
         if (fishes.Count > 0)
         {
@@ -182,13 +197,22 @@ public class SpawnVolume : MonoBehaviour
         if (numberOfFish < 1) { return; }
         for (int i = 0; i < numberOfFish; i++)
         {
-            int spawnTypeIndex = ChooseFish();
             
-            float radius = GetSpawnVolumeRadius(colliderIndex) / 2;
-            float angle = i * Mathf.PI * 2 / numberOfFish;
-            Vector3 spawnLocation = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius + GetSpawnVolumeCenter(colliderIndex);
             if (numberOfTypes > -1)
             {
+                int spawnTypeIndex = ChooseFish();
+
+                float radius = GetSpawnVolumeRadius(colliderIndex) / 2;
+                float angle = i * Mathf.PI * 2 / numberOfFish;
+                Vector3 spawnLocation = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius + GetSpawnVolumeCenter(colliderIndex);
+                
+                if (spawnTypeIndex == 0)
+                {
+                    SpawnSchool(spawnTypeIndex, spawnLocation);
+                    i += schoolSize - 1;
+                    continue;
+                }
+                
                 GameObject fish = pool.GetPooledObject(spawnTypeIndex);
                 if (fish == null) { return; }
                 fish.transform.position = spawnLocation;
@@ -203,6 +227,34 @@ public class SpawnVolume : MonoBehaviour
                     
                 fishes.Add(fish);
             }
+        }
+    }
+    
+    private void SpawnSchool(int spawnTypeIndex, Vector3 spawnLocation)
+    {
+        float spacing = 0.3f;
+        for (int i = 0; i < schoolSize; i++)
+        {
+            GameObject fish = pool.GetPooledObject(spawnTypeIndex);
+            if (fish == null) { return; }
+            fish.transform.position = spawnLocation;
+            if (i % 2 == 0)
+            {
+                fish.transform.position += new Vector3(spacing * (i / 2), 0, 0);
+            }
+            else
+            {
+                fish.transform.position += new Vector3(0, spacing * i, 0);
+            }
+            fish.transform.rotation = Quaternion.identity;
+            fish.SetActive(true);
+
+            if (fish.GetComponent<LightSource>() != null)
+            {
+                float variance = Random.Range(0, fish.GetComponent<LightSource>().LightEnergy.CurrentEnergy * energyVariance);
+                fish.GetComponent<LightSource>().LightEnergy.Deplete(variance);
+            }
+            fishes.Add(fish);
         }
     }
     
@@ -304,6 +356,13 @@ public class SpawnVolume : MonoBehaviour
             initialized[i] = false;
             disabled[i] = true;
         }
+    }
+    
+    private void Reset(int index)
+    {
+        if (index < 0) { return; }
+        initialized[index] = false;
+        disabled[index] = true;
     }
     
     private float GetSpawnVolumeRadius(int colliderIndex)
