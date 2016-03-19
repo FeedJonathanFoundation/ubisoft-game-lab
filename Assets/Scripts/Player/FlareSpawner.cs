@@ -28,6 +28,7 @@ public class FlareSpawner : MonoBehaviour
     private float recoilForce;
     private float timer;
     private LightSource lightSource;
+    private ControllerRumble controllerRumble;  // Caches the component that rumbles the controller
     private new Rigidbody rigidbody;
 	
 
@@ -35,6 +36,7 @@ public class FlareSpawner : MonoBehaviour
     {
         timer = cooldownTime;
         lightSource = GetComponent<LightSource>();
+        controllerRumble = GetComponent<ControllerRumble>();
         rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -52,6 +54,7 @@ public class FlareSpawner : MonoBehaviour
                     lightSource.LightEnergy.Deplete(flareEnergyCost);
                     // Apply recoil in the opposite direction the flare was shot
                     rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
+                    controllerRumble.ShotFlare();   // Rumble the controller
                     timer = 0.0f;
                 }
             }
