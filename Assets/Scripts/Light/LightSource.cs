@@ -98,6 +98,18 @@ public class LightSource : MonoBehaviour
             // Transfer light energy from the other light source to this one
             if (CanAbsorb(otherLightSource))
             {
+                
+                if (this is Player)
+                {
+                    if (otherLightSource.CompareTag("Pickup"))
+                    {
+                        AkSoundEngine.PostEvent("Light_Orb_Pickup", this.gameObject);
+                    }
+                    else
+                    {
+                        AkSoundEngine.PostEvent("Eat", this.gameObject);
+                    }
+                }
                 LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
                                         
                 // Calculate the amount of light to absorb from the other light source
