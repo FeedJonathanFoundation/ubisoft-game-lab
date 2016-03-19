@@ -101,7 +101,7 @@ public class Player : LightSource
     private ControllerRumble controllerRumble;  // Caches the controller rumble component
     private int currentLevel;   
     public int playerVelocity;
-
+    
     /// <summary>
     /// Initializes Player components   
     /// </summary>
