@@ -35,6 +35,10 @@ public class SmoothCamera : MonoBehaviour
     private float maxZoomValue;
     
     [SerializeField]
+    [Tooltip("Z value for camera in zoom zones")]
+    private float zoomZonesValue;
+    
+    [SerializeField]
     [Tooltip("Amount of time before camera zooms back into the player")]
     private float timeBeforeZoomIn;
     
@@ -116,10 +120,10 @@ public class SmoothCamera : MonoBehaviour
             
             if(zoomInZone)
             {
-                if(smallZoomValue != (int)newPosition.z)
+                if(zoomZonesValue != newPosition.z)
                 {
                     //Debug.Log("Zoom zone");
-                    newPosition.z = CameraZoom((newPosition.z > smallZoomValue? zoomOutSpeed : zoomInSpeed), smallZoomValue);
+                    newPosition.z = CameraZoom((newPosition.z > zoomZonesValue? zoomOutSpeed : zoomInSpeed), zoomZonesValue);
                 }
                 acquiredZoom = true;
             }
@@ -147,21 +151,21 @@ public class SmoothCamera : MonoBehaviour
                 acquiredZoom = true;
             }
             
-            if(playerVelocity < smallSpeed && !acquiredZoom && (int)zPosition != newPosition.z)
+            if(playerVelocity < smallSpeed && !acquiredZoom && zPosition != newPosition.z)
             {
                 //Debug.Log("normal");
                 newPosition.z = CameraZoom(zoomInSpeed, zPosition);
                 acquiredZoom = true;
             }
             
-            if(playerVelocity > smallSpeed && playerVelocity < mediumSpeed && !acquiredZoom && smallZoomValue != (int)newPosition.z)
+            if(playerVelocity > smallSpeed && playerVelocity < mediumSpeed && !acquiredZoom && smallZoomValue != newPosition.z)
             {
                 //Debug.Log("small");
                 newPosition.z = CameraZoom((newPosition.z > smallZoomValue? zoomOutSpeed : zoomInSpeed), smallZoomValue);
                 acquiredZoom = true;
             }
             
-            if(playerVelocity > mediumSpeed && !acquiredZoom && mediumZoomValue != (int)newPosition.z)
+            if(playerVelocity > mediumSpeed && !acquiredZoom && mediumZoomValue != newPosition.z)
             {
                 //Debug.Log("medium");
                 newPosition.z = CameraZoom((newPosition.z > mediumZoomValue? zoomOutSpeed : zoomInSpeed), mediumZoomValue);
@@ -181,7 +185,7 @@ public class SmoothCamera : MonoBehaviour
         float zValue = Mathf.Lerp(this.transform.position.z, zoomToValue, Time.deltaTime * zoomSpeed);
         //round up the value to 2 digits after point in orther to check when the value is at the desired zoomToValue
         float roundedValue = Mathf.Round(zValue * 100f) / 100f;
-        //Debug.Log(roundedValue + "------" + (Mathf.Round(zoomToValue * 100f) / 100f));
+        //Debug.Log(roundedValue + " |------| " + (Mathf.Round(zoomToValue * 100f) / 100f));
         
         if(roundedValue == (Mathf.Round(zoomToValue * 100f) / 100f))
         {
