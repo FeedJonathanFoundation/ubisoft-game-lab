@@ -791,6 +791,7 @@ MonoBehaviour:
   damageInflicted: 4
   lightDetector: {fileID: 11474248}
   ignoreFishOfSameType: 1
+  deathParticles: {fileID: 0}
   flockingBehaviour:
     strengthMultiplier: 1
     overrideSteerableSpeed: 1
@@ -890,8 +891,8 @@ MonoBehaviour:
     seekWhenStronger:
       strengthMultiplier: 1
       overrideSteerableSpeed: 1
-      minSpeed: 0.5
-      maxSpeed: 0.5
+      minSpeed: 2.5
+      maxSpeed: 2.5
       overrideMaxForce: 1
       maxForce: 1
     fleeWhenWeaker:

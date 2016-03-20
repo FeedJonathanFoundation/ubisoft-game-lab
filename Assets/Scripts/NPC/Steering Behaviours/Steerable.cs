@@ -705,6 +705,16 @@ public class Steerable : MonoBehaviour
         set { maxForce = value; }
     }
     
+    /// <summary>
+    /// The angle used in the 'Wander' steering behavior. Denotes an angle relative to the entity's 'wander circle'.
+    /// Updated every frame the wander behavior is applied.
+    /// </summary>
+    public float WanderAngle
+    {
+        get { return wanderAngle; }
+        set { wanderAngle = value; }
+    }
+    
     /** Returns a cached version of the Transform component attached to the GameObject to which 
       * this SteeringManager belongs. */
     public Transform Transform

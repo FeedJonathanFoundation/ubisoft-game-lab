@@ -12,6 +12,7 @@ GameObject:
   - 135: {fileID: 13568648}
   - 114: {fileID: 11441870}
   - 114: {fileID: 11464098}
+  - 114: {fileID: 11485938}
   - 114: {fileID: 11422050}
   - 54: {fileID: 5478908}
   m_Layer: 9
@@ -2490,12 +2491,14 @@ MonoBehaviour:
   thrustForce: 3
   changeDirectionBoost: 5.2
   thrustEnergyCost: 0.01
-  brakeDrag: 1
+  brakeDrag: 2
   jetFuelEffect: {fileID: 134692}
-  playerDeathParticles: {fileID: 0}
+  fishHitParticles: {fileID: 0}
+  playerDeathParticles: {fileID: 19877132, guid: 71ac3ce401859634281fd1afa08277fc,
+    type: 2}
   defaultLightStatus: 1
   knockbackForce: 10
-  invulnerabilityTime: 3
+  invulnerabilityTime: 1
   invulnerabilityDrag: 2
   timeToDeplete: 0
   lightToggleEnergyCost: 0
@@ -2503,6 +2506,7 @@ MonoBehaviour:
   lightToggleTime: 0.1
   disableCheckpoints: 1
   isSafe: 0
+  playerVelocity: 0
 --- !u!114 &11442326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2581,7 +2585,6 @@ MonoBehaviour:
   flareEnergyCost: 6
   flareCostPercentage: 0.1
   recoilForce: 1
-  mainCamera: {fileID: 0}
 --- !u!114 &11471332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2608,6 +2611,25 @@ MonoBehaviour:
   lightToRangeRatio: 0.8
   maxIntensity: 0.6
   lightToIntensityRatio: 0.05
+--- !u!114 &11485938
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 256667f030828774b832bf12998dc1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flareRumbleIntensity: 0.9
+  flareRumbleTime: 0.2
+  eatFishRumbleIntensity: 0.8
+  eatFishRumbleTime: 0.1
+  hitFishRumbleIntensity: 1
+  hitFishRumbleTime: 0.2
+  playerDeadRumbleIntensity: 1
+  playerDeadRumbleTime: 0.3
 --- !u!114 &11489478
 MonoBehaviour:
   m_ObjectHideFlags: 1

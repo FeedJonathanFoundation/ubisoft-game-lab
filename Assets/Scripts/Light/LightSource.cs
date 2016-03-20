@@ -46,6 +46,10 @@ public class LightSource : MonoBehaviour
     // DO NOT ACCESS DIRECTLY. Use LightEnergy property instead.
     private LightEnergy lightEnergy;
     private string lightSourceId;
+    
+    /** Raised when the light source consumes some light */
+    public delegate void ConsumedLightSourceHandler(LightSource consumedLightSource);
+    public event ConsumedLightSourceHandler ConsumedLightSource = delegate {};
 
 
     /// <summary>
@@ -130,6 +134,9 @@ public class LightSource : MonoBehaviour
                 // Transfer light energy from the other light source to this one
                 float lightAbsorbed = lightEnergyToAbsorb.Deplete(lightToAbsorb);
                 lightEnergy.Add(lightAbsorbed);
+                
+                // Inform subscribers that this light source consumed another light source.
+                ConsumedLightSource(otherLightSource);
             }
         }
     }

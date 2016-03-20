@@ -28,6 +28,7 @@ public class FlareSpawner : MonoBehaviour
         
     private float timer;
     private LightSource lightSource;
+    private ControllerRumble controllerRumble;  // Caches the component that rumbles the controller
     private new Rigidbody rigidbody;    
     private SmoothCamera smoothCamera;
 	
@@ -36,6 +37,7 @@ public class FlareSpawner : MonoBehaviour
     {
         this.timer = cooldownTime;
         this.lightSource = GetComponent<LightSource>();
+        this.controllerRumble = GetComponent<ControllerRumble>();
         this.rigidbody = GetComponent<Rigidbody>();
         if (GameObject.Find("Main Camera") != null)
         {
@@ -57,6 +59,7 @@ public class FlareSpawner : MonoBehaviour
                     lightSource.LightEnergy.Deplete(flareEnergyCost);
                     // Apply recoil in the opposite direction the flare was shot
                     rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
+                    controllerRumble.ShotFlare();   // Rumble the controller
                     timer = 0.0f;
                     
                     AkSoundEngine.PostEvent("Flare", this.gameObject);
