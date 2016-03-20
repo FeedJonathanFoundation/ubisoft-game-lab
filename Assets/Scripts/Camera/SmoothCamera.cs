@@ -133,7 +133,7 @@ public class SmoothCamera : MonoBehaviour
             
             if(playerVelocity < smallSpeed && !acquiredZoom && zPosition != newPosition.z)
             {
-                //Debug.Log("NORMAL");
+                //Debug.Log("normal");
                 newPosition.z = CameraZoom(zoomSpeed, zPosition);
                 acquiredZoom = true;
             }
