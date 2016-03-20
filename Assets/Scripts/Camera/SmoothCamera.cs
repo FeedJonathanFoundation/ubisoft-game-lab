@@ -69,25 +69,29 @@ public class SmoothCamera : MonoBehaviour
     private float zoomTimer;
     private bool shootFlare;
     private bool zoomInZone;
+    private bool inCurrents;
 
     void Awake()
     {
         playerRigidbody =  target.GetComponent<Rigidbody>();
-        shootFlare = false;
-        zoomInZone = false;
+        this.shootFlare = false;
+        this.zoomInZone = false;
+        this.inCurrents = false;
         transform = GetComponent<Transform>();
         Vector3 position = transform.position;
         position.z = zPosition;
         transform.position = position;
         deadzoneRadiusSquared = deadzoneRadius * deadzoneRadius;
-        zoomTimer = timeBeforeZoomIn;
+        this.zoomTimer = timeBeforeZoomIn;
         DontDestroyOnLoad(this.gameObject); 
     }
     
     void FixedUpdate()
     {
-        if (target)
+        Debug.Log(inCurrents);
+        if (target && !inCurrents)
         {
+            
             float dampTime = this.dampTime;
             Vector3 targetPosition = Vector2.zero;
          
@@ -218,5 +222,10 @@ public class SmoothCamera : MonoBehaviour
         //need to reset if flare was shoot before entering zoomInZone
         this.shootFlare = false;
         this.zoomTimer = timeBeforeZoomIn;
+    }
+    
+    public void SetCurrentState(bool isCurrent)
+    {
+        this.inCurrents = isCurrent;
     }
 }

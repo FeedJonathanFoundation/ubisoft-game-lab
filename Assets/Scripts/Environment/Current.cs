@@ -28,10 +28,16 @@ public class Current : MonoBehaviour
     private bool empty;
     // Holds all rigidbodies in the current.
     private List<Rigidbody> rigidbodies;
+    private SmoothCamera smoothCamera;
     
     void Start()
     {
         rigidbodies = new List<Rigidbody>();
+        GameObject mainCamera = GameObject.Find("Main Camera");
+        if (mainCamera != null)
+        {
+            this.smoothCamera = mainCamera.GetComponent<SmoothCamera>();
+        }
         // By default, the current pushes downward.
         SetDirection();
         empty = true;
@@ -72,6 +78,11 @@ public class Current : MonoBehaviour
         {
             rigidbodies.Add(rigidbody);
             empty = false;
+            
+            if(col.CompareTag("Player"))
+            {
+                smoothCamera.SetCurrentState(true);
+            }
         }
     }
     
@@ -86,6 +97,11 @@ public class Current : MonoBehaviour
             {
                 empty = true;
             } 
+            
+            if(col.CompareTag("Player"))
+            {
+                smoothCamera.SetCurrentState(false);
+            }
         }
     }
     
