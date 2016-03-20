@@ -39,8 +39,12 @@ public class SmoothCamera : MonoBehaviour
     private float timeBeforeZoomIn;
     
     [SerializeField]
-    [Tooltip("Camera zoom in and out speed")]
-    private float zoomSpeed;
+    [Tooltip("Camera zoom in speed")]
+    private float zoomInSpeed;
+    
+    [SerializeField]
+    [Tooltip("Camera zoom out speed")]
+    private float zoomOutSpeed;
     
     /// <summary>
     /// The object that the camera follows.
@@ -59,12 +63,14 @@ public class SmoothCamera : MonoBehaviour
     private Rigidbody playerRigidbody;
     private bool acquiredZoom;
     private float zoomTimer;
-    public bool shootFlare;
+    private bool shootFlare;
+    private bool zoomInZone;
 
     void Awake()
     {
         playerRigidbody =  target.GetComponent<Rigidbody>();
         shootFlare = false;
+        zoomInZone = false;
         transform = GetComponent<Transform>();
         Vector3 position = transform.position;
         position.z = zPosition;
@@ -108,12 +114,22 @@ public class SmoothCamera : MonoBehaviour
             float mediumSpeed = speedZoomMedium * speedZoomMedium;
             float smallSpeed = speedZommSmall * speedZommSmall;
             
-            if(shootFlare)
+            if(zoomInZone)
+            {
+                if(smallZoomValue != (int)newPosition.z)
+                {
+                    //Debug.Log("Zoom zone");
+                    newPosition.z = CameraZoom((newPosition.z > smallZoomValue? zoomOutSpeed : zoomInSpeed), smallZoomValue);
+                }
+                acquiredZoom = true;
+            }
+            
+            if(shootFlare && !acquiredZoom)
             {
                 if(maxZoomValue != newPosition.z)
                 {
                     //Debug.Log("flare shot");
-                    newPosition.z = CameraZoom(-zoomSpeed, maxZoomValue);
+                    newPosition.z = CameraZoom(zoomOutSpeed, maxZoomValue);
                     acquiredZoom = true;
                 }
                 else
@@ -131,24 +147,24 @@ public class SmoothCamera : MonoBehaviour
                 acquiredZoom = true;
             }
             
-            if(playerVelocity < smallSpeed && !acquiredZoom && zPosition != newPosition.z)
+            if(playerVelocity < smallSpeed && !acquiredZoom && (int)zPosition != newPosition.z)
             {
                 //Debug.Log("normal");
-                newPosition.z = CameraZoom(zoomSpeed, zPosition);
+                newPosition.z = CameraZoom(zoomInSpeed, zPosition);
                 acquiredZoom = true;
             }
             
-            if(playerVelocity > smallSpeed && playerVelocity < mediumSpeed && !acquiredZoom && smallZoomValue != newPosition.z)
+            if(playerVelocity > smallSpeed && playerVelocity < mediumSpeed && !acquiredZoom && smallZoomValue != (int)newPosition.z)
             {
                 //Debug.Log("small");
-                newPosition.z = CameraZoom((newPosition.z > smallZoomValue? -zoomSpeed : zoomSpeed), smallZoomValue);
+                newPosition.z = CameraZoom((newPosition.z > smallZoomValue? zoomOutSpeed : zoomInSpeed), smallZoomValue);
                 acquiredZoom = true;
             }
             
-            if(playerVelocity > mediumSpeed && !acquiredZoom && mediumZoomValue != newPosition.z)
+            if(playerVelocity > mediumSpeed && !acquiredZoom && mediumZoomValue != (int)newPosition.z)
             {
                 //Debug.Log("medium");
-                newPosition.z = CameraZoom((newPosition.z > mediumZoomValue? -zoomSpeed : zoomSpeed), mediumZoomValue);
+                newPosition.z = CameraZoom((newPosition.z > mediumZoomValue? zoomOutSpeed : zoomInSpeed), mediumZoomValue);
                 acquiredZoom = true;
             }
             
@@ -162,26 +178,41 @@ public class SmoothCamera : MonoBehaviour
     public float CameraZoom(float zoomSpeed, float zoomToValue)
     {
         //calculate new camera position
-        float zValue = this.transform.position.z;
-        zValue += (Time.deltaTime * zoomSpeed);
+        float zValue = Mathf.Lerp(this.transform.position.z, zoomToValue, Time.deltaTime * zoomSpeed);
+        //round up the value to 2 digits after point in orther to check when the value is at the desired zoomToValue
+        float roundedValue = Mathf.Round(zValue * 100f) / 100f;
+        //Debug.Log(roundedValue + "------" + (Mathf.Round(zoomToValue * 100f) / 100f));
         
-        if((int)zValue != zoomToValue)
-        {
-            return zValue;
-        }
-        else
+        if(roundedValue == (Mathf.Round(zoomToValue * 100f) / 100f))
         {
             return zoomToValue;
         }
+        else
+        {
+            return zValue;
+        }
+        
     }
     
     public void FlareShoot()
     {
-        this.shootFlare = true;
+        //need to check that we aren't in a zoomInZone
+        if(!zoomInZone)
+        {
+            this.shootFlare = true;
+        }
     }
     
     public void ResetTimer()
     {
         this.zoomTimer = 0.0f;
+    }
+    
+    public void SetZoomInZone(bool isZoom)
+    {
+        this.zoomInZone = isZoom;
+        //need to reset if flare was shoot before entering zoomInZone
+        this.shootFlare = false;
+        this.zoomTimer = timeBeforeZoomIn;
     }
 }
