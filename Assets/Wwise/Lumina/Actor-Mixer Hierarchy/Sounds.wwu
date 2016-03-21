@@ -1081,6 +1081,9 @@
 									<StateGroupInfo>
 										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
 									</StateGroupInfo>
+									<StateGroupInfo>
+										<StateGroupRef Name="IMAmb2" ID="{0E5087CE-4389-4980-A89A-875B1E453D01}"/>
+									</StateGroupInfo>
 								</StateGroupList>
 								<CustomStateList>
 									<CustomState>
@@ -1212,6 +1215,63 @@
 							</StateInfo>
 							<ActiveSourceList>
 								<ActiveSource Name="Section 2 Ambient Volcano" ID="{615F0911-B15E-44F8-8E08-C078B89E157D}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Jellyfish Ambient Crackle" ID="{ECDCE305-6FD5-4408-93F1-A26753AD8E26}" ShortID="340614488" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Jellyfish Ambient Crackle" ID="{BD7934FB-E7A0-4D9F-BAD8-00EBAB29375F}" ShortID="387208354">
+									<Language>SFX</Language>
+									<AudioFile>Jellyfish Ambient Crackle.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Jellyfish Ambient Crackle" ID="{BD7934FB-E7A0-4D9F-BAD8-00EBAB29375F}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Jellyfish Attack A" ID="{3BB5EA4F-7E81-4631-BC0E-63E377EF205D}" ShortID="179608829" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Jellyfish Attack A" ID="{5D834336-0475-418F-A105-3DF0B202BF6A}" ShortID="28599005">
+									<Language>SFX</Language>
+									<AudioFile>Jellyfish Attack A.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Jellyfish Attack A" ID="{5D834336-0475-418F-A105-3DF0B202BF6A}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Jellyfish Attack B" ID="{170401FB-9C5A-4CDF-9029-E5269D4AF5DF}" ShortID="650408286" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Jellyfish Attack B" ID="{E96B384B-DF00-4D69-8CC8-812AADD97A2C}" ShortID="500781425">
+									<Language>SFX</Language>
+									<AudioFile>Jellyfish Attack B.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Jellyfish Attack B" ID="{E96B384B-DF00-4D69-8CC8-812AADD97A2C}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>
