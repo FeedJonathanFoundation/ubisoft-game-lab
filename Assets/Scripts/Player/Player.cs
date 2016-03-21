@@ -100,7 +100,23 @@ public class Player : LightSource
     private MaterialExtensions materials;
     private ControllerRumble controllerRumble;  // Caches the controller rumble component
     private int currentLevel;
-    public int playerVelocity;
+    public int playerVelocity;   
+    
+    [Header("Emissive Colours")]
+    [SerializeField]
+    private Color probeColorOn = new Color(1f, 0.3103448f, 0f);
+    [SerializeField]
+    private Color probeColorOff = new Color(0.3f,0.09310344f,0);
+    [SerializeField]
+    private Color probeColorHit = new Color(1, 0.067f, 0.067f);
+    [SerializeField]
+    [Tooltip("The amount of time the player flashes when hit")]
+    private float hitFlashDuration = 2.0f;
+    [SerializeField]
+    private Color probeColorEat = new Color(0, 0.875f, 1);
+    [SerializeField]
+    [Tooltip("The amount of time the player flashes when eating a fish")]
+    private float eatFlashDuration = 0.5f;
 
     /// <summary>
     /// Initializes Player components   
@@ -119,9 +135,8 @@ public class Player : LightSource
         this.controllerRumble = GetComponent<ControllerRumble>();
         AkSoundEngine.SetState("PlayerLife", "Alive");
         this.currentLevel = SceneManager.GetActiveScene().buildIndex;
-        DontDestroyOnLoad(this.gameObject);
-
-        ChangeProbeColor(Color.black, false);
+        DontDestroyOnLoad(this.gameObject);                
+        ChangeColor(probeColorOff, false, 0);
         LoadGame();
         ResetPlayerState();
         
@@ -130,6 +145,17 @@ public class Player : LightSource
         #endif        
     }
 
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        ConsumedLightSource += OnConsumedLightSource;
+    }
+    
+    public override void OnDisable()
+    {
+        base.OnEnable();
+        ConsumedLightSource -= OnConsumedLightSource;
+    }
 
 
     /// <summary>
@@ -236,22 +262,58 @@ public class Player : LightSource
     /// </summary>
     /// <param name="color">target color</param>
     /// <param name="isSmooth">if true, the color change will follow a smooth gradient</param>
-    private void ChangeProbeColor(Color color, bool isSmooth)
+    protected override void ChangeColor(Color color, bool isSmooth, float seconds)
     {
         StopAllCoroutines();
         foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
         {
             Renderer renderer = probe.GetComponent<Renderer>();
-            foreach (Material mat in renderer.materials)
-            {
+            foreach (Material material in renderer.materials)
+            {                                
                 if (isSmooth)
                 {
-                    StartCoroutine(materials.LerpColor(mat, color, lightToggleTime));
+                   StartCoroutine(materials.ChangeColor(material, color, seconds, 0f));
                 }
                 else
                 {
-                    materials.ChangeColor(mat, color);
+                    StartCoroutine(materials.ChangeColor(material, color, seconds));
                 }
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Flashes the probe's emissive color in the specified time
+    /// </summary>
+    private void FlashColor(Color color, float seconds)
+    {
+        if (this.lightToggle != null)
+        {
+            // If the lights are enabled, flash back to the probe's 'on' color
+            if (this.lightToggle.LightsEnabled)
+            {                  
+                FlashColor(color, probeColorOn, seconds);
+            }
+            // If the lights are disabled, flash back to the probe's 'off' color
+            else
+            {                    
+                FlashColor(color, probeColorOff, seconds);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Flashes the probe's emissive color from start color to end color in the specified time
+    /// </summary>
+    private void FlashColor(Color startColor, Color endColor, float seconds)
+    {
+        StopAllCoroutines();
+        foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
+        {
+            Renderer renderer = probe.GetComponent<Renderer>();
+            foreach (Material material in renderer.materials)
+            {                                
+                StartCoroutine(materials.FlashColor(material, startColor, endColor, seconds));
             }
         }
     }
@@ -269,12 +331,12 @@ public class Player : LightSource
                 this.lightToggle.ToggleLights();
                 AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
                 if (this.lightToggle.LightsEnabled)
-                {
-                    this.ChangeProbeColor(new Color(1f, lightToggleTime, 0f, 1f), true);
+                {                  
+                    this.ChangeColor(probeColorOn, true, 0);
                 }
                 else
-                {
-                    this.ChangeProbeColor(Color.black, true);
+                {                    
+                    this.ChangeColor(probeColorOff, true, 0);
                 }
             }
 
@@ -326,13 +388,15 @@ public class Player : LightSource
         {
             // Instantiate hit particles
             GameObject.Instantiate(fishHitParticles, transform.position, Quaternion.Euler(0, 0, 0));
-
+            FlashColor(probeColorHit, hitFlashDuration);
+                        
             // Rumble the controller when the player hits a fish.
             controllerRumble.PlayerHitByFish();
         }
 
         // The player was just hit
         lastTimeHit = Time.time;
+        
     }
 
     /// <summary>
@@ -411,6 +475,15 @@ public class Player : LightSource
         this.Rigidbody.angularVelocity = Vector3.zero;
 
         previousThrustAxis = thrustAxis;
+    }
+    
+    private void OnConsumedLightSource(LightSource consumedLightSource)
+    {
+        // If the player ate a fish
+        if (consumedLightSource.CompareTag("Fish"))
+        {
+            FlashColor(probeColorEat, eatFlashDuration);
+        }
     }
 
     void OnCollisionEnter(Collision collision)
