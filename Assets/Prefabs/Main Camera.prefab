@@ -28,12 +28,12 @@ GameObject:
   - 20: {fileID: 2095902}
   - 92: {fileID: 9298842}
   - 124: {fileID: 12428308}
-  - 81: {fileID: 8158288}
   - 114: {fileID: 11451590}
   - 114: {fileID: 11411938}
   - 114: {fileID: 11444888}
   - 114: {fileID: 11487574}
   - 114: {fileID: 11414556}
+  - 114: {fileID: 11447076}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -172,7 +172,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -190,13 +190,6 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
---- !u!81 &8158288
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 142196}
-  m_Enabled: 1
 --- !u!92 &9298842
 Behaviour:
   m_ObjectHideFlags: 1
@@ -260,6 +253,18 @@ MonoBehaviour:
   blurIterations: 1
   blurType: 0
   fastBloomShader: {fileID: 4800000, guid: 68a00c837b82e4c6d92e7da765dc5f1d, type: 3}
+--- !u!114 &11447076
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feb2e5f883c12478ba139ecf14a413e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listenerId: 0
 --- !u!114 &11451590
 MonoBehaviour:
   m_ObjectHideFlags: 1
