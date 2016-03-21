@@ -35,12 +35,20 @@ public class SmoothCamera : MonoBehaviour
     private float maxZoomValue;
     
     [SerializeField]
+    [Tooltip("Z value for camera in zoom zones")]
+    private float zoomZonesValue;
+    
+    [SerializeField]
     [Tooltip("Amount of time before camera zooms back into the player")]
     private float timeBeforeZoomIn;
     
     [SerializeField]
-    [Tooltip("Camera zoom in and out speed")]
-    private float zoomSpeed;
+    [Tooltip("Camera zoom in speed")]
+    private float zoomInSpeed;
+    
+    [SerializeField]
+    [Tooltip("Camera zoom out speed")]
+    private float zoomOutSpeed;
     
     /// <summary>
     /// The object that the camera follows.
@@ -59,18 +67,22 @@ public class SmoothCamera : MonoBehaviour
     private Rigidbody playerRigidbody;
     private bool acquiredZoom;
     private float zoomTimer;
-    public bool shootFlare;
+    private bool shootFlare;
+    private bool zoomInZone;
+    private bool inCurrents;
 
     void Awake()
     {
         playerRigidbody =  target.GetComponent<Rigidbody>();
-        shootFlare = false;
+        this.shootFlare = false;
+        this.zoomInZone = false;
+        this.inCurrents = false;
         transform = GetComponent<Transform>();
         Vector3 position = transform.position;
         position.z = zPosition;
         transform.position = position;
         deadzoneRadiusSquared = deadzoneRadius * deadzoneRadius;
-        zoomTimer = timeBeforeZoomIn;
+        this.zoomTimer = timeBeforeZoomIn;
         DontDestroyOnLoad(this.gameObject); 
     }
     
@@ -78,28 +90,38 @@ public class SmoothCamera : MonoBehaviour
     {
         if (target)
         {
-            float dampTime = this.dampTime;
-            Vector3 targetPosition = Vector2.zero;
-         
-            float distanceFromTarget = ( (Vector2)(target.position - transform.position) ).sqrMagnitude;   
-            // Choose a different damping time based on whether or not the target is in the deadzone
-            if (distanceFromTarget <= deadzoneRadiusSquared)
+            Vector3 newPosition = Vector3.zero;
+            
+            if(!inCurrents)
             {
-                dampTime = deadzoneDampTime;
-                targetPosition = target.position;
+                float dampTime = this.dampTime;
+                Vector3 targetPosition = Vector2.zero;
+            
+                float distanceFromTarget = ( (Vector2)(target.position - transform.position) ).sqrMagnitude;   
+                // Choose a different damping time based on whether or not the target is in the deadzone
+                if (distanceFromTarget <= deadzoneRadiusSquared)
+                {
+                    dampTime = deadzoneDampTime;
+                    targetPosition = target.position;
+                }
+                // Else, if the target isn't in the deadzone
+                else
+                {
+                    // Compute the target position of the camera
+                    Vector3 distanceFromPlayer = target.position - transform.position;
+                    targetPosition = target.position - distanceFromPlayer.SetMagnitude(deadzoneRadius);
+                }
+
+                // Move the camera to its target smoothly.
+                newPosition = Vector2.SmoothDamp(transform.position, (Vector2)targetPosition, ref velocity, dampTime);
+                // Lock the camera's depth
+                newPosition.z = transform.position.z;
             }
-            // Else, if the target isn't in the deadzone
             else
             {
-                // Compute the target position of the camera
-                Vector3 distanceFromPlayer = target.position - transform.position;
-                targetPosition = target.position - distanceFromPlayer.SetMagnitude(deadzoneRadius);
+                newPosition = this.transform.position;
+                newPosition.x = target.transform.position.x;
             }
-
-            // Move the camera to its target smoothly.
-            Vector3 newPosition = Vector2.SmoothDamp(transform.position, (Vector2)targetPosition, ref velocity, dampTime);
-            // Lock the camera's depth
-            newPosition.z = transform.position.z;
             
             
             // camera zoom settings
@@ -108,12 +130,22 @@ public class SmoothCamera : MonoBehaviour
             float mediumSpeed = speedZoomMedium * speedZoomMedium;
             float smallSpeed = speedZommSmall * speedZommSmall;
             
-            if(shootFlare)
+            if(zoomInZone && !inCurrents)
+            {
+                if(zoomZonesValue != newPosition.z)
+                {
+                    //Debug.Log("Zoom zone");
+                    newPosition.z = CameraZoom((newPosition.z > zoomZonesValue? zoomOutSpeed : zoomInSpeed), zoomZonesValue);
+                }
+                acquiredZoom = true;
+            }
+            
+            if(shootFlare && !acquiredZoom)
             {
                 if(maxZoomValue != newPosition.z)
                 {
                     //Debug.Log("flare shot");
-                    newPosition.z = CameraZoom(-zoomSpeed, maxZoomValue);
+                    newPosition.z = CameraZoom(zoomOutSpeed, maxZoomValue);
                     acquiredZoom = true;
                 }
                 else
@@ -134,21 +166,21 @@ public class SmoothCamera : MonoBehaviour
             if(playerVelocity < smallSpeed && !acquiredZoom && zPosition != newPosition.z)
             {
                 //Debug.Log("normal");
-                newPosition.z = CameraZoom(zoomSpeed, zPosition);
+                newPosition.z = CameraZoom(zoomInSpeed, zPosition);
                 acquiredZoom = true;
             }
             
-            if(playerVelocity > smallSpeed && playerVelocity < mediumSpeed && !acquiredZoom && smallZoomValue != newPosition.z)
+            if(playerVelocity > smallSpeed && playerVelocity < mediumSpeed && !acquiredZoom && smallZoomValue != newPosition.z && !inCurrents)
             {
                 //Debug.Log("small");
-                newPosition.z = CameraZoom((newPosition.z > smallZoomValue? -zoomSpeed : zoomSpeed), smallZoomValue);
+                newPosition.z = CameraZoom((newPosition.z > smallZoomValue? zoomOutSpeed : zoomInSpeed), smallZoomValue);
                 acquiredZoom = true;
             }
             
-            if(playerVelocity > mediumSpeed && !acquiredZoom && mediumZoomValue != newPosition.z)
+            if(playerVelocity > mediumSpeed && !acquiredZoom && mediumZoomValue != newPosition.z && !inCurrents)
             {
                 //Debug.Log("medium");
-                newPosition.z = CameraZoom((newPosition.z > mediumZoomValue? -zoomSpeed : zoomSpeed), mediumZoomValue);
+                newPosition.z = CameraZoom((newPosition.z > mediumZoomValue? zoomOutSpeed : zoomInSpeed), mediumZoomValue);
                 acquiredZoom = true;
             }
             
@@ -162,26 +194,76 @@ public class SmoothCamera : MonoBehaviour
     public float CameraZoom(float zoomSpeed, float zoomToValue)
     {
         //calculate new camera position
-        float zValue = this.transform.position.z;
-        zValue += (Time.deltaTime * zoomSpeed);
+        float zValue = Mathf.Lerp(this.transform.position.z, zoomToValue, Time.deltaTime * zoomSpeed);
+        //round up the value to 2 digits after point in orther to check when the value is at the desired zoomToValue
+        float roundedValue = Mathf.Round(zValue * 100f) / 100f;
+        //Debug.Log(roundedValue + " |------| " + (Mathf.Round(zoomToValue * 100f) / 100f));
         
-        if((int)zValue != zoomToValue)
-        {
-            return zValue;
-        }
-        else
+        if(roundedValue == (Mathf.Round(zoomToValue * 100f) / 100f))
         {
             return zoomToValue;
         }
+        else
+        {
+            return zValue;
+        }
+        
     }
     
     public void FlareShoot()
     {
-        this.shootFlare = true;
+        //need to check that we aren't in a zoomInZone
+        if(!zoomInZone && !inCurrents)
+        {
+            this.shootFlare = true;
+        }
     }
     
     public void ResetTimer()
     {
         this.zoomTimer = 0.0f;
+    }
+    
+    public void SetZoomInZone(bool isZoom)
+    {
+        this.zoomInZone = isZoom;
+        //need to reset if flare was shoot before entering zoomInZone
+        this.shootFlare = false;
+        this.zoomTimer = timeBeforeZoomIn;
+    }
+    
+    public void SetCurrentState(bool isCurrent)
+    {
+        this.inCurrents = isCurrent;
+        //need to reset if flare was shoot before entering zoomInZone
+        this.shootFlare = false;
+        this.zoomTimer = timeBeforeZoomIn;
+    }
+    
+    public void StartCurrentParticles(string location)
+    {
+        foreach(Transform child in this.GetComponentInChildren<Transform>())
+        {
+            //Debug.Log(child.name +  "==" + location);
+            if(child.name == location)
+            {
+                child.gameObject.SetActive(true);
+                child.GetComponent<ParticleSystem>().Play();
+            }
+        }
+    }
+    
+    public void StopCurrentParticles(string location)
+    {
+        foreach(Transform child in this.GetComponentInChildren<Transform>())
+        {
+            //Debug.Log(child.name +  "=!!=" + location);
+            if(child.name == location)
+            {
+                Debug.Log(location);
+                child.gameObject.SetActive(false);
+                child.GetComponent<ParticleSystem>().Stop();
+            }
+        }
     }
 }
