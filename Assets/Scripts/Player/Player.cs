@@ -101,6 +101,11 @@ public class Player : LightSource
     private ControllerRumble controllerRumble;  // Caches the controller rumble component
     private int currentLevel;
     public int playerVelocity;
+    private Color probeColorOn = new Color(1f, 0.3103448f, 0f);
+    private Color probeColorOff = new Color(0.3f,0.09310344f,0);
+    private Color probeColorHit = new Color(1, 0.067f, 0.067f);
+    private Color probeColorEat = new Color(0, 0.875f, 1);
+   
 
     /// <summary>
     /// Initializes Player components   
@@ -119,9 +124,8 @@ public class Player : LightSource
         this.controllerRumble = GetComponent<ControllerRumble>();
         AkSoundEngine.SetState("PlayerLife", "Alive");
         this.currentLevel = SceneManager.GetActiveScene().buildIndex;
-        DontDestroyOnLoad(this.gameObject);
-
-        ChangeProbeColor(Color.black, false);
+        DontDestroyOnLoad(this.gameObject);                
+        ChangeColor(probeColorOff, false, 0);
         LoadGame();
         ResetPlayerState();
         
@@ -236,21 +240,21 @@ public class Player : LightSource
     /// </summary>
     /// <param name="color">target color</param>
     /// <param name="isSmooth">if true, the color change will follow a smooth gradient</param>
-    private void ChangeProbeColor(Color color, bool isSmooth)
+    protected override void ChangeColor(Color color, bool isSmooth, float seconds)
     {
         StopAllCoroutines();
         foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
         {
             Renderer renderer = probe.GetComponent<Renderer>();
-            foreach (Material mat in renderer.materials)
-            {
+            foreach (Material material in renderer.materials)
+            {                                
                 if (isSmooth)
                 {
-                    StartCoroutine(materials.LerpColor(mat, color, lightToggleTime));
+                   StartCoroutine(materials.ChangeColor(material, color, seconds, 0f));
                 }
                 else
                 {
-                    materials.ChangeColor(mat, color);
+                    StartCoroutine(materials.ChangeColor(material, color, seconds));
                 }
             }
         }
@@ -269,12 +273,12 @@ public class Player : LightSource
                 this.lightToggle.ToggleLights();
                 AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
                 if (this.lightToggle.LightsEnabled)
-                {
-                    this.ChangeProbeColor(new Color(1f, lightToggleTime, 0f, 1f), true);
+                {                  
+                    this.ChangeColor(probeColorOn, true, 0);
                 }
                 else
-                {
-                    this.ChangeProbeColor(Color.black, true);
+                {                    
+                    this.ChangeColor(probeColorOff, true, 0);
                 }
             }
 
@@ -326,13 +330,15 @@ public class Player : LightSource
         {
             // Instantiate hit particles
             GameObject.Instantiate(fishHitParticles, transform.position, Quaternion.Euler(0, 0, 0));
-
+            ChangeColor(probeColorHit, false, 0.2f);
+                        
             // Rumble the controller when the player hits a fish.
             controllerRumble.PlayerHitByFish();
         }
 
         // The player was just hit
         lastTimeHit = Time.time;
+        
     }
 
     /// <summary>
