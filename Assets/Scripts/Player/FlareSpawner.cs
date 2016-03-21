@@ -39,9 +39,10 @@ public class FlareSpawner : MonoBehaviour
         this.lightSource = GetComponent<LightSource>();
         this.controllerRumble = GetComponent<ControllerRumble>();
         this.rigidbody = GetComponent<Rigidbody>();
-        if (GameObject.Find("Main Camera") != null)
+        GameObject mainCamera = GameObject.Find("Main Camera");
+        if (mainCamera != null)
         {
-            this.smoothCamera = GameObject.Find("Main Camera").GetComponent<SmoothCamera>();
+            this.smoothCamera = mainCamera.GetComponent<SmoothCamera>();
         }
     }
 
