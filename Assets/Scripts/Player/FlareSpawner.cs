@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class FlareSpawner : MonoBehaviour 
 {
@@ -26,37 +25,53 @@ public class FlareSpawner : MonoBehaviour
     [SerializeField]
     [Tooltip("The amount of recoil applied on the player when shooting the flare")]
     private float recoilForce;
-
-    private float buffer;
-
+        
     private float timer;
     private LightSource lightSource;
-    private new Rigidbody rigidbody;
+    private ControllerRumble controllerRumble;  // Caches the component that rumbles the controller
+    private new Rigidbody rigidbody;    
+    private SmoothCamera smoothCamera;
 	
 
     void Start()
     {
-        timer = cooldownTime;
-        lightSource = GetComponent<LightSource>();
-        rigidbody = GetComponent<Rigidbody>();
+        this.timer = cooldownTime;
+        this.lightSource = GetComponent<LightSource>();
+        this.controllerRumble = GetComponent<ControllerRumble>();
+        this.rigidbody = GetComponent<Rigidbody>();
+        GameObject mainCamera = GameObject.Find("Main Camera");
+        if (mainCamera != null)
+        {
+            this.smoothCamera = mainCamera.GetComponent<SmoothCamera>();
+        }
     }
 
     void Update() 
     {
-        if((timer += Time.deltaTime) >= cooldownTime)
+        if ((timer += Time.deltaTime) >= cooldownTime)
         {
             if (Input.GetButtonDown("UseFlare"))
             {
                 float cost = flareEnergyCost * flareCostPercentage;
-                buffer = flareEnergyCost * flareCostPercentage;
 
-                if(lightSource.LightEnergy.CurrentEnergy > (cost + buffer))
+                if (lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost))
                 {
                     Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
                     lightSource.LightEnergy.Deplete(flareEnergyCost);
                     // Apply recoil in the opposite direction the flare was shot
                     rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
+                    controllerRumble.ShotFlare();   // Rumble the controller
                     timer = 0.0f;
+                    
+                    AkSoundEngine.PostEvent("Flare", this.gameObject);
+                    // STELLA if eaten shut off
+
+                    //reset all values for the zoom when ever a player fires a flare
+                    if (smoothCamera != null)
+                    {
+                        smoothCamera.FlareShoot();
+                        smoothCamera.ResetTimer();   
+                    }                    
                 }
             }
         }

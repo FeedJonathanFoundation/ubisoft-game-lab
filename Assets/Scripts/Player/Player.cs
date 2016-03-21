@@ -15,9 +15,9 @@ public class Player : LightSource
     [Header("Player Movement")]
     [SerializeField]
     [Tooltip("The position at which the character ejects mass")]
-    private Transform massEjectionTransform;    
-    
-    [SerializeField]            
+    private Transform massEjectionTransform;
+
+    [SerializeField]
     [Tooltip("The light ball ejected by the player when thrusting")]
     private GameObject lightBallPrefab;
 
@@ -40,11 +40,15 @@ public class Player : LightSource
     [SerializeField]
     [Tooltip("The damping to apply when the brakes are on at full strength")]
     private float brakeDrag = 1;
-    
+
     [SerializeField]
     [Tooltip("The parent of the propulsion particle effects activated when the player is propulsing")]
     private GameObject jetFuelEffect;
-    
+
+    [SerializeField]
+    [Tooltip("Particle effect played when the player is hit by a fish")]
+    private ParticleSystem fishHitParticles;
+
     [SerializeField]
     [Tooltip("Particle effect played when the player dies")]
     private ParticleSystem playerDeathParticles;
@@ -53,15 +57,15 @@ public class Player : LightSource
     [SerializeField]
     [Tooltip("If true, the lights are enabled on scene start")]
     private bool defaultLightStatus = true;
-    
+
     [SerializeField]
     [Tooltip("The amount of force applied on the player when hit by an enemy")]
     private float knockbackForce = 10;
-    
+
     [SerializeField]
     [Tooltip("Amount of time invulnerable after being hit by an enemy")]
     private float invulnerabilityTime = 3;
-    
+
     [SerializeField]
     [Tooltip("Linear drag applied when player is hit by enemy")]
     private float invulnerabilityDrag = 2;
@@ -77,7 +81,7 @@ public class Player : LightSource
     [SerializeField]
     [Tooltip("Energy needed to activate light and that light will turn off if reached")]
     private float minimalEnergyRestrictionToggleLights = 0;
- 
+
     [SerializeField]
     [Tooltip("The amount of time it takes for the player's emissive light to toggle on/off")]
     private float lightToggleTime = 0.1f;
@@ -85,7 +89,6 @@ public class Player : LightSource
     [SerializeField]
     [Tooltip("If true, checkpoints are not used and user is spawned at the initial position")]
     private bool disableCheckpoints = true;
-                
     private PlayerMovement movement;
     private PlayerLightToggle lightToggle;
     private float lastTimeHit = -100;  // The last time player was hit by an enemy
@@ -94,53 +97,90 @@ public class Player : LightSource
     private bool isDead; // determines is current player is dead
     public bool isSafe; // used for boss AI
     private bool deathParticlesPlayed;
-    private MaterialExtensions materials;      
-    private int currentLevel;   
-        
+    private MaterialExtensions materials;
+    private ControllerRumble controllerRumble;  // Caches the controller rumble component
+    private int currentLevel;
+    public int playerVelocity;   
+    
+    [Header("Emissive Colours")]
+    [SerializeField]
+    private Color probeColorOn = new Color(1f, 0.3103448f, 0f);
+    [SerializeField]
+    private Color probeColorOff = new Color(0.3f,0.09310344f,0);
+    [SerializeField]
+    private Color probeColorHit = new Color(1, 0.067f, 0.067f);
+    [SerializeField]
+    [Tooltip("The amount of time the player flashes when hit")]
+    private float hitFlashDuration = 2.0f;
+    [SerializeField]
+    private Color probeColorEat = new Color(0, 0.875f, 1);
+    [SerializeField]
+    [Tooltip("The amount of time the player flashes when eating a fish")]
+    private float eatFlashDuration = 0.5f;
+
     /// <summary>
     /// Initializes Player components   
     /// </summary>
     protected override void Awake()
     {
-       base.Awake(); // call parent LightSource Awake() first
-       
-       this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, this.Transform, this.Rigidbody, this.LightEnergy, this.jetFuelEffect);
-       this.lightToggle = new PlayerLightToggle(this.Transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
-       this.materials = new MaterialExtensions();
-                
-       this.defaultDrag = Rigidbody.drag;
-       this.isDead = false;
-       this.isSafe = false;
-       this.currentLevel = SceneManager.GetActiveScene().buildIndex;
-       DontDestroyOnLoad(this.gameObject);
-       
-       ChangeProbeColor(Color.black);
-       LoadGame();
-       
-       #if UNITY_EDITOR
-        this.ValidateInputs();
-       #endif 
-           
+        base.Awake(); // call parent LightSource Awake() first
+
+        this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, this.Transform, this.Rigidbody, this.LightEnergy, this.jetFuelEffect);
+        this.lightToggle = new PlayerLightToggle(this.Transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
+        this.materials = new MaterialExtensions();
+
+        this.defaultDrag = Rigidbody.drag;
+        this.isDead = false;
+        this.isSafe = true;
+        this.controllerRumble = GetComponent<ControllerRumble>();
+        AkSoundEngine.SetState("PlayerLife", "Alive");
+        this.currentLevel = SceneManager.GetActiveScene().buildIndex;
+        DontDestroyOnLoad(this.gameObject);                
+        ChangeColor(probeColorOff, false, 0);
+        LoadGame();
+        ResetPlayerState();
+        
+        #if UNITY_EDITOR
+            this.ValidateInputs();
+        #endif        
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        ConsumedLightSource += OnConsumedLightSource;
     }
     
+    public override void OnDisable()
+    {
+        base.OnEnable();
+        ConsumedLightSource -= OnConsumedLightSource;
+    }
+
+
     /// <summary>
     /// Listens for player states such as movement, light controls and death
     /// Called once per frame
     /// </summary>
     protected override void Update()
     {
-        base.Update(); 
-        
+        base.Update();
+
+        playerVelocity = (int)this.Rigidbody.velocity.magnitude;
+
         // Modify player drag if invulnerable
-        if (IsInvulnerable()) 
-        { 
+        if (IsInvulnerable())
+        {
             // 0 = just became invulnerable
             // 1 = not invulnerable anymore
-            float invulnerabilityPercent = (Time.time-lastTimeHit)/invulnerabilityTime;
-            Rigidbody.drag = (invulnerabilityDrag-defaultDrag) * (1-invulnerabilityPercent) + defaultDrag; 
+            float invulnerabilityPercent = (Time.time - lastTimeHit) / invulnerabilityTime;
+            Rigidbody.drag = (invulnerabilityDrag - defaultDrag) * (1 - invulnerabilityPercent) + defaultDrag;
         }
-        else { Rigidbody.drag = defaultDrag; }
-        
+        else
+        {
+            Rigidbody.drag = defaultDrag;
+        }
+
         if (isDead)
         {
             RestartGame();
@@ -149,7 +189,7 @@ public class Player : LightSource
         {
             Move();
             LightControl();
-            
+
             // Clamp the player's velocity
             if (this.Rigidbody.velocity.sqrMagnitude > this.maxSpeed * this.maxSpeed)
             {
@@ -157,69 +197,125 @@ public class Player : LightSource
             }
         }
     }
-        
+
     /// <summary>
     /// Invoked when a new scene is loaded
     /// </summary>
-    protected void OnLevelWasLoaded(int level) 
+    protected void OnLevelWasLoaded(int level)
     {
         Debug.Log("Scene " + level + " is loaded!");
-        this.transform.position = new Vector3(0, 0, 0); 
+        ResetPlayerState();
     }
-          
+
     /// <summary>
     /// Sets player state to 'dead' when LightDepleted event is triggered
     /// </summary>
     protected override void OnLightDepleted()
     {
         base.OnLightDepleted();
-        
+
         // If the player just died
         if (!isDead)
         {
             movement.OnPropulsionEnd();
-            Rigidbody.useGravity = true; 
+            Rigidbody.useGravity = true;
         }
-        
+
         isDead = true;
-               
+        AkSoundEngine.SetState("PlayerLife", "Dead");
+        AkSoundEngine.PostEvent("Die", this.gameObject);
+
         Debug.Log("Game OVER! Press 'R' to restart!");
     }
-                      
+
+    public void ResetPlayerState()
+    {
+        this.Rigidbody.velocity = Vector3.zero;
+        this.Transform.position = Vector3.zero;
+        this.Transform.localEulerAngles = new Vector3(0, 0, -90);
+    }
+
     /// <summary>
     /// If player lights are on, player is visible
     /// </summary>
     public bool IsDetectable()
     {
-        if (lightToggle != null) 
+        if (lightToggle != null)
         {
-            return lightToggle.LightsEnabled;    
+            return lightToggle.LightsEnabled;
         }
-        else 
+        else
         {
             return false;
-        }  
+        }
     }
-    
+
     public int CurrentLevel
     {
         get { return this.currentLevel; }
         set { this.currentLevel = value; }
     }
-            
+
     /// <summary>
-    /// Smoothly changes color of the player avatar to the given one 
+    /// Changes the color of the player avatar to the given one
+    ///  
     /// </summary>
-    private void ChangeProbeColor(Color color)
+    /// <param name="color">target color</param>
+    /// <param name="isSmooth">if true, the color change will follow a smooth gradient</param>
+    protected override void ChangeColor(Color color, bool isSmooth, float seconds)
     {
+        StopAllCoroutines();
         foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
-        {            
+        {
             Renderer renderer = probe.GetComponent<Renderer>();
-            foreach (Material mat in renderer.materials)
-            {
-                StartCoroutine(materials.LerpColor(mat, color, lightToggleTime));
-            }                    
-        }                    
+            foreach (Material material in renderer.materials)
+            {                                
+                if (isSmooth)
+                {
+                   StartCoroutine(materials.ChangeColor(material, color, seconds, 0f));
+                }
+                else
+                {
+                    StartCoroutine(materials.ChangeColor(material, color, seconds));
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Flashes the probe's emissive color in the specified time
+    /// </summary>
+    private void FlashColor(Color color, float seconds)
+    {
+        if (this.lightToggle != null)
+        {
+            // If the lights are enabled, flash back to the probe's 'on' color
+            if (this.lightToggle.LightsEnabled)
+            {                  
+                FlashColor(color, probeColorOn, seconds);
+            }
+            // If the lights are disabled, flash back to the probe's 'off' color
+            else
+            {                    
+                FlashColor(color, probeColorOff, seconds);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Flashes the probe's emissive color from start color to end color in the specified time
+    /// </summary>
+    private void FlashColor(Color startColor, Color endColor, float seconds)
+    {
+        StopAllCoroutines();
+        foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
+        {
+            Renderer renderer = probe.GetComponent<Renderer>();
+            foreach (Material material in renderer.materials)
+            {                                
+                StartCoroutine(materials.FlashColor(material, startColor, endColor, seconds));
+            }
+        }
     }
 
     /// <summary>
@@ -233,17 +329,18 @@ public class Player : LightSource
             if (Input.GetButtonDown("LightToggle") && minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
             {
                 this.lightToggle.ToggleLights();
+                AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
                 if (this.lightToggle.LightsEnabled)
-                {
-                    this.ChangeProbeColor(new Color(1f, lightToggleTime, 0f, 1f));
+                {                  
+                    this.ChangeColor(probeColorOn, true, 0);
                 }
                 else
-                {
-                    this.ChangeProbeColor(Color.black);
-                }                                                 
+                {                    
+                    this.ChangeColor(probeColorOff, true, 0);
+                }
             }
 
-            this.lightToggle.DepleteLight(timeToDeplete, lightToggleEnergyCost); 
+            this.lightToggle.DepleteLight(timeToDeplete, lightToggleEnergyCost);
         }
     }
 
@@ -251,42 +348,57 @@ public class Player : LightSource
     /// Loads the last saved game state on the scene or places player at the origin
     /// </summary>
     private void LoadGame()
-    {              
+    {
         PlayerData data = DataManager.LoadFile();
-        
+
         if (data != null && !disableCheckpoints)
         {
-            if (data.levelID != this.currentLevel) 
+            if (data.levelID != this.currentLevel)
             {
                 if (SceneManager.sceneCountInBuildSettings > data.levelID)
                 {
                     SceneManager.LoadScene(data.levelID, LoadSceneMode.Single);
-                }                    
+                }
             }
             transform.position = DataManager.Vector3FromString(data.playerPosition);
             transform.localEulerAngles = DataManager.Vector3FromString(data.playerRotation);
-        } 
-        else 
+        }
+        else
         {
             transform.position = new Vector3(0, 0, 0);
-            transform.localEulerAngles = new Vector3(0, 0, 0);    
-            DataManager.ClearSavedData();                            
+            transform.localEulerAngles = new Vector3(0, 0, 0);
+            DataManager.ClearSavedData();
         }
     }
-    
+
+    /// <summary>
+    /// Called when the player is hit by a light source that is stronger than him
+    /// </summary>
     public override void Knockback(LightSource enemyLightSource)
-    {        
+    {
         // Calculate a knockback force pushing the player away from the enemy fish
         Vector2 distance = (Transform.position - enemyLightSource.Transform.position);
         Vector2 knockback = distance.normalized * knockbackForce;
-        
+
         Rigidbody.velocity = Vector3.zero;
         Rigidbody.AddForce(knockback, ForceMode.Impulse);
-        
+
+        // If the player was hit by a fish
+        if (enemyLightSource.CompareTag("Fish"))
+        {
+            // Instantiate hit particles
+            GameObject.Instantiate(fishHitParticles, transform.position, Quaternion.Euler(0, 0, 0));
+            FlashColor(probeColorHit, hitFlashDuration);
+                        
+            // Rumble the controller when the player hits a fish.
+            controllerRumble.PlayerHitByFish();
+        }
+
         // The player was just hit
         lastTimeHit = Time.time;
+        
     }
-    
+
     /// <summary>
     /// If true, the player has been hit and is temporarily
     /// invulnerable
@@ -295,7 +407,7 @@ public class Player : LightSource
     {
         return (Time.time - lastTimeHit) < invulnerabilityTime;
     }
-    
+
     public override bool CanBeAbsorbed()
     {
         // The player cannot be absorbed if invulnerable
@@ -304,7 +416,7 @@ public class Player : LightSource
             Debug.Log("PLAYER CAN'T BE ABSORBED: " + (Time.deltaTime - lastTimeHit));
             return false;
         }
-        
+
         return true;
     }
 
@@ -312,33 +424,34 @@ public class Player : LightSource
     /// Listens for input related to movement of the player 
     /// </summary>
     private void Move()
-    {        
+    {
         // Ensure that the rigidbody never spins
         this.Rigidbody.angularVelocity = Vector3.zero;
-        
+
         float thrustAxis = Input.GetAxis("ThrustAxis");
         float brakeAxis = Input.GetAxis("BrakeAxis");
-        
+
         if (Input.GetButtonDown("Thrust") || (previousThrustAxis == 0 && thrustAxis > 0))
         {
             movement.OnPropulsionStart();
         }
-        
+
         if (Input.GetButton("Thrust"))
         {
             movement.Propulse(-massEjectionTransform.up);
         }
+
         if (thrustAxis != 0)
         {
             // Propulse in the direction of the left stick (opposite to the rear of the probe)
             movement.Propulse(-massEjectionTransform.up, thrustAxis);
         }
-        
+
         if (Input.GetButtonUp("Thrust") || (previousThrustAxis > 0 && thrustAxis == 0))
         {
             movement.OnPropulsionEnd();
         }
-        
+
         // Brake
         if (Input.GetButton("Brake"))
         {
@@ -348,7 +461,7 @@ public class Player : LightSource
         {
             movement.Brake(brakeAxis);
         }
-        
+
         if (isDead)
         {
             // Slow down gravity;
@@ -360,41 +473,54 @@ public class Player : LightSource
 
         // Ensure that the rigidbody never spins
         this.Rigidbody.angularVelocity = Vector3.zero;
-        
+
         previousThrustAxis = thrustAxis;
     }
     
+    private void OnConsumedLightSource(LightSource consumedLightSource)
+    {
+        // If the player ate a fish
+        if (consumedLightSource.CompareTag("Fish"))
+        {
+            FlashColor(probeColorEat, eatFlashDuration);
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         // Player has collided upon death
-        if (isDead && !deathParticlesPlayed)
+        if (isDead && !deathParticlesPlayed && playerDeathParticles != null)
         {
             // Calculate the angle of the player's velocity upon impact
-            float crashAngle = Mathf.Rad2Deg * Mathf.Atan2(Rigidbody.velocity.y,Rigidbody.velocity.x);
+            float crashAngle = Mathf.Rad2Deg * Mathf.Atan2(Rigidbody.velocity.y, Rigidbody.velocity.x);
             // Orient the explosion opposite to the player's velocity
             float explosionAngle = crashAngle + 180;
             // Spawn the explosion
             ParticleSystem explosion = GameObject.Instantiate(playerDeathParticles,
-                                        Transform.position,Quaternion.Euler(-90,explosionAngle,0)) as ParticleSystem;
-            
-            Transform.localScale = Vector3.zero;  
-            
+                                        Transform.position, Quaternion.Euler(-90, explosionAngle, 0)) as ParticleSystem;
+            // Rumble the controller
+            controllerRumble.PlayerDied();
+
+            Transform.localScale = Vector3.zero;
+            Rigidbody.isKinematic = true;
+
             // Only play the death particles the first time the player crashes on an obstacle
-            deathParticlesPlayed = true;      
+            deathParticlesPlayed = true;
         }
     }
-    
+
     /// <summary>
     /// Listens for restart button clicks 
     /// </summary>
     private void RestartGame()
     {
         if (Input.GetButtonDown("Restart"))
-        {            
+        {
             Debug.Log("Game Restarted");
-            Transform.localScale = new Vector3(1,1,1);
+            Transform.localScale = new Vector3(1, 1, 1);
+            Rigidbody.isKinematic = false;
             Rigidbody.useGravity = false;
-            
+
             this.LightEnergy.Add(this.DefaultEnergy);
             this.isDead = false;
             this.deathParticlesPlayed = false;
@@ -402,7 +528,7 @@ public class Player : LightSource
             LoadGame();
         }
     }
- 
+
     /// <summary>
     /// Helper method to validate parameters passed through Unity EditorApplication
     /// In case of missing asset, shows debug error and halts the game
@@ -410,17 +536,17 @@ public class Player : LightSource
     private void ValidateInputs()
     {
         #if UNITY_EDITOR
-        if (massEjectionTransform == null || lightBallPrefab == null || jetFuelEffect == null)
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
-            Debug.LogError("Missing prefab on Player object!");                
-        }
+            if (massEjectionTransform == null || lightBallPrefab == null || jetFuelEffect == null)
+            {
+                UnityEditor.EditorApplication.isPlaying = false;
+                Debug.LogError("Missing prefab on Player object!");
+            }
 
-        if (this.transform.Find("LightsToToggle").gameObject == null)
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
-            Debug.LogError("Could not find LightsToToggle object!");
-        }
+            if (this.transform.Find("LightsToToggle").gameObject == null)
+            {
+                UnityEditor.EditorApplication.isPlaying = false;
+                Debug.LogError("Could not find LightsToToggle object!");
+            }
         #endif        
     }
 }

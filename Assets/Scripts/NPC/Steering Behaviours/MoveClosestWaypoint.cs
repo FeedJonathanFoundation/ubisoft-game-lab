@@ -28,11 +28,8 @@ public class MoveClosestWaypoint : NPCActionable
     
     public void SetID(string id)
     {
-        Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         this.id = id;
-        Debug.Log(this.id);
         wallAvoidance.id = id;
-        Debug.Log(wallAvoidance.id);
     }
     
     public void SetBigFish(Transform boss)

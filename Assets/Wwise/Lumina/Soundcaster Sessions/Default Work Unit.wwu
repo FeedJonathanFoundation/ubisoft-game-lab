@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{1BBE4285-55D7-48EE-A246-5E3358680C90}" SchemaVersion="70">
+	<SoundcasterSessions>
+		<WorkUnit Name="Default Work Unit" ID="{1BBE4285-55D7-48EE-A246-5E3358680C90}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundcasterSession Name="New Soundcaster Session" ID="{54344B79-566C-46AC-8487-3C7C63EF4C2C}">
+					<ModuleList>
+						<Module>
+							<ObjectRef Name="Ambient1" ID="{34CCBE0C-A0E2-47BD-B9D1-5D9C020DFAE6}" WorkUnitID="{EAE4CDC1-6F63-43E7-87D3-AEE39B8BC9B7}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Section 3 Jellyfish ambient" ID="{AFB4E037-E623-4C48-AC5A-C9B57E53394A}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+							<Position X="0" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Wall collision" ID="{6744DB81-4DAA-481A-A267-B7B42216648D}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+							<Position X="1" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Ambient2" ID="{8C7FF968-4F75-4025-B230-C067DA3819CE}" WorkUnitID="{EAE4CDC1-6F63-43E7-87D3-AEE39B8BC9B7}"/>
+							<Position X="1" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Evade A" ID="{AE5178B5-1A00-40A5-A1E8-AF1E87EC445D}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+							<Position X="2" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Default" ID="{381BE320-805A-460D-95C5-AA07F49E314D}" WorkUnitID="{EAE4CDC1-6F63-43E7-87D3-AEE39B8BC9B7}"/>
+							<Position X="2" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Movement is true" ID="{9305CA1F-89A4-4EEF-A96F-9519BB641955}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+							<Position X="2" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Detection" ID="{C1220C9E-DF63-4DDD-8381-409D9D3326F5}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+							<Position X="3" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Eat Fish" ID="{B56821F8-CE33-446E-BCF4-83DCEB98C25D}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+							<Position X="3" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Light Off" ID="{1E572DB8-FEF5-4BDB-B388-DC1E85BEC2A1}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+							<Position X="3" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Light Hum" ID="{09663464-1906-49DF-A45A-9AB5CB9DC024}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+							<Position X="4" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Light Orb Pickup" ID="{8D2B665D-5741-474C-86A3-A55C9CB924FA}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+							<Position X="4" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Light On" ID="{CB9249BF-868F-4AEC-AB4D-50CB858B504F}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+							<Position X="4" Y="2"/>
+						</Module>
+					</ModuleList>
+					<RTPCValueList ShowAll="true">
+						<RTPCValue>
+							<GameParameterRef Name="playerVelocity" ID="{84FD68C7-E5A9-4BEF-A88E-F5F25B1CCB51}"/>
+							<Value>0</Value>
+						</RTPCValue>
+					</RTPCValueList>
+					<CurrentStateList ShowAll="true">
+						<CurrentStateRef Name="Alive" ID="{EB9DE84F-4043-4A30-8EF9-00825ACA100C}"/>
+					</CurrentStateList>
+					<CurrentSwitchList ShowAll="true">
+						<CurrentSwitchRef Name="Scene2" ID="{753BFA11-6846-4A67-A83E-BD9F40B9FC36}"/>
+					</CurrentSwitchList>
+				</SoundcasterSession>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundcasterSessions>
+</WwiseDocument>
