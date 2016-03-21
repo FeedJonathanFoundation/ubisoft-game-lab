@@ -100,15 +100,16 @@ public class LightSource : MonoBehaviour
             {
                 
                 if (this is Player)
-                {
+                {                    
                     if (otherLightSource.CompareTag("Pickup"))
                     {
                         AkSoundEngine.PostEvent("Light_Orb_Pickup", this.gameObject);
                     }
                     else
-                    {
+                    {                                                
+                        this.ChangeColor(new Color(0.588f, 0.976f, 0.976f), false, 0.2f);                                      
                         AkSoundEngine.PostEvent("Eat", this.gameObject);
-                    }
+                    }                    
                 }
                 LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
                                         
@@ -140,6 +141,12 @@ public class LightSource : MonoBehaviour
             }
         }
     }
+     
+    protected virtual void ChangeColor(Color color, bool isSmooth, float seconds)
+    {
+        // Implemented in children        
+    } 
+     
      
     /// <summary>
     /// Returns true if this LightSource can absorb the given LightSource
