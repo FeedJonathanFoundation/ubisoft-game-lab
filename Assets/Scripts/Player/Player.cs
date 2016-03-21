@@ -100,12 +100,23 @@ public class Player : LightSource
     private MaterialExtensions materials;
     private ControllerRumble controllerRumble;  // Caches the controller rumble component
     private int currentLevel;
-    public int playerVelocity;
+    public int playerVelocity;   
+    
+    [Header("Emissive Colours")]
+    [SerializeField]
     private Color probeColorOn = new Color(1f, 0.3103448f, 0f);
+    [SerializeField]
     private Color probeColorOff = new Color(0.3f,0.09310344f,0);
+    [SerializeField]
     private Color probeColorHit = new Color(1, 0.067f, 0.067f);
+    [SerializeField]
+    [Tooltip("The amount of time the player flashes when hit")]
+    private float hitFlashDuration = 2.0f;
+    [SerializeField]
     private Color probeColorEat = new Color(0, 0.875f, 1);
-   
+    [SerializeField]
+    [Tooltip("The amount of time the player flashes when eating a fish")]
+    private float eatFlashDuration = 0.5f;
 
     /// <summary>
     /// Initializes Player components   
@@ -134,6 +145,17 @@ public class Player : LightSource
         #endif        
     }
 
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        ConsumedLightSource += OnConsumedLightSource;
+    }
+    
+    public override void OnDisable()
+    {
+        base.OnEnable();
+        ConsumedLightSource -= OnConsumedLightSource;
+    }
 
 
     /// <summary>
@@ -259,6 +281,42 @@ public class Player : LightSource
             }
         }
     }
+    
+    /// <summary>
+    /// Flashes the probe's emissive color in the specified time
+    /// </summary>
+    private void FlashColor(Color color, float seconds)
+    {
+        if (this.lightToggle != null)
+        {
+            // If the lights are enabled, flash back to the probe's 'on' color
+            if (this.lightToggle.LightsEnabled)
+            {                  
+                FlashColor(color, probeColorOn, seconds);
+            }
+            // If the lights are disabled, flash back to the probe's 'off' color
+            else
+            {                    
+                FlashColor(color, probeColorOff, seconds);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Flashes the probe's emissive color from start color to end color in the specified time
+    /// </summary>
+    private void FlashColor(Color startColor, Color endColor, float seconds)
+    {
+        StopAllCoroutines();
+        foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
+        {
+            Renderer renderer = probe.GetComponent<Renderer>();
+            foreach (Material material in renderer.materials)
+            {                                
+                StartCoroutine(materials.FlashColor(material, startColor, endColor, seconds));
+            }
+        }
+    }
 
     /// <summary>
     /// Listens for Lights button click
@@ -330,7 +388,7 @@ public class Player : LightSource
         {
             // Instantiate hit particles
             GameObject.Instantiate(fishHitParticles, transform.position, Quaternion.Euler(0, 0, 0));
-            ChangeColor(probeColorHit, false, 0.2f);
+            FlashColor(probeColorHit, hitFlashDuration);
                         
             // Rumble the controller when the player hits a fish.
             controllerRumble.PlayerHitByFish();
@@ -417,6 +475,15 @@ public class Player : LightSource
         this.Rigidbody.angularVelocity = Vector3.zero;
 
         previousThrustAxis = thrustAxis;
+    }
+    
+    private void OnConsumedLightSource(LightSource consumedLightSource)
+    {
+        // If the player ate a fish
+        if (consumedLightSource.CompareTag("Fish"))
+        {
+            FlashColor(probeColorEat, eatFlashDuration);
+        }
     }
 
     void OnCollisionEnter(Collision collision)

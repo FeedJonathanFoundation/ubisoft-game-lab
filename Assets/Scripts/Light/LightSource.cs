@@ -106,8 +106,7 @@ public class LightSource : MonoBehaviour
                         AkSoundEngine.PostEvent("Light_Orb_Pickup", this.gameObject);
                     }
                     else
-                    {                                                
-                        this.ChangeColor(new Color(0.588f, 0.976f, 0.976f), false, 0.2f);                                      
+                    {                                                                             
                         AkSoundEngine.PostEvent("Eat", this.gameObject);
                     }                    
                 }
