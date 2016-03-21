@@ -88,32 +88,40 @@ public class SmoothCamera : MonoBehaviour
     
     void FixedUpdate()
     {
-        Debug.Log(inCurrents);
-        if (target && !inCurrents)
+        if (target)
         {
+            Vector3 newPosition = Vector3.zero;
             
-            float dampTime = this.dampTime;
-            Vector3 targetPosition = Vector2.zero;
-         
-            float distanceFromTarget = ( (Vector2)(target.position - transform.position) ).sqrMagnitude;   
-            // Choose a different damping time based on whether or not the target is in the deadzone
-            if (distanceFromTarget <= deadzoneRadiusSquared)
+            if(!inCurrents)
             {
-                dampTime = deadzoneDampTime;
-                targetPosition = target.position;
+                float dampTime = this.dampTime;
+                Vector3 targetPosition = Vector2.zero;
+            
+                float distanceFromTarget = ( (Vector2)(target.position - transform.position) ).sqrMagnitude;   
+                // Choose a different damping time based on whether or not the target is in the deadzone
+                if (distanceFromTarget <= deadzoneRadiusSquared)
+                {
+                    dampTime = deadzoneDampTime;
+                    targetPosition = target.position;
+                }
+                // Else, if the target isn't in the deadzone
+                else
+                {
+                    // Compute the target position of the camera
+                    Vector3 distanceFromPlayer = target.position - transform.position;
+                    targetPosition = target.position - distanceFromPlayer.SetMagnitude(deadzoneRadius);
+                }
+
+                // Move the camera to its target smoothly.
+                newPosition = Vector2.SmoothDamp(transform.position, (Vector2)targetPosition, ref velocity, dampTime);
+                // Lock the camera's depth
+                newPosition.z = transform.position.z;
             }
-            // Else, if the target isn't in the deadzone
             else
             {
-                // Compute the target position of the camera
-                Vector3 distanceFromPlayer = target.position - transform.position;
-                targetPosition = target.position - distanceFromPlayer.SetMagnitude(deadzoneRadius);
+                newPosition = this.transform.position;
+                newPosition.x = target.transform.position.x;
             }
-
-            // Move the camera to its target smoothly.
-            Vector3 newPosition = Vector2.SmoothDamp(transform.position, (Vector2)targetPosition, ref velocity, dampTime);
-            // Lock the camera's depth
-            newPosition.z = transform.position.z;
             
             
             // camera zoom settings
@@ -122,7 +130,7 @@ public class SmoothCamera : MonoBehaviour
             float mediumSpeed = speedZoomMedium * speedZoomMedium;
             float smallSpeed = speedZommSmall * speedZommSmall;
             
-            if(zoomInZone)
+            if(zoomInZone && !inCurrents)
             {
                 if(zoomZonesValue != newPosition.z)
                 {
@@ -162,14 +170,14 @@ public class SmoothCamera : MonoBehaviour
                 acquiredZoom = true;
             }
             
-            if(playerVelocity > smallSpeed && playerVelocity < mediumSpeed && !acquiredZoom && smallZoomValue != newPosition.z)
+            if(playerVelocity > smallSpeed && playerVelocity < mediumSpeed && !acquiredZoom && smallZoomValue != newPosition.z && !inCurrents)
             {
                 //Debug.Log("small");
                 newPosition.z = CameraZoom((newPosition.z > smallZoomValue? zoomOutSpeed : zoomInSpeed), smallZoomValue);
                 acquiredZoom = true;
             }
             
-            if(playerVelocity > mediumSpeed && !acquiredZoom && mediumZoomValue != newPosition.z)
+            if(playerVelocity > mediumSpeed && !acquiredZoom && mediumZoomValue != newPosition.z && !inCurrents)
             {
                 //Debug.Log("medium");
                 newPosition.z = CameraZoom((newPosition.z > mediumZoomValue? zoomOutSpeed : zoomInSpeed), mediumZoomValue);
@@ -205,7 +213,7 @@ public class SmoothCamera : MonoBehaviour
     public void FlareShoot()
     {
         //need to check that we aren't in a zoomInZone
-        if(!zoomInZone)
+        if(!zoomInZone && !inCurrents)
         {
             this.shootFlare = true;
         }
@@ -227,5 +235,35 @@ public class SmoothCamera : MonoBehaviour
     public void SetCurrentState(bool isCurrent)
     {
         this.inCurrents = isCurrent;
+        //need to reset if flare was shoot before entering zoomInZone
+        this.shootFlare = false;
+        this.zoomTimer = timeBeforeZoomIn;
+    }
+    
+    public void StartCurrentParticles(string location)
+    {
+        foreach(Transform child in this.GetComponentInChildren<Transform>())
+        {
+            //Debug.Log(child.name +  "==" + location);
+            if(child.name == location)
+            {
+                child.gameObject.SetActive(true);
+                child.GetComponent<ParticleSystem>().Play();
+            }
+        }
+    }
+    
+    public void StopCurrentParticles(string location)
+    {
+        foreach(Transform child in this.GetComponentInChildren<Transform>())
+        {
+            //Debug.Log(child.name +  "=!!=" + location);
+            if(child.name == location)
+            {
+                Debug.Log(location);
+                child.gameObject.SetActive(false);
+                child.GetComponent<ParticleSystem>().Stop();
+            }
+        }
     }
 }
