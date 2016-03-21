@@ -44,6 +44,36 @@ public class MaterialExtensions
         // Reset color to initial one
         if (seconds > 0) { material.SetColor("_EmissionColor", currentColor); }
     }
+    
+    /// <summary>
+    /// Flashes the color of the given material from stat to end in the specified time
+    /// </summary>
+    /// <param name="material"></param>
+    /// <param name="color"></param>
+    public IEnumerator FlashColor(Material material, Color startColor, Color endColor, float seconds)
+    {
+        material.SetColor("_EmissionColor", startColor);
+        
+        for (float time = 0f; time <= seconds; time += Time.deltaTime)
+        {
+            Color currentColor = material.GetColor("_EmissionColor");
+            Color targetColor = Color.Lerp(currentColor, endColor, time/seconds);
+            material.SetColor("_EmissionColor", targetColor);
+            
+            yield return null;
+        }
+
+        // Reset color to initial one
+        //if (seconds > 0) { material.SetColor("_EmissionColor", currentColor); }
+    }
+    
+    /// <summary>
+    /// Sets the material's emissive color to the specified color immediately
+    /// </summary>
+    public void ChangeColor(Material material, Color color)
+    {
+        material.SetColor("_EmissionColor", color);
+    }
 
     /// <summary>
     /// Current not used
