@@ -46,6 +46,10 @@ public class LightSource : MonoBehaviour
     // DO NOT ACCESS DIRECTLY. Use LightEnergy property instead.
     private LightEnergy lightEnergy;
     private string lightSourceId;
+    
+    /** Raised when the light source consumes some light */
+    public delegate void ConsumedLightSourceHandler(LightSource consumedLightSource);
+    public event ConsumedLightSourceHandler ConsumedLightSource = delegate {};
 
 
     /// <summary>
@@ -89,13 +93,25 @@ public class LightSource : MonoBehaviour
             
             LightSource otherLightSource = absorbableLight.GetComponentInParent<LightSource>();
             if (otherLightSource == null) { continue; }
-            
+                                    
             // If this GameObject can absorb the touched light source, 
             // Transfer light energy from the other light source to this one
             if (CanAbsorb(otherLightSource))
             {
+                
+                if (this is Player)
+                {                    
+                    if (otherLightSource.CompareTag("Pickup"))
+                    {
+                        AkSoundEngine.PostEvent("Light_Orb_Pickup", this.gameObject);
+                    }
+                    else
+                    {                                                                             
+                        AkSoundEngine.PostEvent("Eat", this.gameObject);
+                    }                    
+                }
                 LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
-
+                                        
                 // Calculate the amount of light to absorb from the other light source
                 float lightToAbsorb = absorptionRate * Time.deltaTime;
                 
@@ -118,9 +134,18 @@ public class LightSource : MonoBehaviour
                 // Transfer light energy from the other light source to this one
                 float lightAbsorbed = lightEnergyToAbsorb.Deplete(lightToAbsorb);
                 lightEnergy.Add(lightAbsorbed);
+                
+                // Inform subscribers that this light source consumed another light source.
+                ConsumedLightSource(otherLightSource);
             }
         }
     }
+     
+    protected virtual void ChangeColor(Color color, bool isSmooth, float seconds)
+    {
+        // Implemented in children        
+    } 
+     
      
     /// <summary>
     /// Returns true if this LightSource can absorb the given LightSource

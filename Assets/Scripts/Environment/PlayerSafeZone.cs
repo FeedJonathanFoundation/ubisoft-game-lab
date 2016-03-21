@@ -24,6 +24,7 @@ public class PlayerSafeZone : MonoBehaviour
             if(player)
             {
                 player.isSafe = false;
+                //Debug.Log(player.isSafe);
             }
         }
     }

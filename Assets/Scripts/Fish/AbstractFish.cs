@@ -12,6 +12,11 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Steerable))]
 public abstract class AbstractFish : LightSource
 {
+    [Tooltip("The initial angle at which the fish will start swimming." +
+             " (Angle in degrees, clockwise, relative to +y-axis)")]
+    [SerializeField]
+    private float defaultWanderAngle; 
+    
     [Tooltip("Amount of light absorbed from the player upon collision")]
     public float damageInflicted = 4;
     
@@ -22,6 +27,10 @@ public abstract class AbstractFish : LightSource
     [Tooltip("If true, the fish will not react to fish of the same type, except in the default flocking behaviour")]
     [SerializeField]
     private bool ignoreFishOfSameType = false;
+    
+    [Tooltip("Spawned when the fish dies")]
+    [SerializeField]
+    private GameObject deathParticles;
         
     // Holds the steering behaviors of this fish
     private PriorityDictionary actions;
@@ -41,6 +50,8 @@ public abstract class AbstractFish : LightSource
 
         // Cache the 'Steerable' component attached to the GameObject performing this action
         this.steerable = transform.GetComponent<Steerable>();
+        // Set the fish's initial swim direction
+        steerable.WanderAngle = defaultWanderAngle;
     }
 
     /// <summary>
@@ -63,7 +74,13 @@ public abstract class AbstractFish : LightSource
     protected override void OnLightDepleted()
     {
         base.OnLightDepleted();
-        GameObject.Destroy(this.gameObject);
+
+        if (deathParticles != null)
+        {
+            GameObject.Instantiate(deathParticles, transform.position,
+                                   transform.rotation);
+        }
+        this.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -281,5 +298,18 @@ public abstract class AbstractFish : LightSource
             RemoveAction("-2");
         }
     }
+    
+    /// <summary>
+    /// The initial angle at which the fish will start swimming. (Angle in degrees, clockwise, relative to +y-axis)
+    /// </summary>
+    public float DefaultWanderAngle
+    {
+        get { return defaultWanderAngle; }
+        set 
+        { 
+            defaultWanderAngle = value; 
+            steerable.WanderAngle = value;
+        }
+    } 
 
 }

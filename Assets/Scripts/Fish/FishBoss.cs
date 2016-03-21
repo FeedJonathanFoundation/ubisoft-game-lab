@@ -18,7 +18,12 @@ public class FishBoss : AbstractFish
     [Tooltip("Then action performed when the player is in a safe zone")]
     [SerializeField]
     private MoveClosestWaypoint moveToWaypoint;
-    
+
+    private bool bite;
+    private bool swim;
+    private float animationSpeed = 1f;
+    private Animator animator;
+
     protected override void Awake()
     {
         // call parent LightSource Awake() first
@@ -35,6 +40,11 @@ public class FishBoss : AbstractFish
         moveToWaypoint.SetBigFish(this.transform);      //lowest priority
         moveToWaypoint.SetPriority(0);
         moveToWaypoint.SetID("-3");
+        
+        animator = GetComponentInParent<Animator>();
+        bite = false;
+        swim = false;
+        Animate();
     }
     
     protected override void Update()
@@ -45,22 +55,28 @@ public class FishBoss : AbstractFish
     
     public void BossReactToPlayer()
     {
-        //only for the boss ai, always seeks player if it isn't in a safe zone
-        
+        // only for the boss ai, always seeks player if it isn't in a safe zone
         if (!player.GetComponent<Player>().isSafe)
         {
+            bite = true;
+            swim = true;
             followPlayer.TargetLightSource = player.GetComponent<LightSource>();
             AddAction(followPlayer);
+            SetAnimationSpeed();
         }
         
     }
     
     public override void Move() 
     {
+        bite = false;
+        swim = true;
+        Animate();
         moveToWaypoint.SetPriority(0);   // Lowest priority
         moveToWaypoint.SetID(GetID());
         Debug.Log(moveToWaypoint.ToString());
         AddAction(moveToWaypoint);
+        SetAnimationSpeed();
     }
     
     public override void ReactToPlayer(Transform player)
@@ -77,8 +93,24 @@ public class FishBoss : AbstractFish
     
     public override void ReactToFlare(Transform flare)
     {
+        bite = true;
+        swim = true;
+        Animate();
         // Seek the flare
         flareBehaviour.TargetFlare = flare;
         AddAction(flareBehaviour);
+        SetAnimationSpeed();
+    }
+    
+    private void Animate()
+    {
+        animator.SetBool("Bite", bite);
+        animator.SetBool("Swim", swim);
+    }
+    
+    private void SetAnimationSpeed()
+    {
+        animationSpeed = GetComponent<Rigidbody>().velocity.magnitude;
+        animator.SetFloat("Speed", animationSpeed);
     }
 }
