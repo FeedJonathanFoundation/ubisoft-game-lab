@@ -14,6 +14,7 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID AMBIENT1 = 4095159976U;
+        static const AkUniqueID AMBIENT2 = 4095159979U;
         static const AkUniqueID DEFAULT = 782826392U;
         static const AkUniqueID DIE = 445985469U;
         static const AkUniqueID EAT = 781390793U;
@@ -22,8 +23,8 @@ namespace AK
         static const AkUniqueID FLARE = 1540219311U;
         static const AkUniqueID LIGHT_ORB_PICKUP = 4066254940U;
         static const AkUniqueID LIGHTSTOTOGGLE = 3299248253U;
+        static const AkUniqueID LOWENERGY = 1772229705U;
         static const AkUniqueID MOVEMENT = 2129636626U;
-        static const AkUniqueID SC2BASE = 2734563960U;
         static const AkUniqueID WALLCRASH = 2901629858U;
     } // namespace EVENTS
 
@@ -114,6 +115,7 @@ namespace AK
     {
         static const AkUniqueID INIT = 1355168291U;
         static const AkUniqueID MAIN = 3161908922U;
+        static const AkUniqueID THEMES = 1940854371U;
     } // namespace BANKS
 
     namespace BUSSES
