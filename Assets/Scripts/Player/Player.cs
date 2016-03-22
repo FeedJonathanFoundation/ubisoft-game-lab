@@ -40,7 +40,11 @@ public class Player : LightSource
     [SerializeField]
     [Tooltip("The damping to apply when the brakes are on at full strength")]
     private float brakeDrag = 1;
-
+    
+    [SerializeField]
+    [Tooltip("The speed of rotation of the player in response to user input")]
+    private float rotationSpeed = 5;
+    
     [SerializeField]
     [Tooltip("The parent of the propulsion particle effects activated when the player is propulsing")]
     private GameObject jetFuelEffect;
@@ -125,7 +129,7 @@ public class Player : LightSource
     {
         base.Awake(); // call parent LightSource Awake() first
 
-        this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, this.Transform, this.Rigidbody, this.LightEnergy, this.jetFuelEffect);
+        this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, this.Transform, this.Rigidbody, this.LightEnergy, this.jetFuelEffect, this.rotationSpeed);
         this.lightToggle = new PlayerLightToggle(this.Transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
         this.materials = new MaterialExtensions();
 
