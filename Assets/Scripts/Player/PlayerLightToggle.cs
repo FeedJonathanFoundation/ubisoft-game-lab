@@ -13,31 +13,64 @@ public class PlayerLightToggle
 {
     // If true, the lights that are children of this object are enabled.
 	private bool lightsEnabled;    
+    private bool lightButtonPressed; // If true, the user has pressed the button to activate his lights
     private float timeToDeplete;
     private float minimalEnergyRestriction;
+    private float propulsionLightRange; // The percent range of light when propulsion is on
     private GameObject lightsToToggle; 
     private LightSource lightSource;
     
-    public PlayerLightToggle(GameObject lightsToToggle, bool defaultLightStatus, LightSource lightSource, float minimalEnergy)
+    public PlayerLightToggle(GameObject lightsToToggle, bool defaultLightStatus, LightSource lightSource, float minimalEnergy, float propulsionLightRange)
     {        
         this.lightsToToggle = lightsToToggle;
         this.lightsEnabled = defaultLightStatus;
+        this.lightButtonPressed = defaultLightStatus;
         this.lightSource = lightSource;                
         this.minimalEnergyRestriction = minimalEnergy;
+        this.propulsionLightRange = propulsionLightRange;
         this.ToggleLights();
     }
 
     /// <summary>
-    /// Changes the status of Light component attached to Player 
+    /// Changes the status of Light component attached to Player. Called when the light button is pressed.
     /// </summary>
     public void ToggleLights()
     {
-        foreach (Behaviour childComponent in this.lightsToToggle.GetComponentsInChildren<Light>())
+        this.lightButtonPressed = !this.lightsEnabled;
+        
+        ToggleLights(this.lightButtonPressed);
+    }
+    
+    /// <summary>
+    /// Changes the status of Light component attached to Player 
+    /// </summary>
+    private void ToggleLights(bool enabled)
+    {
+        // Toggle the lights to maximum range
+        ToggleLights(enabled, 1.0f);
+    }
+    
+    /// <summary>
+    /// Changes the status of Light component attached to Player 
+    /// <param name="enabled">If true, the lights are toggled on.</param>
+    /// <param name="percent">The strength percentage of the lights. 0 = off 1 = original strength</param>
+    /// </summary>
+    private void ToggleLights(bool enabled, float percent)
+    {
+        foreach (Light light in this.lightsToToggle.GetComponentsInChildren<Light>())
         {
-            childComponent.enabled = !this.lightsEnabled;
+            light.enabled = enabled;
+            
+            // Set the range of the light to the given percent
+            LightRangeModifier rangeModifier = light.GetComponent<LightRangeModifier>();
+            if (rangeModifier)
+            {
+                rangeModifier.enabled = enabled;
+                rangeModifier.PercentRange = percent;
+            }
         }
         // Update the status of the lights
-        this.lightsEnabled = !this.lightsEnabled;
+        this.lightsEnabled = enabled;
         
         Debug.Log("Toggle lights");
     }
@@ -64,6 +97,35 @@ public class PlayerLightToggle
             }
         }
     }
+    
+    /// <summary>
+    /// Turns on the lights after the player starts propulsing
+    /// </summary>
+    public void OnPropulsionStart()
+    {
+        if (!lightButtonPressed)
+        {
+            // Turn on the lights at limited range when the player starts propulsing
+            ToggleLights(true,propulsionLightRange);
+        }
+    }
+    
+    /// <summary>
+    /// Turns off the lights after the player stops propulsing
+    /// </summary>
+    public void OnPropulsionEnd()
+    {
+        if (!lightButtonPressed)
+        {
+            // Turn off the lights since the light button is off and the propulsion ended
+            ToggleLights(false);
+        }
+        else
+        {
+            // Turn on the lights at full range if the light button is on
+            ToggleLights(true, 1.0f);
+        }
+    }
 
     /// <summary>
     /// If true, the lights are enabled and the GameObject is visible
@@ -71,5 +133,13 @@ public class PlayerLightToggle
     public bool LightsEnabled
     {
         get { return this.lightsEnabled; }
+    }
+    
+    /// <summary>
+    /// If true, the light button was pressed and the player's light should be on
+    /// </summary>
+    public bool LightButtonPressed
+    {
+        get { return this.lightButtonPressed; }
     }
 }

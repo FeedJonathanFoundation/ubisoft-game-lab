@@ -81,6 +81,10 @@ public class Player : LightSource
     [SerializeField]
     [Tooltip("Energy needed to activate light and that light will turn off if reached")]
     private float minimalEnergyRestrictionToggleLights = 0;
+    
+    [SerializeField]
+    [Tooltip("The percent range of the players lights when propulsing with lights off")]
+    private float propulsionLightRange = 0.3f;
 
     [SerializeField]
     [Tooltip("The amount of time it takes for the player's emissive light to toggle on/off")]
@@ -126,7 +130,7 @@ public class Player : LightSource
         base.Awake(); // call parent LightSource Awake() first
 
         this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, this.Transform, this.Rigidbody, this.LightEnergy, this.jetFuelEffect);
-        this.lightToggle = new PlayerLightToggle(this.Transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
+        this.lightToggle = new PlayerLightToggle(this.Transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights, propulsionLightRange);
         this.materials = new MaterialExtensions();
 
         this.defaultDrag = Rigidbody.drag;
@@ -434,6 +438,8 @@ public class Player : LightSource
         if (Input.GetButtonDown("Thrust") || (previousThrustAxis == 0 && thrustAxis > 0))
         {
             movement.OnPropulsionStart();
+            lightToggle.OnPropulsionStart();
+            this.ChangeColor(probeColorOn, true, 0);
         }
 
         if (Input.GetButton("Thrust"))
@@ -450,6 +456,9 @@ public class Player : LightSource
         if (Input.GetButtonUp("Thrust") || (previousThrustAxis > 0 && thrustAxis == 0))
         {
             movement.OnPropulsionEnd();
+            lightToggle.OnPropulsionEnd();
+            if (!lightToggle.LightButtonPressed)
+                this.ChangeColor(probeColorOff, true, 0);
         }
 
         // Brake

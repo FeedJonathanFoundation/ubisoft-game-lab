@@ -1448,6 +1448,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.4
   maxIntensity: 0
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 0.5
+  intensityChangeSpeed: 0.5
 --- !u!108 &918303574
 Light:
   m_ObjectHideFlags: 0
@@ -2302,6 +2304,50 @@ Prefab:
       propertyPath: eatFlashDuration
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11441870, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: propulsionLightRange
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11479848, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: intensityChangeSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 116746, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 151512, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 156710, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 146208, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11489478, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: intensityChangeSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11479848, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: rangeChangeSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11489478, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: rangeChangeSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11495008, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: rangeChangeSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11495008, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: intensityChangeSpeed
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
   m_IsPrefabParent: 0
@@ -3143,6 +3189,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.4
   maxIntensity: 0
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 0.5
+  intensityChangeSpeed: 0.5
 --- !u!108 &2095772448
 Light:
   m_ObjectHideFlags: 0

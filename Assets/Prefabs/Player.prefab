@@ -2405,6 +2405,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.02
   maxIntensity: 0
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 0.5
+  intensityChangeSpeed: 0.5
 --- !u!114 &11422050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2445,6 +2447,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.02
   maxIntensity: 0
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 0.5
+  intensityChangeSpeed: 0.5
 --- !u!114 &11439878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2503,10 +2507,17 @@ MonoBehaviour:
   timeToDeplete: 0
   lightToggleEnergyCost: 0
   minimalEnergyRestrictionToggleLights: 0
+  propulsionLightRange: 0.2
   lightToggleTime: 0.1
   disableCheckpoints: 1
   isSafe: 0
   playerVelocity: 0
+  probeColorOn: {r: 1, g: 0.3103448, b: 0, a: 1}
+  probeColorOff: {r: 0.3, g: 0.09310344, b: 0, a: 1}
+  probeColorHit: {r: 0.1586206, g: 1, b: 0, a: 1}
+  hitFlashDuration: 2
+  probeColorEat: {r: 0, g: 0.62672424, b: 1, a: 1}
+  eatFlashDuration: 1
 --- !u!114 &11442326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2555,6 +2566,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.02
   maxIntensity: 0
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 0.5
+  intensityChangeSpeed: 0.5
 --- !u!114 &11453628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2611,6 +2624,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.8
   maxIntensity: 0.6
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 2
+  intensityChangeSpeed: 2
 --- !u!114 &11485938
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2644,6 +2659,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.5
   maxIntensity: 0.9
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 2
+  intensityChangeSpeed: 2
 --- !u!114 &11495008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2658,6 +2675,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.17
   maxIntensity: 0.3
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 2
+  intensityChangeSpeed: 2
 --- !u!135 &13541488
 SphereCollider:
   m_ObjectHideFlags: 1
