@@ -184,6 +184,7 @@ public class Player : LightSource
         if (isDead)
         {
             RestartGame();
+            ObjectPooler.current.ResetPool();
         }
         else
         {
