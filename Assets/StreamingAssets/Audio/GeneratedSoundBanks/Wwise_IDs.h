@@ -103,6 +103,7 @@ namespace AK
 
     namespace GAME_PARAMETERS
     {
+        static const AkUniqueID FLAREDISTANCE = 108225470U;
         static const AkUniqueID PLAYERVELOCITY = 2886637823U;
     } // namespace GAME_PARAMETERS
 

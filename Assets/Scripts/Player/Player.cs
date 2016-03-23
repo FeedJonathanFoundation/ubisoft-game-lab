@@ -140,6 +140,10 @@ public class Player : LightSource
         LoadGame();
         ResetPlayerState();
         
+        
+        // AkSoundEngine.PostEvent("Default", this.gameObject);
+        
+        
         #if UNITY_EDITOR
             this.ValidateInputs();
         #endif        
@@ -167,7 +171,8 @@ public class Player : LightSource
         base.Update();
 
         playerVelocity = (int)this.Rigidbody.velocity.magnitude;
-
+        AkSoundEngine.SetRTPCValue("playerVelocity", playerVelocity);
+        
         // Modify player drag if invulnerable
         if (IsInvulnerable())
         {
