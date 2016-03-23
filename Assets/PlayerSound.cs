@@ -10,6 +10,7 @@ public class PlayerSound : MonoBehaviour {
     void Start()
     {
         AkSoundEngine.PostEvent("Default", this.gameObject);
+        // AkSoundEngine.SetRTPCValue("Distance_Player_FinalDoor", distance);
         
     }
 

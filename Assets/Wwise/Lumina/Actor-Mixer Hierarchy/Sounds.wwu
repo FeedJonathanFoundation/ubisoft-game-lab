@@ -1029,100 +1029,6 @@
 								<ItemRef Name="Light Off" ID="{1E572DB8-FEF5-4BDB-B388-DC1E85BEC2A1}"/>
 							</Playlist>
 						</RandomSequenceContainer>
-						<Sound Name="Flare B" ID="{9A809758-AC1E-4A0B-8F91-9984061C61F6}" ShortID="792219390" Type="SoundFX">
-							<PropertyList>
-								<Property Name="Lowpass" Type="int16">
-									<RTPCList>
-										<RTPC Name="" ID="{46F8B192-64B4-485C-9386-A6ED589DDCCC}" ShortID="631879445">
-											<ReferenceList>
-												<Reference Name="ControlInput">
-													<ObjectRef Name="PlayerFlareDistance" ID="{A113CBC6-5019-4C33-97EA-C77621752ACF}" WorkUnitID="{D4031392-9BD4-4D82-80D3-FD9F5DA62B75}"/>
-												</Reference>
-											</ReferenceList>
-											<Curve Name="" ID="{1AF66DED-2316-4FEF-B35F-A4DA2F15A1A3}">
-												<PropertyList>
-													<Property Name="Flags" Type="int32" Value="65537"/>
-												</PropertyList>
-												<PointList>
-													<Point>
-														<XPos>0</XPos>
-														<YPos>0</YPos>
-														<Flags>5</Flags>
-													</Point>
-													<Point>
-														<XPos>15</XPos>
-														<YPos>23</YPos>
-														<Flags>37</Flags>
-													</Point>
-												</PointList>
-											</Curve>
-										</RTPC>
-									</RTPCList>
-								</Property>
-								<Property Name="Volume" Type="Real64">
-									<RTPCList>
-										<RTPC Name="" ID="{1D321910-3E65-4585-93B6-75F7A33FFEAE}" ShortID="908424133">
-											<ReferenceList>
-												<Reference Name="ControlInput">
-													<ObjectRef Name="PlayerFlareDistance" ID="{A113CBC6-5019-4C33-97EA-C77621752ACF}" WorkUnitID="{D4031392-9BD4-4D82-80D3-FD9F5DA62B75}"/>
-												</Reference>
-											</ReferenceList>
-											<Curve Name="" ID="{CBBEEAE9-E706-441E-A0B7-55D62FAB6E56}">
-												<PropertyList>
-													<Property Name="Flags" Type="int32" Value="3"/>
-												</PropertyList>
-												<PointList>
-													<Point>
-														<XPos>0</XPos>
-														<YPos>0</YPos>
-														<Flags>5</Flags>
-													</Point>
-													<Point>
-														<XPos>15</XPos>
-														<YPos>-8.45527</YPos>
-														<Flags>37</Flags>
-													</Point>
-												</PointList>
-											</Curve>
-										</RTPC>
-									</RTPCList>
-								</Property>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="Flare B" ID="{C2DD5610-47B4-42B7-9F5D-C15968227E8B}" ShortID="344204112">
-									<Language>SFX</Language>
-									<AudioFile>Flare B.wav</AudioFile>
-								</AudioFileSource>
-							</ChildrenList>
-							<StateInfo>
-								<StateGroupList>
-									<StateGroupInfo>
-										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
-									</StateGroupInfo>
-								</StateGroupList>
-								<CustomStateList>
-									<CustomState>
-										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
-										<State Name="Custom State" ID="{C4A42B1F-E4FB-403D-BA22-92F9FD0F37E9}" ShortID="801147140">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-								</CustomStateList>
-							</StateInfo>
-							<ActiveSourceList>
-								<ActiveSource Name="Flare B" ID="{C2DD5610-47B4-42B7-9F5D-C15968227E8B}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
 						<Sound Name="Low Energy" ID="{97908169-BD96-4E06-9DED-272C9565719F}" ShortID="142316025" Type="SoundFX">
 							<PropertyList>
 								<Property Name="Lowpass" Type="int16">
@@ -1237,6 +1143,64 @@
 							</Playlist>
 						</RandomSequenceContainer>
 						<Sound Name="Flare C" ID="{0C811697-24BE-4249-9C36-1656EB0CD55F}" ShortID="104406145" Type="SoundFX">
+							<PropertyList>
+								<Property Name="Lowpass" Type="int16">
+									<RTPCList>
+										<RTPC Name="" ID="{BBECD2BB-756D-4FFC-BCFD-52094F2CEFDE}" ShortID="553429684">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="flareDistance" ID="{FF782539-1CD0-43EB-9C6C-613A3A74B964}" WorkUnitID="{D4031392-9BD4-4D82-80D3-FD9F5DA62B75}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{FB741CA7-8676-4611-8173-142C6A195002}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="65537"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>0</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>34</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<RTPCList>
+										<RTPC Name="" ID="{A7FB6A0C-44B6-458D-9978-B74D545A7A1E}" ShortID="1005973396">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="flareDistance" ID="{FF782539-1CD0-43EB-9C6C-613A3A74B964}" WorkUnitID="{D4031392-9BD4-4D82-80D3-FD9F5DA62B75}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{70850309-22E8-433B-ADFC-EEC651B9A033}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="3"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>6.88129</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>-2.44432</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
@@ -1414,14 +1378,6 @@
 								</StateGroupList>
 								<CustomStateList>
 									<CustomState>
-										<StateRef Name="CP4" ID="{D99EEA5A-E3B9-4964-A68D-B40E93C3C2ED}"/>
-										<State Name="Custom State" ID="{EAED39E4-17A7-48B1-9742-9A1D3A3E7531}" ShortID="794098795">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-									<CustomState>
 										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
 										<State Name="Custom State" ID="{462E8D3D-CAE4-4E23-B10F-3C6D1E45CF7A}" ShortID="744790500">
 											<PropertyList>
@@ -1466,14 +1422,6 @@
 									<CustomState>
 										<StateRef Name="CP3" ID="{4E66AA44-586A-44E9-A672-72CF7D455790}"/>
 										<State Name="Custom State" ID="{38193C56-2E28-43F2-A717-F2E81E0A7401}" ShortID="216376707">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-									<CustomState>
-										<StateRef Name="CP4" ID="{D99EEA5A-E3B9-4964-A68D-B40E93C3C2ED}"/>
-										<State Name="Custom State" ID="{105B247F-5490-482C-A413-D96C6EBF65D2}" ShortID="193372669">
 											<PropertyList>
 												<Property Name="Volume" Type="Real64" Value="-96"/>
 											</PropertyList>
@@ -1543,14 +1491,6 @@
 										</State>
 									</CustomState>
 									<CustomState>
-										<StateRef Name="CP4" ID="{D99EEA5A-E3B9-4964-A68D-B40E93C3C2ED}"/>
-										<State Name="Custom State" ID="{9DADE5A9-42DB-4573-9366-411347E9B878}" ShortID="555647676">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-									<CustomState>
 										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
 										<State Name="Custom State" ID="{41FD44C5-AFBA-41EA-BA46-8850513333EE}" ShortID="290800598">
 											<PropertyList>
@@ -1600,14 +1540,6 @@
 									<CustomState>
 										<StateRef Name="CP1" ID="{BE168014-0F8E-48D6-B505-D2988E3B9914}"/>
 										<State Name="Custom State" ID="{F8E74793-7F1E-4530-A840-5D52DFA2478D}" ShortID="79023227">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-									<CustomState>
-										<StateRef Name="CP4" ID="{D99EEA5A-E3B9-4964-A68D-B40E93C3C2ED}"/>
-										<State Name="Custom State" ID="{B20F79B0-8D7D-49F8-9782-DEB6B829EB11}" ShortID="563404482">
 											<PropertyList>
 												<Property Name="Volume" Type="Real64" Value="-96"/>
 											</PropertyList>
