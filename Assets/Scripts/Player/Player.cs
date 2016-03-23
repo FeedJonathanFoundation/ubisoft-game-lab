@@ -143,7 +143,7 @@ public class Player : LightSource
         ChangeColor(probeColorOff, false, 0);
         LoadGame();
         ResetPlayerState();
-        
+
         #if UNITY_EDITOR
             this.ValidateInputs();
         #endif        
@@ -171,7 +171,8 @@ public class Player : LightSource
         base.Update();
 
         playerVelocity = (int)this.Rigidbody.velocity.magnitude;
-
+        AkSoundEngine.SetRTPCValue("playerVelocity", playerVelocity);
+        
         // Modify player drag if invulnerable
         if (IsInvulnerable())
         {
@@ -188,6 +189,7 @@ public class Player : LightSource
         if (isDead)
         {
             RestartGame();
+            ObjectPooler.current.ResetPool();
         }
         else
         {
@@ -330,20 +332,30 @@ public class Player : LightSource
     {
         if (this.lightToggle != null)
         {
-            if (Input.GetButtonDown("LightToggle") && minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
+            if (Input.GetButtonDown("LightToggle"))
             {
-                this.lightToggle.ToggleLights();
-                AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
-                if (this.lightToggle.LightsEnabled)
-                {                  
-                    this.ChangeColor(probeColorOn, true, 0);
+                if (minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
+                {
+                    this.lightToggle.ToggleLights();
+                    AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
+                    if (this.lightToggle.LightsEnabled)
+                    {
+                        this.ChangeColor(probeColorOn, true, 0);
+                    }
+                    else
+                    {
+                        this.ChangeColor(probeColorOff, true, 0);
+                    }
                 }
                 else
-                {                    
+                {
+                    // If the player isn't thrusting, turn off his emissive lights
                     if (!movement.Thrusting)
                     {
                         this.ChangeColor(probeColorOff, true, 0);
                     }
+                    
+                    AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
                 }
             }
 
@@ -562,4 +574,3 @@ public class Player : LightSource
         #endif        
     }
 }
-
