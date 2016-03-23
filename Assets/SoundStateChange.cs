@@ -7,21 +7,42 @@ public class SoundStateChange : MonoBehaviour
     [Tooltip("State of player before he enters")]
     [SerializeField]
     private int initialState = 0;
+    [Tooltip("Whether the trigger is a safe zone.")]
+    [SerializeField]
+    private bool safeZone = false;
     protected static int currentState = 0;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (currentState == initialState)
+            if (!safeZone)
             {
-                currentState++;
-                SetState(currentState);
+                if (currentState == initialState)
+                {
+                    currentState++;
+                    SetState(currentState);
+                }
+                else if (currentState == (initialState + 1))
+                {
+                    currentState--;
+                    SetState(currentState);
+                }
             }
-            else if (currentState == (initialState + 1))
+            else
             {
-                currentState--;
-                SetState(currentState);
+                SafeZoneSound();
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (safeZone)
+        {
+            if (other.CompareTag("Player"))
+            {
+                // Stop playing sound
             }
         }
     }
@@ -51,5 +72,11 @@ public class SoundStateChange : MonoBehaviour
                 break;
             
         }
+    }
+    
+    private void SafeZoneSound()
+    {
+        // Needs to change to safe zone music
+        AkSoundEngine.SetState("IMAmb2", "CP2");
     }
 }
