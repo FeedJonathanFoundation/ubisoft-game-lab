@@ -23,20 +23,27 @@ public class LightRangeModifier : LightEnergyListener
     private float percentRange;
     private float targetRange;
     private float targetIntensity;
-    private bool lightJustEnabled;   // True if this light has been enabled this frame
 
     // Cached components
     private new Light light;
     
-    void OnEnable()
+    public override void Start()
     {
-        lightJustEnabled = true;
+        base.Start();
+        
+        TurnOffLightImmediate();
     }
     
-    void OnDisable()
+    public virtual void OnEnable()
     {
-        Light.range = 0;
-        Light.intensity = 0;
+        //base.OnEnable();
+    }
+    
+    public virtual void OnDisable()
+    {
+        //base.OnDisable();
+        
+        TurnOffLightImmediate();
         
         StopAllCoroutines();
         
@@ -45,27 +52,15 @@ public class LightRangeModifier : LightEnergyListener
     
     void Update()
     {
+        if (!ActiveLights) { TurnOffLight(); }
+
         Light.range = Mathf.Lerp(Light.range, targetRange, rangeChangeSpeed * Time.deltaTime);
         Light.intensity = Mathf.Lerp(Light.intensity, targetIntensity, intensityChangeSpeed * Time.deltaTime);
     }
 
     public override void OnLightChanged(float currentLight)
     {
-        // If true, the light was just enabled this frame
-        bool lightJustEnabled = false;
-        
-        // Determine if the light was disabled last frame
-        //if ((Time.time - timeLastActive) <= Time.deltaTime)
-        //{
-        //    lightJustEnabled = true;
-        //}
-        
-        // If the light was just enabled
-        //if (lightJustEnabled)
-        //{
-            // Stop all range/intensity lerping
-            //StopAllCoroutines();
-        //}
+        //ebug.Log("Current amount of light: " + currentLight);
                
         // Modifies the range of the attached light component based on the current amount of light energy
         float newRange = currentLight * lightToRangeRatio * percentRange;
@@ -73,16 +68,9 @@ public class LightRangeModifier : LightEnergyListener
         //StartCoroutine(SetRange(newRange,rangeChangeSpeed));
 
         float newIntensity = maxIntensity * lightToIntensityRatio * currentLight * percentRange;
-        if (newIntensity <= maxIntensity)
-        {
-            targetIntensity = newIntensity;
-            //if (lightJustEnabled)
-            //{
-               // StartCoroutine(SetIntensity(newIntensity,intensityChangeSpeed));
-            //}
-        }
-        
-        lightJustEnabled = false;
+        // Cap the light's intensity
+        if (newIntensity >= maxIntensity) { newIntensity = maxIntensity; }
+        targetIntensity = newIntensity;
     }
     
     private IEnumerator SetRange(float range, float speed)
@@ -103,6 +91,18 @@ public class LightRangeModifier : LightEnergyListener
         }
     }
     
+    public void TurnOffLight()
+    {
+        targetRange = 0;
+        targetIntensity = 0;
+    }
+    
+    private void TurnOffLightImmediate()
+    {
+        Light.range = 0;
+        Light.intensity = 0;
+    }
+    
     /// <summary>
     /// The percentage of range of the lights. 0 = zero range. 1 = normal range
     /// </summary>
@@ -113,6 +113,15 @@ public class LightRangeModifier : LightEnergyListener
         { 
             percentRange = value; 
         }
+    }
+    
+    /// <summary>
+    /// If false, the light's intensity is set to zero. Otherwise,
+    /// the light behaves normally
+    /// </summary>
+    public bool ActiveLights
+    {
+        get; set;
     }
 
     /** Cached light component */

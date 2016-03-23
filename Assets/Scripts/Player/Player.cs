@@ -340,7 +340,10 @@ public class Player : LightSource
                 }
                 else
                 {                    
-                    this.ChangeColor(probeColorOff, true, 0);
+                    if (!movement.Thrusting)
+                    {
+                        this.ChangeColor(probeColorOff, true, 0);
+                    }
                 }
             }
 

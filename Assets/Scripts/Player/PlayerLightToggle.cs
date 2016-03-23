@@ -14,6 +14,7 @@ public class PlayerLightToggle
     // If true, the lights that are children of this object are enabled.
 	private bool lightsEnabled;    
     private bool lightButtonPressed; // If true, the user has pressed the button to activate his lights
+    private bool propulsionLightsOn; // If true, the player is holding down the propulsion button
     private float timeToDeplete;
     private float minimalEnergyRestriction;
     private float propulsionLightRange; // The percent range of light when propulsion is on
@@ -36,7 +37,7 @@ public class PlayerLightToggle
     /// </summary>
     public void ToggleLights()
     {
-        this.lightButtonPressed = !this.lightsEnabled;
+        this.lightButtonPressed = !this.lightButtonPressed;
         
         ToggleLights(this.lightButtonPressed);
     }
@@ -59,13 +60,15 @@ public class PlayerLightToggle
     {
         foreach (Light light in this.lightsToToggle.GetComponentsInChildren<Light>())
         {
-            light.enabled = enabled;
+            //light.enabled = enabled;
             
             // Set the range of the light to the given percent
             LightRangeModifier rangeModifier = light.GetComponent<LightRangeModifier>();
             if (rangeModifier)
             {
-                rangeModifier.enabled = enabled;
+                // Turn off the player's light 
+                //if (!enabled) { rangeModifier.TurnOffLight(); }
+                rangeModifier.ActiveLights = enabled;
                 rangeModifier.PercentRange = percent;
             }
         }
@@ -82,11 +85,12 @@ public class PlayerLightToggle
     /// <param name="energyCost">Energy cost of having Player lights turned on</param>
     public void DepleteLight(float timeToDeplete, float energyCost)
     {
-        if (this.lightsEnabled)
+        if (this.lightButtonPressed)
         {
             this.timeToDeplete += Time.deltaTime;
             if (this.timeToDeplete > timeToDeplete)
             {
+                //Debug.Log("DEPLETE LIGHT");
                 this.lightSource.LightEnergy.Deplete(energyCost);
                 this.timeToDeplete = 0;
 
