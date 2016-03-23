@@ -70,7 +70,7 @@ public class PlayerLightToggle
         foreach (Light light in this.lightsToToggle.GetComponentsInChildren<Light>())
         {
             // Skip VeryClose Light                                     
-            Light light = childComponent.GetComponent<Light>();
+            //Light light = childComponent.GetComponent<Light>();
             if (light == null || light.name == "VeryClose Light")
             {
                 continue;

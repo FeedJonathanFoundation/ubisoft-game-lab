@@ -53,8 +53,24 @@ public class SoundStateChange : MonoBehaviour
         {
             case 0:
                 AkSoundEngine.SetState("IMAmb1", "Amb1start");
-                state = 0;
-            }
+                break;
+            case 1:
+                AkSoundEngine.SetState("IMAmb1", "Amb1end");
+                break;
+            case 2:
+                AkSoundEngine.SetState("IMAmb2", "CP1");
+                break;
+            case 3:
+                AkSoundEngine.SetState("IMAmb2", "CP2");
+                break;
+            case 4:
+                AkSoundEngine.SetState("IMAmb2", "CP3");
+                break;
+            // case 5:
+                // AkSoundEngine.SetState("IMAmb3", "");
+            default:
+                break;
+            
         }
     }
     
@@ -64,3 +80,4 @@ public class SoundStateChange : MonoBehaviour
         AkSoundEngine.SetState("IMAmb2", "CP2");
     }
 }
+

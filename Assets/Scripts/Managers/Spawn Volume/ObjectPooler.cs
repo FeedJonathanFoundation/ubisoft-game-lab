@@ -61,6 +61,21 @@ public class ObjectPooler : MonoBehaviour
         return null;
     }
     
+    public void ResetPool()
+    {
+        for (int i = 0; i < pooledObjects.Length; i++)
+        {
+            for (int j = 0; j < pool[i].Count; j++)
+            {
+                GameObject current = pool[i][j];
+                if (current.activeSelf == true)
+                {
+                    current.SetActive(false);
+                }
+            }
+        }
+    }
+    
     public int PooledObjectCount
     {
         get
@@ -69,3 +84,4 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 }
+
