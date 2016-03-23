@@ -567,6 +567,8 @@ public class Player : LightSource
 
             // Only play the death particles the first time the player crashes on an obstacle
             deathParticlesPlayed = true;
+            
+            this.transform.FindChild("ProbeModel").gameObject.SetActive(false); //remove bubbles on death
         }
     }
 
@@ -586,6 +588,7 @@ public class Player : LightSource
             this.isDead = false;
             this.deathParticlesPlayed = false;
             this.Rigidbody.drag = defaultDrag; // reset drag
+            this.transform.FindChild("ProbeModel").gameObject.SetActive(true); //reactivate bubbles
             LoadGame();
         }
     }
