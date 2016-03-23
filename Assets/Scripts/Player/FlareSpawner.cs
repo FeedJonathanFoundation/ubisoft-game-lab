@@ -84,7 +84,6 @@ public class FlareSpawner : MonoBehaviour
         if (flare != null)
         {
             flareDistance = Vector3.Distance(flare.transform.position, player.position);
-            Debug.Log(flareDistance);
             AkSoundEngine.SetRTPCValue("flareDistance", flareDistance);
         }
     }
