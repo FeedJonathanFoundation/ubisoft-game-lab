@@ -26,7 +26,7 @@ GameObject:
   - 4: {fileID: 436452}
   - 95: {fileID: 9558088}
   - 65: {fileID: 6531072}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FishB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,8 +462,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 1.5}
-  m_Center: {x: 0, y: 0.1, z: -0.1}
+  m_Size: {x: 2, y: 0.579141, z: 1.1474415}
+  m_Center: {x: -1.5990764e-12, y: 0.10569439, z: -0.071433954}
 --- !u!95 &9558088
 Animator:
   serializedVersion: 3
@@ -547,7 +547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerOffset: {x: 0, y: 0, z: 0}
-  radius: 0.4
+  radius: 0.7
   layerToDetect:
     serializedVersion: 2
     m_Bits: 256
