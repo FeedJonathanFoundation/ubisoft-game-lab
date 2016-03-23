@@ -51,6 +51,10 @@ public class SpawnVolume : MonoBehaviour
     [SerializeField]
     [Tooltip("Number of fish in school.")]
     private int schoolSize;
+    
+    [SerializeField]
+    [Tooltip("The initial angle at which the fish swim. Relative to the +y-axis, clockwise, in degrees")]
+    private float initialSwimAngle;
 
     [SerializeField]
     [Tooltip("Max distance between player and fish before fish is disabled.")]
@@ -221,11 +225,18 @@ public class SpawnVolume : MonoBehaviour
                 fish.transform.rotation = Quaternion.identity;
                 fish.SetActive(true);
 
-                if (fish.GetComponent<LightSource>() != null)
+                LightSource lightSource = fish.GetComponent<LightSource>();
+                AbstractFish abstractFish = fish.GetComponent<AbstractFish>();
+                if (lightSource != null)
                 {
-                    float variance = Random.Range(0, fish.GetComponent<LightSource>().LightEnergy.CurrentEnergy * energyVariance);
-                    fish.GetComponent<LightSource>().LightEnergy.Deplete(variance);
-                }    
+                    float variance = Random.Range(0, lightSource.LightEnergy.CurrentEnergy * energyVariance);
+                    lightSource.LightEnergy.Deplete(variance);
+                }
+                if (abstractFish != null)
+                {
+                    // Override the fish's default swim direction
+                    abstractFish.DefaultWanderAngle = initialSwimAngle;
+                }
                     
                 fishes.Add(fish);
             }
@@ -251,10 +262,17 @@ public class SpawnVolume : MonoBehaviour
             fish.transform.rotation = Quaternion.identity;
             fish.SetActive(true);
 
-            if (fish.GetComponent<LightSource>() != null)
+            LightSource lightSource = fish.GetComponent<LightSource>();
+            AbstractFish abstractFish = fish.GetComponent<AbstractFish>();
+            if (lightSource != null)
             {
-                float variance = Random.Range(0, fish.GetComponent<LightSource>().LightEnergy.CurrentEnergy * energyVariance);
-                fish.GetComponent<LightSource>().LightEnergy.Deplete(variance);
+                float variance = Random.Range(0, lightSource.LightEnergy.CurrentEnergy * energyVariance);
+                lightSource.LightEnergy.Deplete(variance);
+            }
+            if (abstractFish != null)
+            {
+                // Override the fish's default swim direction
+                abstractFish.DefaultWanderAngle = initialSwimAngle;
             }
             fishes.Add(fish);
         }
