@@ -139,11 +139,7 @@ public class Player : LightSource
         ChangeColor(probeColorOff, false, 0);
         LoadGame();
         ResetPlayerState();
-        
-        
-        // AkSoundEngine.PostEvent("Default", this.gameObject);
-        
-        
+
         #if UNITY_EDITOR
             this.ValidateInputs();
         #endif        
