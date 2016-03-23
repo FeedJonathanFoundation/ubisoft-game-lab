@@ -48,31 +48,31 @@ public class FlareSpawner : MonoBehaviour
 
     void Update() 
     {
-        if ((timer += Time.deltaTime) >= cooldownTime)
+        if (Input.GetButtonDown("UseFlare"))
         {
-            if (Input.GetButtonDown("UseFlare"))
+            float cost = flareEnergyCost * flareCostPercentage;
+            if (((timer += Time.deltaTime) >= cooldownTime) && (lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost)))
             {
-                float cost = flareEnergyCost * flareCostPercentage;
+                Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
+                lightSource.LightEnergy.Deplete(flareEnergyCost);
+                // Apply recoil in the opposite direction the flare was shot
+                rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
+                controllerRumble.ShotFlare();   // Rumble the controller
+                timer = 0.0f;
+                
+                AkSoundEngine.PostEvent("Flare", this.gameObject);
+                // STELLA if eaten shut off
 
-                if (lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost))
+                //reset all values for the zoom when ever a player fires a flare
+                if (smoothCamera != null)
                 {
-                    Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
-                    lightSource.LightEnergy.Deplete(flareEnergyCost);
-                    // Apply recoil in the opposite direction the flare was shot
-                    rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
-                    controllerRumble.ShotFlare();   // Rumble the controller
-                    timer = 0.0f;
-                    
-                    AkSoundEngine.PostEvent("Flare", this.gameObject);
-                    // STELLA if eaten shut off
-
-                    //reset all values for the zoom when ever a player fires a flare
-                    if (smoothCamera != null)
-                    {
-                        smoothCamera.FlareShoot();
-                        smoothCamera.ResetTimer();   
-                    }                    
-                }
+                    smoothCamera.FlareShoot();
+                    smoothCamera.ResetTimer();   
+                }                    
+            }
+            else
+            {
+                AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
             }
         }
     }
