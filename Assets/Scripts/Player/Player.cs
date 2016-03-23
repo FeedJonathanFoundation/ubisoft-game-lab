@@ -544,6 +544,9 @@ public class Player : LightSource
             // Spawn the explosion
             ParticleSystem explosion = GameObject.Instantiate(playerDeathParticles,
                                         Transform.position, Quaternion.Euler(-90, explosionAngle, 0)) as ParticleSystem;
+
+            AkSoundEngine.PostEvent("Explosion", this.gameObject);
+
             // Rumble the controller
             controllerRumble.PlayerDied();
 
