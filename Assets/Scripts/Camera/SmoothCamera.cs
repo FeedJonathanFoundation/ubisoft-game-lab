@@ -70,6 +70,8 @@ public class SmoothCamera : MonoBehaviour
     private bool shootFlare;
     private bool zoomInZone;
     private bool inCurrents;
+    private string particleDirection;
+    private string waitingCurrent;
 
     void Awake()
     {
@@ -77,6 +79,8 @@ public class SmoothCamera : MonoBehaviour
         this.shootFlare = false;
         this.zoomInZone = false;
         this.inCurrents = false;
+        this.particleDirection = "";
+        this.waitingCurrent = "";
         transform = GetComponent<Transform>();
         Vector3 position = transform.position;
         position.z = zPosition;
@@ -91,7 +95,7 @@ public class SmoothCamera : MonoBehaviour
         if (target)
         {
             Vector3 newPosition = Vector3.zero;
-            
+            //Debug.Log(inCurrents + "----" + particleDirection);
             if(!inCurrents)
             {
                 float dampTime = this.dampTime;
@@ -119,8 +123,27 @@ public class SmoothCamera : MonoBehaviour
             }
             else
             {
-                newPosition = this.transform.position;
-                newPosition.x = target.transform.position.x;
+                if(waitingCurrent == "")
+                {
+                    if(particleDirection == "downCurrent" || particleDirection == "upCurrent")
+                    {
+                        newPosition = this.transform.position;
+                        newPosition.x = target.transform.position.x;
+                    }
+                    
+                    if(particleDirection == "leftCurrent" || particleDirection == "rightCurrent")
+                    {
+                        newPosition = this.transform.position;
+                        newPosition.y = target.transform.position.y;
+                    }
+                }
+                else
+                {
+                    newPosition = this.transform.position;
+                }
+                
+                //Debug.Log(newPosition);
+                
             }
             
             
@@ -232,38 +255,29 @@ public class SmoothCamera : MonoBehaviour
         this.zoomTimer = timeBeforeZoomIn;
     }
     
-    public void SetCurrentState(bool isCurrent)
+    public void SetCurrentState(bool isCurrent, string direction)
     {
-        this.inCurrents = isCurrent;
+        if(!isCurrent && waitingCurrent != "")
+        {
+            particleDirection = waitingCurrent;
+            waitingCurrent = "";
+            isCurrent = !isCurrent;
+        }
+        
+        if(inCurrents && isCurrent)
+        {
+            waitingCurrent = direction;
+        }
+        else
+        {
+            this.inCurrents = isCurrent;
+            particleDirection = direction;
+        }
+        
+        //Debug.Log("iscurrent: " + inCurrents + " particleDirection: " + particleDirection + " waitingCurrent: " + waitingCurrent);
         //need to reset if flare was shoot before entering zoomInZone
         this.shootFlare = false;
         this.zoomTimer = timeBeforeZoomIn;
     }
     
-    public void StartCurrentParticles(string location)
-    {
-        foreach(Transform child in this.GetComponentInChildren<Transform>())
-        {
-            //Debug.Log(child.name +  "==" + location);
-            if(child.name == location)
-            {
-                child.gameObject.SetActive(true);
-                child.GetComponent<ParticleSystem>().Play();
-            }
-        }
-    }
-    
-    public void StopCurrentParticles(string location)
-    {
-        foreach(Transform child in this.GetComponentInChildren<Transform>())
-        {
-            //Debug.Log(child.name +  "=!!=" + location);
-            if(child.name == location)
-            {
-                Debug.Log(location);
-                child.gameObject.SetActive(false);
-                child.GetComponent<ParticleSystem>().Stop();
-            }
-        }
-    }
 }
