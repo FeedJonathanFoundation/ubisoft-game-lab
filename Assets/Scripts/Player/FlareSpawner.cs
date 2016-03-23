@@ -55,10 +55,22 @@ public class FlareSpawner : MonoBehaviour
 
     void Update() 
     {
-        if (Input.GetButtonDown("UseFlare"))
+        bool ready = false;
+
+        if (timer < cooldownTime)
+        {
+            timer += Time.deltaTime;
+        }
+        else
+        {
+            ready = true;
+        }
+
+        if (ready && Input.GetButtonDown("UseFlare"))
         {
             float cost = flareEnergyCost * flareCostPercentage;
-            if (((timer += Time.deltaTime) >= cooldownTime) && (lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost)))
+
+            if ((lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost)))
             {
                 flare = (GameObject)Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
                 lightSource.LightEnergy.Deplete(flareEnergyCost);
@@ -67,7 +79,7 @@ public class FlareSpawner : MonoBehaviour
                 controllerRumble.ShotFlare();   // Rumble the controller
                 timer = 0.0f;
                 
-                AkSoundEngine.PostEvent("Flare", this.gameObject);
+                //AkSoundEngine.PostEvent("Flare", this.gameObject);
                 
                 //reset all values for the zoom when ever a player fires a flare
                 if (smoothCamera != null)
@@ -78,7 +90,7 @@ public class FlareSpawner : MonoBehaviour
             }
             else
             {
-                AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
+                //AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
             }
         }
         if (flare != null)
