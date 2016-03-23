@@ -9,7 +9,7 @@ using System.Collections;
 /// </summary>
 public class MaterialExtensions
 {
-      
+
     /// <summary>
     /// Smoothly changes current color of material to target color
     /// </summary>
@@ -31,7 +31,7 @@ public class MaterialExtensions
     }
 
     /// <summary>
-    /// Changes the color of the given material 
+    /// Changes the color of the given material
     /// </summary>
     /// <param name="material"></param>
     /// <param name="color"></param>
@@ -44,7 +44,7 @@ public class MaterialExtensions
         // Reset color to initial one
         if (seconds > 0) { material.SetColor("_EmissionColor", currentColor); }
     }
-    
+
     /// <summary>
     /// Flashes the color of the given material from stat to end in the specified time
     /// </summary>
@@ -53,20 +53,49 @@ public class MaterialExtensions
     public IEnumerator FlashColor(Material material, Color startColor, Color endColor, float seconds)
     {
         material.SetColor("_EmissionColor", startColor);
-        
+
         for (float time = 0f; time <= seconds; time += Time.deltaTime)
         {
             Color currentColor = material.GetColor("_EmissionColor");
             Color targetColor = Color.Lerp(currentColor, endColor, time/seconds);
             material.SetColor("_EmissionColor", targetColor);
-            
+
             yield return null;
         }
 
         // Reset color to initial one
         //if (seconds > 0) { material.SetColor("_EmissionColor", currentColor); }
     }
-    
+
+    /// <summary>
+    /// Given a light smoothly increases its intensity until target is reached 
+    /// </summary>
+    /// <param name="light"></param>
+    /// <param name="targetIntensity"></param>
+    /// <returns></returns>
+    public IEnumerator ChangeLightIntensity(PlayerLightToggle light, float targetIntensity)
+    {
+        float intensityStep = 0.0125f;
+        
+        // validate input
+        if (light != null & light.ProbeLight != null)
+        {            
+           
+            while (light.ProbeLight.intensity > targetIntensity)
+            {
+                light.ProbeLight.intensity -= intensityStep;
+                yield return null;
+            }
+                        
+            while (light.ProbeLight.intensity < targetIntensity)
+            {
+                light.ProbeLight.intensity += intensityStep;
+                yield return null;
+            }    
+                        
+        }
+    }
+
     /// <summary>
     /// Sets the material's emissive color to the specified color immediately
     /// </summary>
