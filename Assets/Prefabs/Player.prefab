@@ -17,6 +17,7 @@ GameObject:
   - 54: {fileID: 5478908}
   - 114: {fileID: 11454232}
   - 114: {fileID: 11459872}
+  - 114: {fileID: 11472788}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -822,6 +823,7 @@ GameObject:
   - 135: {fileID: 13588346}
   - 114: {fileID: 11449654}
   - 114: {fileID: 11433432}
+  - 114: {fileID: 11474644}
   m_Layer: 10
   m_Name: SpawnCollider
   m_TagString: SpawnSignal
@@ -2502,8 +2504,8 @@ MonoBehaviour:
   canAbsorb: 1
   playerWillAlwaysAbsorb: 0
   absorptionRate: 50000
-  defaultEnergy: 10
-  infiniteEnergy: 1
+  defaultEnergy: 40
+  infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11442326}
   massEjectionTransform: {fileID: 451912}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
@@ -2531,9 +2533,10 @@ MonoBehaviour:
   probeColorOn: {r: 1, g: 0.3103448, b: 0, a: 1}
   probeColorOff: {r: 0.3, g: 0.09310344, b: 0, a: 1}
   probeColorHit: {r: 1, g: 0.067, b: 0.067, a: 1}
-  hitFlashDuration: 2
-  probeColorEat: {r: 0, g: 0.875, b: 1, a: 1}
+  probeColorEatFish: {r: 0, g: 0.875, b: 1, a: 1}
+  probeColorEatPickup: {r: 0.82, g: 0.82, b: 0.596, a: 1}
   eatFlashDuration: 0.5
+  hitFlashDuration: 2
 --- !u!114 &11442326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2655,6 +2658,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idleSpinSpeed: 50
+--- !u!114 &11472788
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136dd09779d3041329de6b34ca4e0e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &11474644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9807d0e018a2bb44aa20d697950d438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerOffset: {x: 0, y: 0, z: 0}
+  radius: 20
+  layerToDetect:
+    serializedVersion: 2
+    m_Bits: 117440512
+  tagsToIgnore: []
 --- !u!114 &11479848
 MonoBehaviour:
   m_ObjectHideFlags: 1
