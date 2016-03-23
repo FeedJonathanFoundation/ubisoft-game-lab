@@ -27,4 +27,12 @@ public class PlayerSound : MonoBehaviour {
         //     AkSoundEngine.SetState("MainStateGroup", "Idle");
         // }
 	}
+    
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == obstacleLayer)
+        {
+            AkSoundEngine.SetState("MainStateGroup", "WallCrash");
+        }
+    }
 }
