@@ -21,15 +21,10 @@ public class TextBoxManager : MonoBehaviour
     // Switch to know whether to cancel the typing process and display the full line immediately 
     private bool cancelTyping = false;
     // The speed at which text is written out
-    private float typeSpeed = 0.2f; 
+    private float typeSpeed = 0.025f; 
     
     void Start()
     {   
-        if (endAtLine == 0)
-        {
-            endAtLine = textLines.Length - 1;
-        }
-        
         if (isActive)
         {
             EnableTextBox();
@@ -47,7 +42,7 @@ public class TextBoxManager : MonoBehaviour
             return;
         }
         
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Mouse1))
         {
             if (!isTyping)
             {
