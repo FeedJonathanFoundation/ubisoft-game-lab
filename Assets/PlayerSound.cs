@@ -9,22 +9,10 @@ public class PlayerSound : MonoBehaviour {
 
     void Start()
     {
-        AkSoundEngine.PostEvent("Default", this.gameObject);
-        // AkSoundEngine.SetRTPCValue("Distance_Player_FinalDoor", distance);
-        
+        AkSoundEngine.PostEvent("Default", this.gameObject); 
     }
-
-    // Update is called once per frame
-    void Update()
+    void OnCollisionEnter(Collision collision)
     {
-        // if (true)// crashes into obstacle layer)
-        // {
-        //     AkSoundEngine.SetState("MainStateGroup", "WallCrash");
-        //     // velocity
-        // }
-        // else
-        // {
-        //     AkSoundEngine.SetState("MainStateGroup", "Idle");
-        // }
-	}
+        AkSoundEngine.PostEvent("WallCrash", this.gameObject);
+    }
 }

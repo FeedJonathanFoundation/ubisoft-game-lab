@@ -157,8 +157,6 @@ public class Player : LightSource
         LoadGame();
         ResetPlayerState();
 
-        // AkSoundEngine.PostEvent("Default", this.gameObject);
-
         #if UNITY_EDITOR
             this.ValidateInputs();
         #endif
