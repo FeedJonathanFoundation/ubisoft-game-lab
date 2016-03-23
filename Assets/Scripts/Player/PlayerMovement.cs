@@ -22,22 +22,22 @@ public class PlayerMovement
     /// The higher the value, the faster the propulsion when changing directions
     /// </summary>
     private float changeDirectionBoost;
-    
+
     /// <summary>
     /// The amount of light energy spent when ejecting one piece of mass.
     /// </summary>
     private float thrustEnergyCost = 1;
-    
+
     /// <summary>
     /// The damping to apply when the brakes are on at full strength
     /// </summary>
     private float brakeDrag = 1;
-    
+
     /// <summary>
     /// The propulsion effect activated when the player is propulsing
     /// </summary>
     private GameObject jetFuelEffect;
-    
+
     private float defaultDrag;
     private bool thrusting;  // True if the player is holding down the thrusting button
 
@@ -52,20 +52,23 @@ public class PlayerMovement
     public event OnPropulsionStartHandler OnPropulsionStart = delegate {};
     public event OnPropulsionEndHandler OnPropulsionEnd = delegate {}; */
 
+    private float rotationSpeed;
+
     /// <summary>
     /// Public constructor
     /// </summary>
     public PlayerMovement(
-        Transform massEjectionTransform, 
-        GameObject lightBallPrefab, 
-        float thrustForce, 
-        float changeDirectionBoost, 
-        float thrustEnergyCost, 
-        float brakeDrag, 
-        Transform transform, 
-        Rigidbody rigidbody, 
-        LightEnergy lightEnergy, 
-        GameObject jetFuelEffect
+        Transform massEjectionTransform,
+        GameObject lightBallPrefab,
+        float thrustForce,
+        float changeDirectionBoost,
+        float thrustEnergyCost,
+        float brakeDrag,
+        Transform transform,
+        Rigidbody rigidbody,
+        LightEnergy lightEnergy,
+        GameObject jetFuelEffect,
+        float rotationSpeed
     )
     {
         this.massEjectionTransform = massEjectionTransform;
@@ -76,23 +79,25 @@ public class PlayerMovement
         this.brakeDrag = brakeDrag;
         this.jetFuelEffect = jetFuelEffect;
         this.defaultDrag = rigidbody.drag;
+        this.rotationSpeed = rotationSpeed;
 
         this.transform = transform;
         this.rigidbody = rigidbody;
         this.lightEnergy = lightEnergy;
-        
+
         OnPropulsionEnd();
     }
 
     /// <summary>
-    /// Makes the character follow the left stick's rotation.
+    /// Makes the character rotate according to joystick rotations or 
+    /// arrow button presses.
     /// </summary>
     public void FollowLeftStickRotation()
     {
         // Get the direction the left stick is pointing to
         Vector2 leftStickDirection = InputManager.GetLeftStick();
 
-        if(leftStickDirection.sqrMagnitude > 0.01f)
+        if (leftStickDirection.sqrMagnitude > 0.01f)
         {
             //Debug.Log("Move the player " + Time.time);
 
@@ -101,14 +106,15 @@ public class PlayerMovement
             if (leftStickDirection.x != 0 || leftStickDirection.y != 0)
             {
                 // 90-degree offset to ensure angle is relative to +y-axis
-                leftStickAngle = Mathf.Atan2(leftStickDirection.y,leftStickDirection.x) * Mathf.Rad2Deg - 90;
+                leftStickAngle = Mathf.Atan2(leftStickDirection.y, leftStickDirection.x) * Mathf.Rad2Deg - 90;
             }
 
             // Make the character face in the direction of the left stick
-            transform.localEulerAngles = new Vector3(0,0,leftStickAngle);
+            Quaternion targetPosiion = Quaternion.Euler(new Vector3(0, 0, leftStickAngle));
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetPosiion, Time.fixedDeltaTime * rotationSpeed);
         }
     }
-    
+
     /// <summary>
     /// Call this the instant the player starts propulsing
     /// </summary>
@@ -127,10 +133,10 @@ public class PlayerMovement
         // Inform subscribers that the player activated his thrusters
         //OnPropulsionStart();
     }
-    
+
     public void Propulse(Vector2 direction)
     {
-        Propulse(direction,1);
+        Propulse(direction, 1);
     }
 
     /// <summary>
@@ -144,7 +150,7 @@ public class PlayerMovement
         // Debug.Log("Change in angle (PlayerMovement.Propulse()): " + angleChange);
 
         // Augment the thrusting power depending on how much the player has to turn
-        float thrustBoost = 1 + (angleChange/180) * changeDirectionBoost;
+        float thrustBoost = 1 + (angleChange / 180) * changeDirectionBoost;
 
         // Calculate the final propulsion force
         Vector3 thrustVector = thrustForce * direction * thrustBoost * strength;
@@ -153,7 +159,7 @@ public class PlayerMovement
         // Deplete energy from the player for each ejection
         lightEnergy.Deplete(thrustEnergyCost * strength);
     }
-    
+
     /// <summary>
     /// Call this the frame the player releases the propulsion button
     /// </summary>
@@ -170,7 +176,7 @@ public class PlayerMovement
         // Inform subscribers that the player deactivated his thrusters
         //OnPropulsionEnd();
     }
-    
+
     /// <summary>
     /// Add linear damping on the player's rigidbody 
     /// </summary>

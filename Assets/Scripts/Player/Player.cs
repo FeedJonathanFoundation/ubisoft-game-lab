@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 /// <summary>
-/// Player class is responsible for behaviour related to player's object 
+/// Player class is responsible for behaviour related to player's object
 ///
 /// @author - Jonathan L.A
 /// @author - Alex I.
@@ -40,6 +41,10 @@ public class Player : LightSource
     [SerializeField]
     [Tooltip("The damping to apply when the brakes are on at full strength")]
     private float brakeDrag = 1;
+
+    [SerializeField]
+    [Tooltip("The speed of rotation of the player in response to user input")]
+    private float rotationSpeed = 5;
 
     [SerializeField]
     [Tooltip("The parent of the propulsion particle effects activated when the player is propulsing")]
@@ -104,33 +109,45 @@ public class Player : LightSource
     private MaterialExtensions materials;
     private ControllerRumble controllerRumble;  // Caches the controller rumble component
     private int currentLevel;
-    public int playerVelocity;   
-    
+    public int playerVelocity;
+
     [Header("Emissive Colours")]
     [SerializeField]
     private Color probeColorOn = new Color(1f, 0.3103448f, 0f);
-    [SerializeField]
+    
+    [SerializeField]    
     private Color probeColorOff = new Color(0.3f,0.09310344f,0);
+    
     [SerializeField]
     private Color probeColorHit = new Color(1, 0.067f, 0.067f);
+           
     [SerializeField]
-    [Tooltip("The amount of time the player flashes when hit")]
-    private float hitFlashDuration = 2.0f;
+    private Color probeColorEatFish = new Color(0, 0.875f, 1);
+    
     [SerializeField]
-    private Color probeColorEat = new Color(0, 0.875f, 1);
+    private Color probeColorEatPickup = new Color(0.82f, 0.82f, 0.596f);
+    
     [SerializeField]
     [Tooltip("The amount of time the player flashes when eating a fish")]
     private float eatFlashDuration = 0.5f;
+    
+    [SerializeField]
+    [Tooltip("The amount of time the player flashes when hit")]
+    private float hitFlashDuration = 2.0f;
+    
+    private IEnumerator changeColorCoroutine;
+    private IEnumerator flashColorCoroutine;
+    private IEnumerator changeIntensityCoroutine;
 
     /// <summary>
-    /// Initializes Player components   
+    /// Initializes Player components
     /// </summary>
     protected override void Awake()
     {
         base.Awake(); // call parent LightSource Awake() first
-
-        this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, this.Transform, this.Rigidbody, this.LightEnergy, this.jetFuelEffect);
-        this.lightToggle = new PlayerLightToggle(this.Transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights, propulsionLightRange);
+        
+        this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, this.Transform, this.Rigidbody, this.LightEnergy, this.jetFuelEffect, this.rotationSpeed);
+        this.lightToggle = new PlayerLightToggle(this.Transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights);
         this.materials = new MaterialExtensions();
 
         this.defaultDrag = Rigidbody.drag;
@@ -139,14 +156,14 @@ public class Player : LightSource
         this.controllerRumble = GetComponent<ControllerRumble>();
         AkSoundEngine.SetState("PlayerLife", "Alive");
         this.currentLevel = SceneManager.GetActiveScene().buildIndex;
-        DontDestroyOnLoad(this.gameObject);                
+        DontDestroyOnLoad(this.gameObject);
         ChangeColor(probeColorOff, false, 0);
         LoadGame();
         ResetPlayerState();
 
         #if UNITY_EDITOR
             this.ValidateInputs();
-        #endif        
+        #endif
     }
 
     public override void OnEnable()
@@ -154,7 +171,7 @@ public class Player : LightSource
         base.OnEnable();
         ConsumedLightSource += OnConsumedLightSource;
     }
-    
+
     public override void OnDisable()
     {
         base.OnEnable();
@@ -264,30 +281,33 @@ public class Player : LightSource
 
     /// <summary>
     /// Changes the color of the player avatar to the given one
-    ///  
+    ///
     /// </summary>
     /// <param name="color">target color</param>
     /// <param name="isSmooth">if true, the color change will follow a smooth gradient</param>
     protected override void ChangeColor(Color color, bool isSmooth, float seconds)
     {
-        StopAllCoroutines();
+        if (changeColorCoroutine != null) { StopCoroutine(changeColorCoroutine); }
+        
         foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
         {
             Renderer renderer = probe.GetComponent<Renderer>();
             foreach (Material material in renderer.materials)
-            {                                
+            {
                 if (isSmooth)
                 {
-                   StartCoroutine(materials.ChangeColor(material, color, seconds, 0f));
+                   changeColorCoroutine = materials.ChangeColor(material, color, seconds, 0f);
+                   StartCoroutine(changeColorCoroutine);
                 }
                 else
                 {
-                    StartCoroutine(materials.ChangeColor(material, color, seconds));
+                    changeColorCoroutine = materials.ChangeColor(material, color, seconds);
+                    StartCoroutine(changeColorCoroutine);
                 }
             }
         }
     }
-    
+
     /// <summary>
     /// Flashes the probe's emissive color in the specified time
     /// </summary>
@@ -297,33 +317,36 @@ public class Player : LightSource
         {
             // If the lights are enabled, flash back to the probe's 'on' color
             if (this.lightToggle.LightsEnabled)
-            {                  
+            {
                 FlashColor(color, probeColorOn, seconds);
             }
             // If the lights are disabled, flash back to the probe's 'off' color
             else
-            {                    
+            {
                 FlashColor(color, probeColorOff, seconds);
             }
         }
     }
-    
+
     /// <summary>
     /// Flashes the probe's emissive color from start color to end color in the specified time
     /// </summary>
     private void FlashColor(Color startColor, Color endColor, float seconds)
     {
-        StopAllCoroutines();
+        if (flashColorCoroutine != null) { StopCoroutine(flashColorCoroutine); }
+        
         foreach (GameObject probe in GameObject.FindGameObjectsWithTag("Probe"))
         {
             Renderer renderer = probe.GetComponent<Renderer>();
             foreach (Material material in renderer.materials)
-            {                                
-                StartCoroutine(materials.FlashColor(material, startColor, endColor, seconds));
+            {
+                flashColorCoroutine = materials.FlashColor(material, startColor, endColor, seconds); 
+                StartCoroutine(flashColorCoroutine);
             }
         }
     }
-
+    
+    
     /// <summary>
     /// Listens for Lights button click
     /// When Lights button is clicked toggle the lights ON or OFF
@@ -338,13 +361,20 @@ public class Player : LightSource
                 {
                     this.lightToggle.ToggleLights();
                     AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
+                    
+                    if (changeIntensityCoroutine != null) { StopCoroutine(changeIntensityCoroutine); }
+                    
                     if (this.lightToggle.LightsEnabled)
                     {
                         this.ChangeColor(probeColorOn, true, 0);
+                        changeIntensityCoroutine = materials.ChangeLightIntensity(this.lightToggle, 0.3f);
+                        StartCoroutine(changeIntensityCoroutine);
                     }
                     else
                     {
                         this.ChangeColor(probeColorOff, true, 0);
+                        changeIntensityCoroutine = materials.ChangeLightIntensity(this.lightToggle, 0f); 
+                        StartCoroutine(changeIntensityCoroutine);
                     }
                 }
                 else
@@ -408,14 +438,14 @@ public class Player : LightSource
             // Instantiate hit particles
             GameObject.Instantiate(fishHitParticles, transform.position, Quaternion.Euler(0, 0, 0));
             FlashColor(probeColorHit, hitFlashDuration);
-                        
+
             // Rumble the controller when the player hits a fish.
             controllerRumble.PlayerHitByFish();
         }
 
         // The player was just hit
         lastTimeHit = Time.time;
-        
+
     }
 
     /// <summary>
@@ -440,7 +470,7 @@ public class Player : LightSource
     }
 
     /// <summary>
-    /// Listens for input related to movement of the player 
+    /// Listens for input related to movement of the player
     /// </summary>
     private void Move()
     {
@@ -500,14 +530,21 @@ public class Player : LightSource
 
         previousThrustAxis = thrustAxis;
     }
-    
+
     private void OnConsumedLightSource(LightSource consumedLightSource)
     {
-        // If the player ate a fish
+        // If the player ate a fish        
         if (consumedLightSource.CompareTag("Fish"))
         {
-            FlashColor(probeColorEat, eatFlashDuration);
+            FlashColor(probeColorEatFish, eatFlashDuration);
         }
+        
+        // If the player collected a pickup (yellow ball)       
+        if (consumedLightSource.CompareTag("Pickup"))
+        {
+            FlashColor(probeColorEatPickup, eatFlashDuration);
+        }
+        
     }
 
     void OnCollisionEnter(Collision collision)
@@ -534,7 +571,7 @@ public class Player : LightSource
     }
 
     /// <summary>
-    /// Listens for restart button clicks 
+    /// Listens for restart button clicks
     /// </summary>
     private void RestartGame()
     {
@@ -571,6 +608,6 @@ public class Player : LightSource
                 UnityEditor.EditorApplication.isPlaying = false;
                 Debug.LogError("Could not find LightsToToggle object!");
             }
-        #endif        
+        #endif
     }
 }

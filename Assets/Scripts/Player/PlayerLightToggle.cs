@@ -2,7 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// PlayerLightToggle class is responsible for behaviour related to player lights.
-/// It toggles the lights on or off and depletes the energy from the Player   
+/// It toggles the lights on or off and depletes the energy from the Player
 ///
 /// @author - Simon T.
 /// @author - Alex I.
@@ -20,6 +20,7 @@ public class PlayerLightToggle
     private float propulsionLightRange; // The percent range of light when propulsion is on
     private GameObject lightsToToggle; 
     private LightSource lightSource;
+    private Light closeLight;
     
     public PlayerLightToggle(GameObject lightsToToggle, bool defaultLightStatus, LightSource lightSource, float minimalEnergy, float propulsionLightRange)
     {        
@@ -30,6 +31,14 @@ public class PlayerLightToggle
         this.minimalEnergyRestriction = minimalEnergy;
         this.propulsionLightRange = propulsionLightRange;
         this.ToggleLights();
+        
+        // Cache very close light - needs to be refactored
+        Transform lightTransform = lightsToToggle.transform.Find("VeryClose Light");
+        if (lightTransform != null)
+        {
+            this.closeLight = lightTransform.GetComponent<Light>();
+            this.closeLight.intensity = 0;    
+        }                
     }
 
     /// <summary>
@@ -60,6 +69,13 @@ public class PlayerLightToggle
     {
         foreach (Light light in this.lightsToToggle.GetComponentsInChildren<Light>())
         {
+            // Skip VeryClose Light                                     
+            Light light = childComponent.GetComponent<Light>();
+            if (light == null || light.name == "VeryClose Light")
+            {
+                continue;
+            }
+            
             //light.enabled = enabled;
             
             // Set the range of the light to the given percent
@@ -77,9 +93,9 @@ public class PlayerLightToggle
         
         Debug.Log("Toggle lights");
     }
-    
+
     /// <summary>
-    /// Gradually depletes Player's energy when lights are turned on 
+    /// Gradually depletes Player's energy when lights are turned on
     /// </summary>
     /// <param name="timeToDeplete">Time it takes to deplete a unit of energy when light toggle is on</param>
     /// <param name="energyCost">Energy cost of having Player lights turned on</param>
@@ -145,5 +161,11 @@ public class PlayerLightToggle
     public bool LightButtonPressed
     {
         get { return this.lightButtonPressed; }
+    }
+
+    public Light ProbeLight
+    {
+        get { return this.closeLight; }
+        set { this.closeLight = value; }
     }
 }
