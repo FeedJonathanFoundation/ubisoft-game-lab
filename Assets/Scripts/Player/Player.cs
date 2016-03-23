@@ -157,6 +157,8 @@ public class Player : LightSource
         LoadGame();
         ResetPlayerState();
 
+        // AkSoundEngine.PostEvent("Default", this.gameObject);
+
         #if UNITY_EDITOR
             this.ValidateInputs();
         #endif
@@ -184,7 +186,8 @@ public class Player : LightSource
         base.Update();
 
         playerVelocity = (int)this.Rigidbody.velocity.magnitude;
-
+        AkSoundEngine.SetRTPCValue("playerVelocity", playerVelocity);
+        
         // Modify player drag if invulnerable
         if (IsInvulnerable())
         {
@@ -340,33 +343,41 @@ public class Player : LightSource
             }
         }
     }
-
+    
+    
     /// <summary>
     /// Listens for Lights button click
     /// When Lights button is clicked toggle the lights ON or OFF
     /// </summary>
     private void LightControl()
-    {               
+    {
         if (this.lightToggle != null)
         {
-            if (Input.GetButtonDown("LightToggle") && minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
-            {                
-                this.lightToggle.ToggleLights();                
-                AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
-                
-                if (changeIntensityCoroutine != null) { StopCoroutine(changeIntensityCoroutine); }
-                
-                if (this.lightToggle.LightsEnabled)
+            if (Input.GetButtonDown("LightToggle"))
+            {
+                if (minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
                 {
-                    this.ChangeColor(probeColorOn, true, 0);
-                    changeIntensityCoroutine = materials.ChangeLightIntensity(this.lightToggle, 0.3f);
-                    StartCoroutine(changeIntensityCoroutine);                    
+                    this.lightToggle.ToggleLights();
+                    AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
+                    
+                    if (changeIntensityCoroutine != null) { StopCoroutine(changeIntensityCoroutine); }
+                    
+                    if (this.lightToggle.LightsEnabled)
+                    {
+                        this.ChangeColor(probeColorOn, true, 0);
+                        changeIntensityCoroutine = materials.ChangeLightIntensity(this.lightToggle, 0.3f);
+                        StartCoroutine(changeIntensityCoroutine);
+                    }
+                    else
+                    {
+                        this.ChangeColor(probeColorOff, true, 0);
+                        changeIntensityCoroutine = materials.ChangeLightIntensity(this.lightToggle, 0f); 
+                        StartCoroutine(changeIntensityCoroutine);
+                    }
                 }
                 else
                 {
-                    this.ChangeColor(probeColorOff, true, 0);
-                    changeIntensityCoroutine = materials.ChangeLightIntensity(this.lightToggle, 0f); 
-                    StartCoroutine(changeIntensityCoroutine);
+                    AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
                 }
             }
 
@@ -587,4 +598,3 @@ public class Player : LightSource
         #endif
     }
 }
-

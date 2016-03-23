@@ -20,6 +20,7 @@
 			<Path>MAIN.bnk</Path>
 			<IncludedEvents>
 				<Event Id="4095159976" Name="Ambient1"/>
+				<Event Id="4095159979" Name="Ambient2"/>
 				<Event Id="782826392" Name="Default"/>
 				<Event Id="445985469" Name="Die"/>
 				<Event Id="781390793" Name="Eat"/>
@@ -28,11 +29,15 @@
 				<Event Id="1540219311" Name="Flare"/>
 				<Event Id="4066254940" Name="Light_Orb_Pickup"/>
 				<Event Id="3299248253" Name="LightsToToggle"/>
+				<Event Id="1772229705" Name="LowEnergy"/>
 				<Event Id="2129636626" Name="Movement" MaxAttenuation="0.000000"/>
-				<Event Id="2734563960" Name="Sc2Base"/>
 				<Event Id="2901629858" Name="WallCrash"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
+				<File Id="5727754" Language="SFX">
+					<ShortName>Final Sound Assets\Section 3 Jellyfish ambient.wav</ShortName>
+					<Path>SFX/Final Sound Assets/Section 3 Jellyfish ambient_4B8CC0C5.wem</Path>
+				</File>
 				<File Id="13541197" Language="SFX">
 					<ShortName>Final Sound Assets\Evade A.wav</ShortName>
 					<Path>SFX/Final Sound Assets/Evade A_594EBAD8.wem</Path>
@@ -48,6 +53,10 @@
 				<File Id="57300172" Language="SFX">
 					<ShortName>Final Sound Assets\Section 2 Ambient Whale Layer.wav</ShortName>
 					<Path>SFX/Final Sound Assets/Section 2 Ambient Whale Layer_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="112513681" Language="SFX">
+					<ShortName>Low Energy.wav</ShortName>
+					<Path>SFX/Low Energy_9E69E797.wem</Path>
 				</File>
 				<File Id="130270075" Language="SFX">
 					<ShortName>Red Alert Stab A2.wav</ShortName>
@@ -65,10 +74,6 @@
 					<ShortName>Final Sound Assets\Movement is true.wav</ShortName>
 					<Path>SFX/Final Sound Assets/Movement is true_4B8CC0C5.wem</Path>
 				</File>
-				<File Id="212887263" Language="SFX">
-					<ShortName>Flare A.wav</ShortName>
-					<Path>SFX/Flare A_8CED1D95.wem</Path>
-				</File>
 				<File Id="373193750" Language="SFX">
 					<ShortName>Final Sound Assets\Game Over.wav</ShortName>
 					<Path>SFX/Final Sound Assets/Game Over_9E69E797.wem</Path>
@@ -80,6 +85,14 @@
 				<File Id="377731027" Language="SFX">
 					<ShortName>Final Sound Assets\Red Alert Stab A.wav</ShortName>
 					<Path>SFX/Final Sound Assets/Red Alert Stab A_B6AF252E.wem</Path>
+				</File>
+				<File Id="385392149" Language="SFX">
+					<ShortName>Flare C.wav</ShortName>
+					<Path>SFX/Flare C_9E69E797.wem</Path>
+				</File>
+				<File Id="387208354" Language="SFX">
+					<ShortName>Jellyfish Ambient Crackle.wav</ShortName>
+					<Path>SFX/Jellyfish Ambient Crackle_4B8CC0C5.wem</Path>
 				</File>
 				<File Id="434643027" Language="SFX">
 					<ShortName>Final Sound Assets\Blue FIsh Collect D.wav</ShortName>
