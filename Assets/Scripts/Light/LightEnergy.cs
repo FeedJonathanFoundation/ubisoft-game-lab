@@ -53,6 +53,7 @@ public class LightEnergy
             this.currentEnergy += lightEnergy;    
         }        
         LightChanged(this.currentEnergy);
+        //Debug.Log("LIGHT CHANGED on " + gameObject.name);
     }
 
     /// <summary>
@@ -64,7 +65,11 @@ public class LightEnergy
     /// <returns>float - amount of energy removed</returns>
     public float Deplete(float energyToRemove)
     {
-        if (hasInfiniteEnergy) { return energyToRemove; }
+        if (hasInfiniteEnergy) 
+        { 
+            LightChanged(this.currentEnergy);
+            return energyToRemove; 
+        }
         
         float energyRemoved = energyToRemove;
         
@@ -79,6 +84,7 @@ public class LightEnergy
 
         // Notify subscribers that the amount of energy in this light has changed
         LightChanged(this.currentEnergy);
+        //Debug.Log("LIGHT CHANGED on " + gameObject.name);
         
         // If all light was depleted from this light source
         if (this.currentEnergy <= 0)
