@@ -16,8 +16,8 @@ MonoBehaviour:
   - PhysicalPath: Events/Default Work Unit.wwu
     ParentPhysicalPath: 
     Guid: '{EAE4CDC1-6F63-43E7-87D3-AEE39B8BC9B7}'
-    m_lastTimePsrt1: 163553024
-    m_lastTimePart2: -1999416942
+    m_lastTimePsrt1: -1061864704
+    m_lastTimePart2: -1999416650
     List:
     - Name: Ambient1
       Path: Default Work Unit/Ambient Themes/Ambient1
@@ -139,6 +139,18 @@ MonoBehaviour:
       ID: -995719043
       Guid: f520ca5843af9f45b182c46c75a10dcb
       maxAttenuation: 0
+    - Name: LowEnergy
+      Path: Default Work Unit/Player Effects/LowEnergy
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Player Effects
+        ObjectType: 4
+      - ElementName: LowEnergy
+        ObjectType: 3
+      ID: 1772229705
+      Guid: 8fe5731aefb76f488309cc0bf32d2880
+      maxAttenuation: 0
     - Name: Movement
       Path: Default Work Unit/Player Effects/Movement
       PathAndIcons:
@@ -167,15 +179,15 @@ MonoBehaviour:
   - PhysicalPath: Master-Mixer Hierarchy/Default Work Unit.wwu
     ParentPhysicalPath: 
     Guid: '{1A303C29-4668-4868-A41A-B420E1905AA0}'
-    m_lastTimePsrt1: 173553024
-    m_lastTimePart2: -1999416942
+    m_lastTimePsrt1: 1542579328
+    m_lastTimePart2: -1999416666
     List: []
   StateWwu:
   - PhysicalPath: States/Default Work Unit.wwu
     ParentPhysicalPath: 
     Guid: '{D224D7DA-F454-4289-BD1F-288DB137AAAC}'
-    m_lastTimePsrt1: 213553024
-    m_lastTimePart2: -1999416942
+    m_lastTimePsrt1: 1542579328
+    m_lastTimePart2: -1999416666
     List:
     - Name: IMAmb1
       Path: Default Work Unit/IMAmb1
@@ -294,8 +306,8 @@ MonoBehaviour:
   - PhysicalPath: Switches/Default Work Unit.wwu
     ParentPhysicalPath: 
     Guid: '{420A5BAD-0756-4E88-B5D6-979C3D8A684A}'
-    m_lastTimePsrt1: 213553024
-    m_lastTimePart2: -1999416942
+    m_lastTimePsrt1: 1965776896
+    m_lastTimePart2: -1999416874
     List:
     - Name: Scene
       Path: Default Work Unit/Scene
@@ -330,8 +342,8 @@ MonoBehaviour:
   - PhysicalPath: SoundBanks/Default Work Unit.wwu
     ParentPhysicalPath: 
     Guid: '{AEEC0536-DE4B-4C2C-BE7F-3E54DA9D587F}'
-    m_lastTimePsrt1: 213553024
-    m_lastTimePart2: -1999416942
+    m_lastTimePsrt1: -1061864704
+    m_lastTimePart2: -1999416650
     List:
     - Name: MAIN
       Path: Default Work Unit/MAIN
@@ -342,7 +354,17 @@ MonoBehaviour:
         ObjectType: 7
       ID: -1133058374
       Guid: 6b7e0c65c74c21438786791b38d91c96
-  ExpandedItems: []
+    - Name: Themes
+      Path: Default Work Unit/Themes
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Themes
+        ObjectType: 7
+      ID: 1940854371
+      Guid: be8e5657848f4c41ae08b96208456694
+  ExpandedItems:
+  - /Lumina
   m_lastPopulateTimePsrt1: 0
   m_lastPopulateTimePart2: 0
   autoPopulateEnabled: 1
