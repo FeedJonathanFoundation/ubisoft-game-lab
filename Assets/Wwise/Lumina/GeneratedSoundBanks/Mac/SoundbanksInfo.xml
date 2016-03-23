@@ -15,15 +15,55 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
+		<SoundBank Id="1940854371" Language="SFX">
+			<ShortName>Themes</ShortName>
+			<Path>Themes.bnk</Path>
+			<IncludedEvents>
+				<Event Id="4095159976" Name="Ambient1"/>
+				<Event Id="4095159979" Name="Ambient2"/>
+			</IncludedEvents>
+			<IncludedMemoryFiles>
+				<File Id="5727754" Language="SFX">
+					<ShortName>Final Sound Assets\Section 3 Jellyfish ambient.wav</ShortName>
+					<Path>SFX/Final Sound Assets/Section 3 Jellyfish ambient_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="57300172" Language="SFX">
+					<ShortName>Final Sound Assets\Section 2 Ambient Whale Layer.wav</ShortName>
+					<Path>SFX/Final Sound Assets/Section 2 Ambient Whale Layer_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="184020486" Language="SFX">
+					<ShortName>Final Sound Assets\Section 2 Ambient Deep layer.wav</ShortName>
+					<Path>SFX/Final Sound Assets/Section 2 Ambient Deep layer_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="376746421" Language="SFX">
+					<ShortName>Final Sound Assets\Section 2 Ambient Base Layer.wav</ShortName>
+					<Path>SFX/Final Sound Assets/Section 2 Ambient Base Layer_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="387208354" Language="SFX">
+					<ShortName>Jellyfish Ambient Crackle.wav</ShortName>
+					<Path>SFX/Jellyfish Ambient Crackle_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="554640566" Language="SFX">
+					<ShortName>Final Sound Assets\Section 2 Ambient Volcano.wav</ShortName>
+					<Path>SFX/Final Sound Assets/Section 2 Ambient Volcano_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="854662292" Language="SFX">
+					<ShortName>Final Sound Assets\Ambient Loop A.wav</ShortName>
+					<Path>SFX/Final Sound Assets/Ambient Loop A_4B8CC0C5.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+		</SoundBank>
 		<SoundBank Id="3161908922" Language="SFX">
 			<ShortName>MAIN</ShortName>
 			<Path>MAIN.bnk</Path>
 			<IncludedEvents>
 				<Event Id="4095159976" Name="Ambient1"/>
 				<Event Id="4095159979" Name="Ambient2"/>
+				<Event Id="612075679" Name="Checkpoint"/>
 				<Event Id="782826392" Name="Default"/>
 				<Event Id="445985469" Name="Die"/>
 				<Event Id="781390793" Name="Eat"/>
+				<Event Id="13776098" Name="Explosion"/>
 				<Event Id="3611228611" Name="Fish_Detection"/>
 				<Event Id="2133456085" Name="Fish_Detection_Off"/>
 				<Event Id="1540219311" Name="Flare"/>
@@ -57,6 +97,10 @@
 				<File Id="112513681" Language="SFX">
 					<ShortName>Low Energy.wav</ShortName>
 					<Path>SFX/Low Energy_9E69E797.wem</Path>
+				</File>
+				<File Id="119113391" Language="SFX">
+					<ShortName>Explosion A.wav</ShortName>
+					<Path>SFX/Explosion A_9E69E797.wem</Path>
 				</File>
 				<File Id="130270075" Language="SFX">
 					<ShortName>Red Alert Stab A2.wav</ShortName>
@@ -153,6 +197,10 @@
 				<File Id="932248775" Language="SFX">
 					<ShortName>Final Sound Assets\Wall collision.wav</ShortName>
 					<Path>SFX/Final Sound Assets/Wall collision_9E69E797.wem</Path>
+				</File>
+				<File Id="957480573" Language="SFX">
+					<ShortName>Next Level B.wav</ShortName>
+					<Path>SFX/Next Level B_9E69E797.wem</Path>
 				</File>
 				<File Id="992021646" Language="SFX">
 					<ShortName>Final Sound Assets\Luminous Pickup A.wav</ShortName>
