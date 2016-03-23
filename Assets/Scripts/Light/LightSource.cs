@@ -105,7 +105,10 @@ public class LightSource : MonoBehaviour
                     {
                         AkSoundEngine.PostEvent("Light_Orb_Pickup", this.gameObject);
                     }
-                    else
+                    else if (otherLightSource.CompareTag("Checkpoint"))
+                    {
+                        AkSoundEngine.PostEvent("Checkpoint", this.gameObject);
+                    }
                     {                                                                             
                         AkSoundEngine.PostEvent("Eat", this.gameObject);
                     }                    
