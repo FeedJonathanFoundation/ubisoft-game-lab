@@ -3,12 +3,14 @@
 FJF's entry for the Ubisoft 2016 Game Lab Competition.
 
 ## Controls
-| Action        | Xbox 360 Controller | Keyboard                    |
-| ------------- |:-------------------:| :--------------------------:|
+| Action        | Xbox 360 Controller | Keyboard                  |
+| ------------- |:-------------------:| :------------------------:|
 | Rotate Player | Left-Stick          | <kbd>&#8593;</kbd><kbd>&#8595;</kbd> <kbd>&#8592;</kbd><kbd>&#8594;</kbd>|
-| Propulse      | <kbd>A</kbd>        | <kbd>Space</kbd>            |
-| Shoot Flare   | <kbd> Y </kbd>      |   <kbd>f</kbd>              |
-| Light Toggle  | <kbd> RB </kbd>     |   <kbd>x</kbd>              |
+| Propulse      | <kbd>A</kbd>        | <kbd>Space</kbd>          |
+| Brake  	| <kbd> LB </kbd>     | <kbd>Ctrl</kbd>           |
+| Light Toggle  | <kbd> RB </kbd>     | <kbd>x</kbd>              |
+| Shoot Flare   | <kbd> Y </kbd>      | <kbd>f</kbd>              |
+
 
 ## Team
 **Programmers:** Alex Ilea, Karl Chiraz, Stella Lee, Simon Thompson, Jonathan Lucuix-André
