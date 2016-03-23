@@ -55,6 +55,7 @@ public class SpawnVolume : MonoBehaviour
     [SerializeField]
     [Tooltip("Max distance between player and fish before fish is disabled.")]
     private float maxDistance;
+    private float maxDistanceSquared;
     
     [SerializeField]
     [Tooltip("If player travels backwards, do spawn volumes respawn fish?")]
@@ -84,6 +85,7 @@ public class SpawnVolume : MonoBehaviour
         colliderCount = colliders.Length;
         disabled = new bool[colliderCount];
         initialized = new bool[colliderCount];
+        maxDistanceSquared = maxDistance * maxDistance;
         Reset();
     }
     
@@ -119,14 +121,14 @@ public class SpawnVolume : MonoBehaviour
                             if (fish != null)
                             {
                                 // Deactivate the fish if it is unviewable
-                                CheckDistanceToPlayer(fish.gameObject);
+                                CheckDistanceToPlayer(fish);
                             }
                         }
                     }
                     // Else, if the fish is an individual fish
                     else
                     {
-                        CheckDistanceToPlayer(fishes[i]);
+                        CheckDistanceToPlayer(fishes[i].GetComponent<AbstractFish>());
                     }
                 }
             }
@@ -138,17 +140,17 @@ public class SpawnVolume : MonoBehaviour
     /// Activates the fish if sufficiently close to the player,
     /// and deactivates it otherwise.
     /// </summary>
-    private void CheckDistanceToPlayer(GameObject fish)
+    private void CheckDistanceToPlayer(AbstractFish fish)
     {
         float distanceSquared = (fish.transform.position - player.position).sqrMagnitude;
         
-        if (distanceSquared > maxDistance)
+        if (distanceSquared > maxDistanceSquared)
         {
-            fish.SetActive(false);
+            fish.gameObject.SetActive(false);
         }
-        else if (fish.activeSelf == false)
+        else if (fish.gameObject.activeSelf == false && !fish.Dead)
         {
-            fish.SetActive(true);
+            fish.gameObject.SetActive(true);
         }
     }
     
