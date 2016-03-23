@@ -15,9 +15,11 @@ namespace AK
     {
         static const AkUniqueID AMBIENT1 = 4095159976U;
         static const AkUniqueID AMBIENT2 = 4095159979U;
+        static const AkUniqueID CHECKPOINT = 612075679U;
         static const AkUniqueID DEFAULT = 782826392U;
         static const AkUniqueID DIE = 445985469U;
         static const AkUniqueID EAT = 781390793U;
+        static const AkUniqueID EXPLOSION = 13776098U;
         static const AkUniqueID FISH_DETECTION = 3611228611U;
         static const AkUniqueID FISH_DETECTION_OFF = 2133456085U;
         static const AkUniqueID FLARE = 1540219311U;
@@ -116,6 +118,7 @@ namespace AK
     {
         static const AkUniqueID INIT = 1355168291U;
         static const AkUniqueID MAIN = 3161908922U;
+        static const AkUniqueID THEMES = 1940854371U;
     } // namespace BANKS
 
     namespace BUSSES
