@@ -9,10 +9,21 @@ public class PlayerSound : MonoBehaviour {
 
     void Start()
     {
-        AkSoundEngine.PostEvent("Default", this.gameObject); 
+        AkSoundEngine.PostEvent("Default", this.gameObject);
+        
     }
-    void OnCollisionEnter(Collision collision)
+
+    // Update is called once per frame
+    void Update()
     {
-        AkSoundEngine.PostEvent("WallCrash", this.gameObject);
-    }
+        // if (true)// crashes into obstacle layer)
+        // {
+        //     AkSoundEngine.SetState("MainStateGroup", "WallCrash");
+        //     // velocity
+        // }
+        // else
+        // {
+        //     AkSoundEngine.SetState("MainStateGroup", "Idle");
+        // }
+	}
 }

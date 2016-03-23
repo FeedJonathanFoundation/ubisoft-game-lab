@@ -8,21 +8,11 @@
 						<RandomSequenceContainer Name="Detection" ID="{C1220C9E-DF63-4DDD-8381-409D9D3326F5}" ShortID="251148576">
 							<PropertyList>
 								<Property Name="BelowThresholdBehavior" Type="int16" Value="1"/>
-								<Property Name="GameAuxSendVolume" Type="Real64">
-									<ValueList>
-										<Value>-1</Value>
-									</ValueList>
-								</Property>
 								<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
 								<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
 								<Property Name="MaxSoundPerInstance" Type="int16">
 									<ValueList>
 										<Value>1</Value>
-									</ValueList>
-								</Property>
-								<Property Name="OutputBusLowpass" Type="int16">
-									<ValueList>
-										<Value>5</Value>
 									</ValueList>
 								</Property>
 								<Property Name="UseMaxSoundPerInstance" Type="bool">
@@ -180,31 +170,11 @@
 										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
 									</StateGroupInfo>
 								</StateGroupList>
-								<CustomStateList>
-									<CustomState>
-										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
-										<State Name="Custom State" ID="{F9EBCE8B-5702-4F1E-B561-85BAF7478D4B}" ShortID="431540175">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-								</CustomStateList>
 							</StateInfo>
 						</RandomSequenceContainer>
 						<RandomSequenceContainer Name="Light Orb Pickup" ID="{8D2B665D-5741-474C-86A3-A55C9CB924FA}" ShortID="146330792">
 							<PropertyList>
-								<Property Name="DivergenceCenter" Type="int32">
-									<ValueList>
-										<Value>11</Value>
-									</ValueList>
-								</Property>
 								<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
-								<Property Name="OutputBusVolume" Type="Real64">
-									<ValueList>
-										<Value>5</Value>
-									</ValueList>
-								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
 										<Value>3</Value>
@@ -284,25 +254,10 @@
 										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
 									</StateGroupInfo>
 								</StateGroupList>
-								<CustomStateList>
-									<CustomState>
-										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
-										<State Name="Custom State" ID="{61EAB4F2-0CF9-42B0-8828-4C98FCD50386}" ShortID="393568765">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-								</CustomStateList>
 							</StateInfo>
 						</RandomSequenceContainer>
 						<RandomSequenceContainer Name="Death Sequence" ID="{6A09433B-5A58-4E93-9C1A-B86E715FF4DD}" ShortID="1052618836">
 							<PropertyList>
-								<Property Name="GameAuxSendVolume" Type="Real64">
-									<ValueList>
-										<Value>2</Value>
-									</ValueList>
-								</Property>
 								<Property Name="PlayMechanismSpecialTransitions" Type="bool" Value="True"/>
 								<Property Name="PlayMechanismSpecialTransitionsType" Type="int16" Value="1"/>
 								<Property Name="PlayMechanismSpecialTransitionsValue" Type="Real64" Value="3"/>
@@ -378,11 +333,6 @@
 						<RandomSequenceContainer Name="Eat Fish" ID="{B56821F8-CE33-446E-BCF4-83DCEB98C25D}" ShortID="839223735">
 							<PropertyList>
 								<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
-								<Property Name="Lowpass" Type="int16">
-									<ValueList>
-										<Value>1</Value>
-									</ValueList>
-								</Property>
 								<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
 								<Property Name="MaxSoundPerInstance" Type="int16">
 									<ValueList>
@@ -390,17 +340,7 @@
 									</ValueList>
 								</Property>
 								<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
-								<Property Name="OutputBusLowpass" Type="int16">
-									<ValueList>
-										<Value>6</Value>
-									</ValueList>
-								</Property>
 								<Property Name="OverrideMaxSoundInstance" Type="bool" Value="True"/>
-								<Property Name="Pitch" Type="int32">
-									<ValueList>
-										<Value>10</Value>
-									</ValueList>
-								</Property>
 								<Property Name="UseMaxSoundPerInstance" Type="bool">
 									<ValueList>
 										<Value>True</Value>
@@ -408,7 +348,7 @@
 								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>13</Value>
+										<Value>12</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -528,16 +468,6 @@
 										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
 									</StateGroupInfo>
 								</StateGroupList>
-								<CustomStateList>
-									<CustomState>
-										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
-										<State Name="Custom State" ID="{EB95F92F-190C-4CC1-812F-4D793BD4C72D}" ShortID="1053826911">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-								</CustomStateList>
 							</StateInfo>
 						</RandomSequenceContainer>
 						<Sound Name="Engine Running Default" ID="{E0C55467-74EA-400D-8CC8-13F1E77B337C}" ShortID="474439331" Type="SoundFX">
@@ -608,6 +538,38 @@
 							</StateInfo>
 							<ActiveSourceList>
 								<ActiveSource Name="Engine Running Default" ID="{C40BDC12-264D-4BBC-AE8A-E32EF61FB46E}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Engine On" ID="{5AAE3391-82FE-4875-8DA6-6C5E548A6759}" ShortID="915175920" Type="SoundFX">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+								<Property Name="Pitch" Type="int32">
+									<ValueList>
+										<Value>-660</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>3</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Engine On" ID="{03512A76-DF28-4C91-AE60-95BD0ACA40EE}" ShortID="843432777">
+									<Language>SFX</Language>
+									<AudioFile>Final Sound Assets\Engine On.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Engine On" ID="{03512A76-DF28-4C91-AE60-95BD0ACA40EE}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 						<Sound Name="Movement is true" ID="{9305CA1F-89A4-4EEF-A96F-9519BB641955}" ShortID="711778126" Type="SoundFX">
@@ -704,7 +666,7 @@
 								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>2</Value>
+										<Value>7</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -733,16 +695,6 @@
 										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
 									</StateGroupInfo>
 								</StateGroupList>
-								<CustomStateList>
-									<CustomState>
-										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
-										<State Name="Custom State" ID="{364D43D3-0D61-4ADF-8330-CEA0CCFE791F}" ShortID="257710534">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-								</CustomStateList>
 							</StateInfo>
 							<ActiveSourceList>
 								<ActiveSource Name="Evade A" ID="{4A71E669-2EEF-4F16-B98F-60D78CCE87C5}" Platform="Linked"/>
@@ -812,7 +764,7 @@
 							<PropertyList>
 								<Property Name="Lowpass" Type="int16">
 									<ValueList>
-										<Value>5</Value>
+										<Value>2</Value>
 									</ValueList>
 								</Property>
 								<Property Name="Pitch" Type="int32">
@@ -833,7 +785,7 @@
 								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>7</Value>
+										<Value>-2</Value>
 									</ValueList>
 									<RTPCList>
 										<RTPC Name="" ID="{7EB30D44-3BF2-4885-B4F6-5968B31B9B3C}" ShortID="654558048">
@@ -877,45 +829,12 @@
 									<AudioFile>Final Sound Assets\Wall collision.wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
-							<StateInfo>
-								<StateGroupList>
-									<StateGroupInfo>
-										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
-									</StateGroupInfo>
-								</StateGroupList>
-								<CustomStateList>
-									<CustomState>
-										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
-										<State Name="Custom State" ID="{DDE58F22-17C9-456C-AD5A-F69C41C23F08}" ShortID="47334983">
-											<PropertyList>
-												<Property Name="Lowpass" Type="int16" Value="-77"/>
-												<Property Name="Volume" Type="Real64" Value="-10"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-								</CustomStateList>
-							</StateInfo>
 							<ActiveSourceList>
 								<ActiveSource Name="Wall collision" ID="{036BC886-1A66-484A-9FFF-E7E7819FFBD2}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 						<RandomSequenceContainer Name="LightsToToggle" ID="{82378AB0-1D80-4EBA-8A2E-61A04B7C0A23}" ShortID="614641975">
 							<PropertyList>
-								<Property Name="OutputBusHighpass" Type="int16">
-									<ValueList>
-										<Value>3</Value>
-									</ValueList>
-								</Property>
-								<Property Name="OutputBusLowpass" Type="int16">
-									<ValueList>
-										<Value>3</Value>
-									</ValueList>
-								</Property>
-								<Property Name="OutputBusVolume" Type="Real64">
-									<ValueList>
-										<Value>10</Value>
-									</ValueList>
-								</Property>
 								<Property Name="RandomOrSequence" Type="int16" Value="0"/>
 							</PropertyList>
 							<ReferenceList>
@@ -967,13 +886,6 @@
 									</ActiveSourceList>
 								</Sound>
 								<Sound Name="Light On" ID="{CB9249BF-868F-4AEC-AB4D-50CB858B504F}" ShortID="627324053" Type="SoundFX">
-									<PropertyList>
-										<Property Name="Volume" Type="Real64">
-											<ValueList>
-												<Value>-7</Value>
-											</ValueList>
-										</Property>
-									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
@@ -1007,46 +919,12 @@
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>
-							<StateInfo>
-								<StateGroupList>
-									<StateGroupInfo>
-										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
-									</StateGroupInfo>
-								</StateGroupList>
-								<CustomStateList>
-									<CustomState>
-										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
-										<State Name="Custom State" ID="{F5C59B75-ACA8-44E3-92B1-A021983A2F10}" ShortID="876796097">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-								</CustomStateList>
-							</StateInfo>
 							<Playlist>
 								<ItemRef Name="Light On" ID="{CB9249BF-868F-4AEC-AB4D-50CB858B504F}"/>
 								<ItemRef Name="Light Off" ID="{1E572DB8-FEF5-4BDB-B388-DC1E85BEC2A1}"/>
 							</Playlist>
 						</RandomSequenceContainer>
-						<Sound Name="Low Energy" ID="{97908169-BD96-4E06-9DED-272C9565719F}" ShortID="142316025" Type="SoundFX">
-							<PropertyList>
-								<Property Name="Lowpass" Type="int16">
-									<ValueList>
-										<Value>51</Value>
-									</ValueList>
-								</Property>
-								<Property Name="OutputBusVolume" Type="Real64">
-									<ValueList>
-										<Value>-3</Value>
-									</ValueList>
-								</Property>
-								<Property Name="Pitch" Type="int32">
-									<ValueList>
-										<Value>-1210</Value>
-									</ValueList>
-								</Property>
-							</PropertyList>
+						<Sound Name="Flare A" ID="{4736CD2A-2637-4651-A627-A4F1C8E0B001}" ShortID="545821464" Type="SoundFX">
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
@@ -1056,167 +934,20 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="Low Energy" ID="{2ABD8159-883A-4DFD-8E29-B1D10C623FF6}" ShortID="112513681">
+								<AudioFileSource Name="Flare A" ID="{F6CE7850-D74C-4267-9C8E-FED08E35F886}" ShortID="212887263">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="0.0824711681547619"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="2.80401971726191"/>
+										<Property Name="LoopEnd" Type="Real64" Value="7.38460416666667"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimBegin" Type="Real64" Value="0.0824711681547619"/>
+									</PropertyList>
 									<Language>SFX</Language>
-									<AudioFile>Low Energy.wav</AudioFile>
-								</AudioFileSource>
-							</ChildrenList>
-							<StateInfo>
-								<StateGroupList>
-									<StateGroupInfo>
-										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
-									</StateGroupInfo>
-								</StateGroupList>
-								<CustomStateList>
-									<CustomState>
-										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
-										<State Name="Custom State" ID="{B9719F73-9EC7-4E71-8BD6-261A3FEF4279}" ShortID="899948430">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-								</CustomStateList>
-							</StateInfo>
-							<ActiveSourceList>
-								<ActiveSource Name="Low Energy" ID="{2ABD8159-883A-4DFD-8E29-B1D10C623FF6}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
-						<RandomSequenceContainer Name="Jellyfish Attacking" ID="{BBBBC1DB-1622-4887-B0E6-27F735A1B04C}" ShortID="144486800">
-							<PropertyList>
-								<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
-								<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
-								<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
-								<Property Name="RandomOrSequence" Type="int16" Value="0"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<Sound Name="Jellyfish Attack A" ID="{3BB5EA4F-7E81-4631-BC0E-63E377EF205D}" ShortID="179608829" Type="SoundFX">
-									<ReferenceList>
-										<Reference Name="Conversion">
-											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
-										</Reference>
-										<Reference Name="OutputBus">
-											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
-										</Reference>
-									</ReferenceList>
-									<ChildrenList>
-										<AudioFileSource Name="Jellyfish Attack A" ID="{5D834336-0475-418F-A105-3DF0B202BF6A}" ShortID="28599005">
-											<Language>SFX</Language>
-											<AudioFile>Jellyfish Attack A.wav</AudioFile>
-										</AudioFileSource>
-									</ChildrenList>
-									<ActiveSourceList>
-										<ActiveSource Name="Jellyfish Attack A" ID="{5D834336-0475-418F-A105-3DF0B202BF6A}" Platform="Linked"/>
-									</ActiveSourceList>
-								</Sound>
-								<Sound Name="Jellyfish Attack B" ID="{170401FB-9C5A-4CDF-9029-E5269D4AF5DF}" ShortID="650408286" Type="SoundFX">
-									<ReferenceList>
-										<Reference Name="Conversion">
-											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
-										</Reference>
-										<Reference Name="OutputBus">
-											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
-										</Reference>
-									</ReferenceList>
-									<ChildrenList>
-										<AudioFileSource Name="Jellyfish Attack B" ID="{E96B384B-DF00-4D69-8CC8-812AADD97A2C}" ShortID="500781425">
-											<Language>SFX</Language>
-											<AudioFile>Jellyfish Attack B.wav</AudioFile>
-										</AudioFileSource>
-									</ChildrenList>
-									<ActiveSourceList>
-										<ActiveSource Name="Jellyfish Attack B" ID="{E96B384B-DF00-4D69-8CC8-812AADD97A2C}" Platform="Linked"/>
-									</ActiveSourceList>
-								</Sound>
-							</ChildrenList>
-							<Playlist>
-								<ItemRef Name="Jellyfish Attack A" ID="{3BB5EA4F-7E81-4631-BC0E-63E377EF205D}"/>
-								<ItemRef Name="Jellyfish Attack B" ID="{170401FB-9C5A-4CDF-9029-E5269D4AF5DF}"/>
-							</Playlist>
-						</RandomSequenceContainer>
-						<Sound Name="Flare C" ID="{0C811697-24BE-4249-9C36-1656EB0CD55F}" ShortID="104406145" Type="SoundFX">
-							<PropertyList>
-								<Property Name="Lowpass" Type="int16">
-									<RTPCList>
-										<RTPC Name="" ID="{BBECD2BB-756D-4FFC-BCFD-52094F2CEFDE}" ShortID="553429684">
-											<ReferenceList>
-												<Reference Name="ControlInput">
-													<ObjectRef Name="flareDistance" ID="{FF782539-1CD0-43EB-9C6C-613A3A74B964}" WorkUnitID="{D4031392-9BD4-4D82-80D3-FD9F5DA62B75}"/>
-												</Reference>
-											</ReferenceList>
-											<Curve Name="" ID="{FB741CA7-8676-4611-8173-142C6A195002}">
-												<PropertyList>
-													<Property Name="Flags" Type="int32" Value="65537"/>
-												</PropertyList>
-												<PointList>
-													<Point>
-														<XPos>0</XPos>
-														<YPos>0</YPos>
-														<Flags>5</Flags>
-													</Point>
-													<Point>
-														<XPos>100</XPos>
-														<YPos>34</YPos>
-														<Flags>37</Flags>
-													</Point>
-												</PointList>
-											</Curve>
-										</RTPC>
-									</RTPCList>
-								</Property>
-								<Property Name="Volume" Type="Real64">
-									<RTPCList>
-										<RTPC Name="" ID="{A7FB6A0C-44B6-458D-9978-B74D545A7A1E}" ShortID="1005973396">
-											<ReferenceList>
-												<Reference Name="ControlInput">
-													<ObjectRef Name="flareDistance" ID="{FF782539-1CD0-43EB-9C6C-613A3A74B964}" WorkUnitID="{D4031392-9BD4-4D82-80D3-FD9F5DA62B75}"/>
-												</Reference>
-											</ReferenceList>
-											<Curve Name="" ID="{70850309-22E8-433B-ADFC-EEC651B9A033}">
-												<PropertyList>
-													<Property Name="Flags" Type="int32" Value="3"/>
-												</PropertyList>
-												<PointList>
-													<Point>
-														<XPos>0</XPos>
-														<YPos>6.88129</YPos>
-														<Flags>5</Flags>
-													</Point>
-													<Point>
-														<XPos>100</XPos>
-														<YPos>-2.44432</YPos>
-														<Flags>37</Flags>
-													</Point>
-												</PointList>
-											</Curve>
-										</RTPC>
-									</RTPCList>
-								</Property>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="Flare C" ID="{7DBBE902-14C8-49BF-B0D1-CC4EC651594E}" ShortID="385392149">
-									<Language>SFX</Language>
-									<AudioFile>Flare C.wav</AudioFile>
+									<AudioFile>Flare A.wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="Flare C" ID="{7DBBE902-14C8-49BF-B0D1-CC4EC651594E}" Platform="Linked"/>
+								<ActiveSource Name="Flare A" ID="{F6CE7850-D74C-4267-9C8E-FED08E35F886}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>
@@ -1286,6 +1017,11 @@
 										</ModifierInfo>
 									</ModifierList>
 								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-2</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -1306,35 +1042,8 @@
 									<StateGroupInfo>
 										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
 									</StateGroupInfo>
-									<StateGroupInfo>
-										<StateGroupRef Name="IMAmb2" ID="{0E5087CE-4389-4980-A89A-875B1E453D01}"/>
-									</StateGroupInfo>
 								</StateGroupList>
 								<CustomStateList>
-									<CustomState>
-										<StateRef Name="CP1" ID="{BE168014-0F8E-48D6-B505-D2988E3B9914}"/>
-										<State Name="Custom State" ID="{D45CC1ED-46C3-4CC9-B0B2-3951B8227DC1}" ShortID="91676831">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-									<CustomState>
-										<StateRef Name="CP3" ID="{4E66AA44-586A-44E9-A672-72CF7D455790}"/>
-										<State Name="Custom State" ID="{966A208E-FE7E-47ED-AD8D-7CF85BB574E2}" ShortID="800632480">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-									<CustomState>
-										<StateRef Name="CP2" ID="{9EBC449C-E089-4052-B34E-8B50A1CA48BE}"/>
-										<State Name="Custom State" ID="{194E5A1D-3A57-498D-AD69-9DD6314676BB}" ShortID="534219027">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
 									<CustomState>
 										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
 										<State Name="Custom State" ID="{95C34116-D434-48B7-BC0D-91E3B65560B3}" ShortID="939754314">
@@ -1414,27 +1123,8 @@
 									<StateGroupInfo>
 										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
 									</StateGroupInfo>
-									<StateGroupInfo>
-										<StateGroupRef Name="IMAmb2" ID="{0E5087CE-4389-4980-A89A-875B1E453D01}"/>
-									</StateGroupInfo>
 								</StateGroupList>
 								<CustomStateList>
-									<CustomState>
-										<StateRef Name="CP3" ID="{4E66AA44-586A-44E9-A672-72CF7D455790}"/>
-										<State Name="Custom State" ID="{38193C56-2E28-43F2-A717-F2E81E0A7401}" ShortID="216376707">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-									<CustomState>
-										<StateRef Name="CP2" ID="{9EBC449C-E089-4052-B34E-8B50A1CA48BE}"/>
-										<State Name="Custom State" ID="{139B9AF0-B98D-44B5-BC4A-E41FB8E3BC69}" ShortID="359330505">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
 									<CustomState>
 										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
 										<State Name="Custom State" ID="{862362C5-4DE8-46CA-9BD4-40CF76B5A839}" ShortID="990568790">
@@ -1452,11 +1142,6 @@
 						<Sound Name="Section 2 Ambient Deep layer" ID="{FEF2F84E-D115-4EA1-B752-33228005041E}" ShortID="719789334" Type="SoundFX">
 							<PropertyList>
 								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
-								<Property Name="Volume" Type="Real64">
-									<ValueList>
-										<Value>-2</Value>
-									</ValueList>
-								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -1477,19 +1162,8 @@
 									<StateGroupInfo>
 										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
 									</StateGroupInfo>
-									<StateGroupInfo>
-										<StateGroupRef Name="IMAmb2" ID="{0E5087CE-4389-4980-A89A-875B1E453D01}"/>
-									</StateGroupInfo>
 								</StateGroupList>
 								<CustomStateList>
-									<CustomState>
-										<StateRef Name="CP1" ID="{BE168014-0F8E-48D6-B505-D2988E3B9914}"/>
-										<State Name="Custom State" ID="{D60F07CB-CB70-42D2-B01A-A7641EB75B7D}" ShortID="515715389">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
 									<CustomState>
 										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
 										<State Name="Custom State" ID="{41FD44C5-AFBA-41EA-BA46-8850513333EE}" ShortID="290800598">
@@ -1507,11 +1181,6 @@
 						<Sound Name="Section 2 Ambient Volcano" ID="{A8BA1103-FA82-4AA0-8650-3D9110528E0C}" ShortID="103418413" Type="SoundFX">
 							<PropertyList>
 								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
-								<Property Name="OutputBusLowpass" Type="int16">
-									<ValueList>
-										<Value>2</Value>
-									</ValueList>
-								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -1532,27 +1201,8 @@
 									<StateGroupInfo>
 										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
 									</StateGroupInfo>
-									<StateGroupInfo>
-										<StateGroupRef Name="IMAmb2" ID="{0E5087CE-4389-4980-A89A-875B1E453D01}"/>
-									</StateGroupInfo>
 								</StateGroupList>
 								<CustomStateList>
-									<CustomState>
-										<StateRef Name="CP1" ID="{BE168014-0F8E-48D6-B505-D2988E3B9914}"/>
-										<State Name="Custom State" ID="{F8E74793-7F1E-4530-A840-5D52DFA2478D}" ShortID="79023227">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-									<CustomState>
-										<StateRef Name="CP2" ID="{9EBC449C-E089-4052-B34E-8B50A1CA48BE}"/>
-										<State Name="Custom State" ID="{C1D82E2B-5D1C-4769-8BD0-D19F4158ED05}" ShortID="990243665">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
 									<CustomState>
 										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
 										<State Name="Custom State" ID="{1A6F5318-730F-4193-8E1F-BBE14C4B3B00}" ShortID="685065967">
@@ -1568,9 +1218,6 @@
 							</ActiveSourceList>
 						</Sound>
 						<Sound Name="Jellyfish Ambient Crackle" ID="{ECDCE305-6FD5-4408-93F1-A26753AD8E26}" ShortID="340614488" Type="SoundFX">
-							<PropertyList>
-								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
-							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
@@ -1585,53 +1232,46 @@
 									<AudioFile>Jellyfish Ambient Crackle.wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
-							<StateInfo>
-								<StateGroupList>
-									<StateGroupInfo>
-										<StateGroupRef Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}"/>
-									</StateGroupInfo>
-									<StateGroupInfo>
-										<StateGroupRef Name="IMAmb2" ID="{0E5087CE-4389-4980-A89A-875B1E453D01}"/>
-									</StateGroupInfo>
-								</StateGroupList>
-								<CustomStateList>
-									<CustomState>
-										<StateRef Name="CP1" ID="{BE168014-0F8E-48D6-B505-D2988E3B9914}"/>
-										<State Name="Custom State" ID="{998CC73A-9296-4EFF-9C62-EFEAE6493AB8}" ShortID="369675027">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-									<CustomState>
-										<StateRef Name="CP3" ID="{4E66AA44-586A-44E9-A672-72CF7D455790}"/>
-										<State Name="Custom State" ID="{AA50200C-EFC6-4CA8-B8B2-5EAB79E2405E}" ShortID="198362103">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-									<CustomState>
-										<StateRef Name="CP2" ID="{9EBC449C-E089-4052-B34E-8B50A1CA48BE}"/>
-										<State Name="Custom State" ID="{46150AB0-5B0A-455B-89DF-E1CFAE43979E}" ShortID="818181818">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-96"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-									<CustomState>
-										<StateRef Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
-										<State Name="Custom State" ID="{A33E4D3E-5026-4D91-B336-57F99EF1B251}" ShortID="803097982">
-											<PropertyList>
-												<Property Name="Lowpass" Type="int16" Value="-54"/>
-												<Property Name="Volume" Type="Real64" Value="-18"/>
-											</PropertyList>
-										</State>
-									</CustomState>
-								</CustomStateList>
-							</StateInfo>
 							<ActiveSourceList>
 								<ActiveSource Name="Jellyfish Ambient Crackle" ID="{BD7934FB-E7A0-4D9F-BAD8-00EBAB29375F}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Jellyfish Attack A" ID="{3BB5EA4F-7E81-4631-BC0E-63E377EF205D}" ShortID="179608829" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Jellyfish Attack A" ID="{5D834336-0475-418F-A105-3DF0B202BF6A}" ShortID="28599005">
+									<Language>SFX</Language>
+									<AudioFile>Jellyfish Attack A.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Jellyfish Attack A" ID="{5D834336-0475-418F-A105-3DF0B202BF6A}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Jellyfish Attack B" ID="{170401FB-9C5A-4CDF-9029-E5269D4AF5DF}" ShortID="650408286" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Jellyfish Attack B" ID="{E96B384B-DF00-4D69-8CC8-812AADD97A2C}" ShortID="500781425">
+									<Language>SFX</Language>
+									<AudioFile>Jellyfish Attack B.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Jellyfish Attack B" ID="{E96B384B-DF00-4D69-8CC8-812AADD97A2C}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>

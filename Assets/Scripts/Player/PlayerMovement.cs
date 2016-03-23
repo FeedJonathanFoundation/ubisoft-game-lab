@@ -39,11 +39,18 @@ public class PlayerMovement
     private GameObject jetFuelEffect;
 
     private float defaultDrag;
+    private bool thrusting;  // True if the player is holding down the thrusting button
 
     /** Caches the player's components */
     private Transform transform;
     private Rigidbody rigidbody;
     private LightEnergy lightEnergy;
+    
+    /** Called when the player's thrusters are activated or deactivated. 
+    public delegate void OnPropulsionStartHandler();
+    public delegate void OnPropulsionEndHandler();
+    public event OnPropulsionStartHandler OnPropulsionStart = delegate {};
+    public event OnPropulsionEndHandler OnPropulsionEnd = delegate {}; */
 
     private float rotationSpeed;
 
@@ -120,6 +127,11 @@ public class PlayerMovement
             em.enabled = true;
         }
         //jetFuelEffect.enableEmission = true;
+        
+        thrusting = true;
+        
+        // Inform subscribers that the player activated his thrusters
+        //OnPropulsionStart();
     }
 
     public void Propulse(Vector2 direction)
@@ -158,6 +170,11 @@ public class PlayerMovement
             var em = particles.emission;
             em.enabled = false;
         }
+        
+        thrusting = false;
+        
+        // Inform subscribers that the player deactivated his thrusters
+        //OnPropulsionEnd();
     }
 
     /// <summary>
@@ -166,5 +183,13 @@ public class PlayerMovement
     public void Brake(float strength)
     {
         rigidbody.drag = Mathf.Lerp(defaultDrag, brakeDrag, strength);
+    }
+    
+    /// <summary>
+    /// If true, the player's thrusters are turned on
+    /// </summary>
+    public bool Thrusting
+    {
+        get { return thrusting; }
     }
 }

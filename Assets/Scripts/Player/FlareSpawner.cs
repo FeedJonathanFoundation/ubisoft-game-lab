@@ -31,13 +31,7 @@ public class FlareSpawner : MonoBehaviour
     private ControllerRumble controllerRumble;  // Caches the component that rumbles the controller
     private new Rigidbody rigidbody;    
     private SmoothCamera smoothCamera;
-
-    private float flareDistance = 0f;
-
-    private Transform player;
-
-    private GameObject flare;
-
+	
 
     void Start()
     {
@@ -45,7 +39,6 @@ public class FlareSpawner : MonoBehaviour
         this.lightSource = GetComponent<LightSource>();
         this.controllerRumble = GetComponent<ControllerRumble>();
         this.rigidbody = GetComponent<Rigidbody>();
-        player = GameObject.FindWithTag("Player").transform;
         GameObject mainCamera = GameObject.Find("Main Camera");
         if (mainCamera != null)
         {
@@ -55,36 +48,32 @@ public class FlareSpawner : MonoBehaviour
 
     void Update() 
     {
-        if (Input.GetButtonDown("UseFlare"))
+        if ((timer += Time.deltaTime) >= cooldownTime)
         {
-            float cost = flareEnergyCost * flareCostPercentage;
-            if (((timer += Time.deltaTime) >= cooldownTime) && (lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost)))
+            if (Input.GetButtonDown("UseFlare"))
             {
-                flare = (GameObject)Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
-                lightSource.LightEnergy.Deplete(flareEnergyCost);
-                // Apply recoil in the opposite direction the flare was shot
-                rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
-                controllerRumble.ShotFlare();   // Rumble the controller
-                timer = 0.0f;
-                
-                AkSoundEngine.PostEvent("Flare", this.gameObject);
-                
-                //reset all values for the zoom when ever a player fires a flare
-                if (smoothCamera != null)
+                float cost = flareEnergyCost * flareCostPercentage;
+
+                if (lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost))
                 {
-                    smoothCamera.FlareShoot();
-                    smoothCamera.ResetTimer();   
-                }                    
+                    Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
+                    lightSource.LightEnergy.Deplete(flareEnergyCost);
+                    // Apply recoil in the opposite direction the flare was shot
+                    rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
+                    controllerRumble.ShotFlare();   // Rumble the controller
+                    timer = 0.0f;
+                    
+                    AkSoundEngine.PostEvent("Flare", this.gameObject);
+                    // STELLA if eaten shut off
+
+                    //reset all values for the zoom when ever a player fires a flare
+                    if (smoothCamera != null)
+                    {
+                        smoothCamera.FlareShoot();
+                        smoothCamera.ResetTimer();   
+                    }                    
+                }
             }
-            else
-            {
-                AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
-            }
-        }
-        if (flare != null)
-        {
-            flareDistance = Vector3.Distance(flare.transform.position, player.position);
-            AkSoundEngine.SetRTPCValue("flareDistance", flareDistance);
         }
     }
 }

@@ -37,6 +37,7 @@ public class Seek : NPCActionable
                 {
                     steerable.AddSeekForce(targetTransform.position, strengthMultiplier);
                     AkSoundEngine.PostEvent("Fish_Detection", targetTransform.gameObject);
+                    // STELLA - only for the first time fish detects
                 }
             }
             else
