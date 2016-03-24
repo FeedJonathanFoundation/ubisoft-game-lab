@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canAbsorb: 0
-  playerWillAlwaysAbsorb: 0
+  playerWillAlwaysAbsorb: 1
   absorptionRate: 15
   defaultEnergy: 10
   infiniteEnergy: 0
@@ -211,7 +211,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.2
   maxIntensity: 1
+  minIntensity: 0
   lightToIntensityRatio: 1
+  rangeChangeSpeed: 0.5
+  intensityChangeSpeed: 0.5
 --- !u!114 &11472480
 MonoBehaviour:
   m_ObjectHideFlags: 1
