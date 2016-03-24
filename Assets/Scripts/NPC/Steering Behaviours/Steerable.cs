@@ -637,7 +637,6 @@ public class Steerable : MonoBehaviour
         CheckDirty ();
         
         Vector2 desiredVelocity = Vector2.zero;
-        bool hasWaypoint;
         float closestDistanceWaypoint = -1.00f;
         //checks all the checkpoints and saves the closest one
         foreach(Transform child in wpList.transform)
@@ -649,10 +648,10 @@ public class Steerable : MonoBehaviour
                 desiredVelocity = ((Vector2)child.position - (Vector2)bigFish.position).normalized;
             }
         }
-        
+        Debug.Log(closestDistanceWaypoint);
         if(closestDistanceWaypoint <= slowingRadius && closestDistanceWaypoint > 0)
         {
-            desiredVelocity = Vector2.zero;
+            return Vector2.zero;
         }
         
         // Calculate the velocity at which this object should move to reach his target
