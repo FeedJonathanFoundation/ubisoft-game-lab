@@ -61,6 +61,27 @@ public class ObjectPooler : MonoBehaviour
         return null;
     }
     
+    public void ResetObjectsLights()
+    {
+        for (int i = 0; i < pooledObjects.Length; i++)
+        {
+            for (int j = 0; j < pool[i].Count; j++)
+            {
+                GameObject current = pool[i][j];
+                ResetObjectLight(current);
+            }
+        }
+    }
+    
+    public void ResetObjectLight(GameObject current)
+    {
+        LightSource light = current.GetComponent<LightSource>();
+        if (light != null)
+        {
+            light.LightEnergy.Add(light.DefaultEnergy);
+        }
+    }
+    
     public void ResetPool()
     {
         for (int i = 0; i < pooledObjects.Length; i++)
@@ -71,6 +92,10 @@ public class ObjectPooler : MonoBehaviour
                 if (current.activeSelf == true)
                 {
                     current.SetActive(false);
+                }
+                else
+                {
+                    ResetObjectLight(current);
                 }
             }
         }

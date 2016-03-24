@@ -613,6 +613,16 @@ public class Player : LightSource
             }
             pickup.SetActive(true);
         }
+
+        GameObject[] spawnVolumes = GameObject.FindGameObjectsWithTag("SpawnVolume");
+        foreach (GameObject spawnVolume in spawnVolumes)
+        {
+            SpawnVolume current = spawnVolume.GetComponent<SpawnVolume>();
+            if (current != null)
+            {
+                current.Reset();
+            }
+        }
     }
 
     /// <summary>
