@@ -175,6 +175,7 @@ public class Current : MonoBehaviour
         {
             if (rigidbody != null)
             {
+                AkSoundEngine.PostEvent("Current", this.gameObject);
                 Vector3 initialVelocity = rigidbody.velocity;
                 rigidbody.AddForce(-initialVelocity);
                 rigidbody.AddForce(strength * direction);
