@@ -86,6 +86,7 @@ public class ObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < pooledObjects.Length; i++)
         {
+            if (pool == null) { Debug.Log("Object pool is null?"); return; }
             for (int j = 0; j < pool[i].Count; j++)
             {
                 GameObject current = pool[i][j];
