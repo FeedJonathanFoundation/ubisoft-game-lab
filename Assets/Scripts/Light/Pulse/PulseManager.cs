@@ -9,6 +9,7 @@ public class PulseManager : MonoBehaviour
     private Transform player;
     [SerializeField]
     private Transform target;
+    private float duration;
     public bool activePulse = true;
     Camera camera;
     private float x;
@@ -19,6 +20,7 @@ public class PulseManager : MonoBehaviour
     {
 	   camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
        player = GameObject.FindGameObjectWithTag("Player").transform;
+       duration = GameObject.Find("Pulse").GetComponent<ParticleSystem>().duration;
 	}
 	
 	void Update()  
@@ -26,8 +28,12 @@ public class PulseManager : MonoBehaviour
        // Find the position to place the pulse, as an intersection of the camera bounds and the player-target vector
        CalculatePosition();
        this.transform.position = new Vector3(x, y, camera.transform.position.z + 10);
-        // IMPLEMENT THIS:
-        // AkSoundEngine.PostEvent("Pulse", this.transform.gameObject);
+       InvokeRepeating("PulseSound", 0f, duration);
+    }
+    
+    void PulseSound()
+    {
+        AkSoundEngine.PostEvent("Pulse", this.transform.gameObject);
     }
     
     void CalculatePosition()
