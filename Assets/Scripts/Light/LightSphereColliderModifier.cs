@@ -28,7 +28,7 @@ public class LightSphereColliderModifier : LightEnergyListener
     
     public override void OnLightChanged(float currentLight)
     {
-        sphereCollider.radius = currentLight * lightToRadiusRatio;
+        //sphereCollider.radius = currentLight * lightToRadiusRatio;
     }
     
     void Update()
@@ -37,7 +37,7 @@ public class LightSphereColliderModifier : LightEnergyListener
         float colliderRadius = lightSource.LightEnergy.CurrentEnergy * lightToRadiusRatio;
         Vector3 colliderCenter = Vector2.zero;
         
-        Debug.Log("Detectable radius: " + colliderRadius);
+        //Debug.Log("Detectable radius: " + colliderRadius);
         
         if (player != null)
         {   
@@ -53,8 +53,8 @@ public class LightSphereColliderModifier : LightEnergyListener
             {
                 colliderRadius *= thrustRadiusMultiplier;
 
-                Debug.Log("AFTER THRUSTING Detectable radius: " + colliderRadius);
-                Debug.Log("PLAYER THRUSTING");
+                //Debug.Log("AFTER THRUSTING Detectable radius: " + colliderRadius);
+                //Debug.Log("PLAYER THRUSTING");
             }
         }
         
