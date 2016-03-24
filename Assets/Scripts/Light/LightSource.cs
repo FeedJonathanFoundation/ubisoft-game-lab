@@ -166,7 +166,7 @@ public class LightSource : MonoBehaviour
         if (canAbsorb && !otherLightSource.canAbsorb) { return true; }        
         
         // The player can always absorb a light source with LightSource.playerWillAlwaysAbsorb set to true
-        if (this is Player && otherLightSource.playerWillAlwaysAbsorb) { return true; }
+        if (this is Player && canAbsorb && otherLightSource.playerWillAlwaysAbsorb) { return true; }
 
         return false;        
     }
@@ -273,5 +273,10 @@ public class LightSource : MonoBehaviour
     {
         get { return this.infiniteEnergy; }
         set { this.infiniteEnergy = value; }
+    }
+    
+    public void SetCanAbsorbState(bool state)
+    {
+        canAbsorb = state;
     }
 }
