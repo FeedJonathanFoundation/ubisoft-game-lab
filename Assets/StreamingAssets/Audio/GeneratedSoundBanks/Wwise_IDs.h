@@ -25,6 +25,7 @@ namespace AK
         static const AkUniqueID FISH_DETECTION_OFF = 2133456085U;
         static const AkUniqueID FLARE = 1540219311U;
         static const AkUniqueID FLAREEAT = 3781033855U;
+        static const AkUniqueID JELLYFISHATTACK = 4023935017U;
         static const AkUniqueID LIGHT_ORB_PICKUP = 4066254940U;
         static const AkUniqueID LIGHTSTOTOGGLE = 3299248253U;
         static const AkUniqueID LOWENERGY = 1772229705U;
@@ -109,6 +110,7 @@ namespace AK
     namespace GAME_PARAMETERS
     {
         static const AkUniqueID FLAREDISTANCE = 108225470U;
+        static const AkUniqueID MASTERVOLUME = 2918011349U;
         static const AkUniqueID PLAYERVELOCITY = 2886637823U;
     } // namespace GAME_PARAMETERS
 
