@@ -162,6 +162,28 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="Checkpoint" ID="{A25C24D6-5089-4898-A497-3875BA54B7EF}">
+							<ChildrenList>
+								<Action Name="Play" ID="{C6A6F21F-5448-45BA-BC1D-355EE4D4E13F}" ShortID="80882563" Type="Play" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{CA902572-2D33-42F6-9B92-C0904E2F46B9}" Global="false">
+											<ObjectRef Name="Next Level B" ID="{66785A73-58E9-473E-84BC-88C1291816D4}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Explosion" ID="{07359DE6-F810-4E98-87AF-89A4AFEBD39E}">
+							<ChildrenList>
+								<Action Name="Play" ID="{99997582-B17C-426A-9538-63DD81BB6051}" ShortID="230517774" Type="Play" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{F7823B0C-1332-4F6B-A499-0665FA8DC00A}" Global="false">
+											<ObjectRef Name="Explosion A" ID="{8A196CB9-4934-4A21-900B-AF38EECFE427}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="NPC Effects" ID="{7BC7F326-4F72-4B1E-BDEB-A3FDCC5ED2F5}" ShortID="594739800">

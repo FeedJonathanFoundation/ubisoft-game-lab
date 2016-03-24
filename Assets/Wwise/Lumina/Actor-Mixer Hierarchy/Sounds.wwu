@@ -1219,6 +1219,101 @@
 								<ActiveSource Name="Flare C" ID="{7DBBE902-14C8-49BF-B0D1-CC4EC651594E}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
+						<Sound Name="Explosion A" ID="{8A196CB9-4934-4A21-900B-AF38EECFE427}" ShortID="666770476" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Explosion A" ID="{9FB59A1C-21CC-4FC7-9C41-2B14EF2CD110}" ShortID="119113391">
+									<Language>SFX</Language>
+									<AudioFile>Explosion A.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Explosion A" ID="{9FB59A1C-21CC-4FC7-9C41-2B14EF2CD110}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Next Level B" ID="{66785A73-58E9-473E-84BC-88C1291816D4}" ShortID="284518399" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Next Level B" ID="{CCDAC3EC-4258-44AB-B5FE-842DC2BCFCA5}" ShortID="957480573">
+									<Language>SFX</Language>
+									<AudioFile>Next Level B.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Next Level B" ID="{CCDAC3EC-4258-44AB-B5FE-842DC2BCFCA5}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Radar Bleep A" ID="{729EA742-CCB4-4333-ACEB-BF04594E7E84}" ShortID="526687603" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Radar Bleep A" ID="{A1ED3C01-0905-42C1-A792-63DBEB40F667}" ShortID="1059913816">
+									<Language>SFX</Language>
+									<AudioFile>Radar Bleep A.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Radar Bleep A" ID="{A1ED3C01-0905-42C1-A792-63DBEB40F667}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Radar Bleep B" ID="{EC8B450C-6F46-4E10-980B-DB34F6F5587F}" ShortID="670455594" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Radar Bleep B" ID="{21760FDB-88FB-4835-B3D8-97E1EE3E491C}" ShortID="881047398">
+									<Language>SFX</Language>
+									<AudioFile>Radar Bleep B.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Radar Bleep B" ID="{21760FDB-88FB-4835-B3D8-97E1EE3E491C}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Radar Bleep C" ID="{9A275031-E9BA-48F1-A723-00FB7C62F403}" ShortID="468623026" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Radar Bleep C" ID="{7CAFA7A4-4EC3-4D54-91C6-83385F429556}" ShortID="300398843">
+									<Language>SFX</Language>
+									<AudioFile>Radar Bleep C.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Radar Bleep C" ID="{7CAFA7A4-4EC3-4D54-91C6-83385F429556}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Themes" ID="{B49C0FA1-49C6-4A7B-892E-AB02226CAEED}" ShortID="368595034">

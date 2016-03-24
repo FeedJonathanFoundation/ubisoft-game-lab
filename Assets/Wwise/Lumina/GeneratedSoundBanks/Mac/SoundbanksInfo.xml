@@ -60,6 +60,7 @@
 				<Event Id="4095159976" Name="Ambient1"/>
 				<Event Id="4095159979" Name="Ambient2"/>
 				<Event Id="612075679" Name="Checkpoint"/>
+				<Event Id="2037989808" Name="Current"/>
 				<Event Id="782826392" Name="Default"/>
 				<Event Id="445985469" Name="Die"/>
 				<Event Id="781390793" Name="Eat"/>
@@ -67,10 +68,12 @@
 				<Event Id="3611228611" Name="Fish_Detection"/>
 				<Event Id="2133456085" Name="Fish_Detection_Off"/>
 				<Event Id="1540219311" Name="Flare"/>
+				<Event Id="3781033855" Name="FlareEat" MaxAttenuation="0.000000"/>
 				<Event Id="4066254940" Name="Light_Orb_Pickup"/>
 				<Event Id="3299248253" Name="LightsToToggle"/>
 				<Event Id="1772229705" Name="LowEnergy"/>
 				<Event Id="2129636626" Name="Movement" MaxAttenuation="0.000000"/>
+				<Event Id="1316273048" Name="Pulse"/>
 				<Event Id="2901629858" Name="WallCrash"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
@@ -85,6 +88,10 @@
 				<File Id="19074674" Language="SFX">
 					<ShortName>Final Sound Assets\Death (Hit).wav</ShortName>
 					<Path>SFX/Final Sound Assets/Death (Hit)_31FD0ACA.wem</Path>
+				</File>
+				<File Id="51653580" Language="SFX">
+					<ShortName>Ping Final.wav</ShortName>
+					<Path>SFX/Ping Final_9E69E797.wem</Path>
 				</File>
 				<File Id="53388115" Language="SFX">
 					<ShortName>Final Sound Assets\Light On.wav</ShortName>

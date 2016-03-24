@@ -16,6 +16,7 @@ namespace AK
         static const AkUniqueID AMBIENT1 = 4095159976U;
         static const AkUniqueID AMBIENT2 = 4095159979U;
         static const AkUniqueID CHECKPOINT = 612075679U;
+        static const AkUniqueID CURRENT = 2037989808U;
         static const AkUniqueID DEFAULT = 782826392U;
         static const AkUniqueID DIE = 445985469U;
         static const AkUniqueID EAT = 781390793U;
@@ -23,10 +24,12 @@ namespace AK
         static const AkUniqueID FISH_DETECTION = 3611228611U;
         static const AkUniqueID FISH_DETECTION_OFF = 2133456085U;
         static const AkUniqueID FLARE = 1540219311U;
+        static const AkUniqueID FLAREEAT = 3781033855U;
         static const AkUniqueID LIGHT_ORB_PICKUP = 4066254940U;
         static const AkUniqueID LIGHTSTOTOGGLE = 3299248253U;
         static const AkUniqueID LOWENERGY = 1772229705U;
         static const AkUniqueID MOVEMENT = 2129636626U;
+        static const AkUniqueID PULSE = 1316273048U;
         static const AkUniqueID WALLCRASH = 2901629858U;
     } // namespace EVENTS
 
