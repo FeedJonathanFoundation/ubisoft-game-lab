@@ -93,7 +93,7 @@ public class SoundStateChange : MonoBehaviour
                 break;
             case 4: // Beginning cave scene
                 AkSoundEngine.PostEvent("Ambient2Stop", this.gameObject);
-                AkSoundEngine.PostEvent("Ambient3", this.gameObject);
+                // AkSoundEngine.PostEvent("Ambient3", this.gameObject);
                 AkSoundEngine.SetState("IMAmb3", "Hunted");
                 break;
             case 5: // boss theme
