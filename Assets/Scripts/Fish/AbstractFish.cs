@@ -35,6 +35,7 @@ public abstract class AbstractFish : LightSource
     // Holds the steering behaviors of this fish
     private PriorityDictionary actions;
     protected Steerable steerable;
+    private bool dead;
     
     /// <summary>
     /// Initializes the fish object
@@ -75,11 +76,19 @@ public abstract class AbstractFish : LightSource
     {
         base.OnLightDepleted();
 
-        if (deathParticles != null)
+        if (!Dead)
         {
-            GameObject.Instantiate(deathParticles, transform.position,
-                                   transform.rotation);
+            if (deathParticles != null)
+            {
+                GameObject.Instantiate(deathParticles, transform.position,
+                                    transform.rotation);
+                                    
+                Debug.Log("FISH DEAD");
+            }
+            
+            Dead = true;
         }
+        
         this.gameObject.SetActive(false);
     }
 
@@ -311,5 +320,13 @@ public abstract class AbstractFish : LightSource
             steerable.WanderAngle = value;
         }
     } 
+    
+    /// <summary>
+    /// If true, the fish is dead
+    /// </summary>
+    public bool Dead
+    {
+        get; set;
+    }
 
 }

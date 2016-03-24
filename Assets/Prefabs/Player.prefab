@@ -2410,6 +2410,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.02
   maxIntensity: 0
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 0.5
+  intensityChangeSpeed: 0.5
 --- !u!114 &11422050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2467,6 +2469,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.02
   maxIntensity: 0
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 0.5
+  intensityChangeSpeed: 0.5
 --- !u!114 &11439878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2516,7 +2520,7 @@ MonoBehaviour:
   brakeDrag: 2
   rotationSpeed: 5
   jetFuelEffect: {fileID: 134692}
-  fishHitParticles: {fileID: 0}
+  fishHitParticles: {fileID: 19865272, guid: ed2d060d09dc3e04faf8ca40914cb8d6, type: 2}
   playerDeathParticles: {fileID: 19877132, guid: 71ac3ce401859634281fd1afa08277fc,
     type: 2}
   defaultLightStatus: 1
@@ -2526,6 +2530,7 @@ MonoBehaviour:
   timeToDeplete: 0
   lightToggleEnergyCost: 0
   minimalEnergyRestrictionToggleLights: 0
+  propulsionLightRange: 0.3
   lightToggleTime: 0.1
   disableCheckpoints: 1
   isSafe: 0
@@ -2585,6 +2590,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.02
   maxIntensity: 0
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 0.5
+  intensityChangeSpeed: 0.5
 --- !u!114 &11453628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2703,6 +2710,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.8
   maxIntensity: 0.6
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 0.5
+  intensityChangeSpeed: 0.5
 --- !u!114 &11485938
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2736,6 +2745,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.5
   maxIntensity: 0.9
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 0.5
+  intensityChangeSpeed: 0.5
 --- !u!114 &11495008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2750,6 +2761,8 @@ MonoBehaviour:
   lightToRangeRatio: 0.17
   maxIntensity: 0.3
   lightToIntensityRatio: 0.05
+  rangeChangeSpeed: 0.5
+  intensityChangeSpeed: 0.5
 --- !u!135 &13541488
 SphereCollider:
   m_ObjectHideFlags: 1
