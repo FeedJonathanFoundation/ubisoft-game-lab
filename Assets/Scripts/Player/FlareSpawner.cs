@@ -102,9 +102,10 @@ public class FlareSpawner : MonoBehaviour
             flareDistance = Vector3.Distance(flare.transform.position, player.position);
             AkSoundEngine.SetRTPCValue("flareDistance", flareDistance);
         }
-        else
-        {
-            AkSoundEngine.PostEvent("FlareEat", this.gameObject);
-        }
+    }
+    
+    public void EatFlare()
+    {
+        AkSoundEngine.PostEvent("FlareEat", this.gameObject);
     }
 }
