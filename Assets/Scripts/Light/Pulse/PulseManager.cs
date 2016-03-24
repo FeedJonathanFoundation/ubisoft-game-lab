@@ -9,27 +9,30 @@ public class PulseManager : MonoBehaviour
     private Transform player;
     [SerializeField]
     private Transform target;
-    private float duration;
+    private ParticleSystem particleSystem;
     public bool activePulse = true;
     Camera camera;
     private float x;
     private float y;
     private Vector3 lastPosition = Vector3.zero;
-
-    private int count = 0;
-    void Start()
+    private bool stopped = false;
+    
+	void Start()
     {
 	   camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
        player = GameObject.FindGameObjectWithTag("Player").transform;
-       duration = GameObject.Find("Pulse").GetComponent<ParticleSystem>().duration;
-       InvokeRepeating("PulseSound", 1f, duration);
-	}
+       particleSystem = GameObject.Find("Pulse").GetComponent<ParticleSystem>();
+       InvokeRepeating("PulseSound", 0f, particleSystem.duration);
+    }
 	
 	void Update()  
     {
        // Find the position to place the pulse, as an intersection of the camera bounds and the player-target vector
-       CalculatePosition();
-       this.transform.position = new Vector3(x, y, camera.transform.position.z + 10);
+       if (!stopped)
+       {
+            CalculatePosition();
+            this.transform.position = new Vector3(x, y, camera.transform.position.z + 10);   
+       }
     }
     
     void PulseSound()
@@ -57,35 +60,25 @@ public class PulseManager : MonoBehaviour
         Vector3 botRight = new Vector2(player.transform.position.x + 10, player.transform.position.y - 5.5f);
         Vector3 topRight = new Vector2(player.transform.position.x + 10, player.transform.position.y + 5.5f);
         
+        // Disable the particle system if checkpoint is within the screen bounds
+        if (!stopped && target.position.x <= botRight.x + 5 && target.position.x >= botLeft.x - 5 && target.position.y <= topRight.y + 5 && target.position.y >= botRight.y - 5)
+        {
+            particleSystem.Stop();
+            stopped = true;
+            return;
+        }
+        else if (stopped)
+        {
+            stopped = false;
+            particleSystem.Play();
+        }
+        
         // Find the closest two camera points to the target 
         Vector2 camPoint1 = botLeft;
         Vector2 camPoint2 = botRight;
         
-        // Target is on the left of the camera bounds
-        if (botLeft.x >= target.position.x)
-        {
-            Vector2 intersection = lineIntersection(camPoint1, camPoint2);
-            // Intersection is between botLeft and botRight
-            if (intersection.y <= botLeft.y + 1 && intersection.y >= botLeft.y - 1 && intersection.x >= botLeft.x && intersection.x <= botRight.x)
-            {
-                // Debug.Log("Intersection is at the bottom \n x-value: " + intersection.x + " y-value: " + intersection.y);
-                x = intersection.x;
-                y = intersection.y;
-                return;
-            }
-            else
-            {
-                // Intersection wasn't between botLeft and botRight, check botLeft and topLeft
-                // Debug.Log("Intersection is at the left side \n x-value: " + intersection.x + " y-value: " + intersection.y);
-                camPoint2 = topLeft;
-                intersection = lineIntersection(camPoint1, camPoint2);
-                x = intersection.x;
-                y = intersection.y;
-                return;    
-            }
-        }
         // Target is on the right of the camera bounds
-        else if (botRight.x <= target.position.x)
+        if (botRight.x <= target.position.x)
         {
             // Debug.Log("botRight: " + botRight + " topRight: " + topRight + "\n botLeft: " + botLeft + " topLeft: " + topLeft);
             Vector2 intersection = lineIntersection(camPoint1, camPoint2);
@@ -110,13 +103,36 @@ public class PulseManager : MonoBehaviour
             }
         }
         // Intersection is between the left and right points
-        else 
+        else if (botLeft.x <= target.position.x && botRight.x >= target.position.x)
         {
             Vector2 intersection = lineIntersection(camPoint1, camPoint2);
             x = intersection.x;
             y = intersection.y;
             // Debug.Log("Intersection is at the right \n x-value: " + intersection.x + " y-value: " + intersection.y);
             return;
+        }
+        // Target is on the left of the camera bounds
+        else if (botLeft.x >= target.position.x)
+        {
+            Vector2 intersection = lineIntersection(camPoint1, camPoint2);
+            // Intersection is between botLeft and botRight
+            if (intersection.y <= botLeft.y + 1 && intersection.y >= botLeft.y - 1 && intersection.x >= botLeft.x && intersection.x <= botRight.x)
+            {
+                // Debug.Log("Intersection is at the bottom \n x-value: " + intersection.x + " y-value: " + intersection.y);
+                x = intersection.x;
+                y = intersection.y;
+                return;
+            }
+            else
+            {
+                // Intersection wasn't between botLeft and botRight, check botLeft and topLeft
+                // Debug.Log("Intersection is at the left side \n x-value: " + intersection.x + " y-value: " + intersection.y);
+                camPoint2 = topLeft;
+                intersection = lineIntersection(camPoint1, camPoint2);
+                x = intersection.x;
+                y = intersection.y;
+                return;    
+            }
         }
     }
     
