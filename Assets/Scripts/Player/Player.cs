@@ -230,11 +230,15 @@ public class Player : LightSource
         //     gameOverCanvas = GameObject.Instantiate(gameOverCanvasPrefab);
         //     gameOverCanvas.SetActive(false);
         // }
-        
+        if (gameOverCanvas == null)
+        {
+            gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
+        }
         if (gameOverCanvas.activeSelf == true && !isDead)
         {
             gameOverCanvas.SetActive(false);
         }
+        
 
         playerVelocity = (int)this.Rigidbody.velocity.magnitude;
         AkSoundEngine.SetRTPCValue("playerVelocity", playerVelocity);
