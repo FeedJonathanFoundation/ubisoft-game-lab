@@ -41,7 +41,7 @@ public class Current : MonoBehaviour
     void Start()
     {
         rigidbodies = new List<Rigidbody>();
-        GameObject mainCamera = GameObject.Find("Main Camera");
+        GameObject mainCamera = GameObject.FindWithTag("MainCamera");
         if (mainCamera != null)
         {
             this.smoothCamera = mainCamera.GetComponent<SmoothCamera>();
@@ -93,7 +93,8 @@ public class Current : MonoBehaviour
     {
         if (!particleSystem)
         {
-            foreach (Transform child in smoothCamera.GetComponentInChildren<Transform>())
+            if (smoothCamera == null) { return; }
+            foreach (Transform child in smoothCamera.gameObject.GetComponentsInChildren<Transform>())
             {
                 //Debug.Log(child.name +  "==" + particleDirection);
                 if (child.name == particleDirection)
