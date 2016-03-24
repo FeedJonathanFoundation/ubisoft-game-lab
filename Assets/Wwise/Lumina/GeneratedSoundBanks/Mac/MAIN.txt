@@ -14,6 +14,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	3299248253	LightsToToggle			\Default Work Unit\Player Effects\LightsToToggle	
 	3611228611	Fish_Detection			\Default Work Unit\NPC Effects\Fish_Detection	
 	3781033855	FlareEat			\Default Work Unit\Player Effects\FlareEat	
+	3799923489	StopJellyfishAttack			\Default Work Unit\Player Effects\StopJellyfishAttack	
 	4023935017	JellyfishAttack			\Default Work Unit\Player Effects\JellyfishAttack	
 	4066254940	Light_Orb_Pickup			\Default Work Unit\Player Effects\Light_Orb_Pickup	
 	4095159976	Ambient1			\Default Work Unit\Ambient Themes\Ambient1	
@@ -28,6 +29,7 @@ State	ID	Name	State Group			Notes
 	655265632	Alive	PlayerLife			
 	748895195	None	PlayerLife			
 	2044049779	Dead	PlayerLife			
+	697796920	CP4	IMAmb2			
 	697796925	CP1	IMAmb2			
 	697796926	CP2	IMAmb2			
 	697796927	CP3	IMAmb2			
@@ -39,6 +41,7 @@ State	ID	Name	State Group			Notes
 Custom State	ID	Name	State Group	Owner		Notes
 	5443565	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Engine Running Default		
 	47334983	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Wall collision		
+	66732975	CP4	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Volcano		
 	79023227	CP1	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Volcano		
 	91676831	CP1	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 3 Jellyfish ambient		
 	198362103	CP3	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Jellyfish Ambient Crackle		
@@ -47,11 +50,14 @@ Custom State	ID	Name	State Group	Owner		Notes
 	257710534	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Evade A		
 	290800598	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Deep layer		
 	302184401	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Ambient Loop A		
+	325274319	CP4	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Deep layer		
+	328739437	CP4	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Whale Layer		
 	359330505	CP2	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Whale Layer		
 	369675027	CP1	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Jellyfish Ambient Crackle		
 	393568765	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Light Orb Pickup		
 	431540175	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Detection		
 	515715389	CP1	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Deep layer		
+	534162695	CP4	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Base Layer		
 	534219027	CP2	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 3 Jellyfish ambient		
 	685065967	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Volcano		
 	691779738	Amb1end	IMAmb1	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Ambient Loop A		
