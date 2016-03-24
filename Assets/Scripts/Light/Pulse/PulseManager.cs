@@ -9,9 +9,9 @@ public class PulseManager : MonoBehaviour
     private Transform player;
     [SerializeField]
     private Transform target;
-    private ParticleSystem particleSystem;
+    private ParticleSystem particles;
     public bool activePulse = true;
-    Camera camera;
+    Camera mainCamera;
     private float x;
     private float y;
     private Vector3 lastPosition = Vector3.zero;
@@ -19,10 +19,10 @@ public class PulseManager : MonoBehaviour
     
 	void Start()
     {
-	   camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+	   mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
        player = GameObject.FindGameObjectWithTag("Player").transform;
-       particleSystem = GameObject.Find("Pulse").GetComponent<ParticleSystem>();
-       InvokeRepeating("PulseSound", 0f, particleSystem.duration);
+       particles = GameObject.Find("Pulse").GetComponent<ParticleSystem>();
+       InvokeRepeating("PulseSound", 0f, particles.duration);
     }
 	
 	void Update()  
@@ -31,7 +31,7 @@ public class PulseManager : MonoBehaviour
        if (!stopped)
        {
             CalculatePosition();
-            this.transform.position = new Vector3(x, y, camera.transform.position.z + 10);   
+            this.transform.position = new Vector3(x, y, mainCamera.transform.position.z + 10);   
        }
     }
     
@@ -63,14 +63,14 @@ public class PulseManager : MonoBehaviour
         // Disable the particle system if checkpoint is within the screen bounds
         if (!stopped && target.position.x <= botRight.x + 5 && target.position.x >= botLeft.x - 5 && target.position.y <= topRight.y + 5 && target.position.y >= botRight.y - 5)
         {
-            particleSystem.Stop();
+            particles.Stop();
             stopped = true;
             return;
         }
         else if (stopped)
         {
             stopped = false;
-            particleSystem.Play();
+            particles.Play();
         }
         
         // Find the closest two camera points to the target 

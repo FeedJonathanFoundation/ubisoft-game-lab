@@ -35,7 +35,7 @@ public class Current : MonoBehaviour
     private List<Rigidbody> rigidbodies;
     private SmoothCamera smoothCamera;
     private bool playerInCurrent;
-    private GameObject particleSystem;
+    private GameObject particles;
 
 
     void Start()
@@ -60,30 +60,30 @@ public class Current : MonoBehaviour
             AddCurrentForce();
         }
 
-        if (particleSystem)
+        if (particles)
         {
             if (particleDirection == "downCurrent" || particleDirection == "upCurrent")
             {
-                Vector3 position = particleSystem.transform.position;
+                Vector3 position = particles.transform.position;
                 position.x = smoothCamera.transform.position.x;
-                particleSystem.transform.position = position;
+                particles.transform.position = position;
             }
 
             if (particleDirection == "leftCurrent" || particleDirection == "rightCurrent")
             {
-                Vector3 position = particleSystem.transform.position;
+                Vector3 position = particles.transform.position;
                 position.y = smoothCamera.transform.position.y;
-                particleSystem.transform.position = position;
+                particles.transform.position = position;
             }
 
             if (!playerInCurrent)
             {
-                distance = Vector3.Distance(particleSystem.transform.position, smoothCamera.transform.position);
+                distance = Vector3.Distance(particles.transform.position, smoothCamera.transform.position);
                 //Debug.Log("distance: " + distance);
                 if (distance >= distanceFromPlayer)
                 {
-                    Destroy(particleSystem);
-                    particleSystem = null;
+                    Destroy(particles);
+                    particles = null;
                 }
             }
         }
@@ -91,7 +91,7 @@ public class Current : MonoBehaviour
 
     void StartCurrentParticles()
     {
-        if (!particleSystem)
+        if (!particles)
         {
             if (smoothCamera == null) { return; }
             foreach (Transform child in smoothCamera.gameObject.GetComponentsInChildren<Transform>())
@@ -121,9 +121,9 @@ public class Current : MonoBehaviour
                         position.x *= 1.6f;
                     }
 
-                    particleSystem = (GameObject)Instantiate(child.gameObject, position, child.transform.rotation);
-                    particleSystem.SetActive(true);
-                    particleSystem.GetComponent<ParticleSystem>().Play();
+                    particles = (GameObject)Instantiate(child.gameObject, position, child.transform.rotation);
+                    particles.SetActive(true);
+                    particles.GetComponent<ParticleSystem>().Play();
                 }
             }
         }
