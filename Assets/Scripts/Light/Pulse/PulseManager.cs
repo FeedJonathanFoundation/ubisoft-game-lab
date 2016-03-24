@@ -23,7 +23,7 @@ public class PulseManager : MonoBehaviour
        player = GameObject.FindGameObjectWithTag("Player").transform;
        particleSystem = GameObject.Find("Pulse").GetComponent<ParticleSystem>();
        InvokeRepeating("PulseSound", 0f, particleSystem.duration);
-	}
+    }
 	
 	void Update()  
     {

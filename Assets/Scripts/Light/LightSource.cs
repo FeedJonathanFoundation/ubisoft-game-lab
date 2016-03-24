@@ -109,7 +109,8 @@ public class LightSource : MonoBehaviour
                     {
                         AkSoundEngine.PostEvent("Checkpoint", this.gameObject);
                     }
-                    {                                                                             
+                    else
+                    {                   
                         AkSoundEngine.PostEvent("Eat", this.gameObject);
                     }                    
                 }
