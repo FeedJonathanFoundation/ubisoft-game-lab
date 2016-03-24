@@ -181,11 +181,7 @@ public class Player : LightSource
         
         UI = GameObject.FindWithTag("UI");
 
-        if (gameOverCanvas != null)
-        {
-            gameOverCanvas.SetActive(false);
-        }
-        else
+        if (gameOverCanvas == null)
         {
             Canvas[] canvases = UI.GetComponentsInChildren<Canvas>();
             foreach (Canvas canvas in canvases)
@@ -193,7 +189,6 @@ public class Player : LightSource
                 if (canvas.name == "GameOverCanvas")
                 {
                     gameOverCanvas = canvas.gameObject;
-                    gameOverCanvas.SetActive(false);
                     break;
                 }
             }
