@@ -22,6 +22,7 @@ public class TextBoxManager : MonoBehaviour
     private bool cancelTyping = false;
     // The speed at which text is written out
     private float typeSpeed = 0.025f;
+    private IEnumerator textScroll;
 
     void Start()
     {
@@ -51,7 +52,9 @@ public class TextBoxManager : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(TextScroll(textLines[currentLine]));
+                    if (textScroll != null) { StopCoroutine(textScroll); }
+                    textScroll = TextScroll(textLines[currentLine]);
+                    StartCoroutine(textScroll);
                 }
             }
             else if (isTyping && !cancelTyping)
@@ -87,7 +90,9 @@ public class TextBoxManager : MonoBehaviour
     {
         textBox.SetActive(true);
         isActive = true;
-        StartCoroutine(TextScroll(textLines[currentLine]));
+        if (textScroll != null) { StopCoroutine(textScroll); }
+        textScroll = TextScroll(textLines[currentLine]);
+        StartCoroutine(textScroll);
     }
 
     // Hides the textbox and resumes player movement
