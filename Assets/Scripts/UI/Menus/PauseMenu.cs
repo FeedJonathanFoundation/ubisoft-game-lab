@@ -21,7 +21,7 @@ public class PauseMenu : MonoBehaviour
     //private bool isAxisInUse;
     private float timeLastMove = 0;
     [SerializeField]
-    private float timeBetweenButtonChange = 0.2f;
+    private float timeBetweenButtonChange = 0.15f;
     private float currentTime;
 
     void Awake()
