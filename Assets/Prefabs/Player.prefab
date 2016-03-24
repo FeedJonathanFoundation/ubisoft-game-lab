@@ -73,6 +73,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &105192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 426830}
+  m_Layer: 0
+  m_Name: FlareSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &111702
 GameObject:
   m_ObjectHideFlags: 1
@@ -1220,6 +1235,18 @@ Transform:
   - {fileID: 404604}
   m_Father: {fileID: 418574}
   m_RootOrder: 0
+--- !u!4 &426830
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105192}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071067}
+  m_LocalPosition: {x: -0.06, y: 0.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 479988}
+  m_RootOrder: 11
 --- !u!4 &428646
 Transform:
   m_ObjectHideFlags: 1
@@ -1602,6 +1629,7 @@ Transform:
   - {fileID: 473960}
   - {fileID: 470730}
   - {fileID: 439638}
+  - {fileID: 426830}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &481248
@@ -2408,6 +2436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.02
   maxIntensity: 0
+  minIntensity: 0
   lightToIntensityRatio: 0.05
   rangeChangeSpeed: 0.5
   intensityChangeSpeed: 0.5
@@ -2467,6 +2496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.02
   maxIntensity: 0
+  minIntensity: 0
   lightToIntensityRatio: 0.05
   rangeChangeSpeed: 0.5
   intensityChangeSpeed: 0.5
@@ -2482,6 +2512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToRadiusRatio: 0.2
+  thrustRadiusMultiplier: 0
 --- !u!114 &11440170
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2517,7 +2548,7 @@ MonoBehaviour:
   changeDirectionBoost: 5.2
   thrustEnergyCost: 0.01
   brakeDrag: 2
-  rotationSpeed: 5
+  rotationSpeed: 15
   jetFuelEffect: {fileID: 134692}
   fishHitParticles: {fileID: 19865272, guid: ed2d060d09dc3e04faf8ca40914cb8d6, type: 2}
   playerDeathParticles: {fileID: 19877132, guid: 71ac3ce401859634281fd1afa08277fc,
@@ -2588,6 +2619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.02
   maxIntensity: 0
+  minIntensity: 0
   lightToIntensityRatio: 0.05
   rangeChangeSpeed: 0.5
   intensityChangeSpeed: 0.5
@@ -2694,6 +2726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.8
   maxIntensity: 0.6
+  minIntensity: 0.5
   lightToIntensityRatio: 0.05
   rangeChangeSpeed: 0.5
   intensityChangeSpeed: 0.5
@@ -2729,6 +2762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.5
   maxIntensity: 0.9
+  minIntensity: 0.7
   lightToIntensityRatio: 0.05
   rangeChangeSpeed: 0.5
   intensityChangeSpeed: 0.5
@@ -2745,6 +2779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightToRangeRatio: 0.17
   maxIntensity: 0.3
+  minIntensity: 0.2
   lightToIntensityRatio: 0.05
   rangeChangeSpeed: 0.5
   intensityChangeSpeed: 0.5
