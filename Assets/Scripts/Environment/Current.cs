@@ -22,10 +22,11 @@ public class Current : MonoBehaviour
     [Tooltip("The direction of current force.")]
     private Direction currentDirection;
     [SerializeField]
-    [Tooltip("The direction of current force.")]
-    private GameObject gameObject;
+    [Tooltip("Distance from current for the particle system to be destroyed.")]
+    private float distanceFromPlayer;
     private Vector3 direction;
     private string particleDirection;
+    private float distance;
     
 
     // Whether the current object is empty.
@@ -33,6 +34,8 @@ public class Current : MonoBehaviour
     // Holds all rigidbodies in the current.
     private List<Rigidbody> rigidbodies;
     private SmoothCamera smoothCamera;
+    private bool playerInCurrent;
+    private GameObject particleSystem;
     
     
     void Start()
@@ -46,7 +49,8 @@ public class Current : MonoBehaviour
         // By default, the current pushes downward.
         SetDirection();
         empty = true;
-        
+        playerInCurrent = false;
+        distance = distanceFromPlayer;
     }
     
     void Update()
@@ -54,6 +58,51 @@ public class Current : MonoBehaviour
         if (!empty)
         {
             AddCurrentForce();
+        }
+        
+        if(particleSystem)
+        {
+            if(particleDirection == "downCurrent" || particleDirection == "upCurrent")
+            {
+                Vector3 position = particleSystem.transform.position;
+                position.x = smoothCamera.transform.position.x;
+                particleSystem.transform.position = position;
+            }
+            
+            if(particleDirection == "leftCurrent" || particleDirection == "rightCurrent")
+            {
+                Vector3 position = particleSystem.transform.position;
+                position.y = smoothCamera.transform.position.y;
+                particleSystem.transform.position = position;
+            }
+            
+            if(!playerInCurrent)
+            {
+                distance = Vector3.Distance(particleSystem.transform.position, smoothCamera.transform.position);
+                //Debug.Log("distance: " + distance);
+                if(distance >= distanceFromPlayer)
+                {
+                    Destroy(particleSystem);
+                    particleSystem = null;
+                }
+            }
+        }
+    }
+    
+    void StartCurrentParticles()
+    {
+        if(!particleSystem)
+        {
+            foreach(Transform child in smoothCamera.GetComponentInChildren<Transform>())
+            {
+                //Debug.Log(child.name +  "==" + particleDirection);
+                if(child.name == particleDirection)
+                {
+                    particleSystem = (GameObject)Instantiate(child.gameObject, this.transform.position, child.transform.rotation);
+                    particleSystem.SetActive(true);
+                    particleSystem.GetComponent<ParticleSystem>().Play();
+                }
+            }
         }
     }
     
@@ -91,8 +140,10 @@ public class Current : MonoBehaviour
             
             if(col.CompareTag("Player"))
             {
-                smoothCamera.SetCurrentState(true);
-                smoothCamera.StartCurrentParticles(particleDirection);
+                StartCurrentParticles();
+                smoothCamera.SetCurrentState(true, particleDirection);
+                //smoothCamera.StartCurrentParticles(particleDirection);
+                playerInCurrent = true;
             }
         }
     }
@@ -111,8 +162,9 @@ public class Current : MonoBehaviour
             
             if(col.CompareTag("Player"))
             {
-                smoothCamera.SetCurrentState(false);
-                smoothCamera.StopCurrentParticles(particleDirection);
+                smoothCamera.SetCurrentState(false, "");
+                playerInCurrent = false;
+                //smoothCamera.StopCurrentParticles(particleDirection);
             }
         }
     }
