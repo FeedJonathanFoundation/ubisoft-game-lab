@@ -126,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 153124}
   m_LocalRotation: {x: -0.000000034923954, y: -0.000000013805949, z: 0.99998486, w: -0.0055136415}
-  m_LocalPosition: {x: -190.28596, y: -3.5748303, z: -8.243266}
+  m_LocalPosition: {x: -198.85184, y: -3.664192, z: -19.606634}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 410454}
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 133456}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d1e0ecf875e74cb78cbfaa4f5b1c319, type: 3}
   m_Name: 
@@ -212,8 +212,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -0.00040137768, y: -0.00037428737, z: 0.30084088}
-    m_Extent: {x: 0.064389564, y: 0.0633734, z: 0.3007269}
+    m_Center: {x: -0.00040245056, y: -0.00037430227, z: 0.30084112}
+    m_Extent: {x: 0.064389564, y: 0.06337342, z: 0.3007269}
   m_DirtyAABB: 0
 --- !u!183 &18345410
 Cloth:
@@ -227,8 +227,8 @@ Cloth:
   m_UseTethers: 1
   m_UseGravity: 0
   m_Damping: 0
-  m_ExternalAcceleration: {x: 0, y: 0.85, z: 1.17}
-  m_RandomAcceleration: {x: 0.72, y: 0, z: 0.45}
+  m_ExternalAcceleration: {x: 0, y: 10, z: 0}
+  m_RandomAcceleration: {x: 4, y: 0, z: 0.1}
   m_WorldVelocityScale: 0.5
   m_WorldAccelerationScale: 1
   m_Friction: 0.5
