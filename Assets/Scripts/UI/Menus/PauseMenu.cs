@@ -86,27 +86,22 @@ public class PauseMenu : MonoBehaviour
                 menuButtons[selectedMenuItem].onClick.Invoke();
             }
             
-              
-            
             if (Input.GetAxisRaw("Vertical") > 0 && (currentTime - timeLastMove) >= timeBetweenButtonChange)
             {   
                 MoveMenu(1);       
                 timeLastMove = currentTime;        
-                //isAxisInUse = true;
-                
             }
             else if (Input.GetAxisRaw("Vertical") < 0 && (currentTime - timeLastMove) >= timeBetweenButtonChange)
             {
                 MoveMenu(-1);
-                timeLastMove = currentTime;  
-                //isAxisInUse = true;                
-            } 
-            // else 
-            // {
-            //     //isAxisInUse = false;    
-            // }
-
-            
+                timeLastMove = currentTime;              
+            }            
+        }
+        
+        
+        if (Input.GetButtonDown("Cancel") && pauseMode == 2) 
+        {
+            this.BackButton();
         }
 
 
