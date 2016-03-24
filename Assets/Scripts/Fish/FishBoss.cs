@@ -4,9 +4,8 @@ using System.Collections;
 // Large, impossible to kill NPCs
 // Seeks smaller fish by default
 public class FishBoss : AbstractFish
-{   
-    [Tooltip("Reference to the player")]
-    public GameObject player;
+{
+    private GameObject player;
     [Tooltip("Then action performed when the fish detects the player")]
     [SerializeField]
     private BossSeekPlayer followPlayer;
@@ -28,6 +27,8 @@ public class FishBoss : AbstractFish
     {
         // call parent LightSource Awake() first
         base.Awake();
+        
+        player = GameObject.Find("Player");
         
         followPlayer.SetPriority(2);                    // High priority
         followPlayer.SetID("-1");
@@ -56,6 +57,11 @@ public class FishBoss : AbstractFish
     public void BossReactToPlayer()
     {
         // only for the boss ai, always seeks player if it isn't in a safe zone
+        if(!player)
+        {
+            player = GameObject.Find("Player");
+        }
+        
         if (!player.GetComponent<Player>().isSafe)
         {
             bite = true;
