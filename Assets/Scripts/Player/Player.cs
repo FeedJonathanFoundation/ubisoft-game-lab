@@ -225,11 +225,11 @@ public class Player : LightSource
     {
         base.Update();
 
-        if (gameOverCanvas == null)
-        {
-            gameOverCanvas = GameObject.Instantiate(gameOverCanvasPrefab);
-            gameOverCanvas.SetActive(false);
-        }
+        // if (gameOverCanvas == null)
+        // {
+        //     gameOverCanvas = GameObject.Instantiate(gameOverCanvasPrefab);
+        //     gameOverCanvas.SetActive(false);
+        // }
         
         if (gameOverCanvas.activeSelf == true && !isDead)
         {
