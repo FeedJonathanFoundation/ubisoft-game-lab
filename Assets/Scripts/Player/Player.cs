@@ -153,14 +153,14 @@ public class Player : LightSource
 
         this.defaultDrag = Rigidbody.drag;
         this.isDead = false;
-        //this.isSafe = true;
+        this.isSafe = true;
         this.controllerRumble = GetComponent<ControllerRumble>();
         AkSoundEngine.SetState("PlayerLife", "Alive");
         this.currentLevel = SceneManager.GetActiveScene().buildIndex;
         DontDestroyOnLoad(this.gameObject);
         ChangeColor(probeColorOff, false, 0);
-        //LoadGame();
-        //ResetPlayerState();
+        LoadGame();
+        ResetPlayerState();
         
         gameOverCanvas = GameObject.Find("GameOverCanvas");
         gameOverCanvas.SetActive(false);
@@ -209,6 +209,7 @@ public class Player : LightSource
 
         if (isDead)
         {
+            this.isSafe = true;
             gameOverCanvas.SetActive(true);
             RestartGame();
             ObjectPooler.current.ResetPool();

@@ -17,7 +17,8 @@ public class PlayerSafeZone : MonoBehaviour
                 player.isSafe = true;
                 if (blookingCurrent)
                 {
-                    player.MaxSpeed(4);
+                    Debug.Log("change speed");
+                    player.MaxSpeed(5);
                     StartCoroutine(WaitBeforeCurrent(2.0F));
                 }
                 //Debug.Log(player.isSafe);
