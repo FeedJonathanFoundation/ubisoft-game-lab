@@ -14,10 +14,24 @@ public class SoundStateChange : MonoBehaviour
     [SerializeField]
     private bool safeZone = false;
     protected static int currentState = 0;
-    
+
     void Start()
     {
-        currentState = scene;
+
+        switch (scene)
+        {
+            case 0:
+                currentState = scene;
+                break;
+            case 1:
+                currentState = 1;
+                break;
+            case 2:
+                currentState = 3;
+                break;
+            default:
+                break;
+        }
     }
     
     void Update()
@@ -55,39 +69,37 @@ public class SoundStateChange : MonoBehaviour
         {
             if (other.CompareTag("Player"))
             {
-                // Stop playing sound
+                AkSoundEngine.SetState("IMAmb3", "Hunted");
             }
         }
     }
 
     private void SetState(int newState)
     {
+        Debug.Log("new state: " + newState);
         switch (newState)
         {
-            case 0:
+            case 0:// Field scene
                 AkSoundEngine.SetState("IMAmb1", "Amb1start");
-                Debug.Log("Amb sound 0");
                 break;
             case 1:
                 AkSoundEngine.SetState("IMAmb1", "Amb1end");
-                Debug.Log("Amb sound 1");
                 break;
-            case 2:
+            case 2: // Volcano scene
                 AkSoundEngine.SetState("IMAmb2", "CP2");
-                Debug.Log("Amb sound 2");
                 break;
             case 3:
                 AkSoundEngine.SetState("IMAmb2", "CP3");
-                Debug.Log("Amb sound 3");
                 break;
-            case 4:
-                AkSoundEngine.SetState("IMAmb2", "CP2");
-                Debug.Log("Amb sound 4");
+            case 4: // Beginning cave scene
+                AkSoundEngine.PostEvent("Ambient2Stop", this.gameObject);
+                AkSoundEngine.PostEvent("Ambient3", this.gameObject);
+                AkSoundEngine.SetState("IMAmb3", "Hunted");
                 break;
-            // case 5: // boss theme
-                // AkSoundEngine.SetState("IMAmb3", "");
+            case 5: // boss theme
+                AkSoundEngine.SetState("IMAmb3", "Over");
+                break;
             default:
-                Debug.Log("Amb sound def");
                 break;
             
         }
@@ -95,7 +107,6 @@ public class SoundStateChange : MonoBehaviour
     
     private void SafeZoneSound()
     {
-        // Needs to change to safe zone music
-        AkSoundEngine.SetState("IMAmb2", "CP2");
+        AkSoundEngine.SetState("IMAmb3", "Hiding");
     }
 }

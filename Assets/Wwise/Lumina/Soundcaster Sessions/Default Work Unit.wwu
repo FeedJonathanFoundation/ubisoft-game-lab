@@ -14,6 +14,10 @@
 							<Position X="0" Y="1"/>
 						</Module>
 						<Module>
+							<ObjectRef Name="Ambient2" ID="{8C7FF968-4F75-4025-B230-C067DA3819CE}" WorkUnitID="{EAE4CDC1-6F63-43E7-87D3-AEE39B8BC9B7}"/>
+							<Position X="0" Y="2"/>
+						</Module>
+						<Module>
 							<ObjectRef Name="Wall collision" ID="{6744DB81-4DAA-481A-A267-B7B42216648D}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
 							<Position X="1" Y="0"/>
 						</Module>
@@ -60,11 +64,20 @@
 					</ModuleList>
 					<RTPCValueList ShowAll="true">
 						<RTPCValue>
+							<GameParameterRef Name="flareDistance" ID="{FF782539-1CD0-43EB-9C6C-613A3A74B964}"/>
+							<Value>0</Value>
+						</RTPCValue>
+						<RTPCValue>
+							<GameParameterRef Name="MasterVolume" ID="{D282A59A-6523-4D6F-BE19-74436A08FA5B}"/>
+							<Value>50</Value>
+						</RTPCValue>
+						<RTPCValue>
 							<GameParameterRef Name="playerVelocity" ID="{84FD68C7-E5A9-4BEF-A88E-F5F25B1CCB51}"/>
 							<Value>0</Value>
 						</RTPCValue>
 					</RTPCValueList>
 					<CurrentStateList ShowAll="true">
+						<CurrentStateRef Name="CP2" ID="{9EBC449C-E089-4052-B34E-8B50A1CA48BE}"/>
 						<CurrentStateRef Name="Alive" ID="{EB9DE84F-4043-4A30-8EF9-00825ACA100C}"/>
 					</CurrentStateList>
 					<CurrentSwitchList ShowAll="true">

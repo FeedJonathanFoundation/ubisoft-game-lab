@@ -15,6 +15,7 @@ namespace AK
     {
         static const AkUniqueID AMBIENT1 = 4095159976U;
         static const AkUniqueID AMBIENT2 = 4095159979U;
+        static const AkUniqueID AMBIENT2STOP = 4142644811U;
         static const AkUniqueID CHECKPOINT = 612075679U;
         static const AkUniqueID CURRENT = 2037989808U;
         static const AkUniqueID DEFAULT = 782826392U;
@@ -67,6 +68,9 @@ namespace AK
 
             namespace STATE
             {
+                static const AkUniqueID HIDING = 3538823496U;
+                static const AkUniqueID HUNTED = 671679305U;
+                static const AkUniqueID OVER = 3677122663U;
             } // namespace STATE
         } // namespace IMAMB3
 
