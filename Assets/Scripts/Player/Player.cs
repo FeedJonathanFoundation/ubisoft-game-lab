@@ -141,7 +141,10 @@ public class Player : LightSource
     private IEnumerator changeIntensityCoroutine;
     
     private static Player playerInstance;
-    
+
+    [SerializeField]
+    private GameObject gameOverCanvasPrefab;
+
     /// <summary>
     /// Initializes Player components
     /// </summary>
@@ -200,6 +203,12 @@ public class Player : LightSource
     protected override void Update()
     {
         base.Update();
+
+        if (gameOverCanvas == null)
+        {
+            gameOverCanvas = GameObject.Instantiate(gameOverCanvasPrefab);
+            gameOverCanvas.SetActive(false);
+        }
 
         playerVelocity = (int)this.Rigidbody.velocity.magnitude;
         AkSoundEngine.SetRTPCValue("playerVelocity", playerVelocity);
