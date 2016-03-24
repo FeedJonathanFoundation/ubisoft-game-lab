@@ -616,4 +616,10 @@ public class Player : LightSource
             }
         #endif
     }
+    
+    public PlayerMovement Movement
+    {
+        get { return movement; }
+        set { movement = value; }
+    }
 }
