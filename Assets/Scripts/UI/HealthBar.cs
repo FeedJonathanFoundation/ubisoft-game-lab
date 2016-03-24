@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class HealthBar : MonoBehaviour {
 
     public Slider healthBar;
     private Player player;
     public Image fill;
+    public Image background;
+    private IEnumerator flashingBar;
+    private bool isBarFlashing = false;
     
     void Start()
     {
@@ -18,12 +22,34 @@ public class HealthBar : MonoBehaviour {
         if (healthBar.value <= 1500)
         {
             fill.color = Color.red;
+            background.color = Color.blue;
+            if (!isBarFlashing)
+            {
+                if (flashingBar != null) {StopCoroutine(flashingBar);}
+                flashingBar = FlashHealthBar();
+                isBarFlashing = true;  
+                StartCoroutine(flashingBar); 
+            }
         }
         else
         {
+            if (flashingBar != null) {StopCoroutine(flashingBar);}
             fill.color = Color.white;
+            background.color = Color.white;
+            isBarFlashing = false;
         }
     }
+    
+    private IEnumerator FlashHealthBar()
+    {
+        while (isBarFlashing)
+        {
+            yield return new WaitForSeconds(0.35f);        
+            fill.enabled = false;
+            yield return new WaitForSeconds(0.35f);
+            fill.enabled = true;   
+        }
+    } 
     
     void onDisable()
     {
