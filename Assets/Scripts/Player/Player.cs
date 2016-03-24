@@ -595,7 +595,23 @@ public class Player : LightSource
             this.deathParticlesPlayed = false;
             this.Rigidbody.drag = defaultDrag; // reset drag
             this.transform.FindChild("ProbeModel").gameObject.SetActive(true); //reactivate bubbles
+            ReactivateObjects();
             LoadGame();
+        }
+    }
+    
+    private void ReactivateObjects()
+    {
+        GameObject[] pickups = GameObject.FindGameObjectsWithTag("Pickup");
+        foreach (GameObject pickup in pickups)
+        {
+            Debug.Log(pickup);
+            LightSource light = pickup.GetComponent<LightSource>();
+            if (light != null)
+            {
+                light.LightEnergy.Add(light.DefaultEnergy);
+            }
+            pickup.SetActive(true);
         }
     }
 
