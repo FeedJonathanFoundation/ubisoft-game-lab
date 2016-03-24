@@ -172,7 +172,7 @@ public class Player : LightSource
         LoadGame();
         ResetPlayerState();
         
-        gameOverCanvas = GameObject.Find("GameOverCanvas");
+        gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
         gameOverCanvas.SetActive(false);
 
         #if UNITY_EDITOR
@@ -593,21 +593,22 @@ public class Player : LightSource
     {
         if (Input.GetButtonDown("Restart"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            // Debug.Log("Game Restarted");
-            // gameOverCanvas.SetActive(false);
-            // Transform.localScale = new Vector3(1, 1, 1);
-            // Rigidbody.isKinematic = false;
-            // Rigidbody.useGravity = false;
-
-            // this.LightEnergy.Add(this.DefaultEnergy);
-            // this.isDead = false;
-            // this.deathParticlesPlayed = false;
-            // this.Rigidbody.drag = defaultDrag; // reset drag
-            // this.transform.FindChild("ProbeModel").gameObject.SetActive(true); //reactivate bubbles
-            // ReactivateObjects();
             
-            // LoadGame();
+            Debug.Log("Game Restarted");
+            gameOverCanvas.SetActive(false);
+            Transform.localScale = new Vector3(1, 1, 1);
+            Rigidbody.isKinematic = false;
+            Rigidbody.useGravity = false;
+
+            this.LightEnergy.Add(this.DefaultEnergy);
+            this.isDead = false;
+            this.deathParticlesPlayed = false;
+            this.Rigidbody.drag = defaultDrag; // reset drag
+            this.transform.FindChild("ProbeModel").gameObject.SetActive(true); //reactivate bubbles
+            ReactivateObjects();
+            
+            LoadGame();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
     
