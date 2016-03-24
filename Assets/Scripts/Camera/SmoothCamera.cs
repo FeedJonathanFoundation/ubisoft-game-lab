@@ -186,14 +186,14 @@ public class SmoothCamera : MonoBehaviour
                 acquiredZoom = true;
             }
             
-            if(playerVelocity < smallSpeed && !acquiredZoom && zPosition != newPosition.z)
+            if(playerVelocity < smallSpeed && !acquiredZoom && zPosition != newPosition.z && !inCurrents)
             {
                 //Debug.Log("normal");
                 newPosition.z = CameraZoom(zoomInSpeed, zPosition);
                 acquiredZoom = true;
             }
             
-            if(playerVelocity > smallSpeed && playerVelocity < mediumSpeed && !acquiredZoom && smallZoomValue != newPosition.z && !inCurrents)
+            if((playerVelocity > smallSpeed && playerVelocity < mediumSpeed && !acquiredZoom && smallZoomValue != newPosition.z) || inCurrents)
             {
                 //Debug.Log("small");
                 newPosition.z = CameraZoom((newPosition.z > smallZoomValue? zoomOutSpeed : zoomInSpeed), smallZoomValue);

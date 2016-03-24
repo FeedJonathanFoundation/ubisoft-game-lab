@@ -160,7 +160,8 @@ public class PauseMenu : MonoBehaviour
     // Listens to the volume slider in the Options menu and sets the global game volume to the slider's value
     public void ChangeVolume()
     {
-        AudioListener.volume = volumeSlider.value;
+        float volume = volumeSlider.value * 100;
+        AkSoundEngine.SetRTPCValue("MasterVolume", volume);
     }
 
     // When the Back button is pressed, the options submenu is hidden and the Pause menu is shown
