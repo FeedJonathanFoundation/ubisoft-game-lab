@@ -244,7 +244,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.730545, y: 4.331234, z: 0}
+  m_LocalPosition: {x: 203.6833, y: -91.30493, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 427610}
@@ -630,10 +630,10 @@ MonoBehaviour:
     seekWhenStronger:
       strengthMultiplier: 5
       overrideSteerableSpeed: 1
-      minSpeed: 3
-      maxSpeed: 3
+      minSpeed: 8.2
+      maxSpeed: 8.2
       overrideMaxForce: 1
-      maxForce: 15
+      maxForce: 150
     fleeWhenWeaker:
       strengthMultiplier: 5
       overrideSteerableSpeed: 1
@@ -699,6 +699,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 33554432
   tagsToIgnore: []
+--- !u!114 &11464394
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 181088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d02502e59512407886ceb4d2dab5b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 0}
+  lightSource: {fileID: 0}
 --- !u!114 &11467976
 MonoBehaviour:
   m_ObjectHideFlags: 1
