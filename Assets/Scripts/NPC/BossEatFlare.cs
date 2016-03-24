@@ -18,6 +18,16 @@ public class BossEatFlare : MonoBehaviour
         if(col.tag == "Flare")
         {
             col.transform.parent.gameObject.SetActive(false);
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            for (int i = 0; i < players.Length; i++)
+            {
+                FlareSpawner flare = players[i].GetComponent<FlareSpawner>();
+                if (flare != null)
+                {
+                    flare.EatFlare();
+                }
+            }
+            
         }
     }
 }
