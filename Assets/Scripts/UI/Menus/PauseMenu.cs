@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -42,8 +41,6 @@ public class PauseMenu : MonoBehaviour
         {
             pauseMode = 1;
             pauseCanvas.SetActive(true);
-            GUI.FocusControl("Resume Game Button");
-
             // Freezes the game time
             Time.timeScale = 0f;
             // Free the cursor
