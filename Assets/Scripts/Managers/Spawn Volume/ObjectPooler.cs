@@ -47,9 +47,11 @@ public class ObjectPooler : MonoBehaviour
         }
         for (int i = 0; i < pool[objectID].Count; i++)
         {
-            if (!pool[objectID][i].activeInHierarchy)
+            GameObject current = pool[objectID][i];
+            if (!current.activeInHierarchy)
             {
-                return pool[objectID][i];
+                ReactivateObjectLight(current);
+                return current;
             }
         }
         if (extensible)
@@ -72,7 +74,17 @@ public class ObjectPooler : MonoBehaviour
                 {
                     current.SetActive(false);
                 }
+                ReactivateObjectLight(current);
             }
+        }
+    }
+    
+    private void ReactivateObjectLight(GameObject current)
+    {
+        LightSource light = current.GetComponent<LightSource>();
+        if (light != null)
+        {
+            light.LightEnergy.Add(light.DefaultEnergy);
         }
     }
     
