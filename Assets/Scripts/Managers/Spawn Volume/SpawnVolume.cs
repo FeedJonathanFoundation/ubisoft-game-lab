@@ -369,9 +369,8 @@ public class SpawnVolume : MonoBehaviour
         return true;
     }
     
-    public void Reset()
+    private void Reset()
     {
-        pool.ResetPool();
         for (int i = 0; i < colliderCount; i++)
         {
             initialized[i] = false;
