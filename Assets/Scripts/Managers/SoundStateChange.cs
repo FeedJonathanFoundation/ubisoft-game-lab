@@ -36,7 +36,7 @@ public class SoundStateChange : MonoBehaviour
     
     void Update()
     {
-        Debug.Log("Current State : " + currentState);
+        // Debug.Log("Current State : " + currentState);
     }
 
     void OnTriggerEnter(Collider other)

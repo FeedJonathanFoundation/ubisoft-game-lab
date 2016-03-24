@@ -14,6 +14,7 @@ public class LightRangeModifier : LightEnergyListener
     public float lightToRangeRatio;
 
     public float maxIntensity;
+    public float minIntensity;
     public float lightToIntensityRatio = 0.05f;
     
     [Tooltip("The speed at which the light's range changes when the light is turned on")]
@@ -70,6 +71,7 @@ public class LightRangeModifier : LightEnergyListener
         float newIntensity = maxIntensity * lightToIntensityRatio * currentLight * percentRange;
         // Cap the light's intensity
         if (newIntensity >= maxIntensity) { newIntensity = maxIntensity; }
+        if (newIntensity <= minIntensity) { newIntensity = minIntensity; }
         targetIntensity = newIntensity;
     }
     
