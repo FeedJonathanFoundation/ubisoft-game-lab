@@ -17,7 +17,7 @@ public class BossEatFlare : MonoBehaviour
         // LightAbsorber has a player tag
         if(col.tag == "Flare")
         {
-            Destroy(col.transform.parent.gameObject);
+            col.transform.parent.gameObject.SetActive(false);
         }
     }
 }
