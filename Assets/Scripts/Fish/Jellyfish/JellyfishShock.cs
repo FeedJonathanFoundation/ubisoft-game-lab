@@ -21,4 +21,20 @@ public class JellyfishShock : MonoBehaviour
             }
         }
     }
+    
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.tag == "Player")
+        {
+            AkSoundEngine.PostEvent("JellyfishAttack", this.gameObject);
+        }
+    }
+    
+    void OnTriggerExit(Collider col)
+    {
+        if (col.tag == "Player")
+        {
+            AkSoundEngine.PostEvent("StopJellyfishAttack", this.gameObject);
+        }
+    }
 }
