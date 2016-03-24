@@ -91,7 +91,7 @@ public class PlayerLightToggle
         // Update the status of the lights
         this.lightsEnabled = enabled;
         
-        Debug.Log("Toggle lights");
+        // Debug.Log("Toggle lights");
     }
 
     /// <summary>
