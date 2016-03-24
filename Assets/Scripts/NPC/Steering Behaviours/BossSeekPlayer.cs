@@ -3,10 +3,10 @@ using System.Collections;
 
 [System.Serializable]
 public class BossSeekPlayer : NPCActionable
-{   
+{
     /// <summary>
-	/// The light that this NPC can see
-	/// </summary>
+    /// The light that this NPC can see
+    /// </summary>
     [Tooltip("Set maxSpeed to this value when the player is too far")]
     public float speedMaxIncreased;
     [Tooltip("Set minSpeed to this value when the player is too far")]
@@ -20,10 +20,10 @@ public class BossSeekPlayer : NPCActionable
     /// </summary>
     [SerializeField]
     private Seek seekPlayer;
-    
+
     [SerializeField]
     private WallAvoidance wallAvoidance;
-    
+
     public BossSeekPlayer(int priority, string id, LightSource targetLightSource, bool bossSafe) : base(priority, id)
     {
         this.targetLightSource = targetLightSource;
@@ -31,7 +31,7 @@ public class BossSeekPlayer : NPCActionable
         this.SetPriority(priority);
         this.SetID(id);
     }
-    
+
     /** Call this method in the Start() function of the fish performing this action. */
     public void Init()
     {
@@ -39,29 +39,29 @@ public class BossSeekPlayer : NPCActionable
         seekPlayer.ActionComplete += ChildActionComplete;
         wallAvoidance.ActionComplete += ChildActionComplete;
     }
-    
+
     public void SetBossSafeState(bool bossSafe)
     {
         this.bossAtSafeZone = bossSafe;
     }
-    
+
     public void SetPriority(int priority)
     {
         this.priority = priority;
-        
+
         seekPlayer.priority = priority;
         wallAvoidance.priority = priority;
     }
-    
+
     public void SetID(string id)
     {
         this.id = id;
-        
+
         seekPlayer.id = id;
         wallAvoidance.id = id;
     }
-    
-    public override void Execute(Steerable steerable) 
+
+    public override void Execute(Steerable steerable)
     {
         Player player = targetLightSource.gameObject.GetComponent<Player>();
         if (!player.isSafe)
@@ -80,7 +80,7 @@ public class BossSeekPlayer : NPCActionable
             }
 
             Vector3 position = targetLightSource.transform.position;
-            if(overrideBossSpeed(steerable,position))
+            if (overrideBossSpeed(steerable, position))
             {
                 steerable.MinSpeed = speedMinIncreased;
                 steerable.MaxSpeed = speedMaxIncreased;
@@ -94,33 +94,33 @@ public class BossSeekPlayer : NPCActionable
 
         wallAvoidance.Execute(steerable);
     }
-    
-    private bool overrideBossSpeed(Steerable steerable,Vector3 target)
+
+    private bool overrideBossSpeed(Steerable steerable, Vector3 target)
     {
         float distance = Vector2.Distance(steerable.transform.position, target);
-        if(distance > distanceSpeedIncrease)
+        if (distance >= distanceSpeedIncrease)
         {
             return true;
         }
         return false;
     }
-    
+
     private void ChildActionComplete(NPCActionable childAction)
     {
         // Call ActionCompleted() to notify subscribers that the parent action is complete
         ActionCompleted();
     }
-    
+
     /// <summary>
-	/// The light that this NPC will seek or flee
-	/// </summary>
+    /// The light that this NPC will seek or flee
+    /// </summary>
     public LightSource TargetLightSource
     {
         get { return targetLightSource; }
-        set 
-        { 
-            targetLightSource = value; 
-            
+        set
+        {
+            targetLightSource = value;
+
             if (value)
             {
                 seekPlayer.TargetTransform = value.transform;
@@ -131,5 +131,4 @@ public class BossSeekPlayer : NPCActionable
             }
         }
     }
-    
 }
