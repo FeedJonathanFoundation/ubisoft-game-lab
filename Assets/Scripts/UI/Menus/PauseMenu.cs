@@ -18,7 +18,7 @@ public class PauseMenu : MonoBehaviour
 
     private Button[] menuButtons;
     private int selectedMenuItem;
-    private int menuMoveDirection;
+    private bool isAxisInUse;
 
     void Awake()
     {
@@ -78,15 +78,20 @@ public class PauseMenu : MonoBehaviour
                 menuButtons[selectedMenuItem].onClick.Invoke();
             }
 
-            if (Input.GetAxisRaw("Vertical") > 0)
-            {
-                menuMoveDirection = 1;
-                StartCoroutine(MoveMenu());
+            if (Input.GetAxisRaw("Vertical") > 0 && isAxisInUse == false)
+            {   
+                MoveMenu(1);             
+                isAxisInUse = true;
+                
             }
-            else if (Input.GetAxisRaw("Vertical") < 0)
+            else if (Input.GetAxisRaw("Vertical") < 0 && isAxisInUse == false)
             {
-                menuMoveDirection = -1;
-                StartCoroutine(MoveMenu());
+                MoveMenu(-1);
+                isAxisInUse = true;                
+            } 
+            else 
+            {
+                isAxisInUse = false;    
             }
 
             
@@ -95,8 +100,9 @@ public class PauseMenu : MonoBehaviour
 
     }
 
-    private IEnumerator MoveMenu()
+    private void MoveMenu(int menuMoveDirection)
     {
+
         if (menuMoveDirection > 0)
         {
             if (selectedMenuItem > 0)
@@ -121,7 +127,6 @@ public class PauseMenu : MonoBehaviour
         }
 
         highlightButton();
-        yield return new WaitForSeconds(3);
         
     }
 
