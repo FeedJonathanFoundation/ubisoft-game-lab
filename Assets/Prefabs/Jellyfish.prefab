@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 464112}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Jellyfish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ GameObject:
   - 4: {fileID: 425276}
   - 114: {fileID: 11403914}
   - 95: {fileID: 9548778}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: jellyfishtr (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - 23: {fileID: 2348232}
   - 64: {fileID: 6410556}
   - 114: {fileID: 11492872}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Group49291
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ GameObject:
   - 183: {fileID: 18358406}
   - 65: {fileID: 6593276}
   - 114: {fileID: 11408742}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Group31788
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 114702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.16, y: -5.81, z: 0}
+  m_LocalPosition: {x: 7.18, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 425276}
@@ -226,8 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf512981bd497242a5b5054132a7a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyLost: 0.1
-  timeBeforeEnergyLost: 0.1
+  energyLost: 0.25
+  timeBeforeEnergyLost: 0.05
 --- !u!114 &11492872
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -250,7 +250,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 6a55a59b76db94a7188cf9ed967254ea, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -274,7 +274,7 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.0000009536743, y: -4.1270976, z: -0.000028371811}
+    m_Center: {x: 0.0000014305115, y: -4.127097, z: -0.000028371811}
     m_Extent: {x: 1.2941217, y: 3.9078064, z: 1.1418686}
   m_DirtyAABB: 0
 --- !u!183 &18358406
