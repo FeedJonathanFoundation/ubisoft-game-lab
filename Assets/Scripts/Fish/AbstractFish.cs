@@ -61,8 +61,12 @@ public abstract class AbstractFish : LightSource
     protected override void Update()
     {
         base.Update();
+        if (actions == null)
+        {
+            Debug.Log("NPC Actions list is null for " + this.gameObject);
+            return;
+        }
         List<NPCActionable> activeActions = actions.GetActiveActions();
-
         foreach (NPCActionable action in activeActions)
         {
             action.Execute(steerable);
