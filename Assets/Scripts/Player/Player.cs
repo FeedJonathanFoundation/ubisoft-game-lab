@@ -476,7 +476,7 @@ public class Player : LightSource
         // The player cannot be absorbed if invulnerable
         if (IsInvulnerable())
         {
-            Debug.Log("PLAYER CAN'T BE ABSORBED: " + (Time.deltaTime - lastTimeHit));
+            // Debug.Log("PLAYER CAN'T BE ABSORBED: " + (Time.deltaTime - lastTimeHit));
             return false;
         }
 
