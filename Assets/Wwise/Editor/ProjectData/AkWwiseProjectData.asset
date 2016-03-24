@@ -16,8 +16,8 @@ MonoBehaviour:
   - PhysicalPath: Events/Default Work Unit.wwu
     ParentPhysicalPath: 
     Guid: '{EAE4CDC1-6F63-43E7-87D3-AEE39B8BC9B7}'
-    m_lastTimePsrt1: -1130094976
-    m_lastTimePart2: -1999416443
+    m_lastTimePsrt1: 817750272
+    m_lastTimePart2: -1999416355
     List:
     - Name: Ambient1
       Path: Default Work Unit/Ambient Themes/Ambient1
@@ -42,6 +42,30 @@ MonoBehaviour:
         ObjectType: 3
       ID: -199807317
       Guid: 68f97f8c754f2540b230c067da3819ce
+      maxAttenuation: 0
+    - Name: Ambient2Stop
+      Path: Default Work Unit/Ambient Themes/Ambient2Stop
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Ambient Themes
+        ObjectType: 4
+      - ElementName: Ambient2Stop
+        ObjectType: 3
+      ID: -152322485
+      Guid: 5603f9a3388e694cb7097697ea03d0e2
+      maxAttenuation: 0
+    - Name: Ambient3
+      Path: Default Work Unit/Ambient Themes/Ambient3
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Ambient Themes
+        ObjectType: 4
+      - ElementName: Ambient3
+        ObjectType: 3
+      ID: -199807318
+      Guid: 62e22cd326b26e40850ab379d40590e6
       maxAttenuation: 0
     - Name: Checkpoint
       Path: Default Work Unit/Player Effects/Checkpoint
@@ -235,6 +259,18 @@ MonoBehaviour:
       ID: 1316273048
       Guid: 43d2f29b89bb65459b894b5474a31ac1
       maxAttenuation: 0
+    - Name: StopJellyfishAttack
+      Path: Default Work Unit/Player Effects/StopJellyfishAttack
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Player Effects
+        ObjectType: 4
+      - ElementName: StopJellyfishAttack
+        ObjectType: 3
+      ID: -495043807
+      Guid: 01e721bac5adf84e992bbddfe0253a08
+      maxAttenuation: 0
     - Name: WallCrash
       Path: Default Work Unit/Player Effects/WallCrash
       PathAndIcons:
@@ -251,15 +287,15 @@ MonoBehaviour:
   - PhysicalPath: Master-Mixer Hierarchy/Default Work Unit.wwu
     ParentPhysicalPath: 
     Guid: '{1A303C29-4668-4868-A41A-B420E1905AA0}'
-    m_lastTimePsrt1: 1542579328
-    m_lastTimePart2: -1999416666
+    m_lastTimePsrt1: 817750272
+    m_lastTimePart2: -1999416355
     List: []
   StateWwu:
   - PhysicalPath: States/Default Work Unit.wwu
     ParentPhysicalPath: 
     Guid: '{D224D7DA-F454-4289-BD1F-288DB137AAAC}'
-    m_lastTimePsrt1: 1542579328
-    m_lastTimePart2: -1999416666
+    m_lastTimePsrt1: 827750272
+    m_lastTimePart2: -1999416355
     List:
     - Name: IMAmb1
       Path: Default Work Unit/IMAmb1
@@ -299,6 +335,7 @@ MonoBehaviour:
       - CP1
       - CP2
       - CP3
+      - CP4
       - None
       ValueIcons:
       - ElementName: CP1
@@ -307,13 +344,16 @@ MonoBehaviour:
         ObjectType: 8
       - ElementName: CP3
         ObjectType: 8
+      - ElementName: CP4
+        ObjectType: 8
       - ElementName: None
         ObjectType: 8
-      valueIDs: 3d8997293e8997293f899729db3ba32c
+      valueIDs: 3d8997293e8997293f89972938899729db3ba32c
       ValueGuids:
       - bytes: 148016be8e0fd648b505d2988e3b9914
       - bytes: 9c44bc9e89e05240b34e8b50a1ca48be
       - bytes: 44aa664e6a58e944a67272cf7d455790
+      - bytes: 334d576376d6174b9e490e47b3751695
       - bytes: a5b267f2f38b5e4cab2411db0a4b4659
     - Name: IMAmb3
       Path: Default Work Unit/IMAmb3
@@ -325,13 +365,25 @@ MonoBehaviour:
       ID: 1452801640
       Guid: b733d8132ad597469250d811e5810adb
       values:
+      - Hiding
+      - Hunted
       - None
+      - Over
       ValueIcons:
+      - ElementName: Hiding
+        ObjectType: 8
+      - ElementName: Hunted
+        ObjectType: 8
       - ElementName: None
         ObjectType: 8
-      valueIDs: db3ba32c
+      - ElementName: Over
+        ObjectType: 8
+      valueIDs: 4829eed249030928db3ba32c67702cdb
       ValueGuids:
+      - bytes: e5b77f89e2e5354d8760b38fa8428f39
+      - bytes: 8962547ac085f0428ea8604c65c10d72
       - bytes: f59e995fa7745d48b9f408dd3edca1e5
+      - bytes: 1f459b701451184893fe93c96afade56
     - Name: IMAmb4
       Path: Default Work Unit/IMAmb4
       PathAndIcons:
