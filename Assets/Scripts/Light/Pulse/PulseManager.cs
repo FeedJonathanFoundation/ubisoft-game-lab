@@ -30,15 +30,11 @@ public class PulseManager : MonoBehaviour
        // Find the position to place the pulse, as an intersection of the camera bounds and the player-target vector
        CalculatePosition();
        this.transform.position = new Vector3(x, y, camera.transform.position.z + 10);
-    //    InvokeRepeating("PulseSound", 0f, duration);
-        
     }
     
     void PulseSound()
     {
         AkSoundEngine.PostEvent("Pulse", this.transform.gameObject);
-        count++;
-        Debug.Log("Sound " + count);
     }
     
     void CalculatePosition()
