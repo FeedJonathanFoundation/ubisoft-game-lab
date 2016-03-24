@@ -254,6 +254,7 @@ public class Player : LightSource
 
         if (isDead)
         {
+            this.isSafe = true;
             gameOverCanvas.SetActive(true);
             RestartGame();
         }
@@ -688,5 +689,10 @@ public class Player : LightSource
     {
         get { return movement; }
         set { movement = value; }
+    }
+
+    public void MaxSpeed(float newSpeed)
+    {
+        maxSpeed = newSpeed;
     }
 }
