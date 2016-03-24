@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -80,49 +81,48 @@ public class PauseMenu : MonoBehaviour
             if (Input.GetAxisRaw("Vertical") > 0)
             {
                 menuMoveDirection = 1;
+                StartCoroutine(MoveMenu());
             }
             else if (Input.GetAxisRaw("Vertical") < 0)
             {
                 menuMoveDirection = -1;
+                StartCoroutine(MoveMenu());
             }
 
-            MoveMenu();
+            
         }
 
 
     }
 
-    private void MoveMenu()
+    private IEnumerator MoveMenu()
     {
-        // use raw to get updates even when timescale = 0
-        if (Input.GetButtonUp("Vertical") && pauseMode == 1)
+        if (menuMoveDirection > 0)
         {
-
-            if (menuMoveDirection > 0)
+            if (selectedMenuItem > 0)
             {
-                if (selectedMenuItem > 0)
-                {
-                    selectedMenuItem--;
-                }
-                else
-                {
-                    selectedMenuItem = menuButtons.Length - 1;
-                }
+                selectedMenuItem--;
             }
             else
             {
-                if (selectedMenuItem < menuButtons.Length - 1)
-                {
-                    selectedMenuItem++;
-                }
-                else
-                {
-                    selectedMenuItem = 0;
-                }
+                selectedMenuItem = menuButtons.Length - 1;
             }
-
-            highlightButton();
         }
+        else
+        {
+            if (selectedMenuItem < menuButtons.Length - 1)
+            {
+                selectedMenuItem++;
+            }
+            else
+            {
+                selectedMenuItem = 0;
+            }
+        }
+
+        highlightButton();
+        yield return new WaitForSeconds(3);
+        
     }
 
     private void highlightButton()
