@@ -178,10 +178,11 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 0}
   - {fileID: 0}
-  minFishCount: 40
-  maxFishCount: 40
+  minFishCount: 100
+  maxFishCount: 100
   schoolSize: 7
-  maxDistance: 150
+  initialSwimAngle: 0
+  maxDistance: 50
   automaticReset: 1
 --- !u!114 &11470310
 MonoBehaviour:
@@ -198,7 +199,7 @@ MonoBehaviour:
   - {fileID: 166000, guid: 246b6ac97065c4fb6a2a8caf4194994d, type: 2}
   - {fileID: 140610, guid: 38d0002f615f542afba0a194a8ad5b31, type: 2}
   - {fileID: 126260, guid: 031b3c20622814d5eb2efa60c665d4d4, type: 2}
-  pooledAmount: 230000000500000005000000
+  pooledAmount: 5a0000000a00000005000000
   extensible: 1
 --- !u!135 &13567536
 SphereCollider:
