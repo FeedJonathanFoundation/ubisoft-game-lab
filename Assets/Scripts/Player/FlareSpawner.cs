@@ -60,37 +60,41 @@ public class FlareSpawner : MonoBehaviour
         if (timer < cooldownTime)
         {
             timer += Time.deltaTime;
+            
         }
         else
         {
             ready = true;
         }
 
-        if (ready && Input.GetButtonDown("UseFlare"))
+        if (Input.GetButtonDown("UseFlare"))
         {
-            float cost = flareEnergyCost * flareCostPercentage;
-
-            if ((lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost)))
+            if (ready)
             {
-                flare = (GameObject)Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
-                lightSource.LightEnergy.Deplete(flareEnergyCost);
-                // Apply recoil in the opposite direction the flare was shot
-                rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
-                controllerRumble.ShotFlare();   // Rumble the controller
-                timer = 0.0f;
-                
-                //AkSoundEngine.PostEvent("Flare", this.gameObject);
-                
-                //reset all values for the zoom when ever a player fires a flare
-                if (smoothCamera != null)
+                float cost = flareEnergyCost * flareCostPercentage;
+
+                if ((lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost)))
                 {
-                    smoothCamera.FlareShoot();
-                    smoothCamera.ResetTimer();   
-                }                    
+                    flare = (GameObject)Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
+                    lightSource.LightEnergy.Deplete(flareEnergyCost);
+                    // Apply recoil in the opposite direction the flare was shot
+                    rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
+                    controllerRumble.ShotFlare();   // Rumble the controller
+                    timer = 0.0f;
+
+                    AkSoundEngine.PostEvent("Flare", this.gameObject);
+
+                    //reset all values for the zoom when ever a player fires a flare
+                    if (smoothCamera != null)
+                    {
+                        smoothCamera.FlareShoot();
+                        smoothCamera.ResetTimer();
+                    }
+                }
             }
             else
             {
-                //AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
+                AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
             }
         }
         if (flare != null)
