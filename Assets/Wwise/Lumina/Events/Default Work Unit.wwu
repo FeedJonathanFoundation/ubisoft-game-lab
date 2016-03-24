@@ -184,6 +184,54 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="FlareEat" ID="{9FA7A141-36F7-4414-A623-243DD9EDB3A1}">
+							<ChildrenList>
+								<Action Name="Stop" ID="{7FA1FF22-40C1-4249-A864-DE9BDFCB0449}" ShortID="382283309" Type="Stop" Scope="One" Global="false">
+									<PropertyList>
+										<Property Name="Delay" Type="Real64" Value="0.5"/>
+										<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+									</PropertyList>
+									<ElementList>
+										<Element ID="{E8175887-D24E-4355-8CC1-AB3BB2F31413}" Global="false">
+											<ObjectRef Name="Flare C" ID="{0C811697-24BE-4249-9C36-1656EB0CD55F}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Pulse" ID="{9BF2D243-BB89-4565-9B89-4B5474A31AC1}">
+							<ChildrenList>
+								<Action Name="Play" ID="{F12788BE-F53C-452F-9AEE-C1F906AD7903}" ShortID="208710494" Type="Play" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{110CC57B-A011-4AD4-A252-FACFA9D2360F}" Global="false">
+											<ObjectRef Name="Ping Final" ID="{CE3DA29A-CEB1-4748-9459-A1057E866CB1}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Current" ID="{43C4F5B1-560D-4941-ABC0-A33E772D56F6}">
+							<ChildrenList>
+								<Action Name="Play" ID="{F8FBCB51-009F-4E4C-A2AE-776DE860AD36}" ShortID="205661087" Type="Play" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{63BA29CB-68E1-4CE1-82EF-A7F9A83BE1AB}" Global="false">
+											<ObjectRef Name="Evade A" ID="{AE5178B5-1A00-40A5-A1E8-AF1E87EC445D}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="JellyfishAttack" ID="{78E23E54-C485-41E1-A72B-340F3B157F53}">
+							<ChildrenList>
+								<Action Name="Play" ID="{A0A306E2-F718-4ACE-9F43-FA7FA798C75C}" ShortID="795856891" Type="Play" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{4830CB5A-7ACA-48E4-A906-12A386972B5F}" Global="false">
+											<ObjectRef Name="Jellyfish Attacking" ID="{BBBBC1DB-1622-4887-B0E6-27F735A1B04C}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="NPC Effects" ID="{7BC7F326-4F72-4B1E-BDEB-A3FDCC5ED2F5}" ShortID="594739800">
