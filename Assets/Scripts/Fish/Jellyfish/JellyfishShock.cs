@@ -15,8 +15,11 @@ public class JellyfishShock : MonoBehaviour
             timer += Time.deltaTime;
             if(timer > timeBeforeEnergyLost)
             {
-                Player player = col.gameObject.GetComponent<Player>();
-                player.LightEnergy.Deplete(energyLost);
+                Player player = col.GetComponent<Player>();
+                if(player)
+                {
+                    player.LightEnergy.Deplete(energyLost);
+                }
                 timer = 0;
             }
         }
