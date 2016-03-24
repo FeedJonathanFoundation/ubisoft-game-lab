@@ -142,6 +142,8 @@ public class Player : LightSource
     
     private static Player playerInstance;
 
+    private GameObject UI;
+
     [SerializeField]
     private GameObject gameOverCanvasPrefab;
 
@@ -176,10 +178,29 @@ public class Player : LightSource
         ResetPlayerState();
         
         gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
-        gameOverCanvas.SetActive(false);
+        
+        UI = GameObject.FindWithTag("UI");
 
-        #if UNITY_EDITOR
-            this.ValidateInputs();
+        if (gameOverCanvas != null)
+        {
+            gameOverCanvas.SetActive(false);
+        }
+        else
+        {
+            Canvas[] canvases = UI.GetComponentsInChildren<Canvas>();
+            foreach (Canvas canvas in canvases)
+            {
+                if (canvas.name == "GameOverCanvas")
+                {
+                    gameOverCanvas = canvas.gameObject;
+                    gameOverCanvas.SetActive(false);
+                    break;
+                }
+            }
+        }
+
+#if UNITY_EDITOR
+        this.ValidateInputs();
         #endif
     }
 
@@ -207,6 +228,11 @@ public class Player : LightSource
         if (gameOverCanvas == null)
         {
             gameOverCanvas = GameObject.Instantiate(gameOverCanvasPrefab);
+            gameOverCanvas.SetActive(false);
+        }
+        
+        if (gameOverCanvas.activeSelf == true && !isDead)
+        {
             gameOverCanvas.SetActive(false);
         }
 
