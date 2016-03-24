@@ -254,6 +254,7 @@ public class Player : LightSource
         if (isDead)
         {
             this.isSafe = true;
+            SetCanAbsorbState(false); //remove canAbsorb
             gameOverCanvas.SetActive(true);
             RestartGame();
         }
@@ -640,6 +641,7 @@ public class Player : LightSource
             this.deathParticlesPlayed = false;
             this.Rigidbody.drag = defaultDrag; // reset drag
             this.transform.FindChild("ProbeModel").gameObject.SetActive(true); //reactivate bubbles
+            SetCanAbsorbState(true); //reset canAbsorb
             ReactivateObjects();
             
             LoadGame();
