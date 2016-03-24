@@ -6451,8 +6451,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 520395768}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.7781, y: 15.11508, z: 3.6875}
-  m_LocalScale: {x: 1, y: 50, z: 1}
+  m_LocalPosition: {x: -12.71, y: 15.11508, z: 3.6875}
+  m_LocalScale: {x: 5, y: 50, z: 1}
   m_Children: []
   m_Father: {fileID: 2125123491}
   m_RootOrder: 0
@@ -6478,8 +6478,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 6.1232336e-17}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 44.07352, y: 2.41717, z: 6.1232336e-17}
+  m_Center: {x: -21.291811, y: 0.7085853, z: 0}
 --- !u!23 &520395772
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7267,21 +7267,9 @@ Prefab:
       propertyPath: moveToWaypoint.waypointList
       value: 
       objectReference: {fileID: 978266844}
-    - target: {fileID: 11405610, guid: 01b75c76312fc4c6c9dc06c240c9c8bf, type: 2}
-      propertyPath: followPlayer.speedMaxIncreased
-      value: 5.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 11405610, guid: 01b75c76312fc4c6c9dc06c240c9c8bf, type: 2}
-      propertyPath: followPlayer.distanceSpeedIncrease
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 11405610, guid: 01b75c76312fc4c6c9dc06c240c9c8bf, type: 2}
-      propertyPath: followPlayer.maxSpeed
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 11487242, guid: 01b75c76312fc4c6c9dc06c240c9c8bf, type: 2}
       propertyPath: radius
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01b75c76312fc4c6c9dc06c240c9c8bf, type: 2}
@@ -13148,7 +13136,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2125123490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 118.4, y: -29.9, z: -3.6875}
+  m_LocalPosition: {x: 116.3, y: -29.55, z: -3.6875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 520395769}

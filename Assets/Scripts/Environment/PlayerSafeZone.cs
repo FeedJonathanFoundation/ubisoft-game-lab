@@ -17,9 +17,7 @@ public class PlayerSafeZone : MonoBehaviour
                 player.isSafe = true;
                 if (blookingCurrent)
                 {
-                    Debug.Log("change speed");
                     player.MaxSpeed(5);
-                    StartCoroutine(WaitBeforeCurrent(2.0F));
                 }
                 //Debug.Log(player.isSafe);
             }
@@ -29,7 +27,7 @@ public class PlayerSafeZone : MonoBehaviour
     IEnumerator WaitBeforeCurrent(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        blookingCurrent.SetActive(true);
+        
     }
 
     void OnTriggerExit(Collider col)
@@ -40,6 +38,11 @@ public class PlayerSafeZone : MonoBehaviour
             if (player)
             {
                 player.isSafe = false;
+                if (blookingCurrent)
+                {
+                    blookingCurrent.SetActive(true);
+                    this.gameObject.SetActive(false);
+                }
                 //Debug.Log(player.isSafe);
             }
         }

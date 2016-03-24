@@ -648,7 +648,7 @@ public class Steerable : MonoBehaviour
                 desiredVelocity = ((Vector2)child.position - (Vector2)bigFish.position).normalized;
             }
         }
-        Debug.Log(closestDistanceWaypoint);
+        
         if(closestDistanceWaypoint <= slowingRadius && closestDistanceWaypoint > 0)
         {
             return Vector2.zero;
