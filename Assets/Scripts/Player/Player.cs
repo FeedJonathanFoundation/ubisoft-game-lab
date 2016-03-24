@@ -108,6 +108,7 @@ public class Player : LightSource
     private bool deathParticlesPlayed;
     private MaterialExtensions materials;
     private ControllerRumble controllerRumble;  // Caches the controller rumble component
+    private GameObject gameOverCanvas;
     private int currentLevel;
     public int playerVelocity;
 
@@ -160,6 +161,9 @@ public class Player : LightSource
         ChangeColor(probeColorOff, false, 0);
         LoadGame();
         ResetPlayerState();
+        
+        gameOverCanvas = GameObject.Find("GameOverCanvas");
+        gameOverCanvas.SetActive(false);
 
         #if UNITY_EDITOR
             this.ValidateInputs();
@@ -205,6 +209,7 @@ public class Player : LightSource
 
         if (isDead)
         {
+            gameOverCanvas.SetActive(true);
             RestartGame();
             ObjectPooler.current.ResetPool();
         }
@@ -578,6 +583,7 @@ public class Player : LightSource
         if (Input.GetButtonDown("Restart"))
         {
             Debug.Log("Game Restarted");
+            gameOverCanvas.SetActive(false);
             Transform.localScale = new Vector3(1, 1, 1);
             Rigidbody.isKinematic = false;
             Rigidbody.useGravity = false;
