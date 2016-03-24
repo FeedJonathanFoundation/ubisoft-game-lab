@@ -453,24 +453,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &137152
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 470730}
-  - 23: {fileID: 2397712}
-  - 102: {fileID: 10233640}
-  - 114: {fileID: 11440170}
-  m_Layer: 0
-  m_Name: LightEnergyText (Debug)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &138976
 GameObject:
   m_ObjectHideFlags: 1
@@ -1246,7 +1228,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 479988}
-  m_RootOrder: 11
+  m_RootOrder: 10
 --- !u!4 &428646
 Transform:
   m_ObjectHideFlags: 1
@@ -1345,7 +1327,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 479988}
-  m_RootOrder: 10
+  m_RootOrder: 9
 --- !u!4 &441462
 Transform:
   m_ObjectHideFlags: 1
@@ -1504,18 +1486,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 431708}
   m_RootOrder: 0
---- !u!4 &470730
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 137152}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.05, y: -0.7, z: 0.2163086}
-  m_LocalScale: {x: 0.006, y: 0.006, z: 0.001}
-  m_Children: []
-  m_Father: {fileID: 479988}
-  m_RootOrder: 9
 --- !u!4 &470782
 Transform:
   m_ObjectHideFlags: 1
@@ -1627,7 +1597,6 @@ Transform:
   - {fileID: 497578}
   - {fileID: 433616}
   - {fileID: 473960}
-  - {fileID: 470730}
   - {fileID: 439638}
   - {fileID: 426830}
   m_Father: {fileID: 0}
@@ -2079,32 +2048,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!23 &2397712
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 137152}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
 --- !u!33 &3310202
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -2204,27 +2147,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
---- !u!102 &10233640
-TextMesh:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 137152}
-  m_Text: 0.00
-  m_OffsetZ: 0
-  m_CharacterSize: 1
-  m_LineSpacing: 1
-  m_Anchor: 4
-  m_Alignment: 1
-  m_TabSize: 4
-  m_FontSize: 500
-  m_FontStyle: 0
-  m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Color:
-    serializedVersion: 2
-    rgba: 4294964224
 --- !u!108 &10801068
 Light:
   m_ObjectHideFlags: 1
@@ -2513,17 +2435,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightToRadiusRatio: 0.2
   thrustRadiusMultiplier: 0
---- !u!114 &11440170
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 137152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d02502e59512407886ceb4d2dab5b1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11441870
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2539,7 +2450,7 @@ MonoBehaviour:
   playerWillAlwaysAbsorb: 0
   absorptionRate: 50000
   defaultEnergy: 40
-  infiniteEnergy: 1
+  infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11442326}
   massEjectionTransform: {fileID: 451912}
   lightBallPrefab: {fileID: 191022, guid: 86580ee0a666bcd41ac4dbd0b8ad5342, type: 2}
