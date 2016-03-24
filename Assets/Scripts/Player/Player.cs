@@ -211,7 +211,6 @@ public class Player : LightSource
         {
             gameOverCanvas.SetActive(true);
             RestartGame();
-            ObjectPooler.current.ResetPool();
         }
         else
         {
@@ -596,6 +595,7 @@ public class Player : LightSource
             this.Rigidbody.drag = defaultDrag; // reset drag
             this.transform.FindChild("ProbeModel").gameObject.SetActive(true); //reactivate bubbles
             ReactivateObjects();
+            
             LoadGame();
         }
     }
@@ -613,6 +613,7 @@ public class Player : LightSource
             }
             pickup.SetActive(true);
         }
+        ObjectPooler.current.ResetPool();
     }
 
     /// <summary>
