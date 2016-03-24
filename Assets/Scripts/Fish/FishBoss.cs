@@ -41,7 +41,7 @@ public class FishBoss : AbstractFish
         moveToWaypoint.SetPriority(0);
         moveToWaypoint.SetID("-3");
         
-        animator = GetComponentInParent<Animator>();
+        //animator = GetComponentInParent<Animator>();
         bite = false;
         swim = false;
         Animate();
@@ -104,13 +104,19 @@ public class FishBoss : AbstractFish
     
     private void Animate()
     {
-        animator.SetBool("Bite", bite);
-        animator.SetBool("Swim", swim);
+        if(animator)
+        {
+            animator.SetBool("Bite", bite);
+            animator.SetBool("Swim", swim);
+        }
     }
     
     private void SetAnimationSpeed()
     {
-        animationSpeed = GetComponent<Rigidbody>().velocity.magnitude;
-        animator.SetFloat("Speed", animationSpeed);
+        if(animator)
+        {
+            animationSpeed = GetComponent<Rigidbody>().velocity.magnitude;
+            animator.SetFloat("Speed", animationSpeed);
+        }
     }
 }
