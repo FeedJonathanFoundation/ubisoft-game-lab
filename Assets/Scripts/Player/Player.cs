@@ -181,11 +181,7 @@ public class Player : LightSource
         
         UI = GameObject.FindWithTag("UI");
 
-        if (gameOverCanvas != null)
-        {
-            gameOverCanvas.SetActive(false);
-        }
-        else
+        if (gameOverCanvas == null)
         {
             Canvas[] canvases = UI.GetComponentsInChildren<Canvas>();
             foreach (Canvas canvas in canvases)
@@ -193,7 +189,6 @@ public class Player : LightSource
                 if (canvas.name == "GameOverCanvas")
                 {
                     gameOverCanvas = canvas.gameObject;
-                    gameOverCanvas.SetActive(false);
                     break;
                 }
             }
@@ -225,16 +220,20 @@ public class Player : LightSource
     {
         base.Update();
 
+        // if (gameOverCanvas == null)
+        // {
+        //     gameOverCanvas = GameObject.Instantiate(gameOverCanvasPrefab);
+        //     gameOverCanvas.SetActive(false);
+        // }
         if (gameOverCanvas == null)
         {
-            gameOverCanvas = GameObject.Instantiate(gameOverCanvasPrefab);
-            gameOverCanvas.SetActive(false);
+            gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
         }
-        
         if (gameOverCanvas.activeSelf == true && !isDead)
         {
             gameOverCanvas.SetActive(false);
         }
+        
 
         playerVelocity = (int)this.Rigidbody.velocity.magnitude;
         AkSoundEngine.SetRTPCValue("playerVelocity", playerVelocity);
@@ -254,6 +253,7 @@ public class Player : LightSource
 
         if (isDead)
         {
+            this.isSafe = true;
             gameOverCanvas.SetActive(true);
             RestartGame();
         }
@@ -688,5 +688,10 @@ public class Player : LightSource
     {
         get { return movement; }
         set { movement = value; }
+    }
+
+    public void MaxSpeed(float newSpeed)
+    {
+        maxSpeed = newSpeed;
     }
 }
