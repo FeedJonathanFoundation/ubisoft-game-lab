@@ -139,14 +139,25 @@ public class Player : LightSource
     private IEnumerator changeColorCoroutine;
     private IEnumerator flashColorCoroutine;
     private IEnumerator changeIntensityCoroutine;
-
+    
+    private static Player playerInstance;
+    
     /// <summary>
     /// Initializes Player components
     /// </summary>
     protected override void Awake()
     {
         base.Awake(); // call parent LightSource Awake() first
-        
+        if (playerInstance != null && playerInstance != this)
+        {
+            GameObject.Destroy(this.gameObject);   
+        }
+        else
+        {
+            DontDestroyOnLoad(this.gameObject);
+            playerInstance =  this;
+        }
+                       
         this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, this.Transform, this.Rigidbody, this.LightEnergy, this.jetFuelEffect, this.rotationSpeed);
         this.lightToggle = new PlayerLightToggle(this.Transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights, propulsionLightRange);
         this.materials = new MaterialExtensions();
@@ -157,7 +168,6 @@ public class Player : LightSource
         this.controllerRumble = GetComponent<ControllerRumble>();
         AkSoundEngine.SetState("PlayerLife", "Alive");
         this.currentLevel = SceneManager.GetActiveScene().buildIndex;
-        DontDestroyOnLoad(this.gameObject);
         ChangeColor(probeColorOff, false, 0);
         LoadGame();
         ResetPlayerState();
@@ -583,20 +593,21 @@ public class Player : LightSource
     {
         if (Input.GetButtonDown("Restart"))
         {
-            Debug.Log("Game Restarted");
-            gameOverCanvas.SetActive(false);
-            Transform.localScale = new Vector3(1, 1, 1);
-            Rigidbody.isKinematic = false;
-            Rigidbody.useGravity = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            // Debug.Log("Game Restarted");
+            // gameOverCanvas.SetActive(false);
+            // Transform.localScale = new Vector3(1, 1, 1);
+            // Rigidbody.isKinematic = false;
+            // Rigidbody.useGravity = false;
 
-            this.LightEnergy.Add(this.DefaultEnergy);
-            this.isDead = false;
-            this.deathParticlesPlayed = false;
-            this.Rigidbody.drag = defaultDrag; // reset drag
-            this.transform.FindChild("ProbeModel").gameObject.SetActive(true); //reactivate bubbles
-            ReactivateObjects();
+            // this.LightEnergy.Add(this.DefaultEnergy);
+            // this.isDead = false;
+            // this.deathParticlesPlayed = false;
+            // this.Rigidbody.drag = defaultDrag; // reset drag
+            // this.transform.FindChild("ProbeModel").gameObject.SetActive(true); //reactivate bubbles
+            // ReactivateObjects();
             
-            LoadGame();
+            // LoadGame();
         }
     }
     

@@ -72,7 +72,7 @@ public class SmoothCamera : MonoBehaviour
     private bool inCurrents;
     private string particleDirection;
     private string waitingCurrent;
-
+    private static SmoothCamera cameraInstance;
     void Awake()
     {
         playerRigidbody =  target.GetComponent<Rigidbody>();
@@ -87,7 +87,15 @@ public class SmoothCamera : MonoBehaviour
         transform.position = position;
         deadzoneRadiusSquared = deadzoneRadius * deadzoneRadius;
         this.zoomTimer = timeBeforeZoomIn;
-        DontDestroyOnLoad(this.gameObject); 
+        if (cameraInstance != null && cameraInstance != this)
+        {
+            GameObject.Destroy(this.gameObject);   
+        }
+        else
+        {
+            DontDestroyOnLoad(this.gameObject);
+            cameraInstance =  this;
+        } 
     }
     
     void FixedUpdate()
