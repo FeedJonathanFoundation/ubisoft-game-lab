@@ -497,6 +497,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToScaleRatio: 0.08
+--- !u!114 &11418202
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d02502e59512407886ceb4d2dab5b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 0}
+  lightSource: {fileID: 0}
 --- !u!114 &11419800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -515,7 +528,7 @@ MonoBehaviour:
   infiniteEnergy: 0
   absorbableLightDetector: {fileID: 11442102}
   defaultWanderAngle: 0
-  damageInflicted: 4
+  damageInflicted: 17
   lightDetector: {fileID: 11474248}
   ignoreFishOfSameType: 1
   deathParticles: {fileID: 0}
@@ -618,10 +631,10 @@ MonoBehaviour:
     seekWhenStronger:
       strengthMultiplier: 1
       overrideSteerableSpeed: 1
-      minSpeed: 2.5
-      maxSpeed: 2.5
+      minSpeed: 6
+      maxSpeed: 6
       overrideMaxForce: 1
-      maxForce: 1
+      maxForce: 110
     fleeWhenWeaker:
       strengthMultiplier: 10
       overrideSteerableSpeed: 1
@@ -751,7 +764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerOffset: {x: 0, y: 1.55, z: 0}
-  radius: 2.15
+  radius: 10
   layerToDetect:
     serializedVersion: 2
     m_Bits: 16384
