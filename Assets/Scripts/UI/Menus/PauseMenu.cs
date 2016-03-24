@@ -18,7 +18,11 @@ public class PauseMenu : MonoBehaviour
 
     private Button[] menuButtons;
     private int selectedMenuItem;
-    private bool isAxisInUse;
+    //private bool isAxisInUse;
+    private float timeLastMove = 0;
+    [SerializeField]
+    private float timeBetweenButtonChange = 0.2f;
+    private float currentTime;
 
     void Awake()
     {
@@ -37,11 +41,15 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
+        currentTime = Time.realtimeSinceStartup;
+        
+        
         // If the escape key is pressed and the game is not currently paused
         if (Input.GetButtonDown("Pause Menu") && pauseMode == 0)
         {
             pauseMode = 1;
             pauseCanvas.SetActive(true);
+            
             // Freezes the game time
             Time.timeScale = 0f;
             // Free the cursor
@@ -77,22 +85,26 @@ public class PauseMenu : MonoBehaviour
                 pauseCanvas.SetActive(true);
                 menuButtons[selectedMenuItem].onClick.Invoke();
             }
-
-            if (Input.GetAxisRaw("Vertical") > 0 && isAxisInUse == false)
+            
+              
+            
+            if (Input.GetAxisRaw("Vertical") > 0 && (currentTime - timeLastMove) >= timeBetweenButtonChange)
             {   
-                MoveMenu(1);             
-                isAxisInUse = true;
+                MoveMenu(1);       
+                timeLastMove = currentTime;        
+                //isAxisInUse = true;
                 
             }
-            else if (Input.GetAxisRaw("Vertical") < 0 && isAxisInUse == false)
+            else if (Input.GetAxisRaw("Vertical") < 0 && (currentTime - timeLastMove) >= timeBetweenButtonChange)
             {
                 MoveMenu(-1);
-                isAxisInUse = true;                
+                timeLastMove = currentTime;  
+                //isAxisInUse = true;                
             } 
-            else 
-            {
-                isAxisInUse = false;    
-            }
+            // else 
+            // {
+            //     //isAxisInUse = false;    
+            // }
 
             
         }
