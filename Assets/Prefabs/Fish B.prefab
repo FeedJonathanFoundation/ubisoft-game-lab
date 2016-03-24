@@ -163,24 +163,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &181088
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 449820}
-  - 23: {fileID: 2386892}
-  - 102: {fileID: 10220806}
-  - 114: {fileID: 11464394}
-  m_Layer: 0
-  m_Name: LightEnergyText (Debug)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &199142
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,7 +255,6 @@ Transform:
   - {fileID: 477718}
   - {fileID: 485398}
   - {fileID: 485176}
-  - {fileID: 449820}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &427610
@@ -339,18 +320,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 425022}
   m_RootOrder: 4
---- !u!4 &449820
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181088}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.535, z: 0}
-  m_LocalScale: {x: 0.004, y: 0.004, z: 0.0006666667}
-  m_Children: []
-  m_Father: {fileID: 425022}
-  m_RootOrder: 8
 --- !u!4 &453572
 Transform:
   m_ObjectHideFlags: 1
@@ -411,32 +380,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 425022}
   m_RootOrder: 6
---- !u!23 &2386892
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181088}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
 --- !u!54 &5412154
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -481,27 +424,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!102 &10220806
-TextMesh:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181088}
-  m_Text: 0.00
-  m_OffsetZ: 0
-  m_CharacterSize: 1
-  m_LineSpacing: 1
-  m_Anchor: 4
-  m_Alignment: 1
-  m_TabSize: 4
-  m_FontSize: 500
-  m_FontStyle: 0
-  m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Color:
-    serializedVersion: 2
-    rgba: 4278243071
 --- !u!108 &10898936
 Light:
   m_ObjectHideFlags: 1
