@@ -46,17 +46,67 @@
 										</Element>
 									</ElementList>
 								</Action>
-								<Action Name="Play" ID="{9DAAEBBF-CC89-481D-AF0F-70C32828A136}" ShortID="143590271" Type="Play" Scope="One" Global="false">
-									<ElementList>
-										<Element ID="{2677C2BB-92C5-40E6-BEC6-D9D5817E4F6C}" Global="false">
-											<ObjectRef Name="Section 3 Jellyfish ambient" ID="{AFB4E037-E623-4C48-AC5A-C9B57E53394A}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
-										</Element>
-									</ElementList>
-								</Action>
 								<Action Name="Play" ID="{7CB2FF3C-7996-49E9-8580-660F9D41CEEB}" ShortID="741598219" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{BC45CACF-B1F2-49B7-9325-E9FCF4D667F3}" Global="false">
 											<ObjectRef Name="Jellyfish Ambient Crackle" ID="{ECDCE305-6FD5-4408-93F1-A26753AD8E26}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Ambient3" ID="{D32CE262-B226-406E-850A-B379D40590E6}">
+							<ChildrenList>
+								<Action Name="Play" ID="{3B99E112-C6F2-4FD4-9410-FBC10803533F}" ShortID="921413454" Type="Play" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{163F3FDD-98D0-4B0A-86C7-9D9289BEDDDB}" Global="false">
+											<ObjectRef Name="BossActive" ID="{000AD22F-E92C-46DE-AE64-6174D0052284}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+								<Action Name="Play" ID="{67FA189A-F7F9-4654-8A60-E68D4399C888}" ShortID="43043544" Type="Play" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{D736CDE9-FED1-4B94-B68E-EA027027CBAC}" Global="false">
+											<ObjectRef Name="Boss Outro" ID="{BD3760ED-22D3-41E5-9264-BC53007A00EF}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Ambient2Stop" ID="{A3F90356-8E38-4C69-B709-7697EA03D0E2}">
+							<ChildrenList>
+								<Action Name="Stop" ID="{2873F998-E1C2-417E-BB88-DCE688FA805E}" ShortID="856650417" Type="Stop" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{06F847AA-146E-42C7-8AFC-DAC97A948DB0}" Global="false">
+											<ObjectRef Name="Jellyfish Ambient Crackle" ID="{ECDCE305-6FD5-4408-93F1-A26753AD8E26}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+								<Action Name="Stop" ID="{E91ECA92-5E8F-401A-BDB0-71BF28B055E1}" ShortID="606026170" Type="Stop" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{6CCEF7BF-3682-4BEC-B7C1-5A9940F2AB29}" Global="false">
+											<ObjectRef Name="Section 2 Ambient Base Layer" ID="{301D1F2C-5B64-4034-8506-92915F2E1411}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+								<Action Name="Stop" ID="{429069D4-DDFF-4CB8-B9A8-0A2C9E3061EB}" ShortID="1021370264" Type="Stop" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{AE8A492E-E64E-4CE5-AED3-D7DC19214F7C}" Global="false">
+											<ObjectRef Name="Section 2 Ambient Deep layer" ID="{FEF2F84E-D115-4EA1-B752-33228005041E}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+								<Action Name="Stop" ID="{F865D5D2-AB92-45ED-A6C8-325EFA2DBA39}" ShortID="841640155" Type="Stop" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{C59B1321-07ED-4668-BFD6-9BF0842373EA}" Global="false">
+											<ObjectRef Name="Section 2 Ambient Volcano" ID="{A8BA1103-FA82-4AA0-8650-3D9110528E0C}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+								<Action Name="Stop" ID="{F0605FCB-965F-4967-B555-36678C9FB96B}" ShortID="688365182" Type="Stop" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{4ED63A23-124D-40AA-9787-FA815E8F36AA}" Global="false">
+											<ObjectRef Name="Section 2 Ambient Whale Layer" ID="{90CF5BCF-EF69-4BB7-A163-839FAFB7483C}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
 										</Element>
 									</ElementList>
 								</Action>
@@ -226,6 +276,17 @@
 								<Action Name="Play" ID="{A0A306E2-F718-4ACE-9F43-FA7FA798C75C}" ShortID="795856891" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{4830CB5A-7ACA-48E4-A906-12A386972B5F}" Global="false">
+											<ObjectRef Name="Jellyfish Attacking" ID="{BBBBC1DB-1622-4887-B0E6-27F735A1B04C}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="StopJellyfishAttack" ID="{BA21E701-ADC5-4EF8-992B-BDDFE0253A08}">
+							<ChildrenList>
+								<Action Name="Stop" ID="{46792063-3429-43F4-8AAD-87DA31777BD2}" ShortID="398596322" Type="Stop" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{00079A14-B267-41A1-8EB4-C12089464DBF}" Global="false">
 											<ObjectRef Name="Jellyfish Attacking" ID="{BBBBC1DB-1622-4887-B0E6-27F735A1B04C}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
 										</Element>
 									</ElementList>
