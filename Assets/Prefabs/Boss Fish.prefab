@@ -515,15 +515,15 @@ MonoBehaviour:
   ignoreFishOfSameType: 1
   deathParticles: {fileID: 0}
   followPlayer:
-    strengthMultiplier: 1
+    strengthMultiplier: 2
     overrideSteerableSpeed: 1
     minSpeed: 0.5
-    maxSpeed: 5.5
+    maxSpeed: 6
     overrideMaxForce: 1
     maxForce: 1.5
-    speedMaxIncreased: 5.6
+    speedMaxIncreased: 7
     speedMinIncreased: 0.6
-    distanceSpeedIncrease: 10
+    distanceSpeedIncrease: 5
     seekPlayer:
       strengthMultiplier: 0
       overrideSteerableSpeed: 0
@@ -574,9 +574,9 @@ MonoBehaviour:
     strengthMultiplier: 1
     overrideSteerableSpeed: 1
     minSpeed: 0.5
-    maxSpeed: 1
+    maxSpeed: 2
     overrideMaxForce: 0
-    maxForce: 1
+    maxForce: 1.5
     waypointList: {fileID: 0}
     slowingRadius: 15
     wallAvoidance:
@@ -647,8 +647,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bfd65893f398f45824f35f221ef78d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 3
-  maxSpeed: 3
+  minSpeed: 0
+  maxSpeed: 5.5
   maxForce: 1
   bodyRadius: 1.35
   obstacleDetector: {fileID: 11484122}
