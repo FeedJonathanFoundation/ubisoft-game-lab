@@ -7,7 +7,7 @@ public class BossEatFlare : MonoBehaviour
     
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.Find("Player");
     }
     
     void OnTriggerEnter(Collider col)
@@ -16,10 +16,8 @@ public class BossEatFlare : MonoBehaviour
         if (col.CompareTag("Flare"))
         {
             Destroy(col.transform.parent.gameObject);
-            Debug.Log("eat flare");
-            //col.transform.parent.gameObject.SetActive(false);
-            Transform flareSpawner = player.transform.FindChild("FlareSpawn");
-            flareSpawner.GetComponent<FlareSpawner>().EatFlare();
+            
+            player.GetComponent<FlareSpawner>().EatFlare();
         }
     }
 }
