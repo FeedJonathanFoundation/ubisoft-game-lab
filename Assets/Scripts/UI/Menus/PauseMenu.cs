@@ -17,6 +17,7 @@ public class PauseMenu : MonoBehaviour
     private int pauseMode = 0;
 
     private Button[] menuButtons;
+    private Button[] sceneButtons;
     private int selectedMenuItem;
     //private bool isAxisInUse;
     private float timeLastMove = 0;
@@ -42,8 +43,7 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         currentTime = Time.realtimeSinceStartup;
-        
-        
+                
         // If the escape key is pressed and the game is not currently paused
         if (Input.GetButtonDown("Pause Menu") && pauseMode == 0)
         {
@@ -195,7 +195,7 @@ public class PauseMenu : MonoBehaviour
     public void ExitToMainMenuButton()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene(0);
     }
 
     // When the Exit To Desktop button is pressed, the game is closed
