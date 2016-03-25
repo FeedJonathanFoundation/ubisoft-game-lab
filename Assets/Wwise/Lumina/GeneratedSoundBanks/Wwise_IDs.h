@@ -19,6 +19,7 @@ namespace AK
         static const AkUniqueID AMBIENT3 = 4095159978U;
         static const AkUniqueID BOSSTHEME = 1471715653U;
         static const AkUniqueID CHECKPOINT = 612075679U;
+        static const AkUniqueID CRITICALHEALTH = 2407075028U;
         static const AkUniqueID CURRENT = 2037989808U;
         static const AkUniqueID DEFAULT = 782826392U;
         static const AkUniqueID DIE = 445985469U;
@@ -118,6 +119,7 @@ namespace AK
     namespace GAME_PARAMETERS
     {
         static const AkUniqueID FLAREDISTANCE = 108225470U;
+        static const AkUniqueID LIGHTLEVEL = 827417899U;
         static const AkUniqueID MASTERVOLUME = 2918011349U;
         static const AkUniqueID PLAYERVELOCITY = 2886637823U;
     } // namespace GAME_PARAMETERS

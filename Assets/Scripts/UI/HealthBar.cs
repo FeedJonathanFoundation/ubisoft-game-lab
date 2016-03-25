@@ -10,7 +10,10 @@ public class HealthBar : MonoBehaviour {
     public Image background;
     private IEnumerator flashingBar;
     private bool isBarFlashing = false;
-    
+
+    private float criticalHealth;
+    private float lightLevel;
+
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
@@ -21,6 +24,7 @@ public class HealthBar : MonoBehaviour {
     {
         if (healthBar.value <= 1500)
         {
+            lightLevel = (healthBar.value)/100;
             fill.color = Color.red;
             background.color = Color.blue;
             if (!isBarFlashing)
@@ -46,8 +50,11 @@ public class HealthBar : MonoBehaviour {
         {
             yield return new WaitForSeconds(0.35f);        
             fill.enabled = false;
+            
             yield return new WaitForSeconds(0.35f);
-            fill.enabled = true;   
+            fill.enabled = true;
+            AkSoundEngine.SetRTPCValue("lightLevel", lightLevel);
+            AkSoundEngine.PostEvent("CriticalHealth", this.gameObject);
         }
     } 
     
