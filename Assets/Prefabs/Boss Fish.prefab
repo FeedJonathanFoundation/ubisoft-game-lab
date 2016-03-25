@@ -78,6 +78,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &130282
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 491360}
+  - 136: {fileID: 13667044}
+  - 114: {fileID: 11474062}
+  m_Layer: 0
+  m_Name: EatFlareCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &131962
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,24 +155,6 @@ GameObject:
   - 4: {fileID: 436522}
   m_Layer: 0
   m_Name: joint1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &148982
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 421430}
-  - 54: {fileID: 5498874}
-  - 135: {fileID: 13541218}
-  - 114: {fileID: 11423774}
-  m_Layer: 0
-  m_Name: Eat Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -275,23 +274,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131962}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.18, y: 1.46, z: 0}
+  m_LocalPosition: {x: 0.18, y: 0.46, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children: []
   m_Father: {fileID: 474056}
   m_RootOrder: 7
---- !u!4 &421430
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 148982}
-  m_LocalRotation: {x: 0.27521464, y: 0.65135014, z: 0.27521458, w: 0.65135}
-  m_LocalPosition: {x: 0.18, y: 1.46, z: 2.66}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 474056}
-  m_RootOrder: 0
 --- !u!4 &423918
 Transform:
   m_ObjectHideFlags: 1
@@ -414,7 +401,7 @@ Transform:
   m_LocalPosition: {x: 125.9, y: -37.1, z: -0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
-  - {fileID: 421430}
+  - {fileID: 491360}
   - {fileID: 489830}
   - {fileID: 423918}
   - {fileID: 460170}
@@ -461,6 +448,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 474056}
   m_RootOrder: 1
+--- !u!4 &491360
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130282}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.13, y: 0.5, z: 2.653125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 474056}
+  m_RootOrder: 0
 --- !u!54 &5405872
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -473,21 +472,6 @@ Rigidbody:
   m_AngularDrag: 100
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!54 &5498874
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 148982}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -562,18 +546,18 @@ MonoBehaviour:
   flareBehaviour:
     strengthMultiplier: 1
     overrideSteerableSpeed: 1
-    minSpeed: 0.5
+    minSpeed: 4
     maxSpeed: 5.5
     overrideMaxForce: 1
-    maxForce: 1.5
+    maxForce: 50
     arrivalForce:
-      strengthMultiplier: 0
+      strengthMultiplier: 50
       overrideSteerableSpeed: 0
       minSpeed: 0
       maxSpeed: 0
       overrideMaxForce: 0
       maxForce: 0
-      slowingRadius: 5
+      slowingRadius: 0
     wallAvoidance:
       strengthMultiplier: 1
       overrideSteerableSpeed: 0
@@ -581,8 +565,8 @@ MonoBehaviour:
       maxSpeed: 0
       overrideMaxForce: 0
       maxForce: 0
-      avoidanceForce: 3
-      maxViewDistance: 5
+      avoidanceForce: 4
+      maxViewDistance: 4
       obstacleLayer:
         serializedVersion: 2
         m_Bits: 4096
@@ -624,18 +608,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 67108864
   tagsToIgnore: []
---- !u!114 &11423774
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 148982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb23de337e002554b8b0290dd9473610, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouthSize: 0.8
 --- !u!114 &11472442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -653,6 +625,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   tagsToIgnore: []
+--- !u!114 &11474062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb23de337e002554b8b0290dd9473610, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11475192
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -705,18 +688,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   tagsToIgnore: []
---- !u!135 &13541218
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 148982}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.8
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &13572052
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -740,6 +711,19 @@ CapsuleCollider:
   m_Enabled: 1
   m_Radius: 1.75
   m_Height: 5.21
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &13667044
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130282}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 2.35
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &13790788
