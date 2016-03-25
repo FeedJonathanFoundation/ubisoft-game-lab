@@ -2457,7 +2457,7 @@ MonoBehaviour:
   maxSpeed: 8
   thrustForce: 3
   changeDirectionBoost: 5.2
-  thrustEnergyCost: 0.01
+  thrustEnergyCost: 0.03
   brakeDrag: 2
   rotationSpeed: 15
   jetFuelEffect: {fileID: 134692}
@@ -2469,7 +2469,7 @@ MonoBehaviour:
   invulnerabilityTime: 1
   invulnerabilityDrag: 2
   timeToDeplete: 0
-  lightToggleEnergyCost: 0
+  lightToggleEnergyCost: 0.01
   minimalEnergyRestrictionToggleLights: 0
   propulsionLightRange: 0.3
   lightToggleTime: 0.1
@@ -2483,6 +2483,7 @@ MonoBehaviour:
   probeColorEatPickup: {r: 0.82, g: 0.82, b: 0.596, a: 1}
   eatFlashDuration: 0.5
   hitFlashDuration: 2
+  gameOverCanvasPrefab: {fileID: 0}
 --- !u!114 &11442326
 MonoBehaviour:
   m_ObjectHideFlags: 1
