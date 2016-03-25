@@ -83,7 +83,6 @@ public class Current : MonoBehaviour
                 if (distance >= distanceFromPlayer)
                 {
                     Destroy(particles);
-                    particles = null;
                 }
             }
         }
@@ -93,39 +92,10 @@ public class Current : MonoBehaviour
     {
         if (!particles)
         {
-            if (smoothCamera == null) { return; }
-            foreach (Transform child in smoothCamera.gameObject.GetComponentsInChildren<Transform>())
-            {
-                //Debug.Log(child.name +  "==" + particleDirection);
-                if (child.name == particleDirection)
-                {
-                    Vector3 position = this.transform.position;
-
-                    if (particleDirection == "downCurrent")
-                    {
-                        position.y *= 1.05f;
-                    }
-
-                    if (particleDirection == "upCurrent")
-                    {
-                        position.y *= -1.05f;
-                    }
-
-                    if (particleDirection == "leftCurrent")
-                    {
-                        position.x *= 1.05f;
-                    }
-
-                    if (particleDirection == "rightCurrent")
-                    {
-                        position.x *= 1.6f;
-                    }
-
-                    particles = (GameObject)Instantiate(child.gameObject, position, child.transform.rotation);
-                    particles.SetActive(true);
-                    particles.GetComponent<ParticleSystem>().Play();
-                }
-            }
+            Transform child = smoothCamera.gameObject.transform.FindChild(particleDirection);
+            particles = (GameObject)Instantiate(child.gameObject, this.transform.position, child.transform.rotation);
+            particles.SetActive(true);
+            particles.GetComponent<ParticleSystem>().Play();
         }
     }
 
@@ -166,7 +136,6 @@ public class Current : MonoBehaviour
                 Debug.Log(particleDirection);
                 StartCurrentParticles();
                 smoothCamera.SetCurrentState(true, particleDirection);
-                //smoothCamera.StartCurrentParticles(particleDirection);
                 playerInCurrent = true;
             }
         }
