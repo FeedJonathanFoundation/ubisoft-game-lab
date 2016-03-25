@@ -45,10 +45,10 @@ public class AlbedoColourRelativeToPlayer : ColourRelativeToPlayer
         while (true)
         {
             // Gradually lerp to the target colour
-            Color currentColour = material.GetColor("_AlbedoColor");
+            Color currentColour = material.GetColor("_Color");
             Color newColour = Color.Lerp(currentColour, targetColour, changeSpeed * Time.deltaTime);
             
-            material.SetColor("_AlbedoColor", newColour);
+            material.SetColor("_Color", newColour);
             
             yield return null;
         }
@@ -76,7 +76,11 @@ public class AlbedoColourRelativeToPlayer : ColourRelativeToPlayer
     
     private SkinnedMeshRenderer SkinnedMeshRenderer
     {
-        get { return skinnedMeshRenderer; }
+        get 
+        { 
+            if (skinnedMeshRenderer == null) { skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>(); }
+            return skinnedMeshRenderer; 
+        }
         set { skinnedMeshRenderer = value; }
     }
 }

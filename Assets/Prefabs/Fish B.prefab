@@ -90,6 +90,7 @@ GameObject:
   - 4: {fileID: 429574}
   - 137: {fileID: 13762068}
   - 114: {fileID: 11401166}
+  - 114: {fileID: 11477904}
   m_Layer: 0
   m_Name: fishB:Group43602
   m_TagString: Untagged
@@ -336,7 +337,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.336734, y: -7.535877, z: 0}
+  m_LocalPosition: {x: -3.476122, y: -2.234006, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 427610}
@@ -641,9 +642,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13182bab344a44e45b1705c45ba8b884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minColour: {r: 0, g: 1, b: 0.21379328, a: 0}
-  maxColour: {r: 0, g: 0.0896554, b: 1, a: 0}
-  changeSpeed: 1
+  minColour: {r: 0, g: 0.83448267, b: 1, a: 0}
+  maxColour: {r: 0.9338235, g: 0.46691176, b: 0.46691176, a: 0}
+  changeSpeed: 2
   updateChildren: 0
 --- !u!114 &11407974
 MonoBehaviour:
@@ -926,6 +927,21 @@ MonoBehaviour:
   minColour: {r: 0.11724138, g: 0, b: 1, a: 0}
   maxColour: {r: 0.52205884, g: 0, b: 0, a: 0}
   changeSpeed: 0
+  updateChildren: 0
+--- !u!114 &11477904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 115440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3320ff2205d622d409190a09809249de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minColour: {r: 0.5661765, g: 0.9461461, b: 1, a: 0}
+  maxColour: {r: 1, g: 0.6102941, b: 0.6102941, a: 0}
+  changeSpeed: 2
   updateChildren: 0
 --- !u!114 &11492956
 MonoBehaviour:
