@@ -5,6 +5,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	781390793	Eat			\Default Work Unit\Player Effects\Eat	
 	782826392	Default			\Default Work Unit\Player Effects\Default	
 	1316273048	Pulse			\Default Work Unit\Player Effects\Pulse	
+	1471715653	BossTheme			\Default Work Unit\Player Effects\BossTheme	
 	1540219311	Flare			\Default Work Unit\Player Effects\Flare	
 	1772229705	LowEnergy			\Default Work Unit\Player Effects\LowEnergy	
 	2037989808	Current			\Default Work Unit\Player Effects\Current	
@@ -18,11 +19,13 @@ Event	ID	Name			Wwise Object Path	Notes
 	4023935017	JellyfishAttack			\Default Work Unit\Player Effects\JellyfishAttack	
 	4066254940	Light_Orb_Pickup			\Default Work Unit\Player Effects\Light_Orb_Pickup	
 	4095159976	Ambient1			\Default Work Unit\Ambient Themes\Ambient1	
+	4095159978	Ambient3			\Default Work Unit\Ambient Themes\Ambient3	
 	4095159979	Ambient2			\Default Work Unit\Ambient Themes\Ambient2	
 	4142644811	Ambient2Stop			\Default Work Unit\Ambient Themes\Ambient2Stop	
 
 State Group	ID	Name			Wwise Object Path	Notes
 	444815956	PlayerLife			\Default Work Unit\PlayerLife	
+	1452801640	IMAmb3			\Default Work Unit\IMAmb3	
 	1452801641	IMAmb2			\Default Work Unit\IMAmb2	
 	1452801642	IMAmb1			\Default Work Unit\IMAmb1	
 
@@ -30,6 +33,10 @@ State	ID	Name	State Group			Notes
 	655265632	Alive	PlayerLife			
 	748895195	None	PlayerLife			
 	2044049779	Dead	PlayerLife			
+	671679305	Hunted	IMAmb3			
+	748895195	None	IMAmb3			
+	3538823496	Hiding	IMAmb3			
+	3677122663	Over	IMAmb3			
 	697796920	CP4	IMAmb2			
 	697796925	CP1	IMAmb2			
 	697796926	CP2	IMAmb2			
@@ -49,14 +56,18 @@ Custom State	ID	Name	State Group	Owner		Notes
 	257710534	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Evade A		
 	290800598	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Deep layer		
 	302184401	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Ambient Loop A		
+	313251654	Hunted	IMAmb3	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Boss Outro		
 	325274319	CP4	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Deep layer		
 	328739437	CP4	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Whale Layer		
 	359330505	CP2	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Whale Layer		
 	369675027	CP1	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Jellyfish Ambient Crackle		
+	387161394	Hiding	IMAmb3	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\BossActive		
 	393568765	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Light Orb Pickup		
+	400440070	Hiding	IMAmb3	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Boss Outro		
 	431540175	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Detection		
 	515715389	CP1	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Deep layer		
 	534162695	CP4	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Base Layer		
+	598628307	Over	IMAmb3	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\BossActive		
 	685065967	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Volcano		
 	691779738	Amb1end	IMAmb1	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Ambient Loop A		
 	744790500	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Base Layer		
@@ -65,7 +76,6 @@ Custom State	ID	Name	State Group	Owner		Notes
 	818181818	CP2	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Jellyfish Ambient Crackle		
 	876796097	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\LightsToToggle		
 	899948430	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Low Energy		
-	939754314	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 3 Jellyfish ambient		
 	990243665	CP2	IMAmb2	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Volcano		
 	990568790	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Whale Layer		
 	1053826911	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Eat Fish		
@@ -75,10 +85,10 @@ Game Parameter	ID	Name			Wwise Object Path	Notes
 	2886637823	playerVelocity			\Default Work Unit\playerVelocity	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	5727754	Section 3 Jellyfish ambient	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Final Sound Assets\Section 3 Jellyfish ambient_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 3 Jellyfish ambient		19851820
 	13541197	Evade A	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Final Sound Assets\Evade A_594EBAD8.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Evade A		870912
 	19074674	Death (Hit)	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Final Sound Assets\Death (Hit)_31FD0ACA.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Death Sequence\Death (Hit)		1212080
 	28599005	Jellyfish Attack A	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Jellyfish Attack A_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Jellyfish Attacking\Jellyfish Attack A		358280
+	29808587	Boss Outro	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Boss Outro_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Boss Outro		6351668
 	51653580	Ping Final	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Ping Final_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Ping Final		444128
 	53388115	Light On	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Final Sound Assets\Light On_DA3EDAF7.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\LightsToToggle\Light On		147716
 	57300172	Section 2 Ambient Whale Layer	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Final Sound Assets\Section 2 Ambient Whale Layer_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Whale Layer		12761668
@@ -93,6 +103,8 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	377731027	Red Alert Stab A	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Final Sound Assets\Red Alert Stab A_B6AF252E.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Detection\Red Alert Stab A		1043620
 	385392149	Flare C	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Flare C_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Flare C		2485052
 	387208354	Jellyfish Ambient Crackle	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Jellyfish Ambient Crackle_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Jellyfish Ambient Crackle		9928744
+	404573078	Boss Theme Intro	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Boss Theme Intro_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\BossActive\Boss Theme Intro		4729360
+	423039535	Boss Theme Main	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Boss Theme Main_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\BossActive\Boss Theme Main		14181668
 	434643027	Blue FIsh Collect D	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Final Sound Assets\Blue FIsh Collect D_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Eat Fish\Blue FIsh Collect D		1064436
 	459392038	Blue FIsh Collect E	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Final Sound Assets\Blue FIsh Collect E_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Eat Fish\Blue FIsh Collect E		887204
 	500781425	Jellyfish Attack B	Y:\Documents\Unity\ubisoft-game-lab\Assets\Wwise\Lumina\.cache\Mac\SFX\Jellyfish Attack B_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Jellyfish Attacking\Jellyfish Attack B		380436
