@@ -16,6 +16,8 @@ namespace AK
         static const AkUniqueID AMBIENT1 = 4095159976U;
         static const AkUniqueID AMBIENT2 = 4095159979U;
         static const AkUniqueID AMBIENT2STOP = 4142644811U;
+        static const AkUniqueID AMBIENT3 = 4095159978U;
+        static const AkUniqueID BOSSTHEME = 1471715653U;
         static const AkUniqueID CHECKPOINT = 612075679U;
         static const AkUniqueID CURRENT = 2037989808U;
         static const AkUniqueID DEFAULT = 782826392U;
