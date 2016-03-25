@@ -35,12 +35,12 @@ public class Checkpoint : LightSource
             {
                 // if checkpoint changes scene, save values for the new scene
                 data.playerPosition = DataManager.Vector3ToString(new Vector3(0, 0, 0));
-                data.levelID = player.CurrentLevel + 1;                    
+                // data.levelID = player.CurrentLevel + 1;                    
             } 
             else
             {
                 data.playerPosition = DataManager.Vector3ToString(other.gameObject.transform.position);
-                data.levelID = player.CurrentLevel;    
+                // data.levelID = player.CurrentLevel;    
             }            
             
             data.playerRotation = DataManager.Vector3ToString(other.gameObject.transform.localEulerAngles);
@@ -50,31 +50,27 @@ public class Checkpoint : LightSource
             
             if (changeScene)
             {
-                StartCoroutine(ChangeLevel(player.CurrentLevel + 1));
-                player.CurrentLevel = player.CurrentLevel + 1;                                                
+                StartCoroutine(ChangeLevel());                                            
             }        
         }
     }
     
-    private IEnumerator ChangeLevel(int levelID)
+    private IEnumerator ChangeLevel()
     {
-        if (SceneManager.sceneCountInBuildSettings > levelID)
-        {
-            GameObject camera = GameObject.Find("Main Camera");
-            float fadeTime = 0;
-            
-            // Apply camera fade while loading the next scene
-            if (camera != null && camera.GetComponent<Fade>())
-            {                
-                fadeTime = camera.GetComponent<Fade>().BeginFade(1);                                        
-            }
-            
-            yield return new WaitForSeconds(fadeTime);
-            SceneManager.LoadScene(levelID, LoadSceneMode.Single);            
-            
-            // Destroy checkpoint to prevent it from appearing in the next scene
-            Destroy(this.gameObject); 
+        GameObject camera = GameObject.Find("Main Camera");
+        float fadeTime = 0;
+        
+        // Apply camera fade while loading the next scene
+        if (camera != null && camera.GetComponent<Fade>())
+        {                
+            fadeTime = camera.GetComponent<Fade>().BeginFade(1);                                        
         }
+        
+        yield return new WaitForSeconds(fadeTime);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);            
+        
+        // Destroy checkpoint to prevent it from appearing in the next scene
+        Destroy(this.gameObject); 
     }
 
 }
