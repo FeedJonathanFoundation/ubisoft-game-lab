@@ -10,6 +10,8 @@ public class EmissiveColourRelativeToPlayer : ColourRelativeToPlayer
     private MeshRenderer myRenderer;
     // The MeshRenderer attached to this GameObject's children
     private MeshRenderer[] renderers;
+    // Caches the GameObject's component
+    private SkinnedMeshRenderer skinnedMeshRenderer;
 
     /// <summary>
     /// Called when the player or this light source gains/loses light. Updates the light source's colour
@@ -27,6 +29,13 @@ public class EmissiveColourRelativeToPlayer : ColourRelativeToPlayer
         {
             StartCoroutine(UpdateEmissiveColour(MyRenderer.material, targetColour));
         }
+        
+        Debug.Log("SKINNEDMESHRENDERER: " + SkinnedMeshRenderer);
+        if (SkinnedMeshRenderer != null)
+        {
+            StartCoroutine(UpdateEmissiveColour(SkinnedMeshRenderer.material,targetColour));
+            Debug.Log("CHANGE LIGHT TO: " + targetColour);
+        }
     }
     
     /// <summary>
@@ -43,10 +52,12 @@ public class EmissiveColourRelativeToPlayer : ColourRelativeToPlayer
             
             material.SetColor("_EmissionColor", newColour);
             
+            Debug.Log("Set target emissive colour: " + newColour);
+            
             yield return null;
         }
     }
-
+   
     // The MeshRenderer attached to this GameObject
     private MeshRenderer MyRenderer
     {
@@ -65,5 +76,15 @@ public class EmissiveColourRelativeToPlayer : ColourRelativeToPlayer
             if (renderers == null) { renderers = GetComponentsInChildren<MeshRenderer>(); }
             return renderers;
         }
+    }
+    
+    private SkinnedMeshRenderer SkinnedMeshRenderer
+    {
+        get 
+        { 
+            if (skinnedMeshRenderer == null) { skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>(); }
+            return skinnedMeshRenderer; 
+        }
+        set { skinnedMeshRenderer = value; }
     }
 }

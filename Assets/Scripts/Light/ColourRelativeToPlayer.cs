@@ -34,13 +34,16 @@ public abstract class ColourRelativeToPlayer : MonoBehaviour
     void OnEnable()
     {
         Player.LightEnergy.LightChanged += OnLightChanged;
-        lightSource.LightEnergy.LightChanged += OnLightChanged;
+        //lightSource.LightEnergy.LightChanged += OnLightChanged;
+        
+        // Set the initial colour of the light source.
+        OnLightChanged(Player.LightEnergy.CurrentEnergy);
     }
     
     void OnDisable()
     {
         if (Player != null) { Player.LightEnergy.LightChanged -= OnLightChanged; }
-        lightSource.LightEnergy.LightChanged -= OnLightChanged;
+        //lightSource.LightEnergy.LightChanged -= OnLightChanged;
     }
 
     /// <summary>
@@ -80,7 +83,7 @@ public abstract class ColourRelativeToPlayer : MonoBehaviour
             {
                 GameObject playerObject = GameObject.FindWithTag("Player");
                 // Debug.Log("Found player (EmissiveColourRelativeToPlayer.cs): " + playerObject);
-                player = playerObject.transform.parent.GetComponent<Player>();
+                player = playerObject.GetComponentInParent<Player>();
                 
                 playerSearched = true;
             }
