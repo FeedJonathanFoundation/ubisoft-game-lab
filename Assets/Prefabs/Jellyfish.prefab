@@ -116,7 +116,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 114702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.899994, y: -3.2000122, z: 0}
+  m_LocalPosition: {x: 0, y: 20.7, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 425276}
@@ -226,8 +226,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf512981bd497242a5b5054132a7a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyLost: 0.25
-  timeBeforeEnergyLost: 0.05
+  energyLost: 6
+  timeBeforeEnergyLost: 0
+  hitParticles: {fileID: 19865272, guid: ed2d060d09dc3e04faf8ca40914cb8d6, type: 2}
+  knockbackForce: 10
+  hitFlashDuration: 2
+  probeColorOn: {r: 1, g: 0.3103448, b: 0, a: 1}
+  probeColorOff: {r: 0.3, g: 0.09310344, b: 0, a: 1}
+  probeColorHit: {r: 1, g: 0.067, b: 0.067, a: 1}
 --- !u!114 &11492872
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -274,8 +280,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: -4.127098, z: -0.000028371811}
-    m_Extent: {x: 1.2941208, y: 3.9078064, z: 1.1418686}
+    m_Center: {x: 0.0000011920929, y: -4.127097, z: -0.000028371811}
+    m_Extent: {x: 1.2941217, y: 3.9078064, z: 1.1418686}
   m_DirtyAABB: 0
 --- !u!183 &18358406
 Cloth:
