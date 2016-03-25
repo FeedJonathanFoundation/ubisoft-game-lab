@@ -249,17 +249,17 @@ public class MainMenu : MonoBehaviour
 
     public void FieldButton()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     public void VolcanoButton()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 
     public void CaveButton()
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(4);
     }
 
     // When the Exit button is pressed, quit the build 
