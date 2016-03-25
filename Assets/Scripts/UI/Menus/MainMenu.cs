@@ -35,7 +35,8 @@ public class MainMenu : MonoBehaviour
 
         menuButtons = mainMenuCanvas.GetComponentsInChildren<Button>();
         sceneButtons = scenesCanvas.GetComponentsInChildren<Button>();
-        optionsButtons = mainOptionsCanvas.GetComponentsInChildren<Button>(); 
+        optionsButtons = mainOptionsCanvas.GetComponentsInChildren<Button>();
+         
         menuMode = 0;
         selectedMenuItem = 0;
         highlightButton(menuButtons);
@@ -47,7 +48,7 @@ public class MainMenu : MonoBehaviour
         mainOptionsCanvas.SetActive(false);
         scenesCanvas.SetActive(false);
         // Initialize the volume slider's value to halfway, or 0.5f
-        volumeSlider.value = Mathf.MoveTowards(volumeSlider.value, 100.0f, 0.5f);
+        volumeSlider.value = Mathf.MoveTowards(volumeSlider.value, 100.0f, 0.5f);        
     }
     
     void Update()
@@ -111,14 +112,14 @@ public class MainMenu : MonoBehaviour
         if (Input.GetAxisRaw("Horizontal") > 0 && (currentTime - timeLastMove) >= timeBetweenButtonChange)
         {   
             if (menuMode == 0) { MoveMenu(-1); }
-            else if (menuMode == 1) { ChangeVolume(); Debug.Log("HI");}
+            else if (menuMode == 1) { volumeSlider.Select(); ChangeVolume(); Debug.Log("HI");}
             else if (menuMode == 2) { MoveScenesMenu(-1); }                   
             timeLastMove = currentTime;        
         }
         else if (Input.GetAxisRaw("Horizontal") < 0 && (currentTime - timeLastMove) >= timeBetweenButtonChange)
         {
             if (menuMode == 0) { MoveMenu(1); }
-            else if (menuMode == 1) { ChangeVolume(); }
+            else if (menuMode == 1) { volumeSlider.Select(); ChangeVolume(); }
             else if (menuMode == 2) { MoveScenesMenu(1); }
             timeLastMove = currentTime;              
         }            
