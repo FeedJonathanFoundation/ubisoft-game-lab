@@ -18,6 +18,7 @@ public class PauseMenu : MonoBehaviour
 
     private Button[] menuButtons;
     private Button[] sceneButtons;
+    private Button[] optionsButtons;
     private int selectedMenuItem;
     //private bool isAxisInUse;
     private float timeLastMove = 0;
@@ -32,8 +33,9 @@ public class PauseMenu : MonoBehaviour
         pauseOptionsCanvas = GameObject.Find("optionsCanvas");
 
         menuButtons = pauseCanvas.GetComponentsInChildren<Button>();
+        optionsButtons = pauseOptionsCanvas.GetComponentsInChildren<Button>();
         selectedMenuItem = 0;
-        highlightButton();
+        highlightButton(menuButtons);
 
         // Hide the canvases
         pauseCanvas.SetActive(false);
@@ -72,6 +74,7 @@ public class PauseMenu : MonoBehaviour
             // The options submenu was open, therefore close it and open the options menu
             else
             {
+                //selectedMenuItem = 0;
                 pauseMode = 1;
                 pauseCanvas.SetActive(true);
                 pauseOptionsCanvas.SetActive(false);
@@ -95,8 +98,22 @@ public class PauseMenu : MonoBehaviour
             {
                 MoveMenu(-1);
                 timeLastMove = currentTime;              
-            }            
+            }
         }
+        
+        // if (pauseMode == 2) 
+        // {
+        //     selectedMenuItem = 0;
+        //     highlightButton(optionsButtons);
+            
+        //     if (Input.GetAxisRaw("Horizontal") != 0 && (currentTime - timeLastMove) >= timeBetweenButtonChange)
+        //     {                       
+        //         volumeSlider.Select(); 
+        //         ChangeVolume();                    
+        //         timeLastMove = currentTime;        
+        //     }
+            
+        // }
         
         
         if (Input.GetButtonDown("Cancel") && pauseMode == 2) 
@@ -133,22 +150,22 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
-        highlightButton();
+        highlightButton(menuButtons);
         
     }
 
-    private void highlightButton()
+    private void highlightButton(Button [] buttons)
     {
 
-        ColorBlock colors = menuButtons[selectedMenuItem].colors;
+        ColorBlock colors = buttons[selectedMenuItem].colors;
 
         // reset all buttons
-        foreach (Button button in menuButtons) { button.colors = colors; }
+        foreach (Button button in buttons) { button.colors = colors; }
 
         // Set button at selected index to appear highlighter                              
-        colors.normalColor = new Color(0.588f, 0.588f, 0.588f);
-        colors.highlightedColor = new Color(0.588f, 0.588f, 0.588f);
-        menuButtons[selectedMenuItem].colors = colors;
+        colors.normalColor = new Color(0.588f, 0.588f, 0.588f, 0.5f);
+        colors.highlightedColor = new Color(0.588f, 0.588f, 0.588f, 0.5f);
+        buttons[selectedMenuItem].colors = colors;
     }
 
     // When the Resume button is pressed, the pause menu is hidden and the game time resumes
