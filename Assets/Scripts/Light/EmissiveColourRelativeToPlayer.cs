@@ -30,9 +30,11 @@ public class EmissiveColourRelativeToPlayer : ColourRelativeToPlayer
             StartCoroutine(UpdateEmissiveColour(MyRenderer.material, targetColour));
         }
         
+        Debug.Log("SKINNEDMESHRENDERER: " + SkinnedMeshRenderer);
         if (SkinnedMeshRenderer != null)
         {
             StartCoroutine(UpdateEmissiveColour(SkinnedMeshRenderer.material,targetColour));
+            Debug.Log("CHANGE LIGHT TO: " + targetColour);
         }
     }
     
@@ -78,7 +80,11 @@ public class EmissiveColourRelativeToPlayer : ColourRelativeToPlayer
     
     private SkinnedMeshRenderer SkinnedMeshRenderer
     {
-        get { return skinnedMeshRenderer; }
+        get 
+        { 
+            if (skinnedMeshRenderer == null) { skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>(); }
+            return skinnedMeshRenderer; 
+        }
         set { skinnedMeshRenderer = value; }
     }
 }

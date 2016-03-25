@@ -34,13 +34,16 @@ public abstract class ColourRelativeToPlayer : MonoBehaviour
     void OnEnable()
     {
         Player.LightEnergy.LightChanged += OnLightChanged;
-        lightSource.LightEnergy.LightChanged += OnLightChanged;
+        //lightSource.LightEnergy.LightChanged += OnLightChanged;
+        
+        // Set the initial colour of the light source.
+        OnLightChanged(Player.LightEnergy.CurrentEnergy);
     }
     
     void OnDisable()
     {
         if (Player != null) { Player.LightEnergy.LightChanged -= OnLightChanged; }
-        lightSource.LightEnergy.LightChanged -= OnLightChanged;
+        //lightSource.LightEnergy.LightChanged -= OnLightChanged;
     }
 
     /// <summary>
