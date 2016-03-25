@@ -111,8 +111,8 @@ public class MainMenu : MonoBehaviour
             
         if (Input.GetAxisRaw("Horizontal") > 0 && (currentTime - timeLastMove) >= timeBetweenButtonChange)
         {   
-            if (menuMode == 0) { MoveMenu(-1); }
-            else if (menuMode == 1) { volumeSlider.Select(); ChangeVolume(); Debug.Log("HI");}
+            if (menuMode == 0) { MoveMenu(-1); }    
+            else if (menuMode == 1) { volumeSlider.Select(); ChangeVolume(); }
             else if (menuMode == 2) { MoveScenesMenu(-1); }                   
             timeLastMove = currentTime;        
         }
@@ -197,8 +197,8 @@ public class MainMenu : MonoBehaviour
         foreach (Button button in buttons) { button.colors = colors; }
 
         // Set button at selected index to appear highlighter                              
-        colors.normalColor = new Color(0.588f, 0.588f, 0.588f);
-        colors.highlightedColor = new Color(0.588f, 0.588f, 0.588f);
+        colors.normalColor = new Color(0.588f, 0.588f, 0.588f, 0.5f);
+        colors.highlightedColor = new Color(0.588f, 0.588f, 0.588f, 0.5f);
         buttons[selectedMenuItem].colors = colors;
     }
 
