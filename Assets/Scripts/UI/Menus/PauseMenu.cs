@@ -100,26 +100,31 @@ public class PauseMenu : MonoBehaviour
                 timeLastMove = currentTime;              
             }
         }
-        
-        // if (pauseMode == 2) 
-        // {
-        //     selectedMenuItem = 0;
-        //     highlightButton(optionsButtons);
+        else if (pauseMode == 2) 
+        {
+            selectedMenuItem = 0;
+            highlightButton(optionsButtons);
+                                    
+            if (Input.GetAxisRaw("Horizontal") != 0 && (currentTime - timeLastMove) >= timeBetweenButtonChange)
+            {                       
+                volumeSlider.Select(); 
+                ChangeVolume();                    
+                timeLastMove = currentTime;        
+            }
             
-        //     if (Input.GetAxisRaw("Horizontal") != 0 && (currentTime - timeLastMove) >= timeBetweenButtonChange)
-        //     {                       
-        //         volumeSlider.Select(); 
-        //         ChangeVolume();                    
-        //         timeLastMove = currentTime;        
-        //     }
-            
-        // }
+            if (Input.GetButtonDown("Select Menu Item"))
+            {
+                this.BackButton();
+                timeLastMove = currentTime;
+            }            
+        }
         
         
         if (Input.GetButtonDown("Cancel") && pauseMode == 2) 
-        {
+        {            
             this.BackButton();
         }
+                
 
 
     }
@@ -196,7 +201,9 @@ public class PauseMenu : MonoBehaviour
     // When the Back button is pressed, the options submenu is hidden and the Pause menu is shown
     public void BackButton()
     {
-        pauseMode = 1;
+        pauseMode = 1;        
+        selectedMenuItem = 0;
+        highlightButton(menuButtons);
         pauseCanvas.SetActive(true);
         pauseOptionsCanvas.SetActive(false);
     }
