@@ -117,10 +117,10 @@ Transform:
   - {fileID: 317706304}
   - {fileID: 780512474}
   - {fileID: 1208958022}
+  - {fileID: 1987288095}
   - {fileID: 1500922262}
   - {fileID: 261893447}
   - {fileID: 301870589}
-  - {fileID: 1987288095}
   - {fileID: 494414719}
   - {fileID: 1265733244}
   - {fileID: 1151122902}
@@ -9546,6 +9546,30 @@ Prefab:
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 11405610, guid: 01b75c76312fc4c6c9dc06c240c9c8bf, type: 2}
+      propertyPath: followPlayer.strengthMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405610, guid: 01b75c76312fc4c6c9dc06c240c9c8bf, type: 2}
+      propertyPath: followPlayer.maxSpeed
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405610, guid: 01b75c76312fc4c6c9dc06c240c9c8bf, type: 2}
+      propertyPath: followPlayer.speedMaxIncreased
+      value: 5.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405610, guid: 01b75c76312fc4c6c9dc06c240c9c8bf, type: 2}
+      propertyPath: followPlayer.distanceSpeedIncrease
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405610, guid: 01b75c76312fc4c6c9dc06c240c9c8bf, type: 2}
+      propertyPath: moveToWaypoint.maxForce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405610, guid: 01b75c76312fc4c6c9dc06c240c9c8bf, type: 2}
+      propertyPath: moveToWaypoint.waypointList
+      value: 
+      objectReference: {fileID: 978266844}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01b75c76312fc4c6c9dc06c240c9c8bf, type: 2}
   m_IsPrefabParent: 0
@@ -21247,7 +21271,7 @@ Transform:
   m_LocalScale: {x: 0.10000001, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 10003376}
-  m_RootOrder: 9
+  m_RootOrder: 6
 --- !u!1001 &1994645117
 Prefab:
   m_ObjectHideFlags: 0
