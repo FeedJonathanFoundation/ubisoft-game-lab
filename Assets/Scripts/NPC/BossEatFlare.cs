@@ -1,33 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BossEatFlare : MonoBehaviour 
+public class BossEatFlare : MonoBehaviour
 {
-    [Tooltip("Size of the mouth of the boss fish")]
-    public float mouthSize;
-
-    void Start() 
+    private GameObject player;
+    
+    void Start()
     {
-        // Set the radius
-        this.GetComponent<SphereCollider>().radius = mouthSize;
+        player = GameObject.Find("Player");
     }
     
-    void OnTriggerEnter(Collider col) 
+    void OnTriggerEnter(Collider col)
     {
-        // LightAbsorber has a player tag
-        if(col.tag == "Flare")
+
+        if (col.CompareTag("Flare"))
         {
-            col.transform.parent.gameObject.SetActive(false);
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            for (int i = 0; i < players.Length; i++)
-            {
-                FlareSpawner flare = players[i].GetComponent<FlareSpawner>();
-                if (flare != null)
-                {
-                    flare.EatFlare();
-                }
-            }
+            Destroy(col.transform.parent.gameObject);
             
+            player.GetComponent<FlareSpawner>().EatFlare();
         }
     }
 }
