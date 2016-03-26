@@ -17,7 +17,7 @@ namespace AK
         static const AkUniqueID AMBIENT2 = 4095159979U;
         static const AkUniqueID AMBIENT2STOP = 4142644811U;
         static const AkUniqueID AMBIENT3 = 4095159978U;
-        static const AkUniqueID BOSSTHEME = 1471715653U;
+        static const AkUniqueID AMBIENT3STOP = 2653643762U;
         static const AkUniqueID CHECKPOINT = 612075679U;
         static const AkUniqueID CRITICALHEALTH = 2407075028U;
         static const AkUniqueID CURRENT = 2037989808U;
@@ -33,7 +33,6 @@ namespace AK
         static const AkUniqueID LIGHT_ORB_PICKUP = 4066254940U;
         static const AkUniqueID LIGHTSTOTOGGLE = 3299248253U;
         static const AkUniqueID LOWENERGY = 1772229705U;
-        static const AkUniqueID MOVEMENT = 2129636626U;
         static const AkUniqueID PULSE = 1316273048U;
         static const AkUniqueID STOPJELLYFISHATTACK = 3799923489U;
         static const AkUniqueID WALLCRASH = 2901629858U;
@@ -119,7 +118,6 @@ namespace AK
     namespace GAME_PARAMETERS
     {
         static const AkUniqueID FLAREDISTANCE = 108225470U;
-        static const AkUniqueID LIGHTLEVEL = 827417899U;
         static const AkUniqueID MASTERVOLUME = 2918011349U;
         static const AkUniqueID PLAYERVELOCITY = 2886637823U;
     } // namespace GAME_PARAMETERS

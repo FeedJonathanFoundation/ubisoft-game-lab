@@ -1,0 +1,69 @@
+Event	ID	Name			Wwise Object Path	Notes
+	445985469	Die			\Default Work Unit\Player Effects\Die	
+	781390793	Eat			\Default Work Unit\Player Effects\Eat	
+	782826392	Default			\Default Work Unit\Player Effects\Default	
+	1540219311	Flare			\Default Work Unit\Player Effects\Flare	
+	2129636626	Movement			\Default Work Unit\Player Effects\Movement	
+	2133456085	Fish_Detection_Off			\Default Work Unit\NPC Effects\Fish_Detection_Off	
+	2734563960	Sc2Base			\Default Work Unit\Ambient Themes\Sc2Base	
+	2901629858	WallCrash			\Default Work Unit\Player Effects\WallCrash	
+	3299248253	LightsToToggle			\Default Work Unit\Player Effects\LightsToToggle	
+	3611228611	Fish_Detection			\Default Work Unit\NPC Effects\Fish_Detection	
+	3932323027	Sc1Base			\Default Work Unit\Ambient Themes\Sc1Base	
+	4066254940	Light_Orb_Pickup			\Default Work Unit\Player Effects\Light_Orb_Pickup	
+
+State Group	ID	Name			Wwise Object Path	Notes
+	444815956	PlayerLife			\Default Work Unit\PlayerLife	
+	1452801642	IMAmb1			\Default Work Unit\IMAmb1	
+
+State	ID	Name	State Group			Notes
+	655265632	Alive	PlayerLife			
+	748895195	None	PlayerLife			
+	2044049779	Dead	PlayerLife			
+	145894011	Amb1end	IMAmb1			
+	748895195	None	IMAmb1			
+	3322567584	Amb1start	IMAmb1			
+
+Custom State	ID	Name	State Group	Owner		Notes
+	5443565	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Engine Running Default		
+	222947493	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Movement is true		
+	290800598	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Deep layer		
+	302184401	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Ambient Loop A		
+	685065967	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Volcano		
+	691779738	Amb1end	IMAmb1	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Ambient Loop A		
+	744790500	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Base Layer		
+	990568790	Dead	PlayerLife	\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Whale Layer		
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	1493153371	PlayerSpeed			\Default Work Unit\PlayerSpeed	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	13541197	Evade A	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Evade A_594EBAD8.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Evade A		870912
+	19074674	Death (Hit)	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Death (Hit)_31FD0ACA.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Death Sequence\Death (Hit)		1212080
+	53388115	Light On	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Light On_7F7D3C01.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\LightsToToggle\Light On		147716
+	57300172	Section 2 Ambient Whale Layer	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Section 2 Ambient Whale Layer_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Whale Layer		12761668
+	130270075	Red Alert Stab A2	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Red Alert Stab A2_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Detection\Red Alert Stab A2		1064436
+	133385645	Red Alert Stab B	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Red Alert Stab B_E16F6267.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Detection\Red Alert Stab B		1418896
+	184020486	Section 2 Ambient Deep layer	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Section 2 Ambient Deep layer_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Deep layer		11343820
+	189144480	Movement is true	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Movement is true_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Movement is true		5675204
+	212887263	Flare A	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Flare A_895A1CA8.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Flare A		1403060
+	373193750	Game Over	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Game Over_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Death Sequence\Game Over		3545668
+	376746421	Section 2 Ambient Base Layer	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Section 2 Ambient Base Layer_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Base Layer		11343820
+	377731027	Red Alert Stab A	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Red Alert Stab A_AEF3D7FB.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Detection\Red Alert Stab A		1043620
+	434643027	Blue FIsh Collect D	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Blue FIsh Collect D_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Eat Fish\Blue FIsh Collect D		1064436
+	459392038	Blue FIsh Collect E	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Blue FIsh Collect E_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Eat Fish\Blue FIsh Collect E		887204
+	525905583	Luminous Pickup C	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Luminous Pickup C_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Light Orb Pickup\Luminous Pickup C		1773360
+	533267569	Red Alert Stab C	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Red Alert Stab C_48FDD0C2.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Detection\Red Alert Stab C		1254848
+	554640566	Section 2 Ambient Volcano	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Section 2 Ambient Volcano_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Section 2 Ambient Volcano		3193052
+	644479941	Engine Running Default	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Engine Running Default_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Engine Running Default		2839512
+	693102864	Light Off	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Light Off_2C1A34B4.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\LightsToToggle\Light Off		31500
+	704158851	Red Alert Stab C2	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Red Alert Stab C2_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Detection\Red Alert Stab C2		1419820
+	716427213	Blue FIsh Collect C	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Blue FIsh Collect C_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Eat Fish\Blue FIsh Collect C		1064436
+	770872707	Red Alert Stab B2	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Red Alert Stab B2_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Detection\Red Alert Stab B2		1064436
+	790510395	Blue FIsh Collect A	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Blue FIsh Collect A_B44B546E.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Eat Fish\Blue FIsh Collect A		433692
+	796154733	Blue FIsh Collect B	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Blue FIsh Collect B_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Eat Fish\Blue FIsh Collect B		1064436
+	854662292	Ambient Loop A	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Ambient Loop A_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Themes\Ambient Loop A		16660744
+	905158402	Luminous Pickup B	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Luminous Pickup B_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Light Orb Pickup\Luminous Pickup B		2127820
+	932248775	Wall collision	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Wall collision_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Wall collision		359204
+	992021646	Luminous Pickup A	D:\Games\Unity Projects\Ubisoft Contest - Lumina\ubisoft-game-lab-master\WWise\Lumina\.cache\Windows\SFX\Final Sound Assets\Luminous Pickup A_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Sounds\Effects\Light Orb Pickup\Luminous Pickup A		2127820
+
