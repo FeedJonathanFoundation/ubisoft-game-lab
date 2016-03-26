@@ -103,7 +103,13 @@ public class SpawnVolume : MonoBehaviour
                 Initialize(i);
                 if (automaticReset)
                 {
-                    Reset(i - 1);
+                    Vector3 spawnPosition = GetSpawnVolumeCenter(i - 1);
+                    float distanceSquared = (spawnPosition - player.position).sqrMagnitude;
+        
+                    if (distanceSquared > maxDistanceSquared)
+                    {
+                        Reset(i - 1);
+                    }
                 }
             }
         }
@@ -411,7 +417,7 @@ public class SpawnVolume : MonoBehaviour
         Debug.Log("Spawn volume index not found.");
         return -1;
     }
-    
+   
     public void UpdateSpawnVolume(Vector3 center, bool disable)
     {
         int index = GetSpawnVolumeIndex(center);

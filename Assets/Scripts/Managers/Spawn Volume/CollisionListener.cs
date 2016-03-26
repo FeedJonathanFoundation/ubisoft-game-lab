@@ -24,4 +24,13 @@ public class CollisionListener : MonoBehaviour
             spawnVolume.UpdateSpawnVolume(center, true);
         }
     }
+    
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("SpawnSignal")) 
+        {
+            spawnVolume.UpdateSpawnVolume(center, false);
+        }
+    }
+    
 }
