@@ -83,7 +83,7 @@ public class SpawnVolume : MonoBehaviour
     void Start() 
     {
         fishes = new List<GameObject>();
-        player = GameObject.FindWithTag("Player").transform;
+        player = GameObject.Find("Player").transform;
         pool = ObjectPooler.current;
         numberOfTypes = pool.PooledObjectCount;
         colliderCount = colliders.Length;
