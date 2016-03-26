@@ -229,7 +229,7 @@ public class Player : LightSource
         {
             gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
         }
-        if (gameOverCanvas.activeSelf == true && !isDead)
+        if (gameOverCanvas != null && gameOverCanvas.activeSelf == true && !isDead)
         {
             gameOverCanvas.SetActive(false);
         }
@@ -629,7 +629,7 @@ public class Player : LightSource
     {
         if (Input.GetButtonDown("Restart"))
         {
-            
+
             Debug.Log("Game Restarted");
             gameOverCanvas.SetActive(false);
             Transform.localScale = new Vector3(1, 1, 1);
@@ -643,6 +643,9 @@ public class Player : LightSource
             this.transform.FindChild("ProbeModel").gameObject.SetActive(true); //reactivate bubbles
             SetCanAbsorbState(true); //reset canAbsorb
             ReactivateObjects();
+
+            // if (Application.loadedLevel == 4) { }
+            AkSoundEngine.PostEvent("Ambient3Stop", this.gameObject);
             
             LoadGame();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -651,17 +654,7 @@ public class Player : LightSource
     
     private void ReactivateObjects()
     {
-        GameObject[] pickups = GameObject.FindGameObjectsWithTag("Pickup");
-        foreach (GameObject pickup in pickups)
-        {
-            Debug.Log(pickup);
-            LightSource light = pickup.GetComponent<LightSource>();
-            if (light != null)
-            {
-                light.LightEnergy.Add(light.DefaultEnergy);
-            }
-            pickup.SetActive(true);
-        }
+        
         ObjectPooler.current.ResetPool();
     }
 

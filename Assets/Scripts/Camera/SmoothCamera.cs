@@ -100,6 +100,8 @@ public class SmoothCamera : MonoBehaviour
     
     void FixedUpdate()
     {
+        if (target == null) { target = GameObject.Find("Player").GetComponent<Transform>(); }
+
         if (target)
         {
             Vector3 newPosition = Vector3.zero;

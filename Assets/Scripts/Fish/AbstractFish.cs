@@ -83,7 +83,7 @@ public abstract class AbstractFish : LightSource
                 GameObject.Instantiate(deathParticles, transform.position,
                                     transform.rotation);
                                     
-                // Debug.Log("FISH DEAD");
+                Debug.Log("FISH DEAD");
             }
             
             Dead = true;
