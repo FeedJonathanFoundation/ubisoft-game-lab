@@ -60,6 +60,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 496344}
   - 114: {fileID: 11467562}
+  - 114: {fileID: 11444648}
   m_Layer: 0
   m_Name: FishDeathParticles
   m_TagString: Untagged
@@ -118,6 +119,18 @@ Transform:
   - {fileID: 414108}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11444648
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 199742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4131a701ce65f4a8acf3eeedb19825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTime: 7
 --- !u!114 &11467562
 MonoBehaviour:
   m_ObjectHideFlags: 1
