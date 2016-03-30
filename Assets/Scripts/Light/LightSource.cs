@@ -113,7 +113,7 @@ public class LightSource : MonoBehaviour
                     }
                     else
                     {                   
-                        //AkSoundEngine.PostEvent("Eat", this.gameObject);
+                        AkSoundEngine.PostEvent("Eat", this.gameObject);
                     }                    
                 }
                 LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
