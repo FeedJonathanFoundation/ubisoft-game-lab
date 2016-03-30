@@ -171,7 +171,7 @@ public class Player : LightSource
         this.isDead = false;
         this.isSafe = true;
         this.controllerRumble = GetComponent<ControllerRumble>();
-        //AkSoundEngine.SetState("PlayerLife", "Alive");
+        AkSoundEngine.SetState("PlayerLife", "Alive");
         this.currentLevel = SceneManager.GetActiveScene().buildIndex;
         ChangeColor(probeColorOff, false, 0);
         LoadGame();
@@ -236,7 +236,7 @@ public class Player : LightSource
         
 
         playerVelocity = (int)this.Rigidbody.velocity.magnitude;
-        //AkSoundEngine.SetRTPCValue("playerVelocity", playerVelocity);
+        AkSoundEngine.SetRTPCValue("playerVelocity", playerVelocity);
         
         // Modify player drag if invulnerable
         if (IsInvulnerable())
@@ -295,8 +295,8 @@ public class Player : LightSource
         }
 
         isDead = true;
-        //AkSoundEngine.SetState("PlayerLife", "Dead");
-        //AkSoundEngine.PostEvent("Die", this.gameObject);
+        AkSoundEngine.SetState("PlayerLife", "Dead");
+        AkSoundEngine.PostEvent("Die", this.gameObject);
 
         Debug.Log("Game OVER! Press 'R' to restart!");
     }
@@ -410,7 +410,7 @@ public class Player : LightSource
                 if (minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
                 {
                     this.lightToggle.ToggleLights();
-                    //AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
+                    AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
                     
                     if (changeIntensityCoroutine != null) { StopCoroutine(changeIntensityCoroutine); }
                     
@@ -435,7 +435,7 @@ public class Player : LightSource
                         this.ChangeColor(probeColorOff, true, 0);
                     }
                     
-                    //AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
+                    AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
                 }
             }
 
@@ -645,7 +645,7 @@ public class Player : LightSource
             ReactivateObjects();
 
             // if (Application.loadedLevel == 4) { }
-            //AkSoundEngine.PostEvent("Ambient3Stop", this.gameObject);
+            // AkSoundEngine.PostEvent("Ambient3Stop", this.gameObject);
             
             LoadGame();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

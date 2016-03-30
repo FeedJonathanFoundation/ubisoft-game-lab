@@ -37,7 +37,7 @@ public class PulseManager : MonoBehaviour
     
     void PulseSound()
     {
-        //AkSoundEngine.PostEvent("Pulse", this.transform.gameObject);
+        AkSoundEngine.PostEvent("Pulse", this.transform.gameObject);
     }
     
     void CalculatePosition()

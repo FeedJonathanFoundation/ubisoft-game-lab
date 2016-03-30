@@ -47,7 +47,7 @@ public class JellyfishShock : MonoBehaviour
             {
                 Knockback(player);
                 player.LightEnergy.Deplete(energyLost);
-                //AkSoundEngine.PostEvent("JellyfishAttack", this.gameObject);
+                AkSoundEngine.PostEvent("JellyfishAttack", this.gameObject);
             }
                 // timer = 0;
             // }
@@ -108,7 +108,7 @@ public class JellyfishShock : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            //AkSoundEngine.PostEvent("StopJellyfishAttack", this.gameObject);
+            AkSoundEngine.PostEvent("StopJellyfishAttack", this.gameObject);
         }
     }
     

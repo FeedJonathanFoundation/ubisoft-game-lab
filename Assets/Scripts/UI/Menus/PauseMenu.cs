@@ -195,7 +195,7 @@ public class PauseMenu : MonoBehaviour
     public void ChangeVolume()
     {
         float volume = volumeSlider.value * 100;
-        //AkSoundEngine.SetRTPCValue("MasterVolume", volume);
+        AkSoundEngine.SetRTPCValue("MasterVolume", volume);
     }
 
     // When the Back button is pressed, the options submenu is hidden and the Pause menu is shown

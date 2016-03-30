@@ -53,8 +53,8 @@ public class HealthBar : MonoBehaviour {
             
             yield return new WaitForSeconds(0.35f);
             fill.enabled = true;
-            //AkSoundEngine.SetRTPCValue("lightLevel", lightLevel);
-            //AkSoundEngine.PostEvent("CriticalHealth", this.gameObject);
+            AkSoundEngine.SetRTPCValue("lightLevel", lightLevel);
+            AkSoundEngine.PostEvent("CriticalHealth", this.gameObject);
         }
     } 
     
