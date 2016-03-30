@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{D224D7DA-F454-4289-BD1F-288DB137AAAC}" SchemaVersion="70">
+	<States>
+		<WorkUnit Name="Default Work Unit" ID="{D224D7DA-F454-4289-BD1F-288DB137AAAC}" PersistMode="Standalone">
+			<ChildrenList>
+				<StateGroup Name="PlayerLife" ID="{CE5C7BEA-EF2B-41FC-B88B-0B4C9441DD91}">
+					<ChildrenList>
+						<State Name="None" ID="{407C2BE9-1066-49C4-A30A-611192A5C769}"/>
+						<State Name="Alive" ID="{EB9DE84F-4043-4A30-8EF9-00825ACA100C}"/>
+						<State Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
+					</ChildrenList>
+					<TransitionList>
+						<Transition>
+							<StartState Name="Alive" ID="{EB9DE84F-4043-4A30-8EF9-00825ACA100C}"/>
+							<EndState Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
+							<Time>1</Time>
+							<IsShared>false</IsShared>
+						</Transition>
+						<Transition>
+							<StartState Name="Dead" ID="{0C2CFEE1-0B4B-441B-B150-0748AEDB5568}"/>
+							<EndState Name="Alive" ID="{EB9DE84F-4043-4A30-8EF9-00825ACA100C}"/>
+							<Time>1</Time>
+							<IsShared>false</IsShared>
+						</Transition>
+					</TransitionList>
+				</StateGroup>
+				<StateGroup Name="IMAmb1" ID="{A57FFD85-3B24-4AE0-9B83-5EEDDE5D00F6}">
+					<ChildrenList>
+						<State Name="None" ID="{F5BFB449-8E38-46D7-BE7E-DA91EBDC9473}"/>
+						<State Name="Amb1start" ID="{22E05215-EBFA-4F99-83F2-F85DE928DE41}"/>
+						<State Name="Amb1end" ID="{4FA327BB-64D7-4D3D-A801-3EFA07DD46EA}"/>
+					</ChildrenList>
+					<TransitionList>
+						<Transition>
+							<StartState Name="Amb1start" ID="{22E05215-EBFA-4F99-83F2-F85DE928DE41}"/>
+							<EndState Name="Amb1end" ID="{4FA327BB-64D7-4D3D-A801-3EFA07DD46EA}"/>
+							<Time>3</Time>
+							<IsShared>false</IsShared>
+						</Transition>
+						<Transition>
+							<StartState Name="Amb1end" ID="{4FA327BB-64D7-4D3D-A801-3EFA07DD46EA}"/>
+							<EndState Name="Amb1start" ID="{22E05215-EBFA-4F99-83F2-F85DE928DE41}"/>
+							<Time>3</Time>
+							<IsShared>false</IsShared>
+						</Transition>
+					</TransitionList>
+				</StateGroup>
+				<StateGroup Name="IMAmb2" ID="{0E5087CE-4389-4980-A89A-875B1E453D01}">
+					<ChildrenList>
+						<State Name="None" ID="{F267B2A5-8BF3-4C5E-AB24-11DB0A4B4659}"/>
+						<State Name="CP1" ID="{BE168014-0F8E-48D6-B505-D2988E3B9914}"/>
+						<State Name="CP2" ID="{9EBC449C-E089-4052-B34E-8B50A1CA48BE}"/>
+						<State Name="CP3" ID="{4E66AA44-586A-44E9-A672-72CF7D455790}"/>
+						<State Name="CP4" ID="{63574D33-D676-4B17-9E49-0E47B3751695}"/>
+					</ChildrenList>
+				</StateGroup>
+				<StateGroup Name="IMAmb3" ID="{13D833B7-D52A-4697-9250-D811E5810ADB}">
+					<ChildrenList>
+						<State Name="None" ID="{5F999EF5-74A7-485D-B9F4-08DD3EDCA1E5}"/>
+						<State Name="Hunted" ID="{7A546289-85C0-42F0-8EA8-604C65C10D72}"/>
+						<State Name="Hiding" ID="{897FB7E5-E5E2-4D35-8760-B38FA8428F39}"/>
+						<State Name="Over" ID="{709B451F-5114-4818-93FE-93C96AFADE56}"/>
+					</ChildrenList>
+				</StateGroup>
+				<StateGroup Name="IMAmb4" ID="{6277182F-B0AE-4433-90EC-04E7B7689F9E}">
+					<ChildrenList>
+						<State Name="None" ID="{E74E54EB-BE37-4741-8B36-121664E93F41}"/>
+					</ChildrenList>
+				</StateGroup>
+			</ChildrenList>
+		</WorkUnit>
+	</States>
+</WwiseDocument>
