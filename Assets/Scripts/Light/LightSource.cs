@@ -101,20 +101,20 @@ public class LightSource : MonoBehaviour
                 
                 if (this is Player)
                 {                    
-                    if (otherLightSource.CompareTag("Pickup"))
-                    {
-                        AkSoundEngine.PostEvent("Light_Orb_Pickup", this.gameObject);
-                        // otherLightSource.gameObject.SetActive(false);
-                    }
-                    else if (otherLightSource.CompareTag("Checkpoint"))
-                    {
-                        AkSoundEngine.PostEvent("Light_Orb_Pickup", this.gameObject);
-                        //AkSoundEngine.PostEvent("Checkpoint", this.gameObject);
-                    }
-                    else
-                    {                   
+                    // if (otherLightSource.CompareTag("Pickup"))
+                    // {
+                    //     AkSoundEngine.PostEvent("Light_Orb_Pickup", this.gameObject);
+                    //     // otherLightSource.gameObject.SetActive(false);
+                    // }
+                    // else if (otherLightSource.CompareTag("Checkpoint"))
+                    // {
+                    //     AkSoundEngine.PostEvent("Light_Orb_Pickup", this.gameObject);
+                    //     //AkSoundEngine.PostEvent("Checkpoint", this.gameObject);
+                    // }
+                    // else
+                    // {                   
                         AkSoundEngine.PostEvent("Eat", this.gameObject);
-                    }                    
+                    // }                    
                 }
                 LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
                                         
