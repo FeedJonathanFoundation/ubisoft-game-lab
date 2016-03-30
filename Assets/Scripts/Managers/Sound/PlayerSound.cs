@@ -9,10 +9,10 @@ public class PlayerSound : MonoBehaviour {
 
     void Start()
     {
-        AkSoundEngine.PostEvent("Default", this.gameObject); 
+        //AkSoundEngine.PostEvent("Default", this.gameObject); 
     }
     void OnCollisionEnter(Collision collision)
     {
-        AkSoundEngine.PostEvent("WallCrash", this.gameObject);
+        //AkSoundEngine.PostEvent("WallCrash", this.gameObject);
     }
 }

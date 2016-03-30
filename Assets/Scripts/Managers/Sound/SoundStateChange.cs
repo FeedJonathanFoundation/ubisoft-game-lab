@@ -69,7 +69,7 @@ public class SoundStateChange : MonoBehaviour
         {
             if (other.CompareTag("Player"))
             {
-                AkSoundEngine.SetState("IMAmb3", "Hunted");
+                //AkSoundEngine.SetState("IMAmb3", "Hunted");
             }
         }
     }
@@ -80,24 +80,24 @@ public class SoundStateChange : MonoBehaviour
         switch (newState)
         {
             case 0:// Field scene
-                AkSoundEngine.SetState("IMAmb1", "Amb1start");
+                //AkSoundEngine.SetState("IMAmb1", "Amb1start");
                 break;
             case 1:
-                AkSoundEngine.SetState("IMAmb1", "Amb1end");
+                //AkSoundEngine.SetState("IMAmb1", "Amb1end");
                 break;
             case 2: // Volcano scene
-                AkSoundEngine.SetState("IMAmb2", "CP2");
+                //AkSoundEngine.SetState("IMAmb2", "CP2");
                 break;
             case 3:
-                AkSoundEngine.SetState("IMAmb2", "CP3");
+                //AkSoundEngine.SetState("IMAmb2", "CP3");
                 break;
             case 4: // Beginning cave scene
-                // AkSoundEngine.PostEvent("Ambient2Stop", this.gameObject);
-                // AkSoundEngine.PostEvent("Ambient3", this.gameObject);
-                AkSoundEngine.SetState("IMAmb3", "Hunted");
+                // //AkSoundEngine.PostEvent("Ambient2Stop", this.gameObject);
+                // //AkSoundEngine.PostEvent("Ambient3", this.gameObject);
+                //AkSoundEngine.SetState("IMAmb3", "Hunted");
                 break;
             case 5: // boss theme
-                AkSoundEngine.SetState("IMAmb3", "Over");
+                //AkSoundEngine.SetState("IMAmb3", "Over");
                 break;
             default:
                 break;
@@ -107,6 +107,6 @@ public class SoundStateChange : MonoBehaviour
     
     private void SafeZoneSound()
     {
-        AkSoundEngine.SetState("IMAmb3", "Hiding");
+        //AkSoundEngine.SetState("IMAmb3", "Hiding");
     }
 }
