@@ -2,27 +2,43 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Object Pooler class creates a pool of game objects for reuse.
+///
+/// @author - Stella L.
+/// @version - 1.0.0
+///
+/// </summary>
 public class ObjectPooler : MonoBehaviour
 {
 
     public static ObjectPooler current;
+    
     [Tooltip("Game objects to pool and spawn.")]
     [SerializeField]
     private GameObject[] pooledObjects;
+    
     [Tooltip("Number of game objects to pool (in order).")]
     [SerializeField]
     private int[] pooledAmount;
+    
     [Tooltip("If true, more game objects will be instantiated if they 'run out' of pooled objects.")]
     [SerializeField]
     private bool extensible;
 
     private List<GameObject>[] pool;
-
+    
+    /// <summary>
+    /// Initializes the global pool
+    /// </summary>
     void Awake()
     {
         current = this;
     }
     
+    /// <summary>
+    /// Creates the pool
+    /// </summary>
     void Start()
     {
         pool = new List<GameObject>[pooledObjects.Length];
@@ -38,6 +54,9 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 	
+    /// <summary>
+    /// Returns an object from the pool that is not in use
+    /// </summary>
 	public GameObject GetPooledObject(int objectID)
     {
         if (objectID > pooledObjects.Length)
@@ -63,6 +82,9 @@ public class ObjectPooler : MonoBehaviour
         return null;
     }
     
+    /// <summary>
+    /// Resets the pool, as if it had never been used
+    /// </summary>
     public void ResetPool()
     {
         for (int i = 0; i < pooledObjects.Length; i++)
@@ -79,6 +101,9 @@ public class ObjectPooler : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Restores the default energy of the pooled object
+    /// </summary>
     private void ReactivateObjectLight(GameObject current)
     {
         LightSource light = current.GetComponent<LightSource>();
@@ -93,6 +118,9 @@ public class ObjectPooler : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Returns number of objects in the pool
+    /// </summary>
     public int PooledObjectCount
     {
         get
