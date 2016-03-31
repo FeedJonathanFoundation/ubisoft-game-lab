@@ -38,6 +38,9 @@ public class IntroTextManager : MonoBehaviour
         {
             DisableTextBox();
         }
+        
+        AkSoundEngine.PostEvent("Ambient2", this.gameObject);
+        AkSoundEngine.SetState("IMAmb2", "CP2");
     }
 
     void Update()
@@ -101,6 +104,8 @@ public class IntroTextManager : MonoBehaviour
     // Hides the textbox and resumes player movement
     public void DisableTextBox()
     {
+        AkSoundEngine.PostEvent("Ambient2Stop", this.gameObject);
         SceneManager.LoadScene(2);
+        
     }
 }
