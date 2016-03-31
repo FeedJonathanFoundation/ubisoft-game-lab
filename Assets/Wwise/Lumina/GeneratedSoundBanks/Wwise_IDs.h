@@ -17,7 +17,7 @@ namespace AK
         static const AkUniqueID AMBIENT2 = 4095159979U;
         static const AkUniqueID AMBIENT2STOP = 4142644811U;
         static const AkUniqueID AMBIENT3 = 4095159978U;
-        static const AkUniqueID AMBIENT3STOP = 2653643762U;
+        static const AkUniqueID BOSSEAT = 1580095580U;
         static const AkUniqueID CHECKPOINT = 612075679U;
         static const AkUniqueID CRITICALHEALTH = 2407075028U;
         static const AkUniqueID CURRENT = 2037989808U;
@@ -33,6 +33,7 @@ namespace AK
         static const AkUniqueID LIGHT_ORB_PICKUP = 4066254940U;
         static const AkUniqueID LIGHTSTOTOGGLE = 3299248253U;
         static const AkUniqueID LOWENERGY = 1772229705U;
+        static const AkUniqueID MOVEMENT = 2129636626U;
         static const AkUniqueID PULSE = 1316273048U;
         static const AkUniqueID STOPJELLYFISHATTACK = 3799923489U;
         static const AkUniqueID WALLCRASH = 2901629858U;
@@ -131,7 +132,6 @@ namespace AK
     {
         static const AkUniqueID INIT = 1355168291U;
         static const AkUniqueID MAIN = 3161908922U;
-        static const AkUniqueID THEMES = 1940854371U;
     } // namespace BANKS
 
     namespace BUSSES
