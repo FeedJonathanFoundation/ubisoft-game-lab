@@ -10,25 +10,34 @@ public enum Direction
     right
 }
 
-// Acts as an invisible boundary
-// Be mindful of the direction the player will hit the boundary
-// This should be the side of the trigger box collider
+/// <summary>
+/// Current class acts as an invisible boundary
+/// Be mindful of the direction the player will hit the boundary
+/// This should be the side of the trigger box collider
+///
+/// @author - Stella L.
+/// @author - Karl C.
+/// @version - 1.0.0
+///
+/// </summary>
+[RequireComponent(typeof(Collider))]
 public class Current : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("The strength of current force.")]
     private float strength;
+    
     [SerializeField]
     [Tooltip("The direction of current force.")]
     private Direction currentDirection;
+    
     [SerializeField]
     [Tooltip("Distance from current for the particle system to be destroyed.")]
     private float distanceFromPlayer;
+    
     private Vector3 direction;
     private string particleDirection;
     private float distance;
-
-
     // Whether the current object is empty.
     private bool empty;
     // Holds all rigidbodies in the current.
@@ -37,8 +46,10 @@ public class Current : MonoBehaviour
     private bool playerInCurrent;
     private GameObject particles;
 
-
-    void Start()
+    /// <summary>
+    /// Initializes the current.
+    /// </summary>
+    protected void Start()
     {
         rigidbodies = new List<Rigidbody>();
         GameObject mainCamera = GameObject.FindWithTag("MainCamera");
@@ -53,13 +64,18 @@ public class Current : MonoBehaviour
         distance = distanceFromPlayer;
     }
 
-    void Update()
+    /// <summary>
+    /// If the current is not empty, add current force.
+    /// Do not allow camera to go past current
+    /// and only show particles if in view.
+///// SHOULD PROBABLY CALL A FUNCTION IN SMOOTH CAMERA INSTEAD //////
+    /// </summary>
+    protected void Update()
     {
         if (!empty)
         {
             AddCurrentForce();
         }
-
         if (particles)
         {
             if (particleDirection == "downCurrent" || particleDirection == "upCurrent")
@@ -68,18 +84,15 @@ public class Current : MonoBehaviour
                 position.x = smoothCamera.transform.position.x;
                 particles.transform.position = position;
             }
-
             if (particleDirection == "leftCurrent" || particleDirection == "rightCurrent")
             {
                 Vector3 position = particles.transform.position;
                 position.y = smoothCamera.transform.position.y;
                 particles.transform.position = position;
             }
-
             if (!playerInCurrent)
             {
                 distance = Vector3.Distance(particles.transform.position, smoothCamera.transform.position);
-                //Debug.Log("distance: " + distance);
                 if (distance >= distanceFromPlayer)
                 {
                     Destroy(particles);
@@ -88,7 +101,10 @@ public class Current : MonoBehaviour
         }
     }
 
-    void StartCurrentParticles()
+    /// <summary>
+    /// Instantiates the particle system.
+    /// </summary>
+    private void StartCurrentParticles()
     {
         if (!particles)
         {
@@ -99,7 +115,10 @@ public class Current : MonoBehaviour
         }
     }
 
-    void SetDirection()
+    /// <summary>
+    /// Sets the direction of the current force.
+    /// </summary>
+    private void SetDirection()
     {
         switch (currentDirection)
         {
@@ -121,19 +140,18 @@ public class Current : MonoBehaviour
                 break;
         }
     }
-
-    // Get rigidbody of the colliding game object and add to the list
-    void OnTriggerEnter(Collider col)
+    /// <summary>
+    /// Get rigidbody of the colliding game object and add to the list
+    /// </summary>
+    protected void OnTriggerEnter(Collider col)
     {
         Rigidbody rigidbody = col.gameObject.GetComponent<Rigidbody>();
         if (rigidbody != null)
         {
             rigidbodies.Add(rigidbody);
             empty = false;
-
             if (col.CompareTag("Player"))
             {
-                // Debug.Log(particleDirection);
                 StartCurrentParticles();
                 smoothCamera.SetCurrentState(true, particleDirection);
                 playerInCurrent = true;
@@ -141,8 +159,10 @@ public class Current : MonoBehaviour
         }
     }
 
-    // Remove rigidbody of game object that has exited the current
-    void OnTriggerExit(Collider col)
+    /// <summary>
+    /// Remove rigidbody of game object that has exited the current
+    /// </summary>
+    protected void OnTriggerExit(Collider col)
     {
         Rigidbody rb = col.gameObject.GetComponent<Rigidbody>();
         if (rb != null && rigidbodies.Contains(rb))
@@ -152,24 +172,25 @@ public class Current : MonoBehaviour
             {
                 empty = true;
             }
-
             if (col.CompareTag("Player"))
             {
                 smoothCamera.SetCurrentState(false, "");
                 playerInCurrent = false;
-                //smoothCamera.StopCurrentParticles(particleDirection);
             }
         }
     }
 
-    void AddCurrentForce()
+    /// <summary>
+    /// Applies the current force to the rigidbodies in the current
+    /// </summary>
+    private void AddCurrentForce()
     {
         foreach (Rigidbody rigidbody in rigidbodies)
         {
             if (rigidbody != null)
             {
-                AkSoundEngine.PostEvent("Current", this.gameObject);    
-                            
+                // Plays the current sound
+                AkSoundEngine.PostEvent("Current", this.gameObject);          
                 Vector3 initialVelocity = rigidbody.velocity;
                 rigidbody.AddForce(-initialVelocity);
                 rigidbody.AddForce(strength * direction);
