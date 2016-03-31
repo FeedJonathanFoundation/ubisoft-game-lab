@@ -85,6 +85,11 @@ public class ObjectPooler : MonoBehaviour
         if (light != null)
         {
             light.LightEnergy.Add(light.DefaultEnergy);
+            AbstractFish fish = current.GetComponent<AbstractFish>();
+            if (fish)
+            {
+                fish.Dead = false;
+            }
         }
     }
     
