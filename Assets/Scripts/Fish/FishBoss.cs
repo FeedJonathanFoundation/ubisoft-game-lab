@@ -18,10 +18,10 @@ public class FishBoss : AbstractFish
     [SerializeField]
     private MoveClosestWaypoint moveToWaypoint;
 
-    private bool bite;
-    private bool swim;
+    
     private float animationSpeed = 1f;
     private Animator animator;
+    private float speedFactor = 5f;
 
     protected override void Awake()
     {
@@ -42,10 +42,10 @@ public class FishBoss : AbstractFish
         moveToWaypoint.SetPriority(0);
         moveToWaypoint.SetID("-3");
         
-        //animator = GetComponentInParent<Animator>();
-        bite = false;
-        swim = false;
-        Animate();
+        animator = GetComponentInChildren<Animator>();
+        
+        SetAnimationSpeed();
+        Animate(false, true);
     }
     
     protected override void Update()
@@ -64,8 +64,7 @@ public class FishBoss : AbstractFish
         
         if (!player.GetComponent<Player>().isSafe)
         {
-            bite = true;
-            swim = true;
+            Animate(true, true);
             followPlayer.TargetLightSource = player.GetComponent<LightSource>();
             AddAction(followPlayer);
             SetAnimationSpeed();
@@ -75,9 +74,7 @@ public class FishBoss : AbstractFish
     
     public override void Move() 
     {
-        bite = false;
-        swim = true;
-        Animate();
+        Animate(false, true);
         moveToWaypoint.SetPriority(0);   // Lowest priority
         moveToWaypoint.SetID(GetID());
         Debug.Log(moveToWaypoint.ToString());
@@ -99,16 +96,14 @@ public class FishBoss : AbstractFish
     
     public override void ReactToFlare(Transform flare)
     {
-        bite = true;
-        swim = true;
-        Animate();
+        Animate(true, true);
         // Seek the flare
         flareBehaviour.TargetFlare = flare;
         AddAction(flareBehaviour);
         SetAnimationSpeed();
     }
     
-    private void Animate()
+    private void Animate(bool bite, bool swim)
     {
         if(animator)
         {
@@ -121,8 +116,16 @@ public class FishBoss : AbstractFish
     {
         if(animator)
         {
-            animationSpeed = GetComponent<Rigidbody>().velocity.magnitude;
-            animator.SetFloat("Speed", animationSpeed);
+            float currentSpeed = GetComponent<Rigidbody>().velocity.magnitude;
+            animationSpeed = currentSpeed / speedFactor;
+            if (animationSpeed > 0)
+            {
+                animator.SetFloat("Speed", animationSpeed);
+            }
+            else
+            {
+                animator.SetFloat("Speed", 0.2f);
+            }
         }
     }
 }
