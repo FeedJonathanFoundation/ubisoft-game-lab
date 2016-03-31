@@ -16,7 +16,7 @@ public class BossEatFlare : MonoBehaviour
         if (col.CompareTag("Flare"))
         {
             Destroy(col.transform.parent.gameObject);
-            
+            AkSoundEngine.PostEvent("BossEat", this.gameObject);
             player.GetComponent<FlareSpawner>().EatFlare();
         }
     }
