@@ -71,7 +71,7 @@ public class SoundStateChange : MonoBehaviour
 
     private void SetState(int newState)
     {
-        Debug.Log("new state: " + newState);
+        // Debug.Log("new state: " + newState);
         switch (newState)
         {
             case 0:// Field scene

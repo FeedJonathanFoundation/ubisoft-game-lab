@@ -133,7 +133,7 @@ public class Current : MonoBehaviour
 
             if (col.CompareTag("Player"))
             {
-                Debug.Log(particleDirection);
+                // Debug.Log(particleDirection);
                 StartCurrentParticles();
                 smoothCamera.SetCurrentState(true, particleDirection);
                 playerInCurrent = true;
