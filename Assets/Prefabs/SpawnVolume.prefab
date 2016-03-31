@@ -46,7 +46,7 @@ GameObject:
   - 114: {fileID: 11470310}
   m_Layer: 10
   m_Name: SpawnVolume
-  m_TagString: Untagged
+  m_TagString: SpawnVolume
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -163,23 +163,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f648d350620143169806ce7bde8feb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnTime: 1
   colliders:
   - {fileID: 13598130}
   - {fileID: 13567536}
   - {fileID: 13574020}
+  isSchool: 010000
   probabilities:
   - 2
   - 1
   - 0.15
   energyVariance: 0.492
-  overrideSpawnLocations: 0
-  spawnRandom: 0
-  spawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  minFishCount: 100
-  maxFishCount: 100
+  fishCount: 0
   schoolSize: 7
   initialSwimAngle: 0
   maxDistance: 50
