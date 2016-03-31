@@ -16,7 +16,6 @@ public class JellyfishBounce : MonoBehaviour
         //this could not exist and the player would still bounce off the body as long as istrigger is not checked
         if(col.gameObject.tag == "Player")
         {
-            Debug.Log("bounce");
             col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.Reflect(col.relativeVelocity*-bounceIntensity, col.contacts[0].normal );
         }
     }
