@@ -147,6 +147,8 @@ public class Player : LightSource
     [SerializeField]
     private GameObject gameOverCanvasPrefab;
 
+    private PlayerSound playerSound;
+
     /// <summary>
     /// Initializes Player components
     /// </summary>
@@ -171,7 +173,8 @@ public class Player : LightSource
         this.isDead = false;
         this.isSafe = true;
         this.controllerRumble = GetComponent<ControllerRumble>();
-        AkSoundEngine.SetState("PlayerLife", "Alive");
+        playerSound = GetComponent<PlayerSound>();
+        
         this.currentLevel = SceneManager.GetActiveScene().buildIndex;
         ChangeColor(probeColorOff, false, 0);
         LoadGame();
@@ -234,10 +237,9 @@ public class Player : LightSource
             gameOverCanvas.SetActive(false);
         }
         
-
         playerVelocity = (int)this.Rigidbody.velocity.magnitude;
-        AkSoundEngine.SetRTPCValue("playerVelocity", playerVelocity);
-        
+        playerSound.SetPlayerVelocity(playerVelocity);
+
         // Modify player drag if invulnerable
         if (IsInvulnerable())
         {
@@ -295,8 +297,7 @@ public class Player : LightSource
         }
 
         isDead = true;
-        AkSoundEngine.SetState("PlayerLife", "Dead");
-        AkSoundEngine.PostEvent("Die", this.gameObject);
+        playerSound.PlayerDeathSound();
 
         Debug.Log("Game OVER! Press 'R' to restart!");
     }
@@ -410,8 +411,8 @@ public class Player : LightSource
                 if (minimalEnergyRestrictionToggleLights < this.LightEnergy.CurrentEnergy)
                 {
                     this.lightToggle.ToggleLights();
-                    AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
-                    
+                    playerSound.LightToggleSound();
+
                     if (changeIntensityCoroutine != null) { StopCoroutine(changeIntensityCoroutine); }
                     
                     if (this.lightToggle.LightsEnabled)
@@ -434,8 +435,7 @@ public class Player : LightSource
                     {
                         this.ChangeColor(probeColorOff, true, 0);
                     }
-                    
-                    AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
+                    playerSound.InsufficientEnergySound();
                 }
             }
 
@@ -610,7 +610,7 @@ public class Player : LightSource
             ParticleSystem explosion = GameObject.Instantiate(playerDeathParticles,
                                         Transform.position, Quaternion.Euler(-90, explosionAngle, 0)) as ParticleSystem;
             // Explosion sound
-            AkSoundEngine.PostEvent("Explosion", this.gameObject);
+            playerSound.ExplosionSound();
             // Rumble the controller
             controllerRumble.PlayerDied();
 
@@ -645,9 +645,6 @@ public class Player : LightSource
             this.transform.FindChild("ProbeModel").gameObject.SetActive(true); //reactivate bubbles
             SetCanAbsorbState(true); //reset canAbsorb
             ReactivateObjects();
-
-            // if (Application.loadedLevel == 4) { }
-            // AkSoundEngine.PostEvent("Ambient3Stop", this.gameObject);
             
             LoadGame();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

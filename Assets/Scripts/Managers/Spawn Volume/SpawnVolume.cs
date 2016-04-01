@@ -146,6 +146,7 @@ public class SpawnVolume : MonoBehaviour
     /// </summary>
     private void CheckDistanceToPlayer(AbstractFish fish)
     {
+        if (fish == null) { return; }
         float distanceSquared = (fish.transform.position - player.position).sqrMagnitude;
         
         if (distanceSquared > maxDistanceSquared)
