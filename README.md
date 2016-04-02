@@ -8,16 +8,16 @@ FJF's entry for the Ubisoft 2016 Game Lab Competition.
 | Rotate Player | Left-Stick          | <kbd>&#8593;</kbd><kbd>&#8595;</kbd> <kbd>&#8592;</kbd><kbd>&#8594;</kbd>|
 | Propulse      | <kbd>RT</kbd>       | <kbd>Space</kbd>          |
 | Brake  	| <kbd>LT</kbd>       | <kbd>Ctrl</kbd>           |
-| Light Toggle  | <kbd>RB</kbd>       | <kbd>x</kbd>              |
-| Shoot Flare   | <kbd>Y</kbd>        | <kbd>f</kbd>              |
+| Light Toggle  | <kbd>RB</kbd>       | <kbd>r</kbd>              |
+| Shoot Flare   | <kbd>Y</kbd>        | <kbd>y</kbd>              |
 
 
 ## Team
 **Programmers:** Alex Ilea, Karl Chiraz, Stella Lee, Simon Thompson, Jonathan Lucuix-André
 
-**Artists:** Roxanne Sirois, Tristan Mirza, Carlos Sulpizio
+**Artists:** Roxanne Sirois, Tristan Mirza
 
-**Sound Designers:** Mark Latimer, Jeremy Segal
+**Sound Designer:** Mark Latimer
 
 ------------------
 
@@ -39,11 +39,6 @@ FJF's entry for the Ubisoft 2016 Game Lab Competition.
 	- Select under "Your recently pushed branches" the option to **Compare & pull request**
 	- Write a detailed description and create
 	- Assign appropriate tags under **Labels**, set the **Milestone** to the relevant sprint, and tester as **Assignee**
-
-## Arist Repo Setup:
-
-1. Download the Mac Desktop client
-2. Good luck
 
 
 
