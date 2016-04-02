@@ -1406,6 +1406,44 @@
 								<ActiveSource Name="Boss Outro" ID="{7DFD064B-A06B-47F8-8D5E-6C858A9F8CC0}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
+						<Sound Name="Filthy-Eating" ID="{DDE8C211-84AA-41C8-9F18-B0D0A78D2870}" ShortID="597002702" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Filthy-Eating" ID="{5776DDC0-B0E3-4096-BA60-C38867AA2903}" ShortID="701883154">
+									<Language>SFX</Language>
+									<AudioFile>Filthy-Eating.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Filthy-Eating" ID="{5776DDC0-B0E3-4096-BA60-C38867AA2903}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Critical-A" ID="{4527FEB7-2190-4849-BD25-745784699D9B}" ShortID="629772945" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{3DBB4DEF-935E-4884-A200-1C95CEA3CDA6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1A303C29-4668-4868-A41A-B420E1905AA0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Critical-A" ID="{9C7385DA-09E7-4D49-BB37-B504BF7C40E4}" ShortID="153137605">
+									<Language>SFX</Language>
+									<AudioFile>Critical-A.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Critical-A" ID="{9C7385DA-09E7-4D49-BB37-B504BF7C40E4}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Themes" ID="{B49C0FA1-49C6-4A7B-892E-AB02226CAEED}" ShortID="368595034">

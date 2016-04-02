@@ -293,6 +293,28 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="BossEat" ID="{B1A38A26-2CB4-4700-B58A-72890A8D05D1}">
+							<ChildrenList>
+								<Action Name="Play" ID="{CDE6616C-53E2-407E-B9EC-E858DB8475B2}" ShortID="458466464" Type="Play" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{C1B140F6-6A72-46B1-840F-9E50639D27D7}" Global="false">
+											<ObjectRef Name="Filthy-Eating" ID="{DDE8C211-84AA-41C8-9F18-B0D0A78D2870}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="CriticalHealth" ID="{A96F9A6A-82F5-4283-9178-A10D23011178}">
+							<ChildrenList>
+								<Action Name="Play" ID="{26315FEC-E408-454B-A959-48541EC6F502}" ShortID="491321199" Type="Play" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{6F57F4A8-01C2-4489-A6A2-29ACC7FB4DAE}" Global="false">
+											<ObjectRef Name="Critical-A" ID="{4527FEB7-2190-4849-BD25-745784699D9B}" WorkUnitID="{E540B371-B82C-4CCC-BAED-EACA873F9197}"/>
+										</Element>
+									</ElementList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="NPC Effects" ID="{7BC7F326-4F72-4B1E-BDEB-A3FDCC5ED2F5}" ShortID="594739800">

@@ -37,6 +37,16 @@ public class PlayerSound : MonoBehaviour
         AkSoundEngine.PostEvent("Explosion", target);
     }
     
+    public void AttackSound()
+    {
+        AkSoundEngine.PostEvent("Attack", target);
+    }
+    
+    public void EatSound()
+    {
+        AkSoundEngine.PostEvent("Eat", this.gameObject); 
+    }
+    
     public void PlayerDeathSound()
     {
         AkSoundEngine.SetState("PlayerLife", "Dead");
@@ -45,12 +55,12 @@ public class PlayerSound : MonoBehaviour
     
     public void LightToggleSound()
     {
-        AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
+        AkSoundEngine.PostEvent("LightsToToggle", target);
     }
 
     public void InsufficientEnergySound()
     {
-        AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
+        AkSoundEngine.PostEvent("LowEnergy", target);
     }
     
     public void SetPlayerVelocity(float playerVelocity)

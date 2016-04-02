@@ -100,8 +100,9 @@ public class LightSource : MonoBehaviour
             {
                 
                 if (this is Player)
-                {                                     
-                    AkSoundEngine.PostEvent("Eat", this.gameObject);                 
+                {
+                    PlayerSound playerSound = GetComponent<PlayerSound>();
+                    playerSound.EatSound();
                 }
                 LightEnergy lightEnergyToAbsorb = otherLightSource.LightEnergy;
                                         

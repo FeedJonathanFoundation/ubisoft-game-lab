@@ -666,8 +666,8 @@ public class Player : LightSource
         #if UNITY_EDITOR
             if (massEjectionTransform == null || lightBallPrefab == null || jetFuelEffect == null)
             {
-                UnityEditor.EditorApplication.isPlaying = false;
-                Debug.LogError("Missing prefab on Player object!");
+                // UnityEditor.EditorApplication.isPlaying = false;
+                // Debug.LogError("Missing prefab on Player object!");
             }
 
             if (this.transform.Find("LightsToToggle").gameObject == null)
