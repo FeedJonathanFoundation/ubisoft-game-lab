@@ -2,22 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 
-/// implement probabilities to spawn certain fish types
-
+/// <summary>
+/// SpawnVolume class is responsible for spawning game objects
+/// within sphere collider trigger(s)
+///
+/// @author - Stella L.
+/// @author - Jonathan L.A
+/// @version - 1.0.0
+///
+/// </summary>
+[RequireComponent(typeof(ObjectPooler))]
 public class SpawnVolume : MonoBehaviour
 {
     
     [SerializeField]
-    [Tooltip("Delay between spawns")]
-    private float spawnTime;
-    
-    // Number of possible NPCs to spawn
-    private int numberOfTypes;
-    
+    [Tooltip("Spawn volume colliders - each sphere collider must be in its own game object.)")]
+    private Collider[] colliders;
     
     [SerializeField]
-    [Tooltip("Spawn volume colliders.)")]
-    private Collider[] colliders;
+    [Tooltip("Specify which game objects should be spawned in schools (in order of spawnObjects in Object Pool.)")]
+    private bool[] schools;
     
     [SerializeField]
     [Tooltip("NPC probability of spawning (in order of spawnObjects in Object Pool.)")]
@@ -25,35 +29,19 @@ public class SpawnVolume : MonoBehaviour
     
     [SerializeField]
     [Range(0,1)]
-    [Tooltip("Percent of maximum variance from default energy.")]
+    [Tooltip("Percent of maximum variance from default energy. Allows spawning of fish of different sizes.")]
     private float energyVariance;
     
     [SerializeField]
-    [Tooltip("If true, uses specific spawn points. Else, uses randomly generated spawn points.")]
-    private bool overrideSpawnLocations = false;
-    
-    [SerializeField]
-    [Tooltip("If true, spawns randomly within a circle. Else, generates in a circle pattern.")]
-    private bool spawnRandom = false;
-    
-    [SerializeField]
-    [Tooltip("Specific spawn points.")]
-    private Transform[] spawnPoints;
-    
-    [SerializeField]
-    [Tooltip("Minimum number of fish to be spawned.")]
-    private int minFishCount;
-    
-    [SerializeField]
-    [Tooltip("Maximum number of fish to be spawned.")]
-    private int maxFishCount;
+    [Tooltip("Number of fish to be spawned.")]
+    private int fishCount;
 
     [SerializeField]
     [Tooltip("Number of fish in school.")]
     private int schoolSize;
     
     [SerializeField]
-    [Tooltip("The initial angle at which the fish swim. Relative to the +y-axis, clockwise, in degrees")]
+    [Tooltip("The initial angle at which the fish swim. Relative to the +y-axis, clockwise, in degrees.")]
     private float initialSwimAngle;
 
     [SerializeField]
@@ -62,23 +50,25 @@ public class SpawnVolume : MonoBehaviour
     private float maxDistanceSquared;
     
     [SerializeField]
-    [Tooltip("If player travels backwards, do spawn volumes respawn fish?")]
+    [Tooltip("If true, when player travels backwards, spawn volumes respawn fish.")]
     private bool automaticReset;
-
+    
+    // Amount of space between fish in a school
+    private float schoolSpacing = 0.3f;
     private Transform player;
+    // Tracks which spawn volumes are disabled
     private bool[] disabled;
+    // Tracks which spawn volumes are initialized
     private bool[] initialized;
-
+    private int numberOfTypes;
     private int colliderCount;
-
+    // Holds all fish in the spawn volume
     private List<GameObject> fishes;
-
+    // Holds all fish in the object pool
     private ObjectPooler pool;
 
     /// <summary>
-    /// Initializes fish count to 0,
-    /// Spawns the minimum number of fish without delay
-    /// Spawns the maximum number of fish incrementally
+    /// Initializes fish list and spawn volumes
     /// </summary>
     void Start() 
     {
@@ -93,47 +83,35 @@ public class SpawnVolume : MonoBehaviour
         Reset();
     }
     
+    /// <summary>
+    /// Iterate through colliders to see which should be initialized.
+    /// Check and update existing fish status.
+    /// </summary>
     void Update()
     {
+        // Iterate through the colliders
+        // If not disabled and not intialized, initialized
         for (int i = 0; i < colliderCount; i++)
         {
             if (disabled[i]) { continue; }
             if (!initialized[i])
             { 
                 Initialize(i);
+                // Reset the collider the player has passed
                 if (automaticReset)
                 {
                     Reset(i - 1);
                 }
             }
         }
+        // Check if fish should be active or deactivated
         if (fishes.Count > 0)
         {
             for (int i = 0; i < fishes.Count; i++)
             {
                 if (fishes[i] != null)
                 {
-                    //Debug.Log("Check with fish layer: " + LayerMask.LayerToName(fishes[i].layer));
-                    if (fishes[i].CompareTag("School"))
-                    {
-                        // Cycle through each fish in the school
-                        FishSchool school = fishes[i].GetComponent<FishSchool>();
-                        //Debug.Log("Checking distance with fish in school " + school.Fishes.Length + ", " + school);
-                        for (int j = 0; j < school.Fishes.Length; j++)
-                        {
-                            AbstractFish fish = school.Fishes[j];
-                            if (fish != null)
-                            {
-                                // Deactivate the fish if it is unviewable
-                                CheckDistanceToPlayer(fish);
-                            }
-                        }
-                    }
-                    // Else, if the fish is an individual fish
-                    else
-                    {
-                        CheckDistanceToPlayer(fishes[i].GetComponent<AbstractFish>());
-                    }
+                    CheckDistanceToPlayer(fishes[i].GetComponent<AbstractFish>());
                 }
             }
         }
@@ -147,7 +125,6 @@ public class SpawnVolume : MonoBehaviour
     private void CheckDistanceToPlayer(AbstractFish fish)
     {
         float distanceSquared = (fish.transform.position - player.position).sqrMagnitude;
-        
         if (distanceSquared > maxDistanceSquared)
         {
             fish.gameObject.SetActive(false);
@@ -158,126 +135,93 @@ public class SpawnVolume : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Spawns fish in the newly initialized collider.
+    /// </summary>
     private void Initialize(int colliderIndex)
     {
-        SpawnCircle(minFishCount, colliderIndex);    
-        
-        // Spawn after a delay of spawnTime
-        // if (spawnRandom)
-        // {
-        //     InvokeRepeating ("Spawn", spawnTime, spawnTime);
-        // }
         initialized[colliderIndex] = true;
-    }
-
-
-    //////// DEPRECATED ///////////// 
-    /// <summary>
-    /// If player is dead or max number of fish have been spawned,
-    /// exit function
-    /// If spawn location is valid, spawn fish
-    /// </summary>
-    private void Spawn()
-    {
-        // if (disabled) { return; }
-        // if (!spawnRandom) { return; }
-        
-        // int spawnTypeIndex = ChooseFish();
-
-        // Vector3 spawnLocation = GenerateValidSpawnPoint(spawnTypeIndex);
-        // if (spawnLocation == new Vector3 (-999,-999,-999)) { 
-        //     return; 
-        // }
-        // // If valid spawn point location,
-        // // Create instance of fish prefab at spawn point and rotation
-        // GameObject fish = ObjectPooler.current.GetPooledObject(spawnTypeIndex);
-        // if (fish == null) { return; }
-        // fish.transform.position = spawnLocation;
-        // fish.transform.rotation = Quaternion.identity;
-        // fish.SetActive(true);
-        // fishes.Add(fish);
+        Spawn(fishCount, colliderIndex);
     }
     
-    private void SpawnCircle(int numberOfFish, int colliderIndex)
+    /// <summary>
+    /// Spawns fish in a circular pattern in the specified collider.
+    /// </summary>
+    private void Spawn(int numberOfFish, int colliderIndex)
     {
         if (numberOfFish < 1) { return; }
         for (int i = 0; i < numberOfFish; i++)
         {
-            
             if (numberOfTypes > -1)
             {
                 int spawnTypeIndex = ChooseFish();
-
+                // Select a point in a circle within the collider to spawn the fish
                 float radius = GetSpawnVolumeRadius(colliderIndex) / 2;
                 float angle = i * Mathf.PI * 2 / numberOfFish;
                 Vector3 spawnLocation = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius + GetSpawnVolumeCenter(colliderIndex);
-                
-                if (spawnTypeIndex == 0)
+                // If fish should be spawned as a school (group of fish)
+                if (schools[spawnTypeIndex])
                 {
                     SpawnSchool(spawnTypeIndex, spawnLocation);
                     i += schoolSize - 1;
-                    continue;
                 }
-                
-                GameObject fish = pool.GetPooledObject(spawnTypeIndex);
-                if (fish == null) { return; }
-                fish.transform.position = spawnLocation;
-                fish.transform.rotation = Quaternion.identity;
-                fish.SetActive(true);
-
-                LightSource lightSource = fish.GetComponent<LightSource>();
-                AbstractFish abstractFish = fish.GetComponent<AbstractFish>();
-                if (lightSource != null)
+                else
                 {
-                    float variance = Random.Range(0, lightSource.LightEnergy.CurrentEnergy * energyVariance);
-                    lightSource.LightEnergy.Deplete(variance);
+                    SpawnFish(spawnTypeIndex, spawnLocation);
                 }
-                if (abstractFish != null)
-                {
-                    // Override the fish's default swim direction
-                    abstractFish.DefaultWanderAngle = initialSwimAngle;
-                }
-                    
-                fishes.Add(fish);
             }
         }
     }
     
+    /// <summary>
+    /// Spawns an individual fish.
+    /// </summary>
+    private void SpawnFish(int spawnTypeIndex, Vector3 spawnLocation)
+    {
+        GameObject fish = pool.GetPooledObject(spawnTypeIndex);
+        if (fish == null) { return; }
+        fish.transform.position = spawnLocation;
+        fish.transform.rotation = Quaternion.identity;
+        fish.SetActive(true);
+
+        LightSource lightSource = fish.GetComponent<LightSource>();
+        AbstractFish abstractFish = fish.GetComponent<AbstractFish>();
+        if (lightSource != null)
+        {
+            float variance = Random.Range(0, lightSource.LightEnergy.CurrentEnergy * energyVariance);
+            lightSource.LightEnergy.Deplete(variance);
+        }
+        if (abstractFish != null)
+        {
+            // Override the fish's default swim direction
+            abstractFish.DefaultWanderAngle = initialSwimAngle;
+        }
+        fishes.Add(fish);
+    }
+    
+    /// <summary>
+    /// Spawns an individual fish.
+    /// </summary>
     private void SpawnSchool(int spawnTypeIndex, Vector3 spawnLocation)
     {
-        float spacing = 0.3f;
+        Vector3 modifiedLocation = spawnLocation;
         for (int i = 0; i < schoolSize; i++)
         {
-            GameObject fish = pool.GetPooledObject(spawnTypeIndex);
-            if (fish == null) { return; }
-            fish.transform.position = spawnLocation;
             if (i % 2 == 0)
             {
-                fish.transform.position += new Vector3(spacing * (i / 2), 0, 0);
+                modifiedLocation += new Vector3(schoolSpacing * (i / 2), 0, 0);
             }
             else
             {
-                fish.transform.position += new Vector3(0, spacing * i, 0);
+                modifiedLocation += new Vector3(0, schoolSpacing * i, 0);
             }
-            fish.transform.rotation = Quaternion.identity;
-            fish.SetActive(true);
-
-            LightSource lightSource = fish.GetComponent<LightSource>();
-            AbstractFish abstractFish = fish.GetComponent<AbstractFish>();
-            if (lightSource != null)
-            {
-                float variance = Random.Range(0, lightSource.LightEnergy.CurrentEnergy * energyVariance);
-                lightSource.LightEnergy.Deplete(variance);
-            }
-            if (abstractFish != null)
-            {
-                // Override the fish's default swim direction
-                abstractFish.DefaultWanderAngle = initialSwimAngle;
-            }
-            fishes.Add(fish);
+            SpawnFish(spawnTypeIndex, modifiedLocation);
         }
     }
     
+    /// <summary>
+    /// Returns the index to which fish should be spawned based on the specified probabilities.
+    /// </summary>
     private int ChooseFish()
     {
         // If probabilities array not used, choose random fish type to spawn
@@ -285,18 +229,14 @@ public class SpawnVolume : MonoBehaviour
         {
             return Random.Range(0, numberOfTypes);
         }
-        
-        // Choose fish based on probabilities
         float total = 0;
         for (int i = 0; i < numberOfTypes; i++)
         {
             total += probabilities[i];
         }
-
         float randomFish = Random.value * total;
         for (int i = 0; i < probabilities.Length; i++)
         {
-            // 
             if (randomFish < probabilities[i])
             {
                 return i;
@@ -308,67 +248,9 @@ public class SpawnVolume : MonoBehaviour
         return (probabilities.Length - 1);
     }
     
-    // private Vector3 GenerateValidSpawnPoint(int spawnIndex)
-    // {
-    //     Vector3 spawnLocation = new Vector3 (-999,-999,-999);
-        
-    //     // Use specific spawn points
-    //     // else use random spawn point
-    //     if (overrideSpawnLocations)
-    //     {
-    //         for (int i = 0; i < spawnPoints.Length; i++)
-    //         {
-    //             if (IsValidSpawnPoint(spawnPoints[i].position, spawnIndex)) 
-    //             {
-    //                 spawnLocation = spawnPoints[i].position;
-    //                 break;
-    //             }
-    //         }
-    //     }
-    //     else
-    //     {
-    //         int timeout = 10;       
-    //         // generate random point in sphere collider
-    //         for (int i = 0; i < timeout; i++)
-    //         {
-    //             Vector3 potentialSpawnPoint = transform.position + (Random.insideUnitSphere * GetSpawnVolumeRadius());
-    //             potentialSpawnPoint.z = 0f;
-
-    //             if (IsValidSpawnPoint(potentialSpawnPoint, spawnIndex)) 
-    //             {
-    //                 spawnLocation = potentialSpawnPoint;
-    //                 break;
-    //             }
-    //         }
-    //     }   
-    //     return spawnLocation;
-    // }
-    
-    private bool IsValidSpawnPoint(Vector3 spawnPoint, int spawnIndex)
-    {
-        // Calculate spawn radius of fish
-        GameObject obj = pool.GetPooledObject(spawnIndex);
-        float spawnRadius = obj.GetComponent<SphereCollider>().radius + 1;
-        
-        if (IsOccupied(spawnPoint, spawnRadius))
-        {
-            return false;
-        }
-        return true;
-    }
-    
-    // Checks whether the spawn point is occupied within the radius
-    private bool IsOccupied(Vector3 spawnPoint, float spawnRadius)
-    {
-        // Array of all colliders touching or inside sphere
-        Collider[] colliders = Physics.OverlapSphere(spawnPoint, spawnRadius);
-        if (colliders.Length == 1)
-        {
-            return false; 
-        }
-        return true;
-    }
-    
+    /// <summary>
+    /// Resets all spawn volumes as uninitialized and disabled.
+    /// </summary>
     private void Reset()
     {
         for (int i = 0; i < colliderCount; i++)
@@ -378,6 +260,9 @@ public class SpawnVolume : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Resets the specified spawn volume as uninitialized and disabled.
+    /// </summary>
     private void Reset(int index)
     {
         if (index < 0) { return; }
@@ -385,18 +270,27 @@ public class SpawnVolume : MonoBehaviour
         disabled[index] = true;
     }
     
+    /// <summary>
+    /// Returns the radius of the specified spawn volume collider.
+    /// </summary>
     private float GetSpawnVolumeRadius(int colliderIndex)
     {
         float radius = colliders[colliderIndex].GetComponent<SphereCollider>().radius;
         return radius;
     }
     
+    /// <summary>
+    /// Returns the center point of the specified spawn volume collider.
+    /// </summary>
     private Vector3 GetSpawnVolumeCenter(int colliderIndex)
     {
         Vector3 center = colliders[colliderIndex].transform.position;
         return center;
     }
     
+    /// <summary>
+    /// Returns the spawn volume index that contains the specified point.
+    /// </summary>
     private int GetSpawnVolumeIndex(Vector3 point)
     {
         for (int i = 0; i < colliderCount; i++)
@@ -412,6 +306,9 @@ public class SpawnVolume : MonoBehaviour
         return -1;
     }
     
+    /// <summary>
+    /// Updates the specified spawn volume and updates the disable status.
+    /// </summary>
     public void UpdateSpawnVolume(Vector3 center, bool disable)
     {
         int index = GetSpawnVolumeIndex(center);
@@ -420,5 +317,4 @@ public class SpawnVolume : MonoBehaviour
             disabled[index] = disable;
         }
     }
-
 }
