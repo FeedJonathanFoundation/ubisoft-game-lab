@@ -11,19 +11,31 @@ public enum Priority
     constant = -1
 }
 
+/// <summary>
+/// PriorityDictionary class is responsible for
+/// NPC actions and decision-making
+///
+/// @author - Stella L.
+/// @version - 1.0.0
+///
+/// </summary>
 public class PriorityDictionary
 {
+    
     private Dictionary<String, NPCActionable> lowPriorityAction;
     private Dictionary<String, NPCActionable> medPriorityAction;
     private Dictionary<String, NPCActionable> highPriorityAction;
     private Dictionary<String, NPCActionable> veryHighPriorityAction;
     private List<NPCActionable> constantActions;
-    
     // Helper list to avoid instantiation in GetActiveActions()
     private readonly List<NPCActionable> activeActions;
     
     public int activePriority;
     
+    /// <summary>
+    /// Constructor for new priority dictionary
+    /// creates an empty dictionary for each priority
+    /// </summary>
     public PriorityDictionary()
     {
         lowPriorityAction = new Dictionary<String, NPCActionable>();
@@ -32,10 +44,12 @@ public class PriorityDictionary
         veryHighPriorityAction = new Dictionary<String, NPCActionable>();
         constantActions = new List<NPCActionable>();
         activeActions = new List<NPCActionable>();
-        
         activePriority = 0;
     }
     
+    /// <summary>
+    /// Inserts an action into a dictionary based on its priority
+    /// </summary>
     public void InsertAction(NPCActionable action)
     {
         switch (action.priority)
@@ -60,6 +74,9 @@ public class PriorityDictionary
         }
     }
     
+    /// <summary>
+    /// Inserts an action into the constant priority dictionary
+    /// </summary>
     public void InsertConstantPriority(NPCActionable action)
     {
         if (!constantActions.Contains(action))
@@ -68,6 +85,9 @@ public class PriorityDictionary
         }
     }
     
+    /// <summary>
+    /// Inserts an action into the low priority dictionary
+    /// </summary>
     public void InsertLowPriority(NPCActionable action)
     {
         if (!lowPriorityAction.ContainsKey(action.id))
@@ -77,6 +97,9 @@ public class PriorityDictionary
         }
     }
     
+    /// <summary>
+    /// Inserts an action into the medium priority dictionary
+    /// </summary>
     public void InsertMedPriority(NPCActionable action)
     {
         if (!medPriorityAction.ContainsKey(action.id))
@@ -86,6 +109,9 @@ public class PriorityDictionary
         }
     }
     
+    /// <summary>
+    /// Inserts an action into the high priority dictionary
+    /// </summary>
     public void InsertHighPriority(NPCActionable action)
     {
         if (!highPriorityAction.ContainsKey(action.id))
@@ -95,6 +121,9 @@ public class PriorityDictionary
         }
     }
     
+    /// <summary>
+    /// Inserts an action into the very high priority dictionary
+    /// </summary>
     public void InsertVeryHighPriority(NPCActionable action)
     {
         if (!veryHighPriorityAction.ContainsKey(action.id))
@@ -104,14 +133,22 @@ public class PriorityDictionary
         }
     }
     
-    public void RemoveConstantAction(NPCActionable action)
+    /// <summary>
+    /// Removes an action from the constant priority dictionary
+    /// </summary>
+    public bool RemoveConstantAction(NPCActionable action)
     {
-        if (!constantActions.Contains(action))
+        if (constantActions.Contains(action))
         {
-            constantActions.Add(action);
+            constantActions.Remove(action);
+            return true;
         }
+        return false;
     }
-
+    
+    /// <summary>
+    /// Removes an action from the low priority dictionary
+    /// </summary>
     public bool RemoveLowPriority(string id)
     {
         if (lowPriorityAction.ContainsKey(id))
@@ -123,6 +160,9 @@ public class PriorityDictionary
         return false;
     }
     
+    /// <summary>
+    /// Removes an action from the medium priority dictionary
+    /// </summary>
     public bool RemoveMedPriority(string id)
     {
         if (medPriorityAction.ContainsKey(id))
@@ -134,6 +174,9 @@ public class PriorityDictionary
         return false;
     }
     
+    /// <summary>
+    /// Removes an action from the high priority dictionary
+    /// </summary>
     public bool RemoveHighPriority(string id)
     {
         if (highPriorityAction.ContainsKey(id))
@@ -145,6 +188,9 @@ public class PriorityDictionary
         return false;
     }
     
+    /// <summary>
+    /// Removes an action from the very high priority dictionary
+    /// </summary>
     public bool RemoveVeryHighPriority(string id)
     {
         if (veryHighPriorityAction.ContainsKey(id))
@@ -156,6 +202,9 @@ public class PriorityDictionary
         return false;
     }
     
+    /// <summary>
+    /// Removes an action from a priority dictionary based on the active priority
+    /// </summary>
     public void RemoveAction(string id)
     {
         switch (activePriority)
@@ -178,10 +227,12 @@ public class PriorityDictionary
         UpdatePriority();
     }
 
+    /// <summary>
+    /// Updates the active priority
+    /// </summary>
     public void UpdatePriority()
     {
         int count = 3;
-        
         if (veryHighPriorityAction.Count == 0)
         {
             count--;
@@ -197,11 +248,14 @@ public class PriorityDictionary
         activePriority = count;
     }
     
+    /// <summary>
+    /// Returns a list of the active actions,
+    /// or a concatenation of constant actions and highest priority dictionary
+    /// </summary>
     public List<NPCActionable> GetActiveActions()
     {
         // Clear the current contents of the helper list
         activeActions.Clear();
-        
         Dictionary<string, NPCActionable> activeDictionary; 
         switch(activePriority)
         {
@@ -221,7 +275,6 @@ public class PriorityDictionary
                 activeDictionary = lowPriorityAction;
                 break;
         }
-        
         foreach (NPCActionable action in constantActions) {
             activeActions.Add(action);
         }
@@ -231,19 +284,29 @@ public class PriorityDictionary
         return activeActions;
     }
     
+    /// <summary>
+    /// Returns the action with the specified ID
+    /// </summary>
     public NPCActionable GetAction(string id)
     {
         NPCActionable action = null;
         
         if (veryHighPriorityAction.ContainsKey(id))
+        {
             action = veryHighPriorityAction[id];
+        }
         else if (highPriorityAction.ContainsKey(id))
+        {
             action = highPriorityAction[id];
+        }
         else if (medPriorityAction.ContainsKey(id))
+        {
              action = medPriorityAction[id];
+        }
         else if (lowPriorityAction.ContainsKey(id))
+        {
             action = lowPriorityAction[id];
-            
+        }
         return action;
     }
     

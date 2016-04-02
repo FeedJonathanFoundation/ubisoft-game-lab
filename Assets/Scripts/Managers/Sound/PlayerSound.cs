@@ -1,18 +1,61 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerSound : MonoBehaviour {
+/// <summary>
+/// PlayerSound is responsible for playing player-related sounds
+/// 
+///
+/// @author - Stella L.
+/// @version - 1.0.0
+///
+/// </summary>
+[RequireComponent(typeof(Player))]
+public class PlayerSound : MonoBehaviour
+{
 
-    public LayerMask obstacleLayer;
-
-    private float crashVelocity;
-
+    GameObject target;
     void Start()
     {
-        AkSoundEngine.PostEvent("Default", this.gameObject); 
+        Player player = GetComponent<Player>();
+        
+        if (!player)
+        {
+            Debug.Log("Player not found - player sounds will not work.");
+            return;
+        }
+        target = player.gameObject;
+        AkSoundEngine.SetState("PlayerLife", "Alive");
+        AkSoundEngine.PostEvent("Default", target); 
     }
     void OnCollisionEnter(Collision collision)
     {
-        AkSoundEngine.PostEvent("WallCrash", this.gameObject);
+        AkSoundEngine.PostEvent("WallCrash", target);
     }
+    
+    public void ExplosionSound()
+    {
+        AkSoundEngine.PostEvent("Explosion", target);
+    }
+    
+    public void PlayerDeathSound()
+    {
+        AkSoundEngine.SetState("PlayerLife", "Dead");
+        AkSoundEngine.PostEvent("Die", target);
+    }
+    
+    public void LightToggleSound()
+    {
+        AkSoundEngine.PostEvent("LightsToToggle", this.gameObject);
+    }
+
+    public void InsufficientEnergySound()
+    {
+        AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
+    }
+    
+    public void SetPlayerVelocity(float playerVelocity)
+    {
+        AkSoundEngine.SetRTPCValue("playerVelocity", playerVelocity);
+    }
+
 }

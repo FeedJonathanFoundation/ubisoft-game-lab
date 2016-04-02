@@ -7,7 +7,7 @@ public class FlareSpawner : MonoBehaviour
     private GameObject flareObject;
     
     [SerializeField]
-    [Tooltip("Refers to the flare spwan zone")]
+    [Tooltip("Refers to the flare spawn zone")]
     private Transform flareSpawnObject;
     
     [SerializeField]
@@ -19,6 +19,7 @@ public class FlareSpawner : MonoBehaviour
     private float flareEnergyCost;
     
     [SerializeField]
+    [Range(0,1)]
     [Tooltip("Percentage of energy needed to use flare. 1 = 100%")]
     private float flareCostPercentage;
     
@@ -28,16 +29,15 @@ public class FlareSpawner : MonoBehaviour
         
     private float timer;
     private LightSource lightSource;
-    private ControllerRumble controllerRumble;  // Caches the component that rumbles the controller
+    // Caches the component that rumbles the controller
+    private ControllerRumble controllerRumble;
     private new Rigidbody rigidbody;    
     private SmoothCamera smoothCamera;
-
     private float flareDistance = 0f;
-
     private Transform player;
-
     private GameObject flare;
-
+    private FlareSound flareSound;
+    private PlayerSound playerSound;
 
     void Start()
     {
@@ -46,6 +46,7 @@ public class FlareSpawner : MonoBehaviour
         this.controllerRumble = GetComponent<ControllerRumble>();
         this.rigidbody = GetComponent<Rigidbody>();
         player = GameObject.FindWithTag("Player").transform;
+        playerSound = player.GetComponent<PlayerSound>();
         GameObject mainCamera = GameObject.Find("Main Camera");
         if (mainCamera != null)
         {
@@ -56,23 +57,19 @@ public class FlareSpawner : MonoBehaviour
     void Update() 
     {
         bool ready = false;
-
         if (timer < cooldownTime)
         {
             timer += Time.deltaTime;
-            
         }
         else
         {
             ready = true;
         }
-
         if (Input.GetButtonDown("UseFlare"))
         {
             if (ready)
             {
                 float cost = flareEnergyCost * flareCostPercentage;
-
                 if ((lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost)))
                 {
                     flare = (GameObject)Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
@@ -81,10 +78,10 @@ public class FlareSpawner : MonoBehaviour
                     rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
                     controllerRumble.ShotFlare();   // Rumble the controller
                     timer = 0.0f;
+                    flareSound = new FlareSound(flare);
+                    flareSound.ShootFlareSound();
 
-                    AkSoundEngine.PostEvent("Flare", this.gameObject);
-
-                    //reset all values for the zoom when ever a player fires a flare
+                    //reset all values for the zoom whenever player fires a flare
                     if (smoothCamera != null)
                     {
                         smoothCamera.FlareShoot();
@@ -94,18 +91,18 @@ public class FlareSpawner : MonoBehaviour
             }
             else
             {
-                AkSoundEngine.PostEvent("LowEnergy", this.gameObject);
+                playerSound.InsufficientEnergySound();
             }
         }
         if (flare != null)
         {
             flareDistance = Vector3.Distance(flare.transform.position, player.position);
-            AkSoundEngine.SetRTPCValue("flareDistance", flareDistance);
+            flareSound.SetFlareDistance(flareDistance);
         }
     }
     
     public void EatFlare()
     {
-        AkSoundEngine.PostEvent("FlareEat", this.gameObject);
+        flareSound.EatFlareSound();
     }
 }
