@@ -13,14 +13,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentPluginConfig: Profile
   EventWwu:
-  - PhysicalPath: Events\Default Work Unit.wwu
+  - PhysicalPath: Events/Default Work Unit.wwu
     ParentPhysicalPath: 
     Guid: '{EAE4CDC1-6F63-43E7-87D3-AEE39B8BC9B7}'
-    m_lastTimePsrt1: -1142466575
-    m_lastTimePart2: -1999416266
+    m_lastTimePsrt1: -719927040
+    m_lastTimePart2: -1999414909
     List:
     - Name: Ambient1
-      Path: Default Work Unit\Ambient Themes\Ambient1
+      Path: Default Work Unit/Ambient Themes/Ambient1
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -32,7 +32,7 @@ MonoBehaviour:
       Guid: 0cbecc34e2a0bd47b9d15d9c020dfae6
       maxAttenuation: 0
     - Name: Ambient2
-      Path: Default Work Unit\Ambient Themes\Ambient2
+      Path: Default Work Unit/Ambient Themes/Ambient2
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -44,7 +44,7 @@ MonoBehaviour:
       Guid: 68f97f8c754f2540b230c067da3819ce
       maxAttenuation: 0
     - Name: Ambient2Stop
-      Path: Default Work Unit\Ambient Themes\Ambient2Stop
+      Path: Default Work Unit/Ambient Themes/Ambient2Stop
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -56,7 +56,7 @@ MonoBehaviour:
       Guid: 5603f9a3388e694cb7097697ea03d0e2
       maxAttenuation: 0
     - Name: Ambient3
-      Path: Default Work Unit\Ambient Themes\Ambient3
+      Path: Default Work Unit/Ambient Themes/Ambient3
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -67,8 +67,20 @@ MonoBehaviour:
       ID: -199807318
       Guid: 62e22cd326b26e40850ab379d40590e6
       maxAttenuation: 0
+    - Name: BossEat
+      Path: Default Work Unit/Player Effects/BossEat
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Player Effects
+        ObjectType: 4
+      - ElementName: BossEat
+        ObjectType: 3
+      ID: 1580095580
+      Guid: 268aa3b1b42c0047b58a72890a8d05d1
+      maxAttenuation: 0
     - Name: Checkpoint
-      Path: Default Work Unit\Player Effects\Checkpoint
+      Path: Default Work Unit/Player Effects/Checkpoint
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -79,8 +91,20 @@ MonoBehaviour:
       ID: 612075679
       Guid: d6245ca289509848a4973875ba54b7ef
       maxAttenuation: 0
+    - Name: CriticalHealth
+      Path: Default Work Unit/Player Effects/CriticalHealth
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Player Effects
+        ObjectType: 4
+      - ElementName: CriticalHealth
+        ObjectType: 3
+      ID: -1887892268
+      Guid: 6a9a6fa9f58283429178a10d23011178
+      maxAttenuation: 0
     - Name: Current
-      Path: Default Work Unit\Player Effects\Current
+      Path: Default Work Unit/Player Effects/Current
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -92,7 +116,7 @@ MonoBehaviour:
       Guid: b1f5c4430d564149abc0a33e772d56f6
       maxAttenuation: 0
     - Name: Default
-      Path: Default Work Unit\Player Effects\Default
+      Path: Default Work Unit/Player Effects/Default
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -104,7 +128,7 @@ MonoBehaviour:
       Guid: 20e31b385a800d4695c5aa07f49e314d
       maxAttenuation: 0
     - Name: Die
-      Path: Default Work Unit\Player Effects\Die
+      Path: Default Work Unit/Player Effects/Die
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -116,7 +140,7 @@ MonoBehaviour:
       Guid: c0273793dc09764496b06487c17ed4d6
       maxAttenuation: 0
     - Name: Eat
-      Path: Default Work Unit\Player Effects\Eat
+      Path: Default Work Unit/Player Effects/Eat
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -128,7 +152,7 @@ MonoBehaviour:
       Guid: 626da4a343582346b731ee06ec73d35e
       maxAttenuation: 0
     - Name: Explosion
-      Path: Default Work Unit\Player Effects\Explosion
+      Path: Default Work Unit/Player Effects/Explosion
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -140,7 +164,7 @@ MonoBehaviour:
       Guid: e69d350710f8984e87af89a4afebd39e
       maxAttenuation: 0
     - Name: Fish_Detection
-      Path: Default Work Unit\NPC Effects\Fish_Detection
+      Path: Default Work Unit/NPC Effects/Fish_Detection
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -152,7 +176,7 @@ MonoBehaviour:
       Guid: 3f54eafd87cec149b34d4d3be9543132
       maxAttenuation: 0
     - Name: Fish_Detection_Off
-      Path: Default Work Unit\NPC Effects\Fish_Detection_Off
+      Path: Default Work Unit/NPC Effects/Fish_Detection_Off
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -164,7 +188,7 @@ MonoBehaviour:
       Guid: 4e0a3e9d28ec7f4598a53919fceb9900
       maxAttenuation: 0
     - Name: Flare
-      Path: Default Work Unit\Player Effects\Flare
+      Path: Default Work Unit/Player Effects/Flare
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -176,7 +200,7 @@ MonoBehaviour:
       Guid: 6bc600807f7fd4489ee88a9e78949e6d
       maxAttenuation: 0
     - Name: FlareEat
-      Path: Default Work Unit\Player Effects\FlareEat
+      Path: Default Work Unit/Player Effects/FlareEat
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -188,7 +212,7 @@ MonoBehaviour:
       Guid: 41a1a79ff7361444a623243dd9edb3a1
       maxAttenuation: 0
     - Name: JellyfishAttack
-      Path: Default Work Unit\Player Effects\JellyfishAttack
+      Path: Default Work Unit/Player Effects/JellyfishAttack
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -200,7 +224,7 @@ MonoBehaviour:
       Guid: 543ee27885c4e141a72b340f3b157f53
       maxAttenuation: 0
     - Name: Light_Orb_Pickup
-      Path: Default Work Unit\Player Effects\Light_Orb_Pickup
+      Path: Default Work Unit/Player Effects/Light_Orb_Pickup
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -212,7 +236,7 @@ MonoBehaviour:
       Guid: f7e47479397f6748b1ca4315cbafefc7
       maxAttenuation: 0
     - Name: LightsToToggle
-      Path: Default Work Unit\Player Effects\LightsToToggle
+      Path: Default Work Unit/Player Effects/LightsToToggle
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -224,7 +248,7 @@ MonoBehaviour:
       Guid: f520ca5843af9f45b182c46c75a10dcb
       maxAttenuation: 0
     - Name: LowEnergy
-      Path: Default Work Unit\Player Effects\LowEnergy
+      Path: Default Work Unit/Player Effects/LowEnergy
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -236,7 +260,7 @@ MonoBehaviour:
       Guid: 8fe5731aefb76f488309cc0bf32d2880
       maxAttenuation: 0
     - Name: Movement
-      Path: Default Work Unit\Player Effects\Movement
+      Path: Default Work Unit/Player Effects/Movement
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -248,7 +272,7 @@ MonoBehaviour:
       Guid: 721139845570884b89ba1661aec9d5d1
       maxAttenuation: 0
     - Name: Pulse
-      Path: Default Work Unit\Player Effects\Pulse
+      Path: Default Work Unit/Player Effects/Pulse
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -260,7 +284,7 @@ MonoBehaviour:
       Guid: 43d2f29b89bb65459b894b5474a31ac1
       maxAttenuation: 0
     - Name: StopJellyfishAttack
-      Path: Default Work Unit\Player Effects\StopJellyfishAttack
+      Path: Default Work Unit/Player Effects/StopJellyfishAttack
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -272,7 +296,7 @@ MonoBehaviour:
       Guid: 01e721bac5adf84e992bbddfe0253a08
       maxAttenuation: 0
     - Name: WallCrash
-      Path: Default Work Unit\Player Effects\WallCrash
+      Path: Default Work Unit/Player Effects/WallCrash
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -284,21 +308,21 @@ MonoBehaviour:
       Guid: dce3dae78abfd64da6f6e2efcbf6436c
       maxAttenuation: 0
   AuxBusWwu:
-  - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
+  - PhysicalPath: Master-Mixer Hierarchy/Default Work Unit.wwu
     ParentPhysicalPath: 
     Guid: '{1A303C29-4668-4868-A41A-B420E1905AA0}'
-    m_lastTimePsrt1: -1140586197
+    m_lastTimePsrt1: -1149306368
     m_lastTimePart2: -1999416266
     List: []
   StateWwu:
-  - PhysicalPath: States\Default Work Unit.wwu
+  - PhysicalPath: States/Default Work Unit.wwu
     ParentPhysicalPath: 
     Guid: '{D224D7DA-F454-4289-BD1F-288DB137AAAC}'
-    m_lastTimePsrt1: -2014877314
+    m_lastTimePsrt1: -2016886272
     m_lastTimePart2: -1999416192
     List:
     - Name: IMAmb1
-      Path: Default Work Unit\IMAmb1
+      Path: Default Work Unit/IMAmb1
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -323,7 +347,7 @@ MonoBehaviour:
       - bytes: 1552e022faeb994f83f2f85de928de41
       - bytes: 49b4bff5388ed746be7eda91ebdc9473
     - Name: IMAmb2
-      Path: Default Work Unit\IMAmb2
+      Path: Default Work Unit/IMAmb2
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -356,7 +380,7 @@ MonoBehaviour:
       - bytes: 334d576376d6174b9e490e47b3751695
       - bytes: a5b267f2f38b5e4cab2411db0a4b4659
     - Name: IMAmb3
-      Path: Default Work Unit\IMAmb3
+      Path: Default Work Unit/IMAmb3
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -385,7 +409,7 @@ MonoBehaviour:
       - bytes: f59e995fa7745d48b9f408dd3edca1e5
       - bytes: 1f459b701451184893fe93c96afade56
     - Name: IMAmb4
-      Path: Default Work Unit\IMAmb4
+      Path: Default Work Unit/IMAmb4
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -402,7 +426,7 @@ MonoBehaviour:
       ValueGuids:
       - bytes: eb544ee737be41478b36121664e93f41
     - Name: PlayerLife
-      Path: Default Work Unit\PlayerLife
+      Path: Default Work Unit/PlayerLife
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -427,14 +451,14 @@ MonoBehaviour:
       - bytes: e1fe2c0c4b0b1b44b1500748aedb5568
       - bytes: e92b7c406610c449a30a611192a5c769
   SwitchWwu:
-  - PhysicalPath: Switches\Default Work Unit.wwu
+  - PhysicalPath: Switches/Default Work Unit.wwu
     ParentPhysicalPath: 
     Guid: '{420A5BAD-0756-4E88-B5D6-979C3D8A684A}'
-    m_lastTimePsrt1: -993560480
+    m_lastTimePsrt1: -1009306368
     m_lastTimePart2: -1999416266
     List:
     - Name: Scene
-      Path: Default Work Unit\Scene
+      Path: Default Work Unit/Scene
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -463,14 +487,14 @@ MonoBehaviour:
       - bytes: c867b7eabf48f142a5c33e380a49601c
       - bytes: 061f3840eb0fc4458f9504ce3937a951
   BankWwu:
-  - PhysicalPath: SoundBanks\Default Work Unit.wwu
+  - PhysicalPath: SoundBanks/Default Work Unit.wwu
     ParentPhysicalPath: 
     Guid: '{AEEC0536-DE4B-4C2C-BE7F-3E54DA9D587F}'
-    m_lastTimePsrt1: -993790583
-    m_lastTimePart2: -1999416266
+    m_lastTimePsrt1: -719927040
+    m_lastTimePart2: -1999414909
     List:
     - Name: MAIN
-      Path: Default Work Unit\MAIN
+      Path: Default Work Unit/MAIN
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
@@ -478,19 +502,11 @@ MonoBehaviour:
         ObjectType: 7
       ID: -1133058374
       Guid: 6b7e0c65c74c21438786791b38d91c96
-    - Name: Themes
-      Path: Default Work Unit\Themes
-      PathAndIcons:
-      - ElementName: Default Work Unit
-        ObjectType: 12
-      - ElementName: Themes
-        ObjectType: 7
-      ID: 1940854371
-      Guid: be8e5657848f4c41ae08b96208456694
   ExpandedItems:
   - /Lumina
   - /Lumina/States
   - /Lumina/States/Default Work Unit
+  - /Lumina/States/Default Work Unit/IMAmb2
   - /Lumina/States/Default Work Unit/IMAmb3
   m_lastPopulateTimePsrt1: 0
   m_lastPopulateTimePart2: 0
