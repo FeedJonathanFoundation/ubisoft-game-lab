@@ -9,7 +9,7 @@ using System.Collections;
 /// @version - 1.0.0
 ///
 /// </summary>
-[RequireComponent(SphereCollider))]
+[RequireComponent(typeof(SphereCollider))]
 public class CollisionListener : MonoBehaviour
 {
 
