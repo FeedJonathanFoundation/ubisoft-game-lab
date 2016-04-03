@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class NetworkSetup : NetworkBehaviour
+public class PlayerNetworkSetup : NetworkBehaviour
 {
     [SerializeField]
     private Camera playerCamera;
