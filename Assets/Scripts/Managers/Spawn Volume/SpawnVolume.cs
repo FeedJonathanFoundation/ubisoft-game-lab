@@ -81,6 +81,10 @@ public class SpawnVolume : MonoBehaviour
         initialized = new bool[colliderCount];
         maxDistanceSquared = maxDistance * maxDistance;
         Reset();
+        
+        #if UNITY_EDITOR
+            this.ValidateInputs();
+        #endif
     }
     
     /// <summary>
@@ -144,12 +148,15 @@ public class SpawnVolume : MonoBehaviour
         initialized[colliderIndex] = true;
         Spawn(fishCount, colliderIndex);
     }
-    
+
+    private int count = 0;
+
     /// <summary>
     /// Spawns fish in a circular pattern in the specified collider.
     /// </summary>
     private void Spawn(int numberOfFish, int colliderIndex)
     {
+        Debug.Log("Spawn " + numberOfFish + " " + colliderIndex);
         if (numberOfFish < 1) { return; }
         for (int i = 0; i < numberOfFish; i++)
         {
@@ -318,4 +325,34 @@ public class SpawnVolume : MonoBehaviour
             disabled[index] = disable;
         }
     }
+    
+    private void ValidateInputs()
+    {
+        #if UNITY_EDITOR
+            if (fishCount == 0)
+            {
+                UnityEditor.EditorApplication.isPlaying = false;
+                Debug.LogError("Spawn volume is currently set to spawn zero fish!");
+            }
+            if (maxDistance < 1)
+            {
+                UnityEditor.EditorApplication.isPlaying = false;
+                Debug.LogError("Spawn volume max distance is too low! Fish will never activate!");
+            }
+            if (colliders.Length < 1)
+            {
+                UnityEditor.EditorApplication.isPlaying = false;
+                Debug.LogError("Please add sphere colliders to the spawn volume Colliders array.");
+            }
+            if (probabilities.Length < 1)
+            {
+                Debug.LogError("Spawn volume probabilities are not set. Fish will spawn at equal probabilities.");
+            }
+            if (schools.Length < numberOfTypes)
+            {
+                Debug.LogError("Please set the Schools array size to " + numberOfTypes);
+            }
+        #endif
+    }
+    
 }
