@@ -197,8 +197,8 @@ public class Player : LightSource
             }
         }
 
-#if UNITY_EDITOR
-        this.ValidateInputs();
+        #if UNITY_EDITOR
+            this.ValidateInputs();
         #endif
     }
 
