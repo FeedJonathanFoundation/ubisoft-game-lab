@@ -180,22 +180,22 @@ public class Player : LightSource
         LoadGame();
         ResetPlayerState();
         
-        gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
+        // gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
         
-        UI = GameObject.FindWithTag("UI");
+        // UI = GameObject.FindWithTag("UI");
 
-        if (gameOverCanvas == null)
-        {
-            Canvas[] canvases = UI.GetComponentsInChildren<Canvas>();
-            foreach (Canvas canvas in canvases)
-            {
-                if (canvas.name == "GameOverCanvas")
-                {
-                    gameOverCanvas = canvas.gameObject;
-                    break;
-                }
-            }
-        }
+        // if (gameOverCanvas == null)
+        // {
+        //     Canvas[] canvases = UI.GetComponentsInChildren<Canvas>();
+        //     foreach (Canvas canvas in canvases)
+        //     {
+        //         if (canvas.name == "GameOverCanvas")
+        //         {
+        //             gameOverCanvas = canvas.gameObject;
+        //             break;
+        //         }
+        //     }
+        // }
 
         #if UNITY_EDITOR
             this.ValidateInputs();
@@ -228,17 +228,17 @@ public class Player : LightSource
         //     gameOverCanvas = GameObject.Instantiate(gameOverCanvasPrefab);
         //     gameOverCanvas.SetActive(false);
         // }
-        if (gameOverCanvas == null)
-        {
-            gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
-        }
-        if (gameOverCanvas != null && gameOverCanvas.activeSelf == true && !isDead)
-        {
-            gameOverCanvas.SetActive(false);
-        }
+        // if (gameOverCanvas == null)
+        // {
+        //     gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
+        // }
+        // if (gameOverCanvas != null && gameOverCanvas.activeSelf == true && !isDead)
+        // {
+        //     gameOverCanvas.SetActive(false);
+        // }
         
-        playerVelocity = (int)this.Rigidbody.velocity.magnitude;
-        playerSound.SetPlayerVelocity(playerVelocity);
+        // playerVelocity = (int)this.Rigidbody.velocity.magnitude;
+        // playerSound.SetPlayerVelocity(playerVelocity);
 
         // Modify player drag if invulnerable
         if (IsInvulnerable())
