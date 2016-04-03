@@ -26,6 +26,10 @@ public class ObjectPooler : MonoBehaviour
     [SerializeField]
     private bool extensible;
 
+    [Tooltip("If true and if they 'run out' of the desired pooled object, another available object will be substituted.")]
+    [SerializeField]
+    private bool replace;
+
     private List<GameObject>[] pool;
     
     /// <summary>
@@ -71,6 +75,21 @@ public class ObjectPooler : MonoBehaviour
             {
                 ReactivateObjectLight(current);
                 return current;
+            }
+        }
+        if (replace)
+        {
+            for (int i = 0; i < pooledObjects.Length; i++)
+            {
+                for (int j = 0; j < pool[i].Count; j++)
+                {
+                    GameObject current = pool[i][j];
+                    if (!current.activeInHierarchy)
+                    {
+                        ReactivateObjectLight(current);
+                        return current;
+                    }
+                }
             }
         }
         if (extensible)

@@ -156,7 +156,6 @@ public class SpawnVolume : MonoBehaviour
     /// </summary>
     private void Spawn(int numberOfFish, int colliderIndex)
     {
-        Debug.Log("Spawn " + numberOfFish + " " + colliderIndex);
         if (numberOfFish < 1) { return; }
         for (int i = 0; i < numberOfFish; i++)
         {
