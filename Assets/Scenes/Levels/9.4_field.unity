@@ -2891,7 +2891,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &106029949
 MonoBehaviour:
@@ -2932,7 +2932,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1236620500}
+  - {fileID: 1825193181}
   m_Father: {fileID: 0}
   m_RootOrder: 3
 --- !u!4 &123163154 stripped
@@ -5320,6 +5322,10 @@ Prefab:
     - target: {fileID: 11441870, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
       propertyPath: lightToggleEnergyCost
       value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454232, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 438979a053f634bd59f572a2e74dcdb1, type: 2}
@@ -9929,6 +9935,45 @@ Transform:
   - {fileID: 1131887852}
   m_Father: {fileID: 1010690202}
   m_RootOrder: 0
+--- !u!1 &1236620499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1236620500}
+  - 114: {fileID: 1236620501}
+  m_Layer: 0
+  m_Name: Sound Manager
+  m_TagString: SoundManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &1236620500
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1236620499}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 106029951}
+  m_RootOrder: 0
+--- !u!114 &1236620501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1236620499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0530eaa4d3e3f4cda8260a21f02578f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1237748539 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 8cbe53aefcb3b4efc9841aa6c61ac123, type: 3}
@@ -11858,11 +11903,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22433078, guid: fd158d8d73b88f149b2ba76319197df2, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22433078, guid: fd158d8d73b88f149b2ba76319197df2, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 437158, guid: fd158d8d73b88f149b2ba76319197df2, type: 2}
       propertyPath: m_LocalScale.y
@@ -12864,6 +12909,51 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1825193180
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1825193181}
+  - 114: {fileID: 1825193182}
+  m_Layer: 0
+  m_Name: Sound Bank
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1825193181
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1825193180}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 106029951}
+  m_RootOrder: 1
+--- !u!114 &1825193182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1825193180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 453e0511ac0304af2b4982eb195a4fc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  valueGuid: 6b7e0c65c74c21438786791b38d91c96
+  bankName: MAIN
+  loadAsynchronous: 0
+  unloadTriggerList: 
 --- !u!1 &1837170280
 GameObject:
   m_ObjectHideFlags: 0
@@ -13486,19 +13576,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 476750, guid: acb1abda3f5c62c4eabf8effe924c1b3, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0.3985414
+      value: 0.39854142
       objectReference: {fileID: 0}
     - target: {fileID: 476750, guid: acb1abda3f5c62c4eabf8effe924c1b3, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0.53206044
+      value: 0.5320605
       objectReference: {fileID: 0}
     - target: {fileID: 476750, guid: acb1abda3f5c62c4eabf8effe924c1b3, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0.63765293
+      value: 0.637653
       objectReference: {fileID: 0}
     - target: {fileID: 476750, guid: acb1abda3f5c62c4eabf8effe924c1b3, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.38919804
+      value: 0.38919806
       objectReference: {fileID: 0}
     - target: {fileID: 476750, guid: acb1abda3f5c62c4eabf8effe924c1b3, type: 2}
       propertyPath: m_RootOrder

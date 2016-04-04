@@ -91,7 +91,14 @@ public class FlareSpawner : MonoBehaviour
             }
             else
             {
-                playerSound.InsufficientEnergySound();
+                if (playerSound == null)
+                {
+                    playerSound = player.GetComponent<PlayerSound>();
+                }
+                if (playerSound != null)
+                {
+                    playerSound.InsufficientEnergySound();
+                }
             }
         }
         if (flare != null)
