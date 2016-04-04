@@ -76,7 +76,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 133754}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.07, y: 0.013, z: 0}
+  m_LocalPosition: {x: -15.03, y: 0.0723, z: -0}
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 476750}
@@ -87,9 +87,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193882}
-  m_LocalRotation: {x: 0.39854145, y: 0.5320605, z: 0.637653, w: 0.38919804}
-  m_LocalPosition: {x: -14.96209, y: 20.78001, z: -4.4110417}
-  m_LocalScale: {x: 1, y: 100, z: 0.19999996}
+  m_LocalRotation: {x: 0.0000000074505797, y: 0.00000004097819, z: 0.7071068, w: 0.70710677}
+  m_LocalPosition: {x: 201, y: 107, z: 0}
+  m_LocalScale: {x: 5, y: 500.00018, z: 1}
   m_Children:
   - {fileID: 407218}
   - {fileID: 480494}
@@ -103,7 +103,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 107838}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.15, y: -0.25, z: 0}
+  m_LocalPosition: {x: -17.64, y: -0.1539, z: -0}
   m_LocalScale: {x: 10, y: 0.06, z: 1}
   m_Children: []
   m_Father: {fileID: 476750}
@@ -115,7 +115,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189556}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.360009, y: 0.469, z: -0.000045299537}
+  m_LocalPosition: {x: -18.5, y: 0.5085, z: -0}
   m_LocalScale: {x: 10, y: 0.06000002, z: 1}
   m_Children: []
   m_Father: {fileID: 476750}
@@ -206,6 +206,7 @@ MonoBehaviour:
   strength: 2
   currentDirection: 0
   distanceFromPlayer: 30
+  soundManager: {fileID: 0}
 --- !u!114 &11440322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -220,6 +221,7 @@ MonoBehaviour:
   strength: 2
   currentDirection: 3
   distanceFromPlayer: 30
+  soundManager: {fileID: 0}
 --- !u!114 &11445830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -234,6 +236,7 @@ MonoBehaviour:
   strength: 2
   currentDirection: 2
   distanceFromPlayer: 30
+  soundManager: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
