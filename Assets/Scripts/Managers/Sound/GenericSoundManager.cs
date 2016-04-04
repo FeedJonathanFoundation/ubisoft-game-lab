@@ -23,4 +23,41 @@ public class GenericSoundManager : MonoBehaviour
     {
         AkSoundEngine.PostEvent("Pulse", target);
     }
+    
+    public void BossEatSound(GameObject target)
+    {
+        AkSoundEngine.PostEvent("BossEat", target);
+    }
+    
+    public void SeekSound(GameObject target)
+    {
+        AkSoundEngine.PostEvent("Fish_Detection", target);
+    }
+    
+    public void CriticalHealthSound(GameObject target)
+    {
+        AkSoundEngine.PostEvent("CriticalHealth", target);
+    }
+    
+    public void IntroSound(GameObject target)
+    {
+        AkSoundEngine.PostEvent("Ambient2", target);
+        AkSoundEngine.SetState("IMAmb2", "CP2");
+    }
+    
+    public void StopIntroSound(GameObject target)
+    {
+        AkSoundEngine.PostEvent("Ambient2Stop", target);
+    }
+    
+    // if (soundManager == null)
+    //     {
+    //         GameObject soundGameObject = GameObject.FindWithTag("SoundManager");
+    //         if (soundGameObject !=null)
+    //         {
+    //             soundManager = soundGameObject.GetComponent<GenericSoundManager>();
+    //         }
+    //     }
+    
+    
 }

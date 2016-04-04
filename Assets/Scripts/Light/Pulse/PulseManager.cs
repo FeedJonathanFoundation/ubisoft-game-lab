@@ -27,7 +27,7 @@ public class PulseManager : MonoBehaviour
        
        if (soundManager == null)
        {
-           GameObject soundGameObject = GameObject.FindWithTag("SoundManager");
+            GameObject soundGameObject = GameObject.FindWithTag("SoundManager");
             if (soundGameObject !=null)
             {
                 soundManager = soundGameObject.GetComponent<GenericSoundManager>();
