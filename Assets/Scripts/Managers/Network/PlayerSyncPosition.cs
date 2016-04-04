@@ -1,17 +1,33 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.Networking;
+using System.Collections;
+using System.Collections.Generic;
 
+// MAY NEED TO UPDATE LERP RATE VALUES, BUFFER VALUE
+
+[NetworkSettings (channel = 0, sendInterval = 0.033f)]
 public class PlayerSyncPosition : NetworkBehaviour
 {
-    [SyncVar]
+    [SyncVar(hook = "SyncPositionValues")]
     private Vector3 syncPosition;
     [SerializeField]
     private Transform playerTransform;
+    private float lerpRate;
     [SerializeField]
-    private float lerpRate = 15f;
+    private float normalLerpRate = 15f;
+    [SerializeField]
+    private float fasterLerpRate = 25f;
     private Vector3 lastPosition;
     private float threshold = 0.5f;
+    private List<Vector3> syncPositionList = new List<Vector3>();
+    [SerializeField]
+    private bool useSavedLerping = false;
+    private float buffer = 0.1f;
+
+    void Start()
+    {
+        lerpRate = normalLerpRate;
+    }
 
     void Update()
     {
@@ -23,9 +39,16 @@ public class PlayerSyncPosition : NetworkBehaviour
     // Only used for other clients to smooth out movement
     void LerpPosition()
     {
-        if (isLocalPlayer)
+        if (!isLocalPlayer)
         {
-            playerTransform.position = Vector3.Lerp(playerTransform.position, syncPosition, Time.deltaTime * lerpRate);
+            if (useSavedLerping)
+            {
+                SavedLerping();
+            }
+            else
+            {
+                OrdinaryLerping();
+            }
         }
     }
     
@@ -48,4 +71,31 @@ public class PlayerSyncPosition : NetworkBehaviour
         }
     }
     
+    [Client]
+    void SyncPositionValues(Vector3 latestPosition)
+    {
+        syncPosition = latestPosition;
+        syncPositionList.Add(syncPosition);
+    }
+    
+    void OrdinaryLerping()
+    {
+        playerTransform.position = Vector3.Lerp(playerTransform.position, syncPosition, Time.deltaTime * lerpRate);
+    }
+    
+    void SavedLerping()
+    {
+        if (syncPositionList.Count > 0)
+        {
+            playerTransform.position = Vector3.Lerp(playerTransform.position, syncPositionList[0], Time.deltaTime * lerpRate);
+            if (Vector3.Distance(playerTransform.position, syncPositionList[0]) < buffer)
+            {
+                syncPositionList.RemoveAt(0);
+            }
+            if (syncPositionList.Count > 10)
+            {
+                lerpRate = fasterLerpRate;
+            }
+        }
+    }
 }
