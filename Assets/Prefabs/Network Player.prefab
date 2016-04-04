@@ -709,6 +709,7 @@ GameObject:
   - 114: {fileID: 11456262}
   - 114: {fileID: 11456320}
   - 114: {fileID: 11431680}
+  - 114: {fileID: 11414368}
   m_Layer: 9
   m_Name: Network Player
   m_TagString: Player
@@ -2457,6 +2458,20 @@ MonoBehaviour:
   lightToIntensityRatio: 0.05
   rangeChangeSpeed: 0.5
   intensityChangeSpeed: 0.5
+--- !u!114 &11414368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41af3a5592f134f56bde68b15cf7f2be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTransform: {fileID: 471354}
+  cameraTransform: {fileID: 440560}
+  lerpRate: 15
 --- !u!114 &11419964
 MonoBehaviour:
   m_ObjectHideFlags: 1
