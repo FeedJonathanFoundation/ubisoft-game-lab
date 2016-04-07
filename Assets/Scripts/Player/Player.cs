@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+// using UnityEngine.Networking;
 
 /// <summary>
 /// Player class is responsible for behaviour related to player's object
@@ -140,6 +141,8 @@ public class Player : LightSource
     private IEnumerator flashColorCoroutine;
     private IEnumerator changeIntensityCoroutine;
     
+    [Header("Other")]
+    
     private static Player playerInstance;
 
     private GameObject UI;
@@ -148,6 +151,8 @@ public class Player : LightSource
     private GameObject gameOverCanvasPrefab;
 
     private PlayerSound playerSound;
+    [SerializeField]
+    private NetworkPlayer networkPlayer;
 
     /// <summary>
     /// Initializes Player components
@@ -164,7 +169,7 @@ public class Player : LightSource
             DontDestroyOnLoad(this.gameObject);
             playerInstance =  this;
         }
-                       
+
         this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, this.Transform, this.Rigidbody, this.LightEnergy, this.jetFuelEffect, this.rotationSpeed);
         this.lightToggle = new PlayerLightToggle(this.Transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights, propulsionLightRange);
         this.materials = new MaterialExtensions();
@@ -221,6 +226,7 @@ public class Player : LightSource
     /// </summary>
     protected override void Update()
     {
+        if (!networkPlayer.isLocalPlayer) { return; }
         base.Update();
 
         // if (gameOverCanvas == null)
