@@ -160,14 +160,17 @@ public class Player : LightSource
     protected override void Awake()
     {
         base.Awake(); // call parent LightSource Awake() first
-        if (playerInstance != null && playerInstance != this)
+        if (isLocalPlayer)
         {
-            GameObject.Destroy(this.gameObject);   
-        }
-        else
-        {
-            DontDestroyOnLoad(this.gameObject);
-            playerInstance =  this;
+            if (playerInstance != null && playerInstance != this)
+            {
+                GameObject.Destroy(this.gameObject);
+            }
+            else
+            {
+                DontDestroyOnLoad(this.gameObject);
+                playerInstance = this;
+            }
         }
 
         this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, this.Transform, this.Rigidbody, this.LightEnergy, this.jetFuelEffect, this.rotationSpeed);
@@ -226,7 +229,8 @@ public class Player : LightSource
     /// </summary>
     protected override void Update()
     {
-        if (!networkPlayer.isLocalPlayer) { return; }
+        if (!isLocalPlayer) { return; }
+        // if (!networkPlayer.isLocalPlayer) { return; }
         base.Update();
 
         // if (gameOverCanvas == null)

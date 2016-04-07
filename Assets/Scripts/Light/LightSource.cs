@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Networking;
 
 /// <summary>
 /// Base class for all LigthSource objects
@@ -14,7 +15,7 @@ using UnityEngine;
 /// @version - 1.0.0
 ///
 /// </summary>
-public class LightSource : MonoBehaviour
+public class LightSource : NetworkBehaviour
 {
     [Header("Light Source")]
     [SerializeField]
