@@ -28,6 +28,7 @@ using UnityEngine.Networking;
         public override void OnStartLocalPlayer()
         {
             // Could add text to identify?
+            // Consider removing health bar above player if isLocalPlayer
         }
         
     }
