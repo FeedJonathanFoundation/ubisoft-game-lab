@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
 /// <summary>
 /// SpawnVolume class is responsible for spawning game objects
@@ -12,7 +13,7 @@ using System.Collections.Generic;
 ///
 /// </summary>
 [RequireComponent(typeof(ObjectPooler))]
-public class SpawnVolume : MonoBehaviour
+public class SpawnVolume : NetworkBehaviour
 {
     
     [SerializeField]

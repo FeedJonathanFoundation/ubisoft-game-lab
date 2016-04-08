@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class SmoothCamera : MonoBehaviour
+public class SmoothCamera : NetworkBehaviour
 {
     /// <summary>
     /// The higher the value, the slower the camera moves.
@@ -16,7 +17,7 @@ public class SmoothCamera : MonoBehaviour
     
     [SerializeField]
     [Tooltip("The small speed value")]
-    private float speedZommSmall;
+    private float speedZoomSmall;
     
     [SerializeField]
     [Tooltip("The medium speed value")]
@@ -87,20 +88,38 @@ public class SmoothCamera : MonoBehaviour
         transform.position = position;
         deadzoneRadiusSquared = deadzoneRadius * deadzoneRadius;
         this.zoomTimer = timeBeforeZoomIn;
-        if (cameraInstance != null && cameraInstance != this)
+        if (isLocalPlayer)
         {
-            GameObject.Destroy(this.gameObject);   
+            if (cameraInstance != null && cameraInstance != this)
+            {
+                GameObject.Destroy(this.gameObject);
+            }
+            else
+            {
+                DontDestroyOnLoad(this.gameObject);
+                cameraInstance = this;
+            }
         }
-        else
-        {
-            DontDestroyOnLoad(this.gameObject);
-            cameraInstance =  this;
-        } 
     }
     
     void FixedUpdate()
     {
-        if (target == null) { target = GameObject.Find("Player").GetComponent<Transform>(); }
+
+        if (target == null)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject player in players)
+            {
+                // need to also check that it is the player parent
+                // if (player.isLocalPlayer)
+                // {
+                //     if (player.name != "LightAbsorber")
+                //     {
+                        target = player.GetComponent<Transform>();
+                //     }
+                // }
+            }
+        }
 
         if (target)
         {
@@ -161,7 +180,7 @@ public class SmoothCamera : MonoBehaviour
             acquiredZoom = false;
             float playerVelocity = playerRigidbody.velocity.sqrMagnitude;
             float mediumSpeed = speedZoomMedium * speedZoomMedium;
-            float smallSpeed = speedZommSmall * speedZommSmall;
+            float smallSpeed = speedZoomSmall * speedZoomSmall;
             
             if(zoomInZone && !inCurrents)
             {

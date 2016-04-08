@@ -151,8 +151,6 @@ public class Player : LightSource
     private GameObject gameOverCanvasPrefab;
 
     private PlayerSound playerSound;
-    [SerializeField]
-    private NetworkPlayer networkPlayer;
 
     /// <summary>
     /// Initializes Player components
@@ -230,7 +228,7 @@ public class Player : LightSource
     protected override void Update()
     {
         if (!isLocalPlayer) { return; }
-        // if (!networkPlayer.isLocalPlayer) { return; }
+
         base.Update();
 
         // if (gameOverCanvas == null)
