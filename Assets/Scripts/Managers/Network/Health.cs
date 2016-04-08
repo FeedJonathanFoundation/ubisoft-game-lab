@@ -14,9 +14,18 @@ public class Health : NetworkBehaviour
 
     private bool restartButtonPushed = false;
 
-    void Awake()
+    private NetworkStartPosition[] spawnPoints;
+
+    [SerializeField]
+    private bool destroyOnDeath;
+
+    void Start()
     {
         multiplier = healthBarWidth / maxHealth;
+        if (isLocalPlayer)
+        {
+            spawnPoints = FindObjectsOfType<NetworkStartPosition>();
+        }
     }
 
 
@@ -28,7 +37,11 @@ public class Health : NetworkBehaviour
         {
             currentHealth = 0;
             Debug.Log("Dead");
-            if (restartButtonPushed) // replace this pseudocode; 
+            if (destroyOnDeath)
+            {
+                Destroy(gameObject);
+            }
+            else //if (restartButtonPushed) // replace this pseudocode; 
             // should probably be in update and check if isDead;
             {
                 currentHealth = maxHealth;
@@ -47,7 +60,15 @@ public class Health : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            transform.position = Vector3.zero;
+            // spawns player at (0, 0, 0)
+            // transform.position = Vector3.zero;
+            Vector3 spawnPoint = Vector3.zero;
+            if (spawnPoints != null && spawnPoints.Length > 0)
+            {
+                spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)].transform.position;
+                // maybe have it iterate instead of being random
+            }
+            transform.position = spawnPoint;
         }
     }
     
