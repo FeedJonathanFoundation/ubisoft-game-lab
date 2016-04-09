@@ -115,24 +115,24 @@ public class Player : LightSource
 
     [Header("Emissive Colours")]
     [SerializeField]
-    private Color probeColorOn = new Color(1f, 0.3103448f, 0f);
+    private Color probeColorOn;
     
     [SerializeField]    
-    private Color probeColorOff = new Color(0.3f,0.09310344f,0);
+    private Color probeColorOff;
     
     [SerializeField]
-    private Color localProbeColorOn = new Color(128f, 0f, 111f);
+    private Color localProbeColorOn;
     [SerializeField]
-    private Color localProbeColorOff = new Color(41f, 0f, 35f);
+    private Color localProbeColorOff;
     
     [SerializeField]
-    private Color probeColorHit = new Color(1, 0.067f, 0.067f);
+    private Color probeColorHit;
            
     [SerializeField]
-    private Color probeColorEatFish = new Color(0, 0.875f, 1);
+    private Color probeColorEatFish;
     
     [SerializeField]
-    private Color probeColorEatPickup = new Color(0.82f, 0.82f, 0.596f);
+    private Color probeColorEatPickup;
     
     [SerializeField]
     [Tooltip("The amount of time the player flashes when eating a fish")]
@@ -164,7 +164,7 @@ public class Player : LightSource
     {
         base.Awake(); // call parent LightSource Awake() first
         if (isLocalPlayer)
-        {
+        {                      
             if (playerInstance != null && playerInstance != this)
             {
                 GameObject.Destroy(this.gameObject);
@@ -189,7 +189,7 @@ public class Player : LightSource
         playerSound = GetComponent<PlayerSound>();
         
         this.currentLevel = SceneManager.GetActiveScene().buildIndex;
-        ChangeColor(probeColorOff, false, 0);
+        
         LoadGame();
         ResetPlayerState();
         
@@ -219,6 +219,7 @@ public class Player : LightSource
     {
         probeColorOn = localProbeColorOn;
         probeColorOff = localProbeColorOff;
+        ChangeColor(probeColorOff, false, 0);
     }
 
     public override void OnEnable()
