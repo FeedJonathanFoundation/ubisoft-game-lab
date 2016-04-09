@@ -1,59 +1,47 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 
 public class Health : NetworkBehaviour 
 {
 
     [SerializeField] const int maxHealth = 100;
-    [SyncVar(hook = "OnChangeHealth")][SerializeField] int currentHealth = maxHealth;
-    [SerializeField] RectTransform healthBar;
-    [SerializeField]
-    int healthBarWidth = 200;
-    private int multiplier;
+    [SyncVar(hook = "OnLightChanged")][SerializeField] int currentHealth = maxHealth;
+    [SerializeField] Slider healthBar;
 
     private bool restartButtonPushed = false;
-
+    private Player player;
     private NetworkStartPosition[] spawnPoints;
+    
 
     [SerializeField]
     private bool destroyOnDeath;
 
     void Start()
     {
-        multiplier = healthBarWidth / maxHealth;
+        player = GameObject.Find("Player").GetComponent<Player>();
+        player.LightEnergy.LightChanged += OnLightChanged;
         if (isLocalPlayer)
         {
             spawnPoints = FindObjectsOfType<NetworkStartPosition>();
         }
     }
-
-
-    public void TakeDamage(int amount)
+    
+    void onDisable()
     {
-        if (!isServer) { return; }
-        currentHealth -= amount;
-        if (currentHealth <= 0)
-        {
-            currentHealth = 0;
-            Debug.Log("Dead");
-            if (destroyOnDeath)
-            {
-                Destroy(gameObject);
-            }
-            else //if (restartButtonPushed) // replace this pseudocode; 
-            // should probably be in update and check if isDead;
-            {
-                currentHealth = maxHealth;
-                RpcRespawn();
-            }
-        }
+        player.LightEnergy.LightChanged -= OnLightChanged;
     }
     
-    void OnChangeHealth(int health)
+    void OnLightChanged(float currentEnergy)
     {
-        healthBar.sizeDelta = new Vector2(currentHealth * multiplier, healthBar.sizeDelta.y);
+        healthBar.value = currentEnergy * 100;
     }
+    
+    // void OnChangeHealth(int health)
+    // {
+    //     healthBar.value = health * 100;
+    // }
     
     [ClientRpc]
     void RpcRespawn()
@@ -71,5 +59,4 @@ public class Health : NetworkBehaviour
             transform.position = spawnPoint;
         }
     }
-    
 }
