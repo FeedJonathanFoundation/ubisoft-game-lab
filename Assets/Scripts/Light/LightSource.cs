@@ -118,6 +118,7 @@ public class LightSource : NetworkBehaviour
                         // Absorb a certain amount of light from the player to the fish
                         AbstractFish fish = (AbstractFish)this;
                         lightToAbsorb = fish.damageInflicted;
+                        
                     }
                     
                     // Debug.Log("Absorb " + lightToAbsorb + " from player");
@@ -129,6 +130,11 @@ public class LightSource : NetworkBehaviour
                 // Transfer light energy from the other light source to this one
                 float lightAbsorbed = lightEnergyToAbsorb.Deplete(lightToAbsorb);
                 lightEnergy.Add(lightAbsorbed);
+
+                // string uniqueID = otherLightSource.transform.name;
+                // string uniqueID2 = this.transform.name;
+                // CmdTellServerLightChange(uniqueID, -lightToAbsorb);
+                // CmdTellServerLightChange(uniqueID2, lightToAbsorb);
                 
                 // Inform subscribers that this light source consumed another light source.
                 ConsumedLightSource(otherLightSource);
@@ -203,6 +209,19 @@ public class LightSource : NetworkBehaviour
         }        
     }
     
+    [Command]
+    void CmdTellServerWhoIsDead(string uniqueID)
+    {
+        GameObject current = GameObject.Find(uniqueID);
+        // current.GetComponent<>
+    }
+    
+    [Command]
+    void CmdTellServerLightChange(string uniqueID, float change)
+    {
+        GameObject current = GameObject.Find(uniqueID);
+        // current. ?? tell about damage
+    }
    
     /// PROPERTIES
     

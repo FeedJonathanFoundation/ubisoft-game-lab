@@ -52,11 +52,21 @@ public class ObjectPooler : NetworkBehaviour
             pool[i] = new List<GameObject>();
             for (int j = 0; j < pooledAmount[i]; j++)
             {
-                GameObject gameobject = (GameObject)Instantiate(pooledObjects[i]);
-                // gameobject.SetActive(false);
-                pool[i].Add(gameobject);
-
-                NetworkServer.Spawn(gameObject);
+                GameObject newObject = GameObject.Instantiate(pooledObjects[i]) as GameObject;
+                // newObject.SetActive(false);
+                pool[i].Add(newObject);
+                
+                NPCID npcIDObject = newObject.GetComponent<NPCID>();
+                if (npcIDObject != null)
+                {
+                    LightSource lightSource = newObject.GetComponent<LightSource>();
+                    if (lightSource != null)
+                    {
+                        string identity = lightSource.LightSourceID;
+                        npcIDObject.npcID = identity;
+                    }
+                }
+                NetworkServer.Spawn(newObject.gameObject);
             }
         }
     }
@@ -137,6 +147,8 @@ public class ObjectPooler : NetworkBehaviour
             {
                 fish.Dead = false;
             }
+            
+            
         }
     }
     
