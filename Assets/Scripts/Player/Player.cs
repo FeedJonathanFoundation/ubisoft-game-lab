@@ -121,6 +121,11 @@ public class Player : LightSource
     private Color probeColorOff = new Color(0.3f,0.09310344f,0);
     
     [SerializeField]
+    private Color localProbeColorOn = new Color(128f, 0f, 111f);
+    [SerializeField]
+    private Color localProbeColorOff = new Color(41f, 0f, 35f);
+    
+    [SerializeField]
     private Color probeColorHit = new Color(1, 0.067f, 0.067f);
            
     [SerializeField]
@@ -206,6 +211,12 @@ public class Player : LightSource
         #if UNITY_EDITOR
             this.ValidateInputs();
         #endif
+    }
+    
+    public override void OnStartLocalPlayer()
+    {
+        probeColorOn = localProbeColorOn;
+        probeColorOff = localProbeColorOff;
     }
 
     public override void OnEnable()
