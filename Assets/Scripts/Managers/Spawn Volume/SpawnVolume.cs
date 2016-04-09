@@ -56,7 +56,7 @@ public class SpawnVolume : NetworkBehaviour
     
     // Amount of space between fish in a school
     private float schoolSpacing = 0.3f;
-    private Transform player;
+    private List<Transform> players;
     // Tracks which spawn volumes are disabled
     private bool[] disabled;
     // Tracks which spawn volumes are initialized
@@ -74,7 +74,8 @@ public class SpawnVolume : NetworkBehaviour
     void Start() 
     {
         fishes = new List<GameObject>();
-        player = GameObject.Find("Player").transform;
+        players = new List<Transform>();
+        // player = GameObject.Find("Player").transform;
         pool = ObjectPooler.current;
         numberOfTypes = pool.PooledObjectCount;
         colliderCount = colliders.Length;
@@ -94,6 +95,18 @@ public class SpawnVolume : NetworkBehaviour
     /// </summary>
     void Update()
     {
+        if (players.Count < 2)
+        {
+            Debug.Log("need to adjust to find correct number of players!");
+            GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject current in currentPlayers)
+            {
+                if (current.name != "LightAbsorber")
+                {
+                    players.Add(current.transform);
+                }
+            }
+        }
         // Iterate through the colliders
         // If not disabled and not intialized, initialized
         for (int i = 0; i < colliderCount; i++)
@@ -130,14 +143,17 @@ public class SpawnVolume : NetworkBehaviour
     private void CheckDistanceToPlayer(AbstractFish fish)
     {
         if (fish == null) { return; }
-        float distanceSquared = (fish.transform.position - player.position).sqrMagnitude;
-        if (distanceSquared > maxDistanceSquared)
+        for (int i = 0; i < players.Count; i++)
         {
-            fish.gameObject.SetActive(false);
-        }
-        else if (fish.gameObject.activeSelf == false && !fish.Dead)
-        {
-            fish.gameObject.SetActive(true);
+            float distanceSquared = (fish.transform.position - players[i].position).sqrMagnitude;
+            if (distanceSquared > maxDistanceSquared)
+            {
+                fish.gameObject.SetActive(false);
+            }
+            else if (fish.gameObject.activeSelf == false && !fish.Dead)
+            {
+                fish.gameObject.SetActive(true);
+            }
         }
     }
     
