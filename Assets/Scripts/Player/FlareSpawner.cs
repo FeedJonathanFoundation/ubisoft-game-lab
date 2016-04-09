@@ -58,6 +58,8 @@ public class FlareSpawner : NetworkBehaviour
 
     void Update() 
     {
+        if (!isLocalPlayer) { return; }
+        
         bool ready = false;
         if (timer < cooldownTime)
         {
@@ -74,21 +76,7 @@ public class FlareSpawner : NetworkBehaviour
                 float cost = flareEnergyCost * flareCostPercentage;
                 if ((lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost)))
                 {
-                    flare = (GameObject)Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
-                    lightSource.LightEnergy.Deplete(flareEnergyCost);
-                    // Apply recoil in the opposite direction the flare was shot
-                    rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
-                    controllerRumble.ShotFlare();   // Rumble the controller
-                    timer = 0.0f;
-                    flareSound = new FlareSound(flare);
-                    flareSound.ShootFlareSound();
-
-                    //reset all values for the zoom whenever player fires a flare
-                    if (smoothCamera != null)
-                    {
-                        smoothCamera.FlareShoot();
-                        smoothCamera.ResetTimer();
-                    }
+                    Cmd_ShootFlare();
                 }
             }
             else
@@ -100,6 +88,27 @@ public class FlareSpawner : NetworkBehaviour
         {
             flareDistance = Vector3.Distance(flare.transform.position, player.position);
             flareSound.SetFlareDistance(flareDistance);
+        }
+    }
+    
+    [Command]
+    private void Cmd_ShootFlare()
+    {
+        flare = (GameObject)Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
+        NetworkServer.Spawn(flare);
+        lightSource.LightEnergy.Deplete(flareEnergyCost);
+        // Apply recoil in the opposite direction the flare was shot
+        rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
+        controllerRumble.ShotFlare();   // Rumble the controller
+        timer = 0.0f;
+        flareSound = new FlareSound(flare);
+        flareSound.ShootFlareSound();
+
+        //reset all values for the zoom whenever player fires a flare
+        if (smoothCamera != null)
+        {
+            smoothCamera.FlareShoot();
+            smoothCamera.ResetTimer();
         }
     }
     
