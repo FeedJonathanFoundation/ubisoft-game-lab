@@ -49,7 +49,7 @@ public class HealthBar : MonoBehaviour {
             
             yield return new WaitForSeconds(0.35f);
             fill.enabled = true;
-            AkSoundEngine.PostEvent("CriticalHealth", this.gameObject);
+            // AkSoundEngine.PostEvent("CriticalHealth", this.gameObject);
         }
     } 
     

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class SmoothCamera : MonoBehaviour
+public class SmoothCamera : NetworkBehaviour
 {
     /// <summary>
     /// The higher the value, the slower the camera moves.
@@ -16,7 +17,7 @@ public class SmoothCamera : MonoBehaviour
     
     [SerializeField]
     [Tooltip("The small speed value")]
-    private float speedZommSmall;
+    private float speedZoomSmall;
     
     [SerializeField]
     [Tooltip("The medium speed value")]
@@ -70,12 +71,12 @@ public class SmoothCamera : MonoBehaviour
     private bool shootFlare;
     private bool zoomInZone;
     private bool inCurrents;
+    private bool initialized;
     private string particleDirection;
     private string waitingCurrent;
     private static SmoothCamera cameraInstance;
-    void Awake()
+    public void Init()
     {
-        playerRigidbody =  target.GetComponent<Rigidbody>();
         this.shootFlare = false;
         this.zoomInZone = false;
         this.inCurrents = false;
@@ -87,20 +88,41 @@ public class SmoothCamera : MonoBehaviour
         transform.position = position;
         deadzoneRadiusSquared = deadzoneRadius * deadzoneRadius;
         this.zoomTimer = timeBeforeZoomIn;
-        if (cameraInstance != null && cameraInstance != this)
+        if (isLocalPlayer)
         {
-            GameObject.Destroy(this.gameObject);   
+            if (cameraInstance != null && cameraInstance != this)
+            {
+                GameObject.Destroy(this.gameObject);
+            }
+            else
+            {
+                DontDestroyOnLoad(this.gameObject);
+                cameraInstance = this;
+            }
         }
-        else
-        {
-            DontDestroyOnLoad(this.gameObject);
-            cameraInstance =  this;
-        } 
+
+        initialized = true;
     }
     
     void FixedUpdate()
     {
-        if (target == null) { target = GameObject.Find("Player").GetComponent<Transform>(); }
+        if (!initialized) { return; }
+
+        if (target == null)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject player in players)
+            {
+                // need to also check that it is the player parent
+                // if (player.isLocalPlayer)
+                // {
+                //     if (player.name != "LightAbsorber")
+                //     {
+                        target = player.GetComponent<Transform>();
+                //     }
+                // }
+            }
+        }
 
         if (target)
         {
@@ -159,9 +181,9 @@ public class SmoothCamera : MonoBehaviour
             
             // camera zoom settings
             acquiredZoom = false;
-            float playerVelocity = playerRigidbody.velocity.sqrMagnitude;
+            float playerVelocity = PlayerRigidbody.velocity.sqrMagnitude;
             float mediumSpeed = speedZoomMedium * speedZoomMedium;
-            float smallSpeed = speedZommSmall * speedZommSmall;
+            float smallSpeed = speedZoomSmall * speedZoomSmall;
             
             if(zoomInZone && !inCurrents)
             {
@@ -290,4 +312,25 @@ public class SmoothCamera : MonoBehaviour
         this.zoomTimer = timeBeforeZoomIn;
     }
     
+    /// <summary>
+    /// The transform to follow
+    /// </summary>
+    public Transform Target
+    {
+        get { return target; }
+        set { target = value; }
+    }
+    
+    /// <summary>
+    /// The camera target's rigidbody
+    /// </summary>
+    private Rigidbody PlayerRigidbody
+    {
+        get 
+        {
+            if (playerRigidbody == null ) { playerRigidbody =  target.GetComponent<Rigidbody>(); } 
+            return playerRigidbody; 
+        }
+        set { playerRigidbody = value; }
+    }
 }
