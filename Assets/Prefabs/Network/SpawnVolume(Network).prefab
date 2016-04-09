@@ -28,7 +28,6 @@ GameObject:
   - 114: {fileID: 11452274}
   - 114: {fileID: 11414448}
   - 114: {fileID: 11430288}
-  - 114: {fileID: 11442352}
   m_Layer: 10
   m_Name: SpawnVolume(Network)
   m_TagString: SpawnVolume
@@ -147,7 +146,7 @@ MonoBehaviour:
   - {fileID: 141890, guid: 38402044f2e744338ac93eaa02f8a6e9, type: 2}
   - {fileID: 141682, guid: 3e6866739a2c84000bbef2ef134ccaf6, type: 2}
   - {fileID: 198724, guid: a5f1d169eee89438dae2720c7651a259, type: 2}
-  pooledAmount: 5a0000000a00000005000000
+  pooledAmount: 5a0000000000000000000000
   extensible: 1
   replace: 0
 --- !u!114 &11430288
@@ -182,26 +181,13 @@ MonoBehaviour:
     i15: 118
   m_ServerOnly: 1
   m_LocalPlayerAuthority: 0
---- !u!114 &11442352
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 138686}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47f51bc06c4f6440890bea7771887892, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 141890, guid: 38402044f2e744338ac93eaa02f8a6e9, type: 2}
-  numberOfNPCs: 20
 --- !u!114 &11452274
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 138686}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f648d350620143169806ce7bde8feb3, type: 3}
   m_Name: 
@@ -213,8 +199,8 @@ MonoBehaviour:
   schools: 010000
   probabilities:
   - 2
-  - 1
-  - 0.15
+  - 0
+  - 0
   energyVariance: 0.492
   fishCount: 50
   schoolSize: 7
