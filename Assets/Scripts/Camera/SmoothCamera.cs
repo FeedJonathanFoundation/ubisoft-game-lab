@@ -71,12 +71,12 @@ public class SmoothCamera : NetworkBehaviour
     private bool shootFlare;
     private bool zoomInZone;
     private bool inCurrents;
+    private bool initialized;
     private string particleDirection;
     private string waitingCurrent;
     private static SmoothCamera cameraInstance;
-    void Awake()
+    public void Init()
     {
-        playerRigidbody =  target.GetComponent<Rigidbody>();
         this.shootFlare = false;
         this.zoomInZone = false;
         this.inCurrents = false;
@@ -100,10 +100,13 @@ public class SmoothCamera : NetworkBehaviour
                 cameraInstance = this;
             }
         }
+
+        initialized = true;
     }
     
     void FixedUpdate()
     {
+        if (!initialized) { return; }
 
         if (target == null)
         {
@@ -178,7 +181,7 @@ public class SmoothCamera : NetworkBehaviour
             
             // camera zoom settings
             acquiredZoom = false;
-            float playerVelocity = playerRigidbody.velocity.sqrMagnitude;
+            float playerVelocity = PlayerRigidbody.velocity.sqrMagnitude;
             float mediumSpeed = speedZoomMedium * speedZoomMedium;
             float smallSpeed = speedZoomSmall * speedZoomSmall;
             
@@ -309,4 +312,25 @@ public class SmoothCamera : NetworkBehaviour
         this.zoomTimer = timeBeforeZoomIn;
     }
     
+    /// <summary>
+    /// The transform to follow
+    /// </summary>
+    public Transform Target
+    {
+        get { return target; }
+        set { target = value; }
+    }
+    
+    /// <summary>
+    /// The camera target's rigidbody
+    /// </summary>
+    private Rigidbody PlayerRigidbody
+    {
+        get 
+        {
+            if (playerRigidbody == null ) { playerRigidbody =  target.GetComponent<Rigidbody>(); } 
+            return playerRigidbody; 
+        }
+        set { playerRigidbody = value; }
+    }
 }
