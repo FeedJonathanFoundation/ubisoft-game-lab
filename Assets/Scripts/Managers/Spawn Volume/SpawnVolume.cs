@@ -225,13 +225,7 @@ public class SpawnVolume : NetworkBehaviour
             abstractFish.DefaultWanderAngle = initialSwimAngle;
         }
         fishes.Add(fish);
-        // NetworkServer.Spawn(fish);
-        NPCID npcID = fish.GetComponent<NPCID>();
-        if (npcID != null)
-        {
-            string identity =  lightSource.LightSourceID;
-            npcID.npcID = identity;
-        }
+
     }
     
     /// <summary>

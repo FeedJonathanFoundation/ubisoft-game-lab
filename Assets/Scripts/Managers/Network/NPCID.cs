@@ -34,7 +34,10 @@ public class NPCID : NetworkBehaviour
     {
         if (npcTransform.name == "" || npcTransform.name.Contains(npcPrefabName))
         {
-            npcTransform.name = npcID;
+            if (npcID != null && npcID != "")
+            {
+                npcTransform.name = npcID;
+            }
         }
         identified = true;
     }
