@@ -113,8 +113,9 @@ public class SpawnVolume : NetworkBehaviour
         {
             if (disabled[i]) { continue; }
             if (!initialized[i])
-            { 
+            {
                 Initialize(i);
+                
                 // Reset the collider the player has passed
                 if (automaticReset)
                 {
@@ -129,6 +130,9 @@ public class SpawnVolume : NetworkBehaviour
             {
                 if (fishes[i] != null)
                 {
+                    // REMOVE THIS - for DEBUGGING
+                    fishes[i].SetActive(true);
+
                     CheckDistanceToPlayer(fishes[i].GetComponent<AbstractFish>());
                 }
             }
@@ -142,19 +146,19 @@ public class SpawnVolume : NetworkBehaviour
     /// </summary>
     private void CheckDistanceToPlayer(AbstractFish fish)
     {
-        if (fish == null) { return; }
-        for (int i = 0; i < players.Count; i++)
-        {
-            float distanceSquared = (fish.transform.position - players[i].position).sqrMagnitude;
-            if (distanceSquared > maxDistanceSquared)
-            {
-                fish.gameObject.SetActive(false);
-            }
-            else if (fish.gameObject.activeSelf == false && !fish.Dead)
-            {
-                fish.gameObject.SetActive(true);
-            }
-        }
+        // if (fish == null) { return; }
+        // for (int i = 0; i < players.Count; i++)
+        // {
+        //     float distanceSquared = (fish.transform.position - players[i].position).sqrMagnitude;
+        //     if (distanceSquared > maxDistanceSquared)
+        //     {
+        //         fish.gameObject.SetActive(false);
+        //     }
+        //     else if (fish.gameObject.activeSelf == false && !fish.Dead)
+        //     {
+        //         fish.gameObject.SetActive(true);
+        //     }
+        // }
     }
     
     /// <summary>
@@ -221,11 +225,19 @@ public class SpawnVolume : NetworkBehaviour
             abstractFish.DefaultWanderAngle = initialSwimAngle;
         }
         fishes.Add(fish);
+        // NetworkServer.Spawn(fish);
+        NPCID npcID = fish.GetComponent<NPCID>();
+        if (npcID != null)
+        {
+            string identity =  lightSource.LightSourceID;
+            npcID.npcID = identity;
+        }
     }
     
     /// <summary>
     /// Spawns an individual fish.
     /// </summary>
+    
     private void SpawnSchool(int spawnTypeIndex, Vector3 spawnLocation)
     {
         Vector3 modifiedLocation = spawnLocation;

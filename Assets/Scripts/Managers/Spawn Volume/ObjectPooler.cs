@@ -53,7 +53,7 @@ public class ObjectPooler : NetworkBehaviour
             for (int j = 0; j < pooledAmount[i]; j++)
             {
                 GameObject gameobject = (GameObject)Instantiate(pooledObjects[i]);
-                gameobject.SetActive(false);
+                // gameobject.SetActive(false);
                 pool[i].Add(gameobject);
 
                 NetworkServer.Spawn(gameObject);
