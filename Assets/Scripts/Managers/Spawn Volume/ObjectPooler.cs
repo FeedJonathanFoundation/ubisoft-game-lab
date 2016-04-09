@@ -55,8 +55,15 @@ public class ObjectPooler : NetworkBehaviour
                 GameObject gameobject = (GameObject)Instantiate(pooledObjects[i]);
                 gameobject.SetActive(false);
                 pool[i].Add(gameobject);
-
-                NetworkServer.Spawn(gameObject);
+                
+                LightSource lightSource = gameobject.GetComponent<LightSource>();
+                NpcID npcID = gameobject.GetComponent<NpcID>();
+                if (npcID != null)
+                {
+                    string identity =  lightSource.LightSourceID;
+                    npcID.npcID = identity;
+                }
+                NetworkServer.Spawn(gameobject);
             }
         }
     }
