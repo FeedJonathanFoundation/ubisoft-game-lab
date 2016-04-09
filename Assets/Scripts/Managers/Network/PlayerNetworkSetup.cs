@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 public class PlayerNetworkSetup : NetworkBehaviour
 {
     [SerializeField]
-    private Camera playerCamera;
+    private GameObject playerCamera;
     
     void Start()
     {
@@ -14,7 +14,11 @@ public class PlayerNetworkSetup : NetworkBehaviour
             GameObject.Find("Scene Camera").SetActive(false);
             // GetComponent<>().enabled = true;
             GetComponent<Player>().enabled = true;
-            playerCamera.enabled = true;
+            //playerCamera.enabled = true;
+            
+            SmoothCamera camera = ((GameObject)GameObject.Instantiate(playerCamera, transform.position, Quaternion.Euler(0,0,0))).GetComponent<SmoothCamera>();
+            camera.Target = transform;
+            camera.Init();
         }
 	}
 	

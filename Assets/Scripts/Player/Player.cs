@@ -173,6 +173,8 @@ public class Player : LightSource
             {
                 DontDestroyOnLoad(this.gameObject);
                 playerInstance = this;
+                
+                Debug.Log("CREATE CAMERA");
             }
         }
 
