@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
 /// <summary>
 /// Object Pooler class creates a pool of game objects for reuse.
@@ -9,7 +10,7 @@ using System.Collections.Generic;
 /// @version - 1.0.0
 ///
 /// </summary>
-public class ObjectPooler : MonoBehaviour
+public class ObjectPooler : NetworkBehaviour
 {
 
     public static ObjectPooler current;
@@ -43,7 +44,7 @@ public class ObjectPooler : MonoBehaviour
     /// <summary>
     /// Creates the pool
     /// </summary>
-    void Start()
+    public override void OnStartServer()
     {
         pool = new List<GameObject>[pooledObjects.Length];
         for (int i = 0; i < pooledObjects.Length; i++)
@@ -54,6 +55,8 @@ public class ObjectPooler : MonoBehaviour
                 GameObject gameobject = (GameObject)Instantiate(pooledObjects[i]);
                 gameobject.SetActive(false);
                 pool[i].Add(gameobject);
+
+                NetworkServer.Spawn(gameObject);
             }
         }
     }
