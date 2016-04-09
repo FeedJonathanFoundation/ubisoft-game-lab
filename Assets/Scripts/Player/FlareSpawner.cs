@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
 
-public class FlareSpawner : NetworkBehaviour 
+public class FlareSpawner : MonoBehaviour 
 {
     [SerializeField]
     [Tooltip("Refers to flare game object")]
@@ -27,8 +26,7 @@ public class FlareSpawner : NetworkBehaviour
     [SerializeField]
     [Tooltip("The amount of recoil applied on the player when shooting the flare")]
     private float recoilForce;
-    
-    [SyncVar]    
+        
     private float timer;
     private LightSource lightSource;
     // Caches the component that rumbles the controller
