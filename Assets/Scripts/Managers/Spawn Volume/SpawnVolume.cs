@@ -143,18 +143,18 @@ public class SpawnVolume : NetworkBehaviour
     private void CheckDistanceToPlayer(AbstractFish fish)
     {
         if (fish == null) { return; }
-        for (int i = 0; i < players.Count; i++)
-        {
-            float distanceSquared = (fish.transform.position - players[i].position).sqrMagnitude;
-            if (distanceSquared > maxDistanceSquared)
-            {
-                fish.gameObject.SetActive(false);
-            }
-            else if (fish.gameObject.activeSelf == false && !fish.Dead)
-            {
+        // for (int i = 0; i < players.Count; i++)
+        // {
+        //     float distanceSquared = (fish.transform.position - players[i].position).sqrMagnitude;
+        //     if (distanceSquared > maxDistanceSquared)
+        //     {
+        //         fish.gameObject.SetActive(false);
+        //     }
+        //     else if (fish.gameObject.activeSelf == false && !fish.Dead)
+        //     {
                 fish.gameObject.SetActive(true);
-            }
-        }
+        //     }
+        // }
     }
     
     /// <summary>

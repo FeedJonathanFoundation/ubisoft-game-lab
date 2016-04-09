@@ -41,12 +41,25 @@ public class ObjectPooler : NetworkBehaviour
         current = this;
     }
     
+    public void Start()
+    {
+        pool = new List<GameObject>[pooledObjects.Length];
+        if (!isServer) { return; }
+        CmdSpawnFish();
+    }
+    
     /// <summary>
     /// Creates the pool
     /// </summary>
-    public override void OnStartServer()
+    // public override void OnStartServer()
+    // {
+    //     CmdSpawnFish();
+    // }
+    
+    [Command]
+    private void CmdSpawnFish()
     {
-        pool = new List<GameObject>[pooledObjects.Length];
+        
         for (int i = 0; i < pooledObjects.Length; i++)
         {
             pool[i] = new List<GameObject>();
@@ -54,6 +67,7 @@ public class ObjectPooler : NetworkBehaviour
             {
                 GameObject gameobject = (GameObject)Instantiate(pooledObjects[i]);
                 gameobject.SetActive(false);
+                // gameobject.SetActive(true);
                 pool[i].Add(gameobject);
                 
                 LightSource lightSource = gameobject.GetComponent<LightSource>();
