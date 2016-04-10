@@ -146,7 +146,11 @@ public class SpawnVolume : NetworkBehaviour
     /// </summary>
     private void CheckDistanceToPlayer(AbstractFish fish)
     {
+<<<<<<< HEAD
         // if (fish == null) { return; }
+=======
+        if (fish == null) { return; }
+>>>>>>> df50156b499206d3c21d290b56cb1ceb18d897ce
         // for (int i = 0; i < players.Count; i++)
         // {
         //     float distanceSquared = (fish.transform.position - players[i].position).sqrMagnitude;
@@ -156,7 +160,11 @@ public class SpawnVolume : NetworkBehaviour
         //     }
         //     else if (fish.gameObject.activeSelf == false && !fish.Dead)
         //     {
+<<<<<<< HEAD
         //         fish.gameObject.SetActive(true);
+=======
+                fish.gameObject.SetActive(true);
+>>>>>>> df50156b499206d3c21d290b56cb1ceb18d897ce
         //     }
         // }
     }
