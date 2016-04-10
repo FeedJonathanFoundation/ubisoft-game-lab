@@ -100,7 +100,10 @@ public abstract class AbstractFish : LightSource
     {
         this.gameObject.SetActive(updatedActive);
         active = updatedActive;
-
+        if (active)
+        {
+            NetworkServer.Spawn(this.gameObject);
+        }
         NpcID id = this.gameObject.GetComponent<NpcID>();
         // Debug.Log(id.npcID + " active status changed " + updatedActive);
     }
