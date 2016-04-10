@@ -26,6 +26,7 @@ GameObject:
   - 223: {fileID: 22371392}
   - 114: {fileID: 11479836}
   - 114: {fileID: 11415944}
+  - 114: {fileID: 11445130}
   m_Layer: 5
   m_Name: Healthbar Canvas
   m_TagString: Untagged
@@ -2636,6 +2637,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   tagsToIgnore: []
+--- !u!114 &11445130
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 107834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 595c2e03c7fab48b1bba3dad36ebb9f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11449314
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2678,7 +2690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarWidth: 200
   healthBar: {fileID: 22448344}
-  currentEnergy: 0
+  maxHealth: 0
 --- !u!114 &11456262
 MonoBehaviour:
   m_ObjectHideFlags: 1
