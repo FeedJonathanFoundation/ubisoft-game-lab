@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Networking;
 
 /// <summary>
 /// Object Pooler class creates a pool of game objects for reuse.
@@ -10,7 +9,7 @@ using UnityEngine.Networking;
 /// @version - 1.0.0
 ///
 /// </summary>
-public class ObjectPooler : NetworkBehaviour
+public class ObjectPooler : MonoBehaviour
 {
 
     public static ObjectPooler current;
@@ -41,47 +40,20 @@ public class ObjectPooler : NetworkBehaviour
         current = this;
     }
     
-    public void Start()
-    {
-        pool = new List<GameObject>[pooledObjects.Length];
-        if (!isServer) { return; }
-        CmdSpawnFish();
-    }
-    
     /// <summary>
     /// Creates the pool
     /// </summary>
-    // public override void OnStartServer()
-    // {
-    //     CmdSpawnFish();
-    // }
-    
-    [Command]
-    private void CmdSpawnFish()
+    void Start()
     {
-        
+        pool = new List<GameObject>[pooledObjects.Length];
         for (int i = 0; i < pooledObjects.Length; i++)
         {
             pool[i] = new List<GameObject>();
             for (int j = 0; j < pooledAmount[i]; j++)
             {
                 GameObject gameobject = (GameObject)Instantiate(pooledObjects[i]);
-<<<<<<< HEAD
-                // gameobject.SetActive(false);
-=======
                 gameobject.SetActive(false);
-                // gameobject.SetActive(true);
->>>>>>> df50156b499206d3c21d290b56cb1ceb18d897ce
                 pool[i].Add(gameobject);
-                
-                LightSource lightSource = gameobject.GetComponent<LightSource>();
-                NpcID npcID = gameobject.GetComponent<NpcID>();
-                if (npcID != null)
-                {
-                    string identity =  lightSource.LightSourceID;
-                    npcID.npcID = identity;
-                }
-                NetworkServer.Spawn(gameobject);
             }
         }
     }

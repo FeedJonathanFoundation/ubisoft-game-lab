@@ -13,18 +13,18 @@ public class FlareSound : MonoBehaviour
 
     public void ShootFlareSound()
     {
-        // AkSoundEngine.PostEvent("Flare", target);
+        AkSoundEngine.PostEvent("Flare", target);
     }
     
     public void SetFlareDistance(float flareDistance)
     {
-        // AkSoundEngine.SetRTPCValue("flareDistance", flareDistance);
+        AkSoundEngine.SetRTPCValue("flareDistance", flareDistance);
     }
     
     // need to pass boss fish object
     public void EatFlareSound()
     {
-        // AkSoundEngine.PostEvent("FlareEat", this.gameObject);
+        AkSoundEngine.PostEvent("FlareEat", this.gameObject);
     }
     
 }

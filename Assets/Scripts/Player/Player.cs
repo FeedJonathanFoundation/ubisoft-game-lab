@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-// using UnityEngine.Networking;
 
 /// <summary>
 /// Player class is responsible for behaviour related to player's object
@@ -115,24 +114,19 @@ public class Player : LightSource
 
     [Header("Emissive Colours")]
     [SerializeField]
-    private Color probeColorOn;
+    private Color probeColorOn = new Color(1f, 0.3103448f, 0f);
     
     [SerializeField]    
-    private Color probeColorOff;
+    private Color probeColorOff = new Color(0.3f,0.09310344f,0);
     
     [SerializeField]
-    private Color localProbeColorOn;
-    [SerializeField]
-    private Color localProbeColorOff;
-    
-    [SerializeField]
-    private Color probeColorHit;
+    private Color probeColorHit = new Color(1, 0.067f, 0.067f);
            
     [SerializeField]
-    private Color probeColorEatFish;
+    private Color probeColorEatFish = new Color(0, 0.875f, 1);
     
     [SerializeField]
-    private Color probeColorEatPickup;
+    private Color probeColorEatPickup = new Color(0.82f, 0.82f, 0.596f);
     
     [SerializeField]
     [Tooltip("The amount of time the player flashes when eating a fish")]
@@ -145,8 +139,6 @@ public class Player : LightSource
     private IEnumerator changeColorCoroutine;
     private IEnumerator flashColorCoroutine;
     private IEnumerator changeIntensityCoroutine;
-    
-    [Header("Other")]
     
     private static Player playerInstance;
 
@@ -163,21 +155,16 @@ public class Player : LightSource
     protected override void Awake()
     {
         base.Awake(); // call parent LightSource Awake() first
-        if (isLocalPlayer)
-        {                      
-            if (playerInstance != null && playerInstance != this)
-            {
-                GameObject.Destroy(this.gameObject);
-            }
-            else
-            {
-                DontDestroyOnLoad(this.gameObject);
-                playerInstance = this;
-                
-                Debug.Log("CREATE CAMERA");
-            }
+        if (playerInstance != null && playerInstance != this)
+        {
+            GameObject.Destroy(this.gameObject);   
         }
-
+        else
+        {
+            DontDestroyOnLoad(this.gameObject);
+            playerInstance =  this;
+        }
+                       
         this.movement = new PlayerMovement(massEjectionTransform, lightBallPrefab, thrustForce, changeDirectionBoost, thrustEnergyCost, brakeDrag, this.Transform, this.Rigidbody, this.LightEnergy, this.jetFuelEffect, this.rotationSpeed);
         this.lightToggle = new PlayerLightToggle(this.Transform.Find("LightsToToggle").gameObject, defaultLightStatus, this, minimalEnergyRestrictionToggleLights, propulsionLightRange);
         this.materials = new MaterialExtensions();
@@ -189,37 +176,30 @@ public class Player : LightSource
         playerSound = GetComponent<PlayerSound>();
         
         this.currentLevel = SceneManager.GetActiveScene().buildIndex;
-        
+        ChangeColor(probeColorOff, false, 0);
         LoadGame();
         ResetPlayerState();
         
-        // gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
+        gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
         
-        // UI = GameObject.FindWithTag("UI");
+        UI = GameObject.FindWithTag("UI");
 
-        // if (gameOverCanvas == null)
-        // {
-        //     Canvas[] canvases = UI.GetComponentsInChildren<Canvas>();
-        //     foreach (Canvas canvas in canvases)
-        //     {
-        //         if (canvas.name == "GameOverCanvas")
-        //         {
-        //             gameOverCanvas = canvas.gameObject;
-        //             break;
-        //         }
-        //     }
-        // }
+        if (gameOverCanvas == null)
+        {
+            Canvas[] canvases = UI.GetComponentsInChildren<Canvas>();
+            foreach (Canvas canvas in canvases)
+            {
+                if (canvas.name == "GameOverCanvas")
+                {
+                    gameOverCanvas = canvas.gameObject;
+                    break;
+                }
+            }
+        }
 
         #if UNITY_EDITOR
             this.ValidateInputs();
         #endif
-    }
-    
-    public override void OnStartLocalPlayer()
-    {
-        probeColorOn = localProbeColorOn;
-        probeColorOff = localProbeColorOff;
-        ChangeColor(probeColorOff, false, 0);
     }
 
     public override void OnEnable()
@@ -241,8 +221,6 @@ public class Player : LightSource
     /// </summary>
     protected override void Update()
     {
-        if (!isLocalPlayer) { return; }
-
         base.Update();
 
         // if (gameOverCanvas == null)
@@ -250,17 +228,17 @@ public class Player : LightSource
         //     gameOverCanvas = GameObject.Instantiate(gameOverCanvasPrefab);
         //     gameOverCanvas.SetActive(false);
         // }
-        // if (gameOverCanvas == null)
-        // {
-        //     gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
-        // }
-        // if (gameOverCanvas != null && gameOverCanvas.activeSelf == true && !isDead)
-        // {
-        //     gameOverCanvas.SetActive(false);
-        // }
+        if (gameOverCanvas == null)
+        {
+            gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
+        }
+        if (gameOverCanvas != null && gameOverCanvas.activeSelf == true && !isDead)
+        {
+            gameOverCanvas.SetActive(false);
+        }
         
-        // playerVelocity = (int)this.Rigidbody.velocity.magnitude;
-        // playerSound.SetPlayerVelocity(playerVelocity);
+        playerVelocity = (int)this.Rigidbody.velocity.magnitude;
+        playerSound.SetPlayerVelocity(playerVelocity);
 
         // Modify player drag if invulnerable
         if (IsInvulnerable())
