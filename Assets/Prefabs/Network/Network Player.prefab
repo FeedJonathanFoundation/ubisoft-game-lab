@@ -744,6 +744,7 @@ GameObject:
   - 114: {fileID: 11469702}
   - 114: {fileID: 11468384}
   - 114: {fileID: 11496696}
+  - 114: {fileID: 11452186}
   m_Layer: 9
   m_Name: Network Player
   m_TagString: Player
@@ -2652,6 +2653,18 @@ MonoBehaviour:
   flareEnergyCost: 6
   flareCostPercentage: 0.1
   recoilForce: 1
+--- !u!114 &11452186
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e0e6ac393fb640a3a35898ce7a905b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefabCloneName: Network Player(Clone)
 --- !u!114 &11456262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2714,8 +2727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 100
-  healthBar: {fileID: 22448344}
-  healthBarWidth: 200
+  healthBar: {fileID: 0}
   destroyOnDeath: 0
 --- !u!114 &11469702
 MonoBehaviour:
@@ -2813,7 +2825,7 @@ MonoBehaviour:
   disableCheckpoints: 1
   isSafe: 0
   playerVelocity: 0
-  probeColorOn: {r: 0.99607843, g: 0, b: 0.8509804, a: 1}
+  probeColorOn: {r: 0.24446934, g: 0.059039805, b: 0.38235295, a: 1}
   probeColorOff: {r: 0.53676474, g: 0.055255182, b: 0.46662372, a: 1}
   localProbeColorOn: {r: 1, g: 0.30980393, b: 0, a: 1}
   localProbeColorOff: {r: 0.29803923, g: 0.09019608, b: 0, a: 1}
