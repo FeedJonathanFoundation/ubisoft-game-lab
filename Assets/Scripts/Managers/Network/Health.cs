@@ -21,7 +21,7 @@ public class Health : NetworkBehaviour
 
     void Start()
     {
-        player = GameObject.Find("Player").GetComponent<Player>();
+        // player = GameObject.Find("Player").GetComponent<Player>();
         // player.LightEnergy.LightChanged += OnLightChanged;
         if (isLocalPlayer)
         {
