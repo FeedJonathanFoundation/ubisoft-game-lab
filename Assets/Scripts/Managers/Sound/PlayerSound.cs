@@ -29,43 +29,43 @@ public class PlayerSound : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        // AkSoundEngine.PostEvent("WallCrash", target);
+        AkSoundEngine.PostEvent("WallCrash", target);
     }
     
     public void ExplosionSound()
     {
-        // AkSoundEngine.PostEvent("Explosion", target);
+        AkSoundEngine.PostEvent("Explosion", target);
     }
     
     public void AttackSound()
     {
-        // AkSoundEngine.PostEvent("Attack", target);
+        AkSoundEngine.PostEvent("Attack", target);
     }
     
     public void EatSound()
     {
-        // AkSoundEngine.PostEvent("Eat", this.gameObject); 
+        AkSoundEngine.PostEvent("Eat", this.gameObject); 
     }
     
     public void PlayerDeathSound()
     {
-        // AkSoundEngine.SetState("PlayerLife", "Dead");
-        // AkSoundEngine.PostEvent("Die", target);
+        AkSoundEngine.SetState("PlayerLife", "Dead");
+        AkSoundEngine.PostEvent("Die", target);
     }
     
     public void LightToggleSound()
     {
-        // AkSoundEngine.PostEvent("LightsToToggle", target);
+        AkSoundEngine.PostEvent("LightsToToggle", target);
     }
 
     public void InsufficientEnergySound()
     {
-        // AkSoundEngine.PostEvent("LowEnergy", target);
+        AkSoundEngine.PostEvent("LowEnergy", target);
     }
     
     public void SetPlayerVelocity(float playerVelocity)
     {
-        // AkSoundEngine.SetRTPCValue("playerVelocity", playerVelocity);
+        AkSoundEngine.SetRTPCValue("playerVelocity", playerVelocity);
     }
 
 }
