@@ -6,8 +6,9 @@ using UnityEngine.Networking;
 public class Health : NetworkBehaviour 
 {
 
-    [SerializeField] const int maxHealth = 100;
-    [SyncVar(hook = "OnLightChanged")][SerializeField] int currentHealth = maxHealth;
+    [SerializeField] const float maxHealth = 100;
+    // [SyncVar(hook = "OnLightChanged")]
+    [SerializeField] float currentHealth = maxHealth;
     [SerializeField] Slider healthBar;
 
     private bool restartButtonPushed = false;
@@ -21,7 +22,7 @@ public class Health : NetworkBehaviour
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
-        player.LightEnergy.LightChanged += OnLightChanged;
+        // player.LightEnergy.LightChanged += OnLightChanged;
         if (isLocalPlayer)
         {
             spawnPoints = FindObjectsOfType<NetworkStartPosition>();
@@ -30,12 +31,13 @@ public class Health : NetworkBehaviour
     
     void onDisable()
     {
-        player.LightEnergy.LightChanged -= OnLightChanged;
+        // player.LightEnergy.LightChanged -= OnLightChanged;
     }
     
-    void OnLightChanged(float currentEnergy)
+    float OnLightChanged(float currentEnergy)
     {
         healthBar.value = currentEnergy * 100;
+        return healthBar.value;
     }
     
     // void OnChangeHealth(int health)
