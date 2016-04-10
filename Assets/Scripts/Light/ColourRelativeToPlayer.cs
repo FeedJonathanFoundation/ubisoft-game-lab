@@ -33,11 +33,14 @@ public abstract class ColourRelativeToPlayer : MonoBehaviour
     
     void OnEnable()
     {
-        Player.LightEnergy.LightChanged += OnLightChanged;
-        //lightSource.LightEnergy.LightChanged += OnLightChanged;
-        
-        // Set the initial colour of the light source.
-        OnLightChanged(Player.LightEnergy.CurrentEnergy);
+        if (Player != null)
+        {
+            Player.LightEnergy.LightChanged += OnLightChanged;
+            //lightSource.LightEnergy.LightChanged += OnLightChanged;
+            
+            // Set the initial colour of the light source.
+            OnLightChanged(Player.LightEnergy.CurrentEnergy);
+        }
     }
     
     void OnDisable()
@@ -60,15 +63,20 @@ public abstract class ColourRelativeToPlayer : MonoBehaviour
     /// </summary>
     protected virtual Color GetTargetColour()
     {
-        float currentEnergy = lightSource.LightEnergy.CurrentEnergy;
-        float playerEnergy = Player.LightEnergy.CurrentEnergy;
+        if (Player != null)
+        {
+            float currentEnergy = lightSource.LightEnergy.CurrentEnergy;
+            float playerEnergy = Player.LightEnergy.CurrentEnergy;
+            
+            Color targetColour = Color.white;
+            
+            if (currentEnergy > playerEnergy) { targetColour = maxColour; }
+            else { targetColour = minColour; }
+            
+            return targetColour;
+        }
         
-        Color targetColour = Color.white;
-        
-        if (currentEnergy > playerEnergy) { targetColour = maxColour; }
-        else { targetColour = minColour; }
-        
-        return targetColour;
+        return minColour;
     }
 
     /// <summary>
@@ -82,8 +90,12 @@ public abstract class ColourRelativeToPlayer : MonoBehaviour
             if (!playerSearched && player == null)
             {
                 GameObject playerObject = GameObject.FindWithTag("Player");
-                // Debug.Log("Found player (EmissiveColourRelativeToPlayer.cs): " + playerObject);
-                player = playerObject.GetComponentInParent<Player>();
+
+                if (playerObject != null)
+                {
+                    // Debug.Log("Found player (EmissiveColourRelativeToPlayer.cs): " + playerObject);
+                    player = playerObject.GetComponentInParent<Player>();
+                }
                 
                 playerSearched = true;
             }

@@ -114,6 +114,11 @@ GameObject:
   - 114: {fileID: 11413566}
   - 114: {fileID: 11451530}
   - 114: {fileID: 11449196}
+<<<<<<< HEAD
+  - 114: {fileID: 11499376}
+=======
+  - 114: {fileID: 11434686}
+>>>>>>> df50156b499206d3c21d290b56cb1ceb18d897ce
   m_Layer: 24
   m_Name: Fish A (Network)
   m_TagString: Fish
@@ -593,6 +598,19 @@ MonoBehaviour:
   tagsToIgnore:
   - Fish A
   - Player
+--- !u!114 &11434686
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eea0cd9d6100d4ab0ba458afc239b7be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcID: 
+  npcPrefabName: Network
 --- !u!114 &11442028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -656,7 +674,7 @@ MonoBehaviour:
     i13: 248
     i14: 166
     i15: 233
-  m_ServerOnly: 1
+  m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &11466462
 MonoBehaviour:
@@ -846,6 +864,19 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 4096
+--- !u!114 &11499376
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8b1a26bcfef41db813737f2781716a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcID: 
+  npcPrefabName: Network
 --- !u!135 &13501780
 SphereCollider:
   m_ObjectHideFlags: 1

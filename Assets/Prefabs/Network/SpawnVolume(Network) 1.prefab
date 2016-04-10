@@ -45,7 +45,6 @@ GameObject:
   - 114: {fileID: 11469404}
   - 114: {fileID: 11430652}
   - 114: {fileID: 11444786}
-  - 114: {fileID: 11471564}
   m_Layer: 10
   m_Name: SpawnVolume(Network) 1
   m_TagString: SpawnVolume
@@ -144,12 +143,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pooledObjects:
-  - {fileID: 166000, guid: 246b6ac97065c4fb6a2a8caf4194994d, type: 2}
-  - {fileID: 140610, guid: 38d0002f615f542afba0a194a8ad5b31, type: 2}
-  - {fileID: 126260, guid: 031b3c20622814d5eb2efa60c665d4d4, type: 2}
-  pooledAmount: 320000000a00000005000000
+  - {fileID: 141890, guid: 38402044f2e744338ac93eaa02f8a6e9, type: 2}
+  - {fileID: 141682, guid: 3e6866739a2c84000bbef2ef134ccaf6, type: 2}
+  - {fileID: 198724, guid: a5f1d169eee89438dae2720c7651a259, type: 2}
+  pooledAmount: 0a0000000000000000000000
+<<<<<<< HEAD
   extensible: 1
   replace: 1
+=======
+  extensible: 0
+  replace: 0
+>>>>>>> df50156b499206d3c21d290b56cb1ceb18d897ce
 --- !u!114 &11438762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -199,7 +203,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 168980}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f648d350620143169806ce7bde8feb3, type: 3}
   m_Name: 
@@ -210,28 +214,19 @@ MonoBehaviour:
   - {fileID: 13551188}
   schools: 010000
   probabilities:
-  - 2
+<<<<<<< HEAD
   - 1
-  - 0.15
+=======
+  - 2
+>>>>>>> df50156b499206d3c21d290b56cb1ceb18d897ce
+  - 0
+  - 0
   energyVariance: 0.492
-  fishCount: 50
+  fishCount: 10
   schoolSize: 7
   initialSwimAngle: 0
   maxDistance: 50
   automaticReset: 0
---- !u!114 &11471564
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 168980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47f51bc06c4f6440890bea7771887892, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 141890, guid: 38402044f2e744338ac93eaa02f8a6e9, type: 2}
-  numberOfNPCs: 10
 --- !u!114 &11488108
 MonoBehaviour:
   m_ObjectHideFlags: 1

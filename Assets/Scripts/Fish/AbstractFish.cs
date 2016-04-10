@@ -60,6 +60,7 @@ public abstract class AbstractFish : LightSource
     /// </summary>
     protected override void Update()
     {
+        if (!isServer) { return; }
         base.Update();
         List<NPCActionable> activeActions = actions.GetActiveActions();
 

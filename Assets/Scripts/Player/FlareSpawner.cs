@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class FlareSpawner : MonoBehaviour 
+public class FlareSpawner : NetworkBehaviour 
 {
     [SerializeField]
     [Tooltip("Refers to flare game object")]
@@ -26,7 +27,8 @@ public class FlareSpawner : MonoBehaviour
     [SerializeField]
     [Tooltip("The amount of recoil applied on the player when shooting the flare")]
     private float recoilForce;
-        
+    
+    [SyncVar]    
     private float timer;
     private LightSource lightSource;
     // Caches the component that rumbles the controller
@@ -56,6 +58,8 @@ public class FlareSpawner : MonoBehaviour
 
     void Update() 
     {
+        if (!isLocalPlayer) { return; }
+        
         bool ready = false;
         if (timer < cooldownTime)
         {
@@ -72,21 +76,7 @@ public class FlareSpawner : MonoBehaviour
                 float cost = flareEnergyCost * flareCostPercentage;
                 if ((lightSource.LightEnergy.CurrentEnergy > (flareEnergyCost + cost)))
                 {
-                    flare = (GameObject)Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
-                    lightSource.LightEnergy.Deplete(flareEnergyCost);
-                    // Apply recoil in the opposite direction the flare was shot
-                    rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
-                    controllerRumble.ShotFlare();   // Rumble the controller
-                    timer = 0.0f;
-                    flareSound = new FlareSound(flare);
-                    flareSound.ShootFlareSound();
-
-                    //reset all values for the zoom whenever player fires a flare
-                    if (smoothCamera != null)
-                    {
-                        smoothCamera.FlareShoot();
-                        smoothCamera.ResetTimer();
-                    }
+                    Cmd_ShootFlare();
                 }
             }
             else
@@ -98,6 +88,27 @@ public class FlareSpawner : MonoBehaviour
         {
             flareDistance = Vector3.Distance(flare.transform.position, player.position);
             flareSound.SetFlareDistance(flareDistance);
+        }
+    }
+    
+    [Command]
+    private void Cmd_ShootFlare()
+    {
+        flare = (GameObject)Instantiate(flareObject, flareSpawnObject.position, flareSpawnObject.rotation);
+        NetworkServer.Spawn(flare);
+        lightSource.LightEnergy.Deplete(flareEnergyCost);
+        // Apply recoil in the opposite direction the flare was shot
+        rigidbody.AddForce(-flareSpawnObject.right * recoilForce, ForceMode.Impulse);
+        controllerRumble.ShotFlare();   // Rumble the controller
+        timer = 0.0f;
+        flareSound = new FlareSound(flare);
+        flareSound.ShootFlareSound();
+
+        //reset all values for the zoom whenever player fires a flare
+        if (smoothCamera != null)
+        {
+            smoothCamera.FlareShoot();
+            smoothCamera.ResetTimer();
         }
     }
     
