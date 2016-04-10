@@ -397,7 +397,7 @@ GameObject:
   - 114: {fileID: 11425716}
   m_Layer: 5
   m_Name: Foreground
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -742,9 +742,9 @@ GameObject:
   - 114: {fileID: 11431330}
   - 114: {fileID: 11456262}
   - 114: {fileID: 11469702}
-  - 114: {fileID: 11468384}
   - 114: {fileID: 11496696}
   - 114: {fileID: 11452186}
+  - 114: {fileID: 11454282}
   m_Layer: 9
   m_Name: Network Player
   m_TagString: Player
@@ -2665,6 +2665,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefabCloneName: Network Player(Clone)
+--- !u!114 &11454282
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98c32ac3451e6461fa0686fdd968982b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarWidth: 200
+  healthBar: {fileID: 22448344}
+  currentEnergy: 0
 --- !u!114 &11456262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2715,20 +2729,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightToMassRatio: 0.12
   minMass: 0.9
---- !u!114 &11468384
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 173166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98c32ac3451e6461fa0686fdd968982b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 100
-  healthBar: {fileID: 0}
-  destroyOnDeath: 0
 --- !u!114 &11469702
 MonoBehaviour:
   m_ObjectHideFlags: 1

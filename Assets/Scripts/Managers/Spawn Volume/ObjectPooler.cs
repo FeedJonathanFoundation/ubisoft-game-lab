@@ -54,7 +54,7 @@ public class ObjectPooler : NetworkBehaviour
             for (int j = 0; j < pooledAmount[i]; j++)
             {
                 GameObject gameobject = (GameObject)Instantiate(pooledObjects[i]);
-                NetworkServer.Spawn(gameobject);
+                // NetworkServer.Spawn(gameobject);
 
                 AbstractFish fish = gameobject.GetComponent<AbstractFish>();
                 if (fish != null)
