@@ -66,8 +66,12 @@ public class ObjectPooler : NetworkBehaviour
             for (int j = 0; j < pooledAmount[i]; j++)
             {
                 GameObject gameobject = (GameObject)Instantiate(pooledObjects[i]);
+<<<<<<< HEAD
+                // gameobject.SetActive(false);
+=======
                 gameobject.SetActive(false);
                 // gameobject.SetActive(true);
+>>>>>>> df50156b499206d3c21d290b56cb1ceb18d897ce
                 pool[i].Add(gameobject);
                 
                 LightSource lightSource = gameobject.GetComponent<LightSource>();

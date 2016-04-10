@@ -113,8 +113,9 @@ public class SpawnVolume : NetworkBehaviour
         {
             if (disabled[i]) { continue; }
             if (!initialized[i])
-            { 
+            {
                 Initialize(i);
+                
                 // Reset the collider the player has passed
                 if (automaticReset)
                 {
@@ -129,6 +130,9 @@ public class SpawnVolume : NetworkBehaviour
             {
                 if (fishes[i] != null)
                 {
+                    // REMOVE THIS - for DEBUGGING
+                    fishes[i].SetActive(true);
+
                     CheckDistanceToPlayer(fishes[i].GetComponent<AbstractFish>());
                 }
             }
@@ -142,7 +146,11 @@ public class SpawnVolume : NetworkBehaviour
     /// </summary>
     private void CheckDistanceToPlayer(AbstractFish fish)
     {
+<<<<<<< HEAD
+        // if (fish == null) { return; }
+=======
         if (fish == null) { return; }
+>>>>>>> df50156b499206d3c21d290b56cb1ceb18d897ce
         // for (int i = 0; i < players.Count; i++)
         // {
         //     float distanceSquared = (fish.transform.position - players[i].position).sqrMagnitude;
@@ -152,7 +160,11 @@ public class SpawnVolume : NetworkBehaviour
         //     }
         //     else if (fish.gameObject.activeSelf == false && !fish.Dead)
         //     {
+<<<<<<< HEAD
+        //         fish.gameObject.SetActive(true);
+=======
                 fish.gameObject.SetActive(true);
+>>>>>>> df50156b499206d3c21d290b56cb1ceb18d897ce
         //     }
         // }
     }
@@ -221,11 +233,19 @@ public class SpawnVolume : NetworkBehaviour
             abstractFish.DefaultWanderAngle = initialSwimAngle;
         }
         fishes.Add(fish);
+        // NetworkServer.Spawn(fish);
+        NPCID npcID = fish.GetComponent<NPCID>();
+        if (npcID != null)
+        {
+            string identity =  lightSource.LightSourceID;
+            npcID.npcID = identity;
+        }
     }
     
     /// <summary>
     /// Spawns an individual fish.
     /// </summary>
+    
     private void SpawnSchool(int spawnTypeIndex, Vector3 spawnLocation)
     {
         Vector3 modifiedLocation = spawnLocation;

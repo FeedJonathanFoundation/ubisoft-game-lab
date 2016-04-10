@@ -11,7 +11,11 @@ public class PlayerNetworkSetup : NetworkBehaviour
     {
 	    if (isLocalPlayer)
         {
-            GameObject.Find("Scene Camera").SetActive(false);
+            GameObject sceneCamera = GameObject.Find("Scene Camera");
+            if (sceneCamera != null)
+            {
+                sceneCamera.SetActive(false);
+            }
             // GetComponent<>().enabled = true;
             GetComponent<Player>().enabled = true;
             //playerCamera.enabled = true;
