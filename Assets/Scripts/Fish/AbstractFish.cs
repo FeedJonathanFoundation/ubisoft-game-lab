@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections.Generic;
 
 /// <summary>
@@ -36,7 +37,10 @@ public abstract class AbstractFish : LightSource
     private PriorityDictionary actions;
     protected Steerable steerable;
     private bool dead;
-    
+
+    [SyncVar(hook = "OnActiveChange")]
+    private bool active;
+
     /// <summary>
     /// Initializes the fish object
     /// </summary>
@@ -89,8 +93,19 @@ public abstract class AbstractFish : LightSource
             
             Dead = true;
         }
-        
-        this.gameObject.SetActive(false);
+        OnActiveChange(false);
+    }
+    
+    public void OnActiveChange(bool updatedActive)
+    {
+        this.gameObject.SetActive(updatedActive);
+        active = updatedActive;
+        if (active)
+        {
+            NetworkServer.Spawn(this.gameObject);
+        }
+        NpcID id = this.gameObject.GetComponent<NpcID>();
+        // Debug.Log(id.npcID + " active status changed " + updatedActive);
     }
 
     /// <summary>

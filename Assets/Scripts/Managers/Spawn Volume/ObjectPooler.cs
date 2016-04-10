@@ -41,33 +41,30 @@ public class ObjectPooler : NetworkBehaviour
         current = this;
     }
     
+    /// <summary>
+    /// Creates the pool
+    /// </summary>
     public void Start()
     {
         pool = new List<GameObject>[pooledObjects.Length];
         if (!isServer) { return; }
-        CmdSpawnFish();
-    }
-    
-    /// <summary>
-    /// Creates the pool
-    /// </summary>
-    // public override void OnStartServer()
-    // {
-    //     CmdSpawnFish();
-    // }
-    
-    [Command]
-    private void CmdSpawnFish()
-    {
-        
         for (int i = 0; i < pooledObjects.Length; i++)
         {
             pool[i] = new List<GameObject>();
             for (int j = 0; j < pooledAmount[i]; j++)
             {
                 GameObject gameobject = (GameObject)Instantiate(pooledObjects[i]);
-                gameobject.SetActive(false);
-                // gameobject.SetActive(true);
+                NetworkServer.Spawn(gameobject);
+
+                AbstractFish fish = gameobject.GetComponent<AbstractFish>();
+                if (fish != null)
+                {
+                    fish.OnActiveChange(false);
+                }
+                else
+                {
+                    gameobject.SetActive(false);
+                }
                 pool[i].Add(gameobject);
                 
                 LightSource lightSource = gameobject.GetComponent<LightSource>();
@@ -77,10 +74,11 @@ public class ObjectPooler : NetworkBehaviour
                     string identity =  lightSource.LightSourceID;
                     npcID.npcID = identity;
                 }
-                NetworkServer.Spawn(gameobject);
+                
             }
         }
     }
+    
 	
     /// <summary>
     /// Returns an object from the pool that is not in use
@@ -137,7 +135,15 @@ public class ObjectPooler : NetworkBehaviour
                 GameObject current = pool[i][j];
                 if (current.activeSelf == true)
                 {
-                    current.SetActive(false);
+                    AbstractFish fish = current.GetComponent<AbstractFish>();
+                    if (fish != null)
+                    {
+                        fish.OnActiveChange(false);
+                    }
+                    else
+                    {
+                        current.SetActive(false);
+                    }
                 }
                 ReactivateObjectLight(current);
             }

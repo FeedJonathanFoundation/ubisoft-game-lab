@@ -46,7 +46,7 @@ GameObject:
   - 114: {fileID: 11430652}
   - 114: {fileID: 11444786}
   m_Layer: 10
-  m_Name: SpawnVolume(Network) 1
+  m_Name: SpawnVolume(Network)
   m_TagString: SpawnVolume
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,9 +146,9 @@ MonoBehaviour:
   - {fileID: 141890, guid: 38402044f2e744338ac93eaa02f8a6e9, type: 2}
   - {fileID: 141682, guid: 3e6866739a2c84000bbef2ef134ccaf6, type: 2}
   - {fileID: 198724, guid: a5f1d169eee89438dae2720c7651a259, type: 2}
-  pooledAmount: 0a0000000000000000000000
+  pooledAmount: 0a0000000000000002000000
   extensible: 0
-  replace: 0
+  replace: 1
 --- !u!114 &11438762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,7 +211,7 @@ MonoBehaviour:
   probabilities:
   - 2
   - 0
-  - 0
+  - 0.5
   energyVariance: 0.492
   fishCount: 10
   schoolSize: 7

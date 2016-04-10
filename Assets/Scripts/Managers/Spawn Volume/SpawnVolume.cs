@@ -130,10 +130,16 @@ public class SpawnVolume : NetworkBehaviour
             {
                 if (fishes[i] != null)
                 {
-                    // REMOVE THIS - for DEBUGGING
-                    fishes[i].SetActive(true);
-
-                    CheckDistanceToPlayer(fishes[i].GetComponent<AbstractFish>());
+                    
+                    
+                    AbstractFish fish = fishes[i].GetComponent<AbstractFish>();
+                    if (fish != null)
+                    {
+                        // REMOVE THIS - for DEBUGGING
+                        // fishes[i].SetActive(true);
+                        fish.OnActiveChange(true);
+                        CheckDistanceToPlayer(fish);
+                    }
                 }
             }
         }
@@ -157,7 +163,8 @@ public class SpawnVolume : NetworkBehaviour
         //     }
         //     else if (fish.gameObject.activeSelf == false && !fish.Dead)
         //     {
-                fish.gameObject.SetActive(true);
+                // fish.gameObject.SetActive(true);
+        fish.OnActiveChange(true);
         //     }
         // }
     }
@@ -211,8 +218,8 @@ public class SpawnVolume : NetworkBehaviour
         if (fish == null) { return; }
         fish.transform.position = spawnLocation;
         fish.transform.rotation = Quaternion.identity;
-        fish.SetActive(true);
-
+        // fish.SetActive(true);
+        
         LightSource lightSource = fish.GetComponent<LightSource>();
         AbstractFish abstractFish = fish.GetComponent<AbstractFish>();
         if (lightSource != null)
@@ -224,6 +231,7 @@ public class SpawnVolume : NetworkBehaviour
         {
             // Override the fish's default swim direction
             abstractFish.DefaultWanderAngle = initialSwimAngle;
+            abstractFish.OnActiveChange(true);
         }
         fishes.Add(fish);
         // NetworkServer.Spawn(fish);
