@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
 /// <summary>
 /// SpawnVolume class is responsible for spawning game objects
@@ -12,7 +13,7 @@ using System.Collections.Generic;
 ///
 /// </summary>
 [RequireComponent(typeof(ObjectPooler))]
-public class SpawnVolume : MonoBehaviour
+public class SpawnVolume : NetworkBehaviour
 {
     
     [SerializeField]
@@ -55,7 +56,7 @@ public class SpawnVolume : MonoBehaviour
     
     // Amount of space between fish in a school
     private float schoolSpacing = 0.3f;
-    private Transform player;
+    private List<Transform> players;
     // Tracks which spawn volumes are disabled
     private bool[] disabled;
     // Tracks which spawn volumes are initialized
@@ -73,7 +74,8 @@ public class SpawnVolume : MonoBehaviour
     void Start() 
     {
         fishes = new List<GameObject>();
-        player = GameObject.Find("Player").transform;
+        players = new List<Transform>();
+        // player = GameObject.Find("Player").transform;
         pool = ObjectPooler.current;
         numberOfTypes = pool.PooledObjectCount;
         colliderCount = colliders.Length;
@@ -93,14 +95,27 @@ public class SpawnVolume : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (players.Count < 2)
+        {
+            Debug.Log("need to adjust to find correct number of players!");
+            GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject current in currentPlayers)
+            {
+                if (current.name != "LightAbsorber")
+                {
+                    players.Add(current.transform);
+                }
+            }
+        }
         // Iterate through the colliders
         // If not disabled and not intialized, initialized
         for (int i = 0; i < colliderCount; i++)
         {
             if (disabled[i]) { continue; }
             if (!initialized[i])
-            { 
+            {
                 Initialize(i);
+                
                 // Reset the collider the player has passed
                 if (automaticReset)
                 {
@@ -115,6 +130,9 @@ public class SpawnVolume : MonoBehaviour
             {
                 if (fishes[i] != null)
                 {
+                    // REMOVE THIS - for DEBUGGING
+                    fishes[i].SetActive(true);
+
                     CheckDistanceToPlayer(fishes[i].GetComponent<AbstractFish>());
                 }
             }
@@ -128,16 +146,27 @@ public class SpawnVolume : MonoBehaviour
     /// </summary>
     private void CheckDistanceToPlayer(AbstractFish fish)
     {
+<<<<<<< HEAD
+        // if (fish == null) { return; }
+=======
         if (fish == null) { return; }
-        float distanceSquared = (fish.transform.position - player.position).sqrMagnitude;
-        if (distanceSquared > maxDistanceSquared)
-        {
-            fish.gameObject.SetActive(false);
-        }
-        else if (fish.gameObject.activeSelf == false && !fish.Dead)
-        {
-            fish.gameObject.SetActive(true);
-        }
+>>>>>>> df50156b499206d3c21d290b56cb1ceb18d897ce
+        // for (int i = 0; i < players.Count; i++)
+        // {
+        //     float distanceSquared = (fish.transform.position - players[i].position).sqrMagnitude;
+        //     if (distanceSquared > maxDistanceSquared)
+        //     {
+        //         fish.gameObject.SetActive(false);
+        //     }
+        //     else if (fish.gameObject.activeSelf == false && !fish.Dead)
+        //     {
+<<<<<<< HEAD
+        //         fish.gameObject.SetActive(true);
+=======
+                fish.gameObject.SetActive(true);
+>>>>>>> df50156b499206d3c21d290b56cb1ceb18d897ce
+        //     }
+        // }
     }
     
     /// <summary>
@@ -204,11 +233,19 @@ public class SpawnVolume : MonoBehaviour
             abstractFish.DefaultWanderAngle = initialSwimAngle;
         }
         fishes.Add(fish);
+        // NetworkServer.Spawn(fish);
+        NPCID npcID = fish.GetComponent<NPCID>();
+        if (npcID != null)
+        {
+            string identity =  lightSource.LightSourceID;
+            npcID.npcID = identity;
+        }
     }
     
     /// <summary>
     /// Spawns an individual fish.
     /// </summary>
+    
     private void SpawnSchool(int spawnTypeIndex, Vector3 spawnLocation)
     {
         Vector3 modifiedLocation = spawnLocation;
