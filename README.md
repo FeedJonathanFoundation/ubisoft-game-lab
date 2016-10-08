@@ -1,6 +1,7 @@
-# Ubisoft Game Lab 2016 - FJF Entry
+# Lumina
+## Ubisoft Game Lab 2016 Entry
 
-FJF's entry for the Ubisoft 2016 Game Lab Competition.
+A probe is dispatched to the ocean of an alien planet with instructions to locate the source of a mysterious sonar signal.
 
 ## Controls
 | Action        | Xbox 360 Controller | Keyboard                  |
