@@ -1,9 +1,10 @@
 # Lumina
-## Ubisoft Game Lab 2016 Entry
+
+![cover art](https://cloud.githubusercontent.com/assets/10332234/19215375/1fd38a7a-8d51-11e6-982c-76909842651b.jpg)
 
 A probe is dispatched to the ocean of an alien planet with instructions to locate the source of a mysterious sonar signal.
 
-![cover art](https://cloud.githubusercontent.com/assets/10332234/19215375/1fd38a7a-8d51-11e6-982c-76909842651b.jpg)
+### [Gameplay Video](https://vimeo.com/186107760)
 
 ## Controls
 | Action        | Xbox 360 Controller | Keyboard                  |
@@ -22,7 +23,7 @@ A probe is dispatched to the ocean of an alien planet with instructions to locat
 
 **Sound Designer:** Mark Latimer
 
-## Recognition
+## Ubisoft Game Lab 2016
 Lumina was awarded **Best Creativity and Integration of Theme** at Ubisoft Game Lab 2016
 
 ------------------
