@@ -4,7 +4,8 @@
 
 A probe is dispatched to the ocean of an alien planet with instructions to locate the source of a mysterious sonar signal.
 
-### [Gameplay Video](https://vimeo.com/186107760)
+## Watch
+* [Gameplay Video](https://vimeo.com/186107760)
 
 ## Controls
 | Action        | Xbox 360 Controller | Keyboard                  |
@@ -14,7 +15,6 @@ A probe is dispatched to the ocean of an alien planet with instructions to locat
 | Brake  	| <kbd>LT</kbd>       | <kbd>Ctrl</kbd>           |
 | Light Toggle  | <kbd>RB</kbd>       | <kbd>r</kbd>              |
 | Shoot Flare   | <kbd>Y</kbd>        | <kbd>y</kbd>              |
-
 
 ## Team
 **Programmers:** Alex Ilea, Karl Chiraz, Stella Lee, Simon Thompson, Jonathan Lucuix-André
