@@ -24,4 +24,4 @@ A probe is dispatched to the ocean of an alien planet with instructions to locat
 **Sound Designer:** Mark Latimer
 
 ## Ubisoft Game Lab 2016
-Lumina was awarded **Best Creativity and Integration of Theme** at Ubisoft Game Lab 2016
+Lumina was awarded **Best Creativity and Integration of Theme** at the Ubisoft Game Lab Competition 2016
