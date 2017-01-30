@@ -25,6 +25,8 @@ public class IntroTextManager : MonoBehaviour
     // The speed at which text is written out
     private float typeSpeed = 0.025f;
     private IEnumerator textScroll;
+    [SerializeField]
+    private GenericSoundManager soundManager;
 
     void Start()
     {
@@ -38,9 +40,31 @@ public class IntroTextManager : MonoBehaviour
         {
             DisableTextBox();
         }
-        
-        AkSoundEngine.PostEvent("Ambient2", this.gameObject);
-        AkSoundEngine.SetState("IMAmb2", "CP2");
+        IntroSound();
+        if (soundManager == null)
+        {
+            GameObject soundGameObject = GameObject.FindWithTag("SoundManager");
+            if (soundGameObject !=null)
+            {
+                soundManager = soundGameObject.GetComponent<GenericSoundManager>();
+            }
+        }
+    }
+    
+    private void IntroSound()
+    {
+        if (soundManager)
+        {
+            soundManager.IntroSound(this.gameObject);
+        }
+    }
+    
+    private void StopIntroSound()
+    {
+        if (soundManager)
+        {
+            soundManager.StopIntroSound(this.gameObject);
+        }
     }
 
     void Update()
@@ -104,7 +128,7 @@ public class IntroTextManager : MonoBehaviour
     // Hides the textbox and resumes player movement
     public void DisableTextBox()
     {
-        AkSoundEngine.PostEvent("Ambient2Stop", this.gameObject);
+        StopIntroSound();
         SceneManager.LoadScene(2);
         
     }

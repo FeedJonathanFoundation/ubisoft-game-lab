@@ -45,6 +45,8 @@ public class Current : MonoBehaviour
     private SmoothCamera smoothCamera;
     private bool playerInCurrent;
     private GameObject particles;
+    [SerializeField]
+    private GenericSoundManager soundManager;
 
     /// <summary>
     /// Initializes the current.
@@ -62,6 +64,16 @@ public class Current : MonoBehaviour
         empty = true;
         playerInCurrent = false;
         distance = distanceFromPlayer;
+
+        if (soundManager == null)
+        {
+            GameObject soundGameObject = GameObject.FindWithTag("SoundManager");
+            if (soundGameObject !=null)
+            {
+                soundManager = soundGameObject.GetComponent<GenericSoundManager>();
+            }
+        }
+
     }
 
     /// <summary>
@@ -190,7 +202,11 @@ public class Current : MonoBehaviour
             if (rigidbody != null)
             {
                 // Plays the current sound
-                AkSoundEngine.PostEvent("Current", this.gameObject);          
+                if (soundManager)
+                {
+                    soundManager.CurrentSound(this.gameObject);
+                }
+
                 Vector3 initialVelocity = rigidbody.velocity;
                 rigidbody.AddForce(-initialVelocity);
                 rigidbody.AddForce(strength * direction);

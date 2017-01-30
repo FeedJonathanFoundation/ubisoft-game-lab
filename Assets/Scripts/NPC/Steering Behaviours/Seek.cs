@@ -5,7 +5,9 @@ using System.Collections;
 public class Seek : NPCActionable
 {   
     private Transform targetTransform;
-    
+    [SerializeField]
+    private GenericSoundManager soundManager;
+
     public Seek(int priority, string id, Transform transform) : base(priority, id)
     {
         targetTransform = transform;
@@ -36,7 +38,7 @@ public class Seek : NPCActionable
                 if (player.IsDetectable())
                 {
                     steerable.AddSeekForce(targetTransform.position, strengthMultiplier);
-                    AkSoundEngine.PostEvent("Fish_Detection", targetTransform.gameObject);
+                    SeekSound();
                 }
             }
             else
@@ -44,6 +46,23 @@ public class Seek : NPCActionable
                 steerable.AddSeekForce(targetTransform.position, strengthMultiplier);
             }
             
+        }
+    }
+    
+    private void SeekSound()
+    {
+        if (soundManager == null)
+        {
+            GameObject soundGameObject = GameObject.FindWithTag("SoundManager");
+            if (soundGameObject !=null)
+            {
+                soundManager = soundGameObject.GetComponent<GenericSoundManager>();
+            }
+        }
+        
+        if (soundManager)
+        {
+            soundManager.SeekSound(targetTransform.gameObject);
         }
     }
     
